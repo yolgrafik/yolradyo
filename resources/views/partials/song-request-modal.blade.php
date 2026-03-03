@@ -90,7 +90,7 @@
                 body:fd,
                 headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}
             }).then(function(r){return r.json();}).then(function(data){
-                if(data.ok){successEl.style.display='block';form.reset();setTimeout(closeModal,1500);}
+                if(data.ok){successEl.textContent=data.message||'İsteğiniz alındı.';successEl.style.background='rgba(34,197,94,0.2)';successEl.style.color='#86efac';successEl.style.display='block';form.reset();setTimeout(closeModal,1500);}
                 else if(data.errors){Object.keys(data.errors).forEach(function(k){var m=data.errors[k][0];var errEl=document.getElementById('err_'+k);if(errEl){errEl.textContent=m;}});}
             }).catch(function(){successEl.textContent='Bir hata oluştu. Lütfen tekrar deneyin.';successEl.style.background='rgba(239,68,68,0.2)';successEl.style.color='#fca5a5';successEl.style.display='block';});
         });
