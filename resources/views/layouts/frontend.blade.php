@@ -278,6 +278,12 @@
             justify-content: center;
             align-items: center;
         }
+        .bottom-bar-logo-wrap .disc-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
         .bottom-bar-logo {
             height: 70px;
             width: auto;
