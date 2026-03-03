@@ -19,7 +19,7 @@ Route::get('/kvkk', [FrontendController::class, 'kvkk']);
 
 Route::get('/api/radio/status', App\Http\Controllers\Api\RadioStatusController::class);
 
-Route::post('/istek-gonder', [App\Http\Controllers\RequestController::class, 'store'])->name('song-request.store');
+Route::post('/istek-gonder', [App\Http\Controllers\RequestController::class, 'store'])->name('song.request');
 Route::get('/istekler/approved', [App\Http\Controllers\RequestController::class, 'approvedList'])->name('song-request.approved');
 
 Route::prefix('admin')->group(function () {

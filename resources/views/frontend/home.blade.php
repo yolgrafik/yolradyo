@@ -275,6 +275,8 @@
     .btn-request {
         display: grid;
         place-items: center;
+        cursor: pointer;
+        font-family: inherit;
         padding: 1rem 1.5rem;
         background: linear-gradient(135deg, #16a34a, var(--accent));
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -473,7 +475,7 @@
         <div class="home-right">
             <div class="home-actions">
                 <a href="#" class="btn-live">CANLI DİNLE</a>
-                <a href="#" class="btn-request" data-open-song-request>ISTEK Gönder</a>
+                <button type="button" class="btn-request" data-open-song-request>ISTEK Gönder</button>
             </div>
             <div class="home-icon-buttons">
                 <button type="button" class="icon-placeholder" aria-label="Play">▶</button>

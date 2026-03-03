@@ -30,7 +30,7 @@
                 <textarea name="mesaj" id="mesaj" rows="3" class="request-form__input"></textarea>
                 <span class="request-form__error" id="err_mesaj"></span>
             </div>
-            <div class="request-form__success" id="formSuccess" style="display:none">Istek alindi, onaydan sonra yayinlanacaktir.</div>
+            <div class="request-form__success" id="formSuccess" style="display:none">Isteginiz alindi.</div>
             <div class="request-form__actions">
                 <button type="submit" class="request-form__btn">Gonder</button>
                 <button type="button" class="request-form__btn request-form__btn--cancel" data-close-modal>Iptal</button>
@@ -41,10 +41,10 @@
 
 @push('styles')
 <style>
-.request-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:1rem;}
+.request-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .request-modal.is-open{display:flex;}
 .request-modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
-.request-modal__box{position:relative;background:rgba(22,28,36,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:1.5rem;max-width:420px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.05) inset;}
+.request-modal__box{position:relative;background:rgba(22,28,36,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:1.5rem;max-width:420px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.05) inset;margin:auto;}
 .request-modal__close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;line-height:1;padding:0.25rem;}
 .request-modal__close:hover{color:var(--text);}
 .request-modal__title{font-size:1.25rem;font-weight:700;margin-bottom:1.25rem;color:var(--text);}
@@ -58,6 +58,7 @@
 .request-form__btn{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;border-radius:8px;cursor:pointer;border:none;}
 .request-form__btn[type=submit]{background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;}
 .request-form__btn--cancel{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
+@media(max-width:480px){.request-modal{padding:0.5rem;}.request-modal__box{padding:1.25rem;max-height:85vh;}}
 </style>
 @endpush
 
@@ -88,7 +89,7 @@
             successEl.style.display='none';
             var fd=new FormData(form);
             fd.append('_token',document.querySelector('input[name="_token"]').value);
-            fetch('{{ url("/istek-gonder") }}',{
+            fetch('{{ route("song.request") }}',{
                 method:'POST',
                 body:fd,
                 headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}
