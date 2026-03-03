@@ -12,7 +12,6 @@
             --muted: #8b95a5;
             --border: rgba(255, 255, 255, 0.08);
             --accent: #c92a2a;
-            --footer-logo-offset: 18px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { font-family: Arial, sans-serif; }
@@ -258,8 +257,8 @@
         .logo-player {
             position: fixed;
             left: 50%;
-            transform: translateX(-50%) translateY(var(--footer-logo-offset));
-            bottom: 45px;
+            transform: translateX(-50%);
+            bottom: 10px;
             z-index: 1001;
         }
         .bottom-bar-logo-wrap {
