@@ -63,10 +63,21 @@
             position: relative;
             z-index: 1;
         }
+        .topbar-logo-wrap {
+            height: 38px;
+            display: flex;
+            align-items: center;
+        }
         .topbar-logo {
             height: 38px;
             width: auto;
             object-fit: contain;
+        }
+        .topbar-logo-fallback {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #fff;
         }
         .topbar-brand-text {
             display: flex;
@@ -151,10 +162,13 @@
             align-items: center;
             gap: 0.6rem;
         }
-        .sidebar-brand-logo {
+        .sidebar-brand-inner .sidebar-brand-logo {
             height: 28px;
             width: auto;
             object-fit: contain;
+        }
+        .sidebar-brand-inner .logo-fallback {
+            font-size: 0.85rem;
         }
         .sidebar-brand-text {
             font-size: 0.95rem;
@@ -471,8 +485,7 @@
             <aside class="sidebar">
                 <div class="sidebar-brand">
                     <div class="sidebar-brand-inner">
-                        <img src="{{ asset('assets/brand/radyoyol-logo.png') }}" alt="RADYOYOL" class="sidebar-brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                        <span class="logo-fallback" style="display:none">RADYOYOL</span>
+                        <img src="{{ asset('assets/brand/radyoyol-logo.png') }}" alt="" class="sidebar-brand-logo" onerror="this.style.display='none'">
                         <span class="sidebar-brand-text">RADYOYOL</span>
                     </div>
                 </div>
