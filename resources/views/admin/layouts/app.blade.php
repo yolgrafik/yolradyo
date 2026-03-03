@@ -555,6 +555,15 @@
           overflow: visible !important;
           position: relative !important;
         }
+        .topbar.admin-hero{
+          height: 170px !important;
+          min-height: 170px !important;
+          padding: 25px 40px !important;
+          display:flex !important;
+          align-items:center !important;
+          justify-content:space-between !important;
+          overflow: visible !important;
+        }
     </style>
     @stack('styles')
 </head>
