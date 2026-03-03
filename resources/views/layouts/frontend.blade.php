@@ -22,7 +22,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding-bottom: 145px;
+            padding-bottom: 175px;
         }
         .navbar {
             position: sticky;
@@ -241,7 +241,7 @@
             bottom: 48px;
             left: 0;
             right: 0;
-            height: 90px;
+            height: 120px;
             z-index: 1000;
             font-family: Arial, sans-serif;
             background: rgba(10,12,20,0.75);
@@ -267,7 +267,7 @@
             transform: translate(-50%, -50%);
         }
         .bottom-bar-logo {
-            height: 70px;
+            height: 98px;
             width: auto;
             display: block;
         }
@@ -381,10 +381,10 @@
             body.playing .disc-overlay { animation: none; }
         }
         @media (max-width: 768px) {
-            .bottom-bar-logo { height: 56px; }
+            .bottom-bar-logo { height: 78px; }
             .legal-footer { font-size: 12px; padding: 12px 0.75rem; }
             .legal-footer .sep { margin: 0 0.4rem; }
-            body { padding-bottom: 135px; }
+            body { padding-bottom: 165px; }
             .disc-overlay { width: 40px; height: 40px; }
             .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
             .disc-overlay .icon.pause { width: 14px; height: 14px; }
