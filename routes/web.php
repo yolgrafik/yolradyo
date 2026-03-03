@@ -7,6 +7,10 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
+    Route::get('', function () {
+        return session('admin_logged_in') ? redirect('/admin/dashboard') : redirect('/admin/login');
+    });
+
     Route::get('login', [App\Http\Controllers\Admin\AuthController::class, 'showLogin'])->name('admin.login');
     Route::post('login', [App\Http\Controllers\Admin\AuthController::class, 'login']);
     Route::get('logout', function () {
