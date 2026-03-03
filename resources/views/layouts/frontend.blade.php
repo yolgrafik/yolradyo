@@ -22,7 +22,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding-bottom: 90px;
+            padding-bottom: 175px;
         }
         .navbar {
             position: sticky;
@@ -221,11 +221,11 @@
             right: 0;
             z-index: 999;
             font-family: Arial, sans-serif;
-            font-size: 11px;
+            font-size: 13px;
             background: rgba(5,7,12,0.85);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            padding: 7px 1rem;
+            padding: 14px 1rem;
             text-align: center;
         }
         .legal-footer a {
@@ -238,10 +238,10 @@
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
             position: fixed;
-            bottom: 24px;
+            bottom: 48px;
             left: 0;
             right: 0;
-            height: 60px;
+            height: 120px;
             z-index: 1000;
             font-family: Arial, sans-serif;
             background: rgba(10,12,20,0.75);
@@ -258,7 +258,7 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 22px;
+            bottom: 45px;
             z-index: 1001;
         }
         .bottom-bar-logo-wrap {
@@ -274,7 +274,7 @@
             transform: translate(-50%, -50%);
         }
         .bottom-bar-logo {
-            height: 49px;
+            height: 98px;
             width: auto;
             display: block;
         }
@@ -335,8 +335,8 @@
         /* Footer Logo Player */
         .disc-overlay {
             position: absolute;
-            width: 24px;
-            height: 24px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: #ff2a2a;
             border: none;
@@ -355,14 +355,14 @@
         .disc-overlay .icon.play {
             width: 0;
             height: 0;
-            border-top: 4px solid transparent;
-            border-bottom: 4px solid transparent;
-            border-left: 7px solid #fff;
-            margin-left: 2px;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 14px solid #fff;
+            margin-left: 4px;
         }
         .disc-overlay .icon.pause {
-            width: 8px;
-            height: 8px;
+            width: 16px;
+            height: 16px;
             position: relative;
             display: block;
         }
@@ -371,8 +371,8 @@
             content: '';
             position: absolute;
             top: 0;
-            width: 2px;
-            height: 8px;
+            width: 5px;
+            height: 16px;
             background: #fff;
         }
         .disc-overlay .icon.pause::before { left: 0; }
@@ -388,15 +388,15 @@
             body.playing .disc-overlay { animation: none; }
         }
         @media (max-width: 768px) {
-            .bottom-bar-logo { height: 39px; }
-            .legal-footer { font-size: 10px; padding: 6px 0.75rem; }
+            .bottom-bar-logo { height: 78px; }
+            .legal-footer { font-size: 12px; padding: 12px 0.75rem; }
             .legal-footer .sep { margin: 0 0.4rem; }
-            body { padding-bottom: 75px; }
-            .disc-overlay { width: 20px; height: 20px; }
-            .disc-overlay .icon.play { border-top-width: 3px; border-bottom-width: 3px; border-left-width: 5px; margin-left: 1px; }
-            .disc-overlay .icon.pause { width: 6px; height: 6px; }
+            body { padding-bottom: 165px; }
+            .disc-overlay { width: 40px; height: 40px; }
+            .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
+            .disc-overlay .icon.pause { width: 14px; height: 14px; }
             .disc-overlay .icon.pause::before,
-            .disc-overlay .icon.pause::after { width: 3px; height: 6px; }
+            .disc-overlay .icon.pause::after { width: 4px; height: 14px; }
         }
     </style>
     @stack('styles')
