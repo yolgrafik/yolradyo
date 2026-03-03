@@ -27,18 +27,19 @@ Route::prefix('admin')->group(function () {
     Route::get('login', [App\Http\Controllers\Admin\AuthController::class, 'showLogin'])->name('admin.login');
     Route::post('login', [App\Http\Controllers\Admin\AuthController::class, 'login']);
     Route::get('logout', function () {
-        session()->forget('admin_logged_in');
+        if (session('admin_id') && \Illuminate\Support\Facades\Schema::hasTable('admin_activity_logs')) {
+            \App\Helpers\ActivityLogger::log('admin.logout', null, (int) session('admin_id'));
+        }
+        session()->forget(['admin_logged_in', 'admin_id']);
         return redirect('/admin/login');
     })->name('admin.logout');
 
-    Route::get('dashboard', function () {
-        if (!session('admin_logged_in')) {
-            return redirect('/admin/login');
-        }
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::middleware('admin')->group(function () {
+        Route::get('dashboard', function () {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
 
-    Route::get('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'index'])->name('admin.shoutcast.player.index');
+        Route::get('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'index'])->name('admin.shoutcast.player.index');
     Route::post('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'store'])->name('admin.shoutcast.player.store');
     Route::redirect('stream-settings', '/admin/shoutcast/player', 301);
 
@@ -54,4 +55,33 @@ Route::prefix('admin')->group(function () {
     Route::post('settings/footer', [App\Http\Controllers\Admin\SettingsController::class, 'saveFooter']);
     Route::get('settings/theme', [App\Http\Controllers\Admin\SettingsController::class, 'themeForm'])->name('admin.settings.theme');
     Route::post('settings/theme', [App\Http\Controllers\Admin\SettingsController::class, 'saveTheme']);
+
+        Route::middleware('admin.permission:users.manage')->prefix('users')->name('admin.users.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\AdminUserController::class, 'index'])->name('index');
+            Route::get('create', [App\Http\Controllers\Admin\AdminUserController::class, 'create'])->name('create');
+            Route::post('/', [App\Http\Controllers\Admin\AdminUserController::class, 'store'])->name('store');
+            Route::get('{user}/edit', [App\Http\Controllers\Admin\AdminUserController::class, 'edit'])->name('edit');
+            Route::put('{user}', [App\Http\Controllers\Admin\AdminUserController::class, 'update'])->name('update');
+            Route::delete('{user}', [App\Http\Controllers\Admin\AdminUserController::class, 'destroy'])->name('destroy');
+            Route::post('{user}/toggle', [App\Http\Controllers\Admin\AdminUserController::class, 'toggle'])->name('toggle');
+        });
+
+        Route::middleware('admin.permission:users.manage')->prefix('roles')->name('admin.roles.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\RoleController::class, 'index'])->name('index');
+            Route::get('create', [App\Http\Controllers\Admin\RoleController::class, 'create'])->name('create');
+            Route::post('/', [App\Http\Controllers\Admin\RoleController::class, 'store'])->name('store');
+            Route::get('{role}/edit', [App\Http\Controllers\Admin\RoleController::class, 'edit'])->name('edit');
+            Route::put('{role}', [App\Http\Controllers\Admin\RoleController::class, 'update'])->name('update');
+            Route::delete('{role}', [App\Http\Controllers\Admin\RoleController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::middleware('admin.permission:logs.view')->get('activity-logs', [App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('admin.activity-logs.index');
+
+        Route::prefix('security')->name('admin.security.')->group(function () {
+            Route::get('2fa', [App\Http\Controllers\Admin\TwoFactorController::class, 'index'])->name('2fa');
+            Route::post('2fa/enable', [App\Http\Controllers\Admin\TwoFactorController::class, 'enable'])->name('2fa.enable');
+            Route::post('2fa/confirm', [App\Http\Controllers\Admin\TwoFactorController::class, 'confirmEnable'])->name('2fa.confirm');
+            Route::post('2fa/disable', [App\Http\Controllers\Admin\TwoFactorController::class, 'disable'])->name('2fa.disable');
+        });
+    });
 });

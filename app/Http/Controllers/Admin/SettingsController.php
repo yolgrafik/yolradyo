@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 use App\Services\SettingsService;
 use Illuminate\Http\Request;
@@ -53,6 +54,7 @@ class SettingsController extends Controller
             'address_text' => ['value' => $validated['address_text'] ?? '', 'type' => 'text'],
             'maintenance_mode' => ['value' => (bool) ($validated['maintenance_mode'] ?? false), 'type' => 'boolean'],
         ]);
+        ActivityLogger::log('settings.updated', ['section' => 'general']);
 
         return redirect()->route('admin.settings.general')->with('success', 'Kaydedildi');
     }
@@ -96,6 +98,7 @@ class SettingsController extends Controller
             $path = $request->file('favicon_file')->store($dir, 'public');
             $this->settings->set('brand_favicon_path', $path, 'text');
         }
+        ActivityLogger::log('settings.updated', ['section' => 'branding']);
 
         return redirect()->route('admin.settings.branding')->with('success', 'Kaydedildi');
     }
@@ -137,6 +140,7 @@ class SettingsController extends Controller
             $path = $request->file('og_image_file')->store($dir, 'public');
             $this->settings->set('seo_og_image_path', $path, 'text');
         }
+        ActivityLogger::log('settings.updated', ['section' => 'seo']);
 
         return redirect()->route('admin.settings.seo')->with('success', 'Kaydedildi');
     }
@@ -171,6 +175,7 @@ class SettingsController extends Controller
             'social_instagram' => ['value' => $validated['social_instagram'] ?? '', 'type' => 'url'],
             'social_tiktok' => ['value' => $validated['social_tiktok'] ?? '', 'type' => 'url'],
         ]);
+        ActivityLogger::log('settings.updated', ['section' => 'social']);
 
         return redirect()->route('admin.settings.social')->with('success', 'Kaydedildi');
     }
@@ -223,6 +228,7 @@ class SettingsController extends Controller
             }
         }
         $this->settings->set('footer_legal_links_json', $sanitized, 'json');
+        ActivityLogger::log('settings.updated', ['section' => 'footer']);
 
         return redirect()->route('admin.settings.footer')->with('success', 'Kaydedildi');
     }
@@ -257,6 +263,7 @@ class SettingsController extends Controller
             'theme_text' => ['value' => $validated['theme_text'] ?? '#f0f2f5', 'type' => 'color'],
             'theme_glow' => ['value' => $validated['theme_glow'] ?? '#c92a2a', 'type' => 'color'],
         ]);
+        ActivityLogger::log('settings.updated', ['section' => 'theme']);
 
         return redirect()->route('admin.settings.theme')->with('success', 'Kaydedildi');
     }
