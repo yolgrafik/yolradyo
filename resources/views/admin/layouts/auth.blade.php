@@ -30,51 +30,6 @@
             padding: 1rem;
             position: relative;
             overflow-x: hidden;
-            cursor: none;
-        }
-        @media (hover: hover) and (pointer: fine) {
-            body.cursor-ready * { cursor: none; }
-            body.cursor-ready input, body.cursor-ready textarea { cursor: text; }
-            body.cursor-ready [disabled] { cursor: not-allowed; }
-        }
-        .cursor-wrap {
-            position: fixed;
-            left: 0;
-            top: 0;
-            pointer-events: none;
-            z-index: 99999;
-            opacity: 0;
-            transition: opacity 0.25s ease;
-        }
-        .cursor-wrap.is-visible { opacity: 1; }
-        .custom-cursor {
-            width: 8px;
-            height: 8px;
-            background: #ff2a2a;
-            border-radius: 50%;
-            position: fixed;
-            left: 0;
-            top: 0;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-        }
-        .cursor-ring {
-            width: 28px;
-            height: 28px;
-            border: 1.5px solid rgba(255, 0, 0, 0.4);
-            border-radius: 50%;
-            position: fixed;
-            left: 0;
-            top: 0;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 9998;
-            transition: transform 0.15s ease, border 0.2s ease;
-        }
-        .cursor-wrap.cursor-hover .cursor-ring {
-            transform: translate(-50%, -50%) scale(1.4);
-            border-color: #ff3b3b;
         }
         body::before {
             content: '';
@@ -155,10 +110,6 @@
     @stack('styles')
 </head>
 <body>
-    <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
-        <div class="cursor-ring" id="cursorRing"></div>
-        <div class="custom-cursor" id="cursorDot"></div>
-    </div>
     <div class="auth-card {{ View::hasSection('hero') ? 'login-card' : '' }}">
         @hasSection('hero')
             @yield('hero')
@@ -179,37 +130,6 @@
             © 2026 RADYOYOL
         </div>
     </div>
-    <script>
-        (function() {
-            var wrap = document.getElementById('cursorWrap');
-            var dot = document.getElementById('cursorDot');
-            var ring = document.getElementById('cursorRing');
-            if (!wrap || !dot || !ring || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-            document.body.classList.add('cursor-ready');
-            var mx = 0, my = 0, x = 0, y = 0;
-            function move() {
-                x += (mx - x) * 0.18;
-                y += (my - y) * 0.18;
-                dot.style.left = x + 'px';
-                dot.style.top = y + 'px';
-                ring.style.left = x + 'px';
-                ring.style.top = y + 'px';
-                requestAnimationFrame(move);
-            }
-            move();
-            document.addEventListener('mousemove', function(e) {
-                mx = e.clientX;
-                my = e.clientY;
-                wrap.classList.add('is-visible');
-            });
-            var hoverSel = 'a, button, [role="button"], .btn-login, .pw-toggle, .forgot-link, input[type="submit"], label[for]';
-            function updateHover(el) {
-                wrap.classList.toggle('cursor-hover', !!(el && el.closest && el.closest(hoverSel)));
-            }
-            document.addEventListener('mouseover', function(e) { updateHover(e.target); });
-            document.addEventListener('mouseout', function(e) { updateHover(e.relatedTarget); });
-        })();
-    </script>
     @stack('scripts')
 </body>
 </html>
