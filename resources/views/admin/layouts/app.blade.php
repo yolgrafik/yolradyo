@@ -552,6 +552,10 @@
           position: relative !important;
         }
         .topbar.admin-hero{
+          background-image: url("{{ asset('assets/images/admin-hero.png') }}");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           height: 170px !important;
           min-height: 170px !important;
           padding: 25px 40px !important;
@@ -565,7 +569,7 @@
 </head>
 <body>
     <div class="app-wrap">
-        <header class="topbar admin-topbar admin-hero" style="background-image:url('{{ asset('assets/images/admin-hero.png') }}'); background-size:cover; background-position:center top; background-repeat:no-repeat;">
+        <header class="topbar admin-topbar admin-hero">
             <div class="topbar-top-line"></div>
             <div class="topbar-bottom-line"></div>
             <div class="topbar-inner">
