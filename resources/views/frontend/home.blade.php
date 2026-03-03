@@ -39,8 +39,8 @@
         position: absolute;
         inset: 0;
         opacity: 0;
-        transform: translateX(40px) scale(0.98);
-        transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        clip-path: inset(0 100% 0 0 round 0);
+        transition: opacity 0.5s ease, clip-path 1s cubic-bezier(0.65, 0, 0.35, 1);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -50,11 +50,33 @@
     .home-slider__slide.is-active {
         opacity: 1;
         z-index: 1;
-        transform: translateX(0) scale(1);
+        clip-path: inset(0 0 0 0 round 0);
     }
     .home-slider__slide.is-exiting {
         opacity: 0;
-        transform: translateX(-40px) scale(0.98);
+        clip-path: inset(0 0 0 100% round 0);
+    }
+    .home-slider__slide::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C150,120 350,0 600,60 C850,120 1050,0 1200,60 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.3)'/%3E%3Cpath d='M0,80 C200,40 400,120 600,80 C800,40 1000,120 1200,80 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.2)'/%3E%3C/svg%3E") no-repeat bottom center;
+        background-size: 200% 100%;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0;
+        animation: none;
+    }
+    .home-slider__slide.is-active::after {
+        opacity: 1;
+        animation: waveFloat 4s ease-in-out infinite;
+    }
+    @keyframes waveFloat {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
     }
     .home-slider__slide::before {
         content: '';
@@ -62,6 +84,14 @@
         inset: 0;
         background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
         pointer-events: none;
+    }
+    @keyframes waveRevealIn {
+        0% { clip-path: polygon(100% 0, 100% 100%, 100% 100%, 100% 0); }
+        100% { clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); }
+    }
+    @keyframes waveRevealOut {
+        0% { clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); }
+        100% { clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); }
     }
     .home-slider__content {
         position: relative;
