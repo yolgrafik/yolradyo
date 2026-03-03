@@ -66,12 +66,17 @@
 (function(){
     var modal=document.getElementById('songRequestModal');
     var form=document.getElementById('songRequestForm');
-    var openBtn=document.querySelector('[data-open-song-request]');
     var closeBtns=document.querySelectorAll('[data-close-modal]');
     var successEl=document.getElementById('formSuccess');
     function openModal(){if(modal){modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}}
     function closeModal(){if(modal){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}}
-    if(openBtn){openBtn.addEventListener('click',function(e){e.preventDefault();openModal();});}
+    document.addEventListener('click',function(e){
+        var t=e.target;
+        while(t){
+            if(t.getAttribute&&t.getAttribute('data-open-song-request')!==null){e.preventDefault();openModal();return;}
+            t=t.parentElement;
+        }
+    });
     closeBtns.forEach(function(btn){btn.addEventListener('click',closeModal);});
     if(modal){modal.addEventListener('click',function(e){if(e.target===modal){closeModal();}});}
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal&&modal.classList.contains('is-open')){closeModal();}});
