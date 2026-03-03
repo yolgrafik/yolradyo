@@ -52,7 +52,7 @@
         }
     });
     closeBtns.forEach(function(btn){btn.addEventListener('click',closeModal);});
-    if(modal){modal.addEventListener('click',function(e){if(e.target===modal||e.target.classList.contains('request-modal__backdrop')){closeModal();}});}
+    if(modal){modal.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('request-modal__backdrop')){closeModal();}});}
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal&&modal.classList.contains('is-open')){closeModal();}});
     function clearErrors(){['isim_soyad','sanatci_ismi','turku_ismi','mesaj'].forEach(function(id){var el=document.getElementById('err_'+id);if(el){el.textContent='';}});}
     if(form){
