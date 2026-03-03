@@ -305,7 +305,7 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            bottom: -50px;
+            bottom: -30px;
             z-index: 1001;
         }
         .player-right {
