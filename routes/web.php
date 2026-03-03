@@ -38,4 +38,5 @@ Route::prefix('admin')->group(function () {
 
     Route::get('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'index'])->name('admin.shoutcast.player.index');
     Route::post('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'store'])->name('admin.shoutcast.player.store');
+    Route::redirect('stream-settings', '/admin/shoutcast/player', 301);
 });

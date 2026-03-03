@@ -473,8 +473,10 @@
     @php
         $streamUrl = $radioSettings ? ($radioSettings->radio_stream_url ?? '') : '';
         $backupUrl = $radioSettings ? ($radioSettings->radio_backup_stream_url ?? '') : '';
+        $autoPlay = $radioSettings ? ($radioSettings->radio_auto_play ?? false) : false;
+        $defaultVolume = $radioSettings ? ($radioSettings->radio_default_volume ?? 0.8) : 0.8;
     @endphp
-    <audio id="radioAudio" src="{{ $streamUrl }}" data-stream-url="{{ $streamUrl }}" data-backup-url="{{ $backupUrl }}" preload="none"></audio>
+    <audio id="radioAudio" src="{{ $streamUrl }}" data-stream-url="{{ $streamUrl }}" data-backup-url="{{ $backupUrl }}" data-auto-play="{{ $autoPlay ? '1' : '0' }}" data-default-volume="{{ $defaultVolume }}" preload="none"></audio>
 
     <script>
         (function() {
@@ -493,7 +495,7 @@
             var navLogo = document.querySelector('.nav-logo');
             var quickLive = document.getElementById('quickMenuLive');
             if (!audio || !btn) return;
-            audio.volume = 0.8;
+            audio.volume = parseFloat(audio.getAttribute('data-default-volume')) || 0.8;
             var streamUrl = audio.getAttribute('data-stream-url') || '';
             var backupUrl = audio.getAttribute('data-backup-url') || '';
             var usedBackup = false;
@@ -540,6 +542,9 @@
                 document.body.classList.remove('playing');
                 if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
             });
+            if (audio.getAttribute('data-auto-play') === '1' && (streamUrl || backupUrl)) {
+                tryPlay();
+            }
             audio.addEventListener('error', function() {
                 if (!usedBackup && backupUrl) {
                     usedBackup = true;
