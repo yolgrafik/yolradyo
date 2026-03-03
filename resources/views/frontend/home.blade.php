@@ -261,7 +261,7 @@
         display: grid;
         place-items: center;
         padding: 1rem 1.5rem;
-        background: linear-gradient(135deg, var(--accent), #a02020);
+        background: linear-gradient(135deg, #16a34a, var(--accent));
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 12px;
         color: #fff;
@@ -270,12 +270,13 @@
         font-weight: 700;
         text-decoration: none;
         text-transform: none;
-        box-shadow: 0 4px 20px rgba(201, 42, 42, 0.4);
-        transition: all 0.2s ease;
+        box-shadow: 0 4px 20px rgba(22, 163, 74, 0.35);
+        transition: all 0.25s ease;
     }
     .btn-request:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 28px rgba(201, 42, 42, 0.5);
+        background: linear-gradient(135deg, #22c55e, #dc2626);
+        box-shadow: 0 0 24px rgba(34, 197, 94, 0.4), 0 0 40px rgba(220, 38, 38, 0.35);
     }
     .home-icon-buttons {
         display: flex;
@@ -449,7 +450,7 @@
         <div class="home-right">
             <div class="home-actions">
                 <a href="#" class="btn-live">CANLI DİNLE</a>
-                <a href="#" class="btn-request">İSTEK Gönder</a>
+                <a href="#" class="btn-request" data-open-song-request>ISTEK Gönder</a>
             </div>
             <div class="home-icon-buttons">
                 <button type="button" class="icon-placeholder" aria-label="Play">▶</button>
