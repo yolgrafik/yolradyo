@@ -227,8 +227,11 @@
         }
         .legal-strip {
             width: 100%;
-            text-align: center !important;
-            display: block !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.6rem;
             padding: 10px 0 14px;
         }
         .legal-pretext {
@@ -236,12 +239,17 @@
             font-size: 14px !important;
             font-weight: 700 !important;
             color: rgba(255,255,255,0.85) !important;
-            margin: 0 0 10px 0 !important;
+            margin: 0 !important;
+        }
+        .legal-sep {
+            color: rgba(255,255,255,0.35);
+            font-size: 13px;
         }
         .legal-links {
-            width: 100%;
-            text-align: center !important;
-            display: block !important;
+            display: flex !important;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
             font-family: Arial, sans-serif !important;
             font-size: 13px !important;
             color: rgba(255,255,255,0.70) !important;
@@ -621,7 +629,8 @@
     </div>
     <footer class="legal-footer">
         <div class="legal-strip" id="legalStrip">
-            <div class="legal-pretext" id="legalText">RadyoYol Tum Haklari Saklidir</div>
+            <div class="legal-pretext" id="legalText">Radyoyol Tüm Haklari Saklidir</div>
+            <span class="legal-sep">|</span>
             <div class="legal-links" id="legalLinks">
                 <a href="{{ url('/gizlilik') }}">Gizlilik Politikasi</a>
                 <span class="sep">|</span>
