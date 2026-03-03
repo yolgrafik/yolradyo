@@ -4,9 +4,28 @@
 <div class="card" style="max-width:600px;">
     <div class="card-header">Yonetici Duzenle: {{ $user->name }}</div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.users.update', $user) }}">
+        <form method="POST" action="{{ route('admin.users.update', $user) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <div class="form-group">
+                <label>Profil Resmi</label>
+                <div class="avatar-edit-row">
+                    <div class="avatar-preview-wrap">
+                        <img src="{{ $user->avatarUrl() }}" alt="" class="avatar-preview" id="avatarPreview">
+                    </div>
+                    <div class="avatar-edit-actions">
+                        <input type="file" name="avatar" id="avatar" accept="image/jpeg,image/png,image/webp" class="form-input">
+                        <span class="form-hint">JPG, PNG, WebP. Maks. 2MB</span>
+                        @error('avatar')<span class="form-error">{{ $message }}</span>@enderror
+                        @if($user->avatar_path)
+                        <label class="checkbox-label" style="margin-top:0.75rem;">
+                            <input type="checkbox" name="remove_avatar" value="1" {{ old('remove_avatar') ? 'checked' : '' }}>
+                            Resmi Kaldir
+                        </label>
+                        @endif
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <label for="name">Ad Soyad *</label>
                 <input type="text" name="name" id="name" required value="{{ old('name', $user->name) }}" class="form-input">
@@ -62,5 +81,23 @@
 .btn-save{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border:none;border-radius:10px;cursor:pointer;}
 .btn-cancel{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);border-radius:10px;text-decoration:none;}
 </style>
+@endpush
+@push('scripts')
+<script>
+(function(){
+    var input = document.getElementById('avatar');
+    var preview = document.getElementById('avatarPreview');
+    if (input && preview) {
+        input.addEventListener('change', function(){
+            var f = this.files[0];
+            if (f) {
+                var r = new FileReader();
+                r.onload = function(){ preview.src = r.result; };
+                r.readAsDataURL(f);
+            }
+        });
+    }
+})();
+</script>
 @endpush
 @endsection

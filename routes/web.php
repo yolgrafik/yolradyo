@@ -64,6 +64,7 @@ Route::prefix('admin')->group(function () {
             Route::put('{user}', [App\Http\Controllers\Admin\AdminUserController::class, 'update'])->name('update');
             Route::delete('{user}', [App\Http\Controllers\Admin\AdminUserController::class, 'destroy'])->name('destroy');
             Route::post('{user}/toggle', [App\Http\Controllers\Admin\AdminUserController::class, 'toggle'])->name('toggle');
+            Route::post('{user}/avatar-remove', [App\Http\Controllers\Admin\AdminUserController::class, 'removeAvatar'])->name('avatar-remove');
         });
 
         Route::middleware('admin.permission:users.manage')->prefix('roles')->name('admin.roles.')->group(function () {

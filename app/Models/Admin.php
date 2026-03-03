@@ -15,9 +15,17 @@ class Admin extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar_path',
         'role_id',
         'is_active',
     ];
+
+    public function avatarUrl(): string
+    {
+        return $this->avatar_path
+            ? asset($this->avatar_path)
+            : asset('assets/images/user-default.svg');
+    }
 
     protected $hidden = [
         'password',

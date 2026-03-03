@@ -18,8 +18,8 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Ad</th>
-                        <th>E-posta</th>
+                        <th style="width:50px;"></th>
+                        <th>Yonetici</th>
                         <th>Rol</th>
                         <th>Durum</th>
                         <th>Son Giris</th>
@@ -29,8 +29,13 @@
                 <tbody>
                     @forelse($admins as $admin)
                     <tr>
-                        <td>{{ $admin->name }}</td>
-                        <td>{{ $admin->email }}</td>
+                        <td>
+                            <img src="{{ $admin->avatarUrl() }}" alt="" class="table-avatar">
+                        </td>
+                        <td>
+                            <div class="table-user-name">{{ $admin->name }}</div>
+                            <div class="table-user-email">{{ $admin->email }}</div>
+                        </td>
                         <td>{{ $admin->role?->name ?? '-' }}</td>
                         <td>
                             @if($admin->is_active)
@@ -60,7 +65,7 @@
                         </td>
                     </tr>
                     @empty
-                    <tr><td colspan="6" class="text-center">Henuz yonetici yok.</td></tr>
+                    <tr><td colspan="5" class="text-center">Henuz yonetici yok.</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -89,6 +94,9 @@
 .btn-success{background:rgba(34,197,94,0.25);color:#86efac;}
 .btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
 .d-inline{display:inline;}
+.table-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--border);}
+.table-user-name{font-weight:600;color:var(--text);}
+.table-user-email{font-size:0.8rem;color:var(--muted);}
 </style>
 @endpush
 @endsection

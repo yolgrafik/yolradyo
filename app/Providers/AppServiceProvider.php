@@ -36,5 +36,13 @@ class AppServiceProvider extends ServiceProvider
             }
             $view->with('siteSettings', $siteSettings);
         });
+
+        View::composer('admin.layouts.app', function ($view) {
+            $currentAdmin = null;
+            if (session('admin_id') && Schema::hasTable('admins')) {
+                $currentAdmin = \App\Models\Admin::with('role')->find(session('admin_id'));
+            }
+            $view->with('currentAdmin', $currentAdmin);
+        });
     }
 }

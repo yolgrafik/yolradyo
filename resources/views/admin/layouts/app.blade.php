@@ -189,6 +189,10 @@
             box-shadow: 0 0 12px rgba(201, 42, 42, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
+        .user-avatar-img {
+            object-fit: cover;
+            background: linear-gradient(135deg, rgba(201, 42, 42, 0.5), rgba(180, 30, 30, 0.6));
+        }
         .user-box:hover .user-avatar {
             box-shadow: 0 0 18px rgba(201, 42, 42, 0.5), 0 2px 12px rgba(0, 0, 0, 0.25);
             transform: scale(1.05);
@@ -723,11 +727,20 @@
                 </div>
                 <div class="topbar-spacer topbar-spacer--right">
                 <div class="user-box">
+                    @php $admin = $currentAdmin ?? null; @endphp
+                    @if($admin)
+                    <img src="{{ $admin->avatarUrl() }}" alt="" class="user-avatar user-avatar-img" aria-hidden="true">
+                    <div class="user-info">
+                        <span class="user-badge">Yetkili</span>
+                        <span class="user-role">{{ $admin->name }}</span>
+                    </div>
+                    @else
                     <div class="user-avatar" aria-hidden="true">Y</div>
                     <div class="user-info">
                         <span class="user-badge">Yetkili</span>
                         <span class="user-role">Yonetici</span>
                     </div>
+                    @endif
                     <a href="{{ route('admin.logout') }}" class="btn-logout">Cikis</a>
                 </div>
                 </div>
