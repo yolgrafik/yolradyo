@@ -564,6 +564,44 @@
           justify-content:space-between !important;
           overflow: visible !important;
         }
+        .topbar-title{
+          position: relative;
+          display:inline-block;
+          text-transform: uppercase;
+        }
+        .topbar-title .shine{
+          position: relative;
+          display:inline-block;
+          color: rgba(255,255,255,.95);
+          text-shadow:
+            0 0 10px rgba(255,255,255,.12),
+            0 0 22px rgba(220,38,38,.18);
+        }
+        .topbar-title .shine::after{
+          content:"";
+          position:absolute;
+          top:-20%;
+          left:-40%;
+          width:45%;
+          height:140%;
+          background: linear-gradient(120deg,
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,.35) 45%,
+            rgba(255,255,255,0) 85%
+          );
+          transform: skewX(-18deg);
+          filter: blur(1px);
+          opacity:.55;
+          animation: titleShine 7s ease-in-out infinite;
+          pointer-events:none;
+          mix-blend-mode: screen;
+        }
+        @keyframes titleShine{
+          0%   { transform: translateX(-140%) skewX(-18deg); opacity:0; }
+          12%  { opacity:.55; }
+          35%  { transform: translateX(260%) skewX(-18deg); opacity:0; }
+          100% { transform: translateX(260%) skewX(-18deg); opacity:0; }
+        }
     </style>
     @stack('styles')
 </head>
@@ -580,7 +618,7 @@
                         <span class="topbar-logo-fallback" style="display:none">RADYOYOL</span>
                     </div>
                     <div class="topbar-brand-text">
-                        <div class="topbar-title">RADYOYOL ADMIN PANEL</div>
+                        <div class="topbar-title"><span class="shine">RADYOYOL ADMIN PANEL</span></div>
                         <div class="topbar-sub">TAM OZELLIK LISTESI</div>
                     </div>
                 </div>
