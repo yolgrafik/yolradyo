@@ -39,7 +39,7 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { font-family: Arial, sans-serif; }
-        body {
+        body{{ request()->is('/') ? '.page-home' : '' }} {
             font-family: Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
@@ -264,6 +264,30 @@
         }
         .legal-line a:hover {
             color: #fff;
+        }
+        /* Global İstek Gönder button - fixed right, above player */
+        .global-request-btn {
+            position: fixed;
+            bottom: 178px;
+            right: 1.5rem;
+            z-index: 998;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #dc2626, var(--accent));
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(201, 42, 42, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .global-request-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(201, 42, 42, 0.45);
+        }
+        @media (max-width: 768px) {
+            .global-request-btn { bottom: 168px; right: 1rem; font-size: 0.8rem; padding: 0.45rem 0.85rem; }
         }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
@@ -609,6 +633,8 @@
         @yield('content')
     </main>
 
+    <button type="button" class="global-request-btn" data-open-song-request aria-label="Şarkı isteği gönder">İstek Gönder</button>
+
     <div class="bottom-bar-player">
         <div class="player-logo-wrap">
             <div class="logo-player bottom-bar-logo-wrap">
@@ -635,7 +661,6 @@
             <div class="player-listeners" id="playerListeners">Dinleyici: 0</div>
         </div>
     </div>
-    @include('partials.song-request-modal')
 
     <footer class="legal-footer">
         <div class="legal-line">
@@ -800,5 +825,6 @@
         })();
     </script>
     @stack('scripts')
+    @include('partials.song-request-modal')
 </body>
 </html>

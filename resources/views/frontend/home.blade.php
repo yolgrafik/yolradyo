@@ -474,7 +474,7 @@
         </div>
         <div class="home-right">
             <div class="home-actions">
-                <a href="#" class="btn-live">CANLI DİNLE</a>
+                <a href="#" class="btn-live" id="quickMenuLive">CANLI DİNLE</a>
                 <button type="button" class="btn-request" data-open-song-request>İstek Gönder</button>
             </div>
             <div class="home-icon-buttons">
