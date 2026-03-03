@@ -157,6 +157,8 @@
         }
         .nav-section__items {
             list-style: none;
+            margin: 0;
+            padding: 0;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.18s ease-out;
