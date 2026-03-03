@@ -334,17 +334,6 @@
             gap: 1rem;
             min-width: 0;
         }
-        .radio-player-logo {
-            flex-shrink: 0;
-            cursor: pointer;
-            transition: opacity 0.2s ease;
-        }
-        .radio-player-logo:hover { opacity: 0.9; }
-        .radio-player-logo img {
-            height: 44px;
-            width: auto;
-            display: block;
-        }
         .radio-player-live {
             display: flex;
             align-items: center;
@@ -373,80 +362,31 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
             min-width: 0;
         }
-        .radio-player-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        .radio-player-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
+        .player-logo {
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
+            transition: opacity 0.2s ease;
         }
-        .radio-player-btn:hover {
-            background: rgba(201, 42, 42, 0.2);
-            border-color: rgba(201, 42, 42, 0.4);
-            color: #fff;
+        .player-logo:hover { opacity: 0.9; }
+        .player-logo .logo-img {
+            width: 90px;
+            height: auto;
+            display: block;
+            transform-origin: center;
+            transition: transform 0.3s ease;
         }
-        .radio-player-btn svg { width: 18px; height: 18px; }
-        .radio-player-play {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(230,230,230,0.9));
-            border: 2px solid rgba(201, 42, 42, 0.5);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.8);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
+        .radio-player.playing .player-logo .logo-img {
+            animation: spinDisc 3s linear infinite;
         }
-        .radio-player-play:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 28px rgba(201, 42, 42, 0.4), inset 0 1px 0 rgba(255,255,255,0.8);
+        @media (prefers-reduced-motion: reduce) {
+            .radio-player.playing .player-logo .logo-img {
+                animation: none;
+            }
         }
-        .radio-player-play img,
-        .radio-player-play svg {
-            width: 28px;
-            height: 28px;
-            object-fit: contain;
-        }
-        .radio-player-play .pause-icon { width: 24px; height: 24px; }
-        .radio-player-play.playing img.play-icon { display: none; }
-        .radio-player-play.playing img.pause-icon { display: block; }
-        .radio-player-play img.pause-icon { display: none; }
-        .radio-player-title {
-            max-width: 280px;
-            font-size: 0.9rem;
-            color: var(--muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .radio-player-loading {
-            display: none;
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .radio-player.loading .radio-player-loading { display: block; }
-        .radio-player.loading .radio-player-play { opacity: 0.6; pointer-events: none; }
         .radio-player-right {
             display: flex;
             align-items: center;
@@ -521,22 +461,10 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        .logo-disc {
-            transform-origin: center;
-            display: inline-block;
-        }
-        .radio-player.playing .logo-disc {
-            animation: spinDisc 2.8s linear infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .radio-player.playing .logo-disc {
-                animation: none;
-            }
-        }
         @media (max-width: 768px) {
             body { padding-bottom: 96px; }
             .radio-player { padding: 0 1rem; gap: 0.75rem; }
-            .radio-player-title { max-width: 120px; font-size: 0.8rem; }
+            .player-logo .logo-img { width: 70px; }
             .radio-player-volume input[type="range"] { width: 60px; }
         }
     </style>
@@ -636,37 +564,17 @@
     </footer>
 
     <div class="radio-player" id="radioPlayer">
-        <audio id="radioAudio" preload="none"></audio>
         <div class="radio-player-left">
-            <a href="{{ url('/') }}" class="radio-player-logo" id="radioPlayerLogo" title="Radyoyu başlat">
-                <div class="logo-disc" id="logoDisc">
-                @if(file_exists(public_path('logo.png')))
-                    <img src="{{ asset('logo.png') }}" alt="RADYOYOL">
-                @else
-                    <span class="nav-logo-text" style="font-size:1.25rem;">RADYOYOL</span>
-                @endif
-                </div>
-            </a>
             <div class="radio-player-live">
                 <span class="radio-player-live-dot"></span>
                 <span>CANLI</span>
             </div>
         </div>
         <div class="radio-player-center">
-            <div class="radio-player-controls">
-                <button type="button" class="radio-player-btn" id="radioPrev" aria-label="Önceki">⏮</button>
-                <button type="button" class="radio-player-play" id="radioPlay" aria-label="Oynat/Duraklat">
-                    @if(file_exists(public_path('assets/images/play-logo.png')))
-                    <img src="{{ asset('assets/images/play-logo.png') }}" alt="" class="play-icon">
-                    @else
-                    <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M8 5v14l11-7z"/></svg>
-                    @endif
-                    <svg class="pause-icon" viewBox="0 0 24 24" fill="var(--accent)" width="24" height="24" style="display:none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
-                </button>
-                <button type="button" class="radio-player-btn" id="radioNext" aria-label="Sonraki">⏭</button>
+            <div class="player-logo" id="playerLogo" title="Oynat / Duraklat">
+                <img src="{{ asset('assets/images/play.png') }}" class="logo-img" alt="RADYOYOL">
+                <audio id="radioStream" src="https://example.com/stream" preload="none"></audio>
             </div>
-            <div class="radio-player-loading" id="radioLoading"></div>
-            <div class="radio-player-title" id="radioTitle">Şarkı bilgisi yükleniyor...</div>
         </div>
         <div class="radio-player-right">
             <div class="radio-player-volume">
@@ -690,65 +598,35 @@
             }
         })();
         (function() {
-            var STREAM_URL = 'https://example.com/stream';
-            var audio = document.getElementById('radioAudio');
+            var audio = document.getElementById('radioStream');
             var player = document.getElementById('radioPlayer');
-            var playBtn = document.getElementById('radioPlay');
-            var prevBtn = document.getElementById('radioPrev');
-            var nextBtn = document.getElementById('radioNext');
+            var logoEl = document.getElementById('playerLogo');
             var volInput = document.getElementById('radioVol');
             var volBtn = document.getElementById('radioVolBtn');
-            var titleEl = document.getElementById('radioTitle');
-            var loadingEl = document.getElementById('radioLoading');
-            var logoLink = document.getElementById('radioPlayerLogo');
             var navLogo = document.querySelector('.nav-logo');
-            if (!audio || !playBtn) return;
+            if (!audio || !logoEl) return;
             audio.volume = 0.8;
-            volInput.value = 80;
-            volInput.addEventListener('input', function() {
-                audio.volume = this.value / 100;
-                volBtn.textContent = this.value == 0 ? '🔇' : (this.value < 50 ? '🔉' : '🔊');
-            });
+            if (volInput) volInput.value = 80;
+            if (volInput && volBtn) {
+                volInput.addEventListener('input', function() {
+                    audio.volume = this.value / 100;
+                    volBtn.textContent = this.value == 0 ? '🔇' : (this.value < 50 ? '🔉' : '🔊');
+                });
+            }
             function setPlaying(playing) {
                 player.classList.toggle('playing', playing);
-                playBtn.classList.toggle('playing', playing);
-                var playIcon = playBtn.querySelector('.play-icon');
-                var pauseIcon = playBtn.querySelector('.pause-icon');
-                if (playIcon) playIcon.style.display = playing ? 'none' : 'block';
-                if (pauseIcon) pauseIcon.style.display = playing ? 'block' : 'none';
-            }
-            function setLoading(loading) {
-                player.classList.toggle('loading', loading);
             }
             function togglePlay() {
                 if (audio.paused) {
-                    setLoading(true);
-                    audio.src = STREAM_URL;
-                    audio.play().then(function() {
-                        setLoading(false);
-                        setPlaying(true);
-                        titleEl.textContent = 'Canlı Yayın';
-                    }).catch(function() {
-                        setLoading(false);
-                        titleEl.textContent = 'Yayın başlatılamadı';
-                    });
+                    audio.play().catch(function() {});
                 } else {
                     audio.pause();
-                    setPlaying(false);
-                    titleEl.textContent = 'Duraklatıldı';
                 }
             }
-            playBtn.addEventListener('click', function(e) {
+            logoEl.addEventListener('click', function(e) {
                 e.preventDefault();
                 togglePlay();
             });
-            if (logoLink) {
-                logoLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    togglePlay();
-                    return false;
-                });
-            }
             if (navLogo) {
                 navLogo.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -756,29 +634,14 @@
                     return false;
                 });
             }
-            prevBtn.addEventListener('click', function() { audio.currentTime = 0; });
-            nextBtn.addEventListener('click', function() { audio.currentTime = 0; });
             audio.addEventListener('playing', function() {
-                setLoading(false);
                 setPlaying(true);
-                titleEl.textContent = 'Canlı Yayın';
             });
             audio.addEventListener('pause', function() {
                 setPlaying(false);
-                if (audio.ended) titleEl.textContent = 'Yayın bitti';
-                else titleEl.textContent = 'Duraklatıldı';
             });
             audio.addEventListener('ended', function() {
                 setPlaying(false);
-                titleEl.textContent = 'Yayın bitti';
-            });
-            audio.addEventListener('error', function() {
-                setLoading(false);
-                setPlaying(false);
-                titleEl.textContent = 'Yayın başlatılamadı';
-            });
-            audio.addEventListener('waiting', function() {
-                setLoading(true);
             });
         })();
     </script>
