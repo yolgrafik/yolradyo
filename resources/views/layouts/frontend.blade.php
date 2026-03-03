@@ -96,6 +96,9 @@
         .nav-menu > li > a.active {
             color: #fff;
         }
+        .nav-menu > li > a.active {
+            color: var(--accent);
+        }
         .nav-menu > li > a:hover::after,
         .nav-menu > li > a.active::after {
             transform: scaleX(1);
@@ -143,17 +146,17 @@
             position: absolute;
             top: 100%;
             left: 0;
-            min-width: 200px;
-            background: var(--panel);
+            min-width: 220px;
+            background: #111827;
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 0.5rem;
             margin-top: 0.25rem;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-8px);
             transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         }
         .nav-dropdown:hover .nav-dropdown-menu {
             opacity: 1;
@@ -162,9 +165,35 @@
         }
         .nav-dropdown-menu a {
             display: block;
-            padding: 0.6rem 1rem;
-            border-radius: 6px;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 8px;
             text-transform: none;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .nav-dropdown-menu a::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 3px;
+            background: var(--accent);
+            border-radius: 0 2px 2px 0;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .nav-dropdown-menu a:hover {
+            background: rgba(201, 42, 42, 0.12);
+            color: #fff;
+            padding-left: 22px;
+            box-shadow: inset 0 0 20px rgba(201, 42, 42, 0.08);
+        }
+        .nav-dropdown-menu a:hover::before {
+            opacity: 1;
         }
         .nav-toggle {
             display: none;
