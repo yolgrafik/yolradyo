@@ -13,16 +13,16 @@ class SettingsController extends Controller
         protected SettingsService $settings
     ) {}
 
-    protected function ensureAdmin(): void
+    protected function ensureAdmin()
     {
         if (!session('admin_logged_in')) {
-            abort(redirect()->route('admin.login'));
+            return redirect()->route('admin.login');
         }
     }
 
     public function generalForm()
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         return view('admin.settings.general', [
             'site_name' => $this->settings->get('site_name', 'RADYOYOL'),
             'site_slogan' => $this->settings->get('site_slogan'),
@@ -35,7 +35,7 @@ class SettingsController extends Controller
 
     public function saveGeneral(Request $request)
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         $validated = $request->validate([
             'site_name' => 'required|string|max:255',
             'site_slogan' => 'nullable|string|max:255',
@@ -59,7 +59,7 @@ class SettingsController extends Controller
 
     public function brandingForm()
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         return view('admin.settings.branding', [
             'brand_logo_path' => $this->settings->get('brand_logo_path'),
             'brand_favicon_path' => $this->settings->get('brand_favicon_path'),
@@ -68,7 +68,7 @@ class SettingsController extends Controller
 
     public function saveBranding(Request $request)
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         $validated = $request->validate([
             'logo_file' => 'nullable|file|mimes:png,jpg,jpeg,svg|max:2048',
             'favicon_file' => 'nullable|file|mimes:png,ico|max:1024',
@@ -102,7 +102,7 @@ class SettingsController extends Controller
 
     public function seoForm()
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         return view('admin.settings.seo', [
             'seo_meta_title' => $this->settings->get('seo_meta_title'),
             'seo_meta_description' => $this->settings->get('seo_meta_description'),
@@ -113,7 +113,7 @@ class SettingsController extends Controller
 
     public function saveSeo(Request $request)
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         $validated = $request->validate([
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:160',
@@ -143,7 +143,7 @@ class SettingsController extends Controller
 
     public function socialForm()
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         return view('admin.settings.social', [
             'social_facebook' => $this->settings->get('social_facebook'),
             'social_x' => $this->settings->get('social_x'),
@@ -155,7 +155,7 @@ class SettingsController extends Controller
 
     public function saveSocial(Request $request)
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         $validated = $request->validate([
             'social_facebook' => 'nullable|url|max:500',
             'social_x' => 'nullable|url|max:500',
@@ -177,7 +177,7 @@ class SettingsController extends Controller
 
     public function footerForm()
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         $defaultLinks = [
             ['label' => 'Gizlilik Politikasi', 'url' => '/gizlilik'],
             ['label' => 'Cerez Politikasi', 'url' => '/cerez'],
@@ -194,7 +194,7 @@ class SettingsController extends Controller
 
     public function saveFooter(Request $request)
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         $validated = $request->validate([
             'footer_legal_text' => 'required|string|max:255',
             'footer_legal_links_json' => 'nullable|string',
@@ -210,9 +210,15 @@ class SettingsController extends Controller
         $sanitized = [];
         foreach ($decoded as $item) {
             if (is_array($item) && isset($item['label'], $item['url'])) {
+                $url = trim((string) $item['url']);
+                if ($url === '') {
+                    $url = '/';
+                } elseif (!str_starts_with($url, '/') && !filter_var($url, FILTER_VALIDATE_URL)) {
+                    $url = '/';
+                }
                 $sanitized[] = [
                     'label' => (string) $item['label'],
-                    'url' => filter_var($item['url'], FILTER_SANITIZE_URL) ?: '/',
+                    'url' => $url,
                 ];
             }
         }
@@ -223,7 +229,7 @@ class SettingsController extends Controller
 
     public function themeForm()
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         return view('admin.settings.theme', [
             'theme_primary' => $this->settings->get('theme_primary', '#0f1319'),
             'theme_accent' => $this->settings->get('theme_accent', '#c92a2a'),
@@ -235,7 +241,7 @@ class SettingsController extends Controller
 
     public function saveTheme(Request $request)
     {
-        $this->ensureAdmin();
+        if ($r = $this->ensureAdmin()) return $r;
         $validated = $request->validate([
             'theme_primary' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
             'theme_accent' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
