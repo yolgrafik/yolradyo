@@ -101,63 +101,87 @@
         .sidebar {
             width: 270px;
             background: var(--panel);
-            padding: 1rem 0;
+            padding: 1rem;
             flex-shrink: 0;
             border-right: 1px solid var(--border);
         }
-        .sidebar-section {
-            margin-bottom: 0;
+        .nav-accordion {
+            list-style: none;
         }
-        .sidebar-section + .sidebar-section {
-            margin-top: 0.5rem;
-            padding-top: 0.5rem;
+        .nav-section {
+            margin-bottom: 0.35rem;
+        }
+        .nav-section + .nav-section {
+            margin-top: 0.35rem;
+            padding-top: 0.35rem;
             border-top: 1px solid var(--border);
         }
-        .sidebar-section-title {
-            font-size: 0.83rem;
+        .nav-section__toggle {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 0.85rem;
             font-weight: 700;
             color: var(--text);
-            padding: 0.65rem 1rem;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.6rem;
-            text-decoration: none;
-            transition: background 0.2s;
-            cursor: default;
+            text-align: left;
+            transition: background 0.15s;
         }
-        a.sidebar-section-title {
-            cursor: pointer;
+        .nav-section__toggle:hover {
+            background: rgba(255, 255, 255, 0.06);
         }
-        .sidebar-section-title .icon {
+        .nav-section.is-open .nav-section__toggle {
+            background: rgba(255, 255, 255, 0.04);
+            border-left: 3px solid var(--accent);
+            padding-left: 11px;
+        }
+        .nav-section__toggle .icon {
             width: 18px;
             height: 18px;
             flex-shrink: 0;
             opacity: 0.9;
         }
-        .sidebar-section-title:hover {
-            background: rgba(220, 38, 38, 0.2);
+        .nav-section__chevron {
+            margin-left: auto;
+            font-size: 0.65rem;
+            opacity: 0.7;
+            transition: transform 0.18s;
         }
-        .sidebar-section.active .sidebar-section-title {
-            background: var(--accent);
-            color: #fff;
+        .nav-section.is-open .nav-section__chevron {
+            transform: rotate(180deg);
         }
-        .sidebar-item {
+        .nav-section__items {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.18s ease-out;
+        }
+        .nav-section.is-open .nav-section__items {
+            max-height: 400px;
+        }
+        .nav-item {
+            display: block;
+            padding: 10px 12px 10px 28px;
             font-size: 0.8rem;
             color: var(--muted);
-            padding: 0.45rem 1rem 0.45rem 2.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: color 0.15s, background 0.15s;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
         }
-        .sidebar-item:hover {
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text);
-            background: rgba(255,255,255,0.03);
+            border-left-color: var(--accent);
         }
-        .sidebar-item::before {
-            content: '▸';
-            font-size: 0.6rem;
-            opacity: 0.7;
+        .nav-item.is-active {
+            background: var(--accent);
+            color: #fff;
+            border-left-color: rgba(255, 255, 255, 0.3);
         }
         .content-area {
             flex: 1;
@@ -215,26 +239,18 @@
             .sidebar {
                 width: 100%;
                 padding: 0.5rem;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.25rem;
                 border-right: none;
                 border-bottom: 1px solid var(--border);
             }
-            .sidebar-section {
-                flex: 0 1 auto;
-                margin-bottom: 0;
+            .nav-section + .nav-section {
+                margin-top: 0.25rem;
+                padding-top: 0.25rem;
             }
-            .sidebar-section + .sidebar-section {
-                margin-top: 0;
-                padding-top: 0;
-                border-top: none;
+            .nav-section__toggle {
+                padding: 10px 12px;
             }
-            .sidebar-section-title {
-                padding: 0.5rem 0.75rem;
-            }
-            .sidebar-item {
-                display: none;
+            .nav-section__items {
+                max-height: 300px;
             }
             .content-area {
                 padding: 20px 24px;
