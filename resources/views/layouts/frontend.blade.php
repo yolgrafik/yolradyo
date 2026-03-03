@@ -220,28 +220,33 @@
             left: 0;
             right: 0;
             z-index: 999;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
             background: rgba(5,7,12,0.85);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             padding: 14px 1rem;
-            text-align: center;
         }
-        .legal-footer a {
-            color: rgba(255,255,255,0.6);
+        .legal-pretext {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: 0.2px;
+            margin: 0 0 10px 0;
+        }
+        .legal-links {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+        }
+        .legal-links a {
+            color: rgba(255,255,255,0.65);
             text-decoration: none;
+            padding: 0 10px;
             transition: color 0.2s;
         }
-        .legal-footer a:hover { color: #fff; }
-        .legal-footer .sep { color: rgba(255,255,255,0.35); margin: 0 0.6rem; pointer-events: none; }
-        .legal-footer-copy {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            color: rgba(255,255,255,0.55);
-            text-align: center;
-            margin-bottom: 8px;
-        }
+        .legal-links a:hover { color: #fff; }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
             position: fixed;
@@ -509,8 +514,10 @@
         }
         @media (max-width: 768px) {
             .bottom-bar-logo { height: 78px; }
-            .legal-footer { font-size: 12px; padding: 12px 0.75rem; }
-            .legal-footer .sep { margin: 0 0.4rem; }
+            .legal-footer { padding: 12px 0.75rem; }
+            .legal-pretext { font-size: 12px; margin-bottom: 8px; }
+            .legal-links { font-size: 12px; }
+            .legal-links a { padding: 0 6px; }
             body { padding-bottom: 165px; }
             .disc-overlay { width: 40px; height: 40px; }
             .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
@@ -604,11 +611,15 @@
         </div>
     </div>
     <footer class="legal-footer">
-        <div class="legal-footer-copy">RadyoYol Tum Haklari Saklidir</div>
-        <a href="{{ url('/gizlilik') }}">Gizlilik Politikası</a><span class="sep">|</span>
-        <a href="{{ url('/cerez') }}">Çerez Politikası</a><span class="sep">|</span>
-        <a href="{{ url('/kullanim') }}">Kullanım Şartları</a><span class="sep">|</span>
-        <a href="{{ url('/kvkk') }}">KVKK Aydınlatma Metni</a>
+        <div class="legal-strip">
+            <div class="legal-pretext">RadyoYol Tum Haklari Saklidir</div>
+            <div class="legal-links">
+                <a href="{{ url('/gizlilik') }}">Gizlilik Politikasi</a> |
+                <a href="{{ url('/cerez') }}">Cerez Politikasi</a> |
+                <a href="{{ url('/kullanim') }}">Kullanim Sartlari</a> |
+                <a href="{{ url('/kvkk') }}">KVKK Aydinlatma Metni</a>
+            </div>
+        </div>
     </footer>
     @php
         $streamUrl = $radioSettings ? ($radioSettings->radio_stream_url ?? '') : '';
