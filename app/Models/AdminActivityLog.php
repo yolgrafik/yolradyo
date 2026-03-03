@@ -21,6 +21,7 @@ class AdminActivityLog extends Model
 
     protected $casts = [
         'meta' => 'array',
+        'created_at' => 'datetime',
     ];
 
     public function admin(): BelongsTo
