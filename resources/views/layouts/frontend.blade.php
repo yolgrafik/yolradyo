@@ -235,6 +235,13 @@
         }
         .legal-footer a:hover { color: #fff; }
         .legal-footer .sep { color: rgba(255,255,255,0.35); margin: 0 0.6rem; pointer-events: none; }
+        .legal-footer-copy {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.55);
+            text-align: center;
+            margin-bottom: 8px;
+        }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
             position: fixed;
@@ -249,18 +256,30 @@
             -webkit-backdrop-filter: blur(12px);
             border-top: 1px solid rgba(255,0,0,0.35);
             box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            display: flex;
             align-items: center;
+            justify-content: center;
             padding: 0 1.5rem;
-            gap: 1rem;
+            gap: 0;
         }
         .bottom-bar-player > * { pointer-events: auto; }
-        .player-left {
+        .player-logo-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .player-volume-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 12px;
+        }
+        .player-status-group {
             display: flex;
             flex-direction: column;
-            gap: 0.2rem;
-            min-width: 0;
+            align-items: flex-start;
+            gap: 0.15rem;
+            margin-left: 16px;
         }
         .player-status {
             display: flex;
@@ -280,40 +299,16 @@
         .player-status.paused .dot { background: #94a3b8; }
         .player-status .dot.pulse { animation: statusPulse 1.5s ease-in-out infinite; }
         @keyframes statusPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        .player-now-playing {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.85);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        .player-now-playing { display: none; }
         .player-listeners {
             font-size: 0.7rem;
             color: rgba(255,255,255,0.6);
         }
-        .player-center {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 120px;
-        }
-        .bottom-bar-player .logo-player {
-            pointer-events: auto;
-        }
         .logo-player {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: -30px;
-            z-index: 1001;
-        }
-        .player-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            justify-content: flex-end;
-            min-width: 0;
+            position: relative;
+            bottom: auto;
+            left: auto;
+            transform: none;
         }
         .player-mute-btn {
             width: 36px;
@@ -338,8 +333,7 @@
         .player-volume-wrap {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            min-width: 100px;
+            min-width: 80px;
         }
         .player-volume-wrap input[type="range"] {
             -webkit-appearance: none;
@@ -381,6 +375,7 @@
         .player-eq span:nth-child(5) { height: 10px; animation-delay: 0.4s; }
         body.playing .player-eq span { background: var(--accent); }
         @keyframes eqBars { 0%, 100% { transform: scaleY(0.6); } 50% { transform: scaleY(1); } }
+        .player-eq { margin-left: 0.5rem; }
         .bottom-bar-logo-wrap {
             position: relative;
             display: flex;
@@ -449,8 +444,7 @@
         @media (max-width: 768px) {
             .nav-logo img { height: 70px; }
             .bottom-bar-player { padding: 0 1rem; gap: 0.5rem; }
-            .player-left { font-size: 0.7rem; }
-            .player-now-playing { font-size: 0.75rem; max-width: 120px; }
+            .player-status-group { font-size: 0.7rem; }
             .player-volume-wrap { min-width: 60px; }
             .player-volume-wrap input[type="range"] { width: 50px; }
             .player-eq { display: none; }
@@ -585,21 +579,13 @@
     </main>
 
     <div class="bottom-bar-player">
-        <div class="player-left">
-            <div class="player-status" id="playerStatus">
-                <span class="dot pulse"></span>
-                <span id="playerStatusText">CANLI</span>
-            </div>
-            <div class="player-now-playing" id="playerNowPlaying">-</div>
-            <div class="player-listeners" id="playerListeners">Dinleyici: 0</div>
-        </div>
-        <div class="player-center">
+        <div class="player-logo-wrap">
             <div class="logo-player bottom-bar-logo-wrap">
                 <img src="{{ asset('assets/images/play.png') }}" class="bottom-bar-logo" alt="RADYOYOL">
                 <button type="button" id="discBtn" class="disc-overlay" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
             </div>
         </div>
-        <div class="player-right">
+        <div class="player-volume-group">
             <button type="button" class="player-mute-btn" id="playerMuteBtn" title="Sesi ac/kapat" aria-label="Sesi ac/kapat">
                 <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg>
                 <svg class="icon-muted" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
@@ -609,8 +595,16 @@
             </div>
             <div class="player-eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
         </div>
+        <div class="player-status-group">
+            <div class="player-status" id="playerStatus">
+                <span class="dot pulse"></span>
+                <span id="playerStatusText">Duraklatildi</span>
+            </div>
+            <div class="player-listeners" id="playerListeners">Dinleyici: 0</div>
+        </div>
     </div>
     <footer class="legal-footer">
+        <div class="legal-footer-copy">RadyoYol Tum Haklari Saklidir</div>
         <a href="{{ url('/gizlilik') }}">Gizlilik Politikası</a><span class="sep">|</span>
         <a href="{{ url('/cerez') }}">Çerez Politikası</a><span class="sep">|</span>
         <a href="{{ url('/kullanim') }}">Kullanım Şartları</a><span class="sep">|</span>
