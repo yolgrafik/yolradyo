@@ -106,10 +106,43 @@
                 padding: 1.5rem 1.25rem 2rem;
             }
         }
+        /* LOGIN CURSOR - remove this block to restore default cursor */
+        @media (hover: hover) and (pointer: fine) {
+            body.has-login-cursor { cursor: none; }
+            body.has-login-cursor * { cursor: none; }
+            body.has-login-cursor input, body.has-login-cursor textarea { cursor: text; }
+            .login-cursor {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 7px;
+                height: 7px;
+                background: #dc2626;
+                border-radius: 50%;
+                box-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+                pointer-events: none;
+                z-index: 99999;
+                opacity: 0;
+                transform: translate(-50%, -50%);
+                transition: opacity 0.2s ease, transform 0.2s ease;
+            }
+            .login-cursor::before {
+                content: '';
+                position: absolute;
+                inset: -4px;
+                border: 1px solid rgba(220, 38, 38, 0.25);
+                border-radius: 50%;
+            }
+            .login-cursor.is-visible { opacity: 1; }
+            .login-cursor.is-hover {
+                transform: translate(-50%, -50%) scale(1.15);
+            }
+        }
     </style>
     @stack('styles')
 </head>
 <body>
+    <div class="login-cursor" id="loginCursor" aria-hidden="true"></div>
     <div class="auth-card {{ View::hasSection('hero') ? 'login-card' : '' }}">
         @hasSection('hero')
             @yield('hero')
@@ -130,6 +163,34 @@
             © 2026 RADYOYOL
         </div>
     </div>
+    <script>
+    /* LOGIN CURSOR - remove this block to restore default cursor */
+    (function() {
+        var c = document.getElementById('loginCursor');
+        if (!c || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+        document.body.classList.add('has-login-cursor');
+        var x = 0, y = 0, tx = 0, ty = 0;
+        function tick() {
+            tx += (x - tx) * 0.2;
+            ty += (y - ty) * 0.2;
+            c.style.left = tx + 'px';
+            c.style.top = ty + 'px';
+            requestAnimationFrame(tick);
+        }
+        tick();
+        document.addEventListener('mousemove', function(e) {
+            x = e.clientX;
+            y = e.clientY;
+            c.classList.add('is-visible');
+        });
+        var sel = 'a, button, .btn-login, .pw-toggle, .forgot-link, input[type="submit"], label[for]';
+        function check(el) {
+            c.classList.toggle('is-hover', !!(el && el.closest && el.closest(sel)));
+        }
+        document.addEventListener('mouseover', function(e) { check(e.target); });
+        document.addEventListener('mouseout', function(e) { check(e.relatedTarget); });
+    })();
+    </script>
     @stack('scripts')
 </body>
 </html>
