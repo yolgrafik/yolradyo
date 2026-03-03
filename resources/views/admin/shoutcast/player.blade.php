@@ -54,6 +54,28 @@
                 @enderror
             </div>
 
+            <hr style="border: none; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+            <h3 style="font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 1rem;">SHOUTcast Now Playing</h3>
+            <div style="margin-bottom: 1.25rem;">
+                <label for="shoutcast_base_url" style="display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem;">SHOUTCAST_BASE_URL</label>
+                <input type="url" name="shoutcast_base_url" id="shoutcast_base_url"
+                    value="{{ old('shoutcast_base_url', $settings->shoutcast_base_url ?? '') }}"
+                    placeholder="https://yourhost:8000"
+                    style="width: 100%; padding: 0.75rem 1rem; font-size: 0.9rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 10px; color: var(--text);">
+                @error('shoutcast_base_url')
+                    <span style="font-size: 0.8rem; color: #f87171; margin-top: 0.35rem; display: block;">{{ $message }}</span>
+                @enderror
+            </div>
+            <div style="margin-bottom: 1.25rem;">
+                <label for="shoutcast_sid" style="display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem;">SHOUTCAST_SID (varsayilan: 1)</label>
+                <input type="number" name="shoutcast_sid" id="shoutcast_sid" min="1" max="255"
+                    value="{{ old('shoutcast_sid', $settings->shoutcast_sid ?? 1) }}"
+                    style="width: 120px; padding: 0.75rem 1rem; font-size: 0.9rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 10px; color: var(--text);">
+                @error('shoutcast_sid')
+                    <span style="font-size: 0.8rem; color: #f87171; margin-top: 0.35rem; display: block;">{{ $message }}</span>
+                @enderror
+            </div>
+
             <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
                 <button type="submit" style="padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; border: none; border-radius: 10px; cursor: pointer;">
                     Kaydet
