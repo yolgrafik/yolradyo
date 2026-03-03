@@ -526,12 +526,33 @@
                 margin-top: 20px;
             }
         }
+        .admin-topbar{
+          min-height:140px !important;
+          position:relative;
+          overflow:hidden;
+        }
+        .admin-topbar::before{
+          content:"";
+          position:absolute;
+          inset:0;
+          background: linear-gradient(90deg, rgba(10,10,14,.75) 0%, rgba(180,30,30,.45) 45%, rgba(10,10,14,.55) 100%);
+          pointer-events:none;
+        }
+        .admin-topbar::after{
+          content:"";
+          position:absolute;
+          left:0;
+          right:0;
+          bottom:0;
+          height:2px;
+          background: rgba(220,38,38,.8);
+        }
     </style>
     @stack('styles')
 </head>
 <body>
     <div class="app-wrap">
-        <header class="topbar">
+        <header class="topbar admin-topbar" style="background-image:url('{{ asset('assets/images/admin-hero.png') }}'); background-size:cover; background-position:center top; background-repeat:no-repeat;">
             <div class="topbar-top-line"></div>
             <div class="topbar-bottom-line"></div>
             <div class="topbar-inner">
