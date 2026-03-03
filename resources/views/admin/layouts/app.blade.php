@@ -13,6 +13,8 @@
             --muted: #8b95a5;
             --border: rgba(255, 255, 255, 0.06);
             --accent: #c92a2a;
+            --cursor-mic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3Cfilter id='mg'%3E%3CfeGaussianBlur stdDeviation='1.2' result='b'/%3E%3CfeFlood flood-color='%23ff2e2e' flood-opacity='0.6'/%3E%3CfeComposite in2='b' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23mg)' stroke='%23ff2e2e' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 5a4 4 0 0 0-4 4v7a4 4 0 0 0 8 0V9a4 4 0 0 0-4-4z'/%3E%3Cpath d='M24 14v2a8 8 0 0 1-16 0v-2'/%3E%3Cline x1='16' y1='24' x2='16' y2='28'/%3E%3C/g%3E%3C/svg%3E") 16 16;
+            --cursor-mic-ptr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3Cfilter id='mg2'%3E%3CfeGaussianBlur stdDeviation='1.2' result='b'/%3E%3CfeFlood flood-color='%23ff6b6b' flood-opacity='0.5'/%3E%3CfeComposite in2='b' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23mg2)' stroke='%23ff6b6b' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 5a4 4 0 0 0-4 4v7a4 4 0 0 0 8 0V9a4 4 0 0 0-4-4z'/%3E%3Cpath d='M24 14v2a8 8 0 0 1-16 0v-2'/%3E%3Cline x1='16' y1='24' x2='16' y2='28'/%3E%3C/g%3E%3C/svg%3E") 16 16;
         }
         * {
             box-sizing: border-box;
@@ -24,7 +26,14 @@
             background: linear-gradient(180deg, #0d1017 0%, #151a24 50%, #12161f 100%);
             color: var(--text);
             min-height: 100vh;
+            cursor: var(--cursor-mic);
+            transition: cursor 0.2s ease;
         }
+        a, button, [role="button"], .nav-item, .nav-section__toggle, .quick-btn, .btn-logout, [tabindex]:not([tabindex="-1"]) {
+            cursor: var(--cursor-mic-ptr);
+        }
+        input, textarea, [contenteditable="true"] { cursor: text; }
+        [disabled], [aria-disabled="true"] { cursor: not-allowed; }
         .app-wrap {
             display: flex;
             flex-direction: column;
