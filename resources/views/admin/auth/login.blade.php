@@ -1,0 +1,173 @@
+@extends('admin.layouts.auth')
+
+@push('styles')
+<style>
+    .alert-error {
+        background: rgba(185, 28, 28, 0.3);
+        color: #fecaca;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        font-size: 0.875rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    .form-group label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+    }
+    .input-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .input-wrap input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        padding-right: 2.75rem;
+        font-size: 1rem;
+        background: rgba(38, 38, 50, 0.8);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        transition: border-color 0.15s;
+    }
+    .input-wrap input:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+    .input-wrap input::placeholder {
+        color: var(--muted);
+    }
+    .input-wrap.email-wrap input {
+        padding-right: 1rem;
+    }
+    .pw-toggle {
+        position: absolute;
+        right: 0.75rem;
+        background: none;
+        border: none;
+        color: var(--muted);
+        font-size: 0.8rem;
+        cursor: pointer;
+        padding: 0.25rem;
+    }
+    .pw-toggle:hover {
+        color: var(--text);
+    }
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    .checkbox-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .checkbox-wrap input {
+        width: 1rem;
+        height: 1rem;
+        accent-color: var(--accent);
+    }
+    .checkbox-wrap span {
+        font-size: 0.875rem;
+        color: var(--muted);
+    }
+    .forgot-link {
+        font-size: 0.875rem;
+        color: var(--muted);
+        text-decoration: none;
+    }
+    .forgot-link:hover {
+        color: var(--accent);
+    }
+    .btn-login {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        font-size: 1rem;
+        font-weight: 600;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+    .btn-login:hover {
+        background: #b91c1c;
+    }
+    .error-text {
+        font-size: 0.75rem;
+        color: #f87171;
+        margin-top: 0.35rem;
+    }
+</style>
+@endpush
+
+@section('content')
+    @if (session('error'))
+        <div class="alert-error">{{ session('error') }}</div>
+    @endif
+
+    <form method="POST" action="{{ route('admin.login') }}">
+        @csrf
+
+        <div class="form-group">
+            <label for="email">E-posta</label>
+            <div class="input-wrap email-wrap">
+                <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Email adresinizi giriniz" required autofocus>
+            </div>
+            @error('email')
+                <p class="error-text">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="password">Sifre</label>
+            <div class="input-wrap">
+                <input type="password" id="password" name="password" placeholder="Sifrenizi giriniz" required>
+                <button type="button" class="pw-toggle" id="pwToggle" aria-label="Sifreyi goster">Goster</button>
+            </div>
+            @error('password')
+                <p class="error-text">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-row">
+            <label class="checkbox-wrap">
+                <input type="checkbox" name="remember">
+                <span>Beni Hatirla</span>
+            </label>
+            <a href="#" class="forgot-link">Sifremi Unuttum</a>
+        </div>
+
+        <button type="submit" class="btn-login">Giris Yap</button>
+    </form>
+
+    <script>
+        (function() {
+            var pw = document.getElementById('password');
+            var btn = document.getElementById('pwToggle');
+            if (pw && btn) {
+                btn.addEventListener('click', function() {
+                    if (pw.type === 'password') {
+                        pw.type = 'text';
+                        btn.textContent = 'Gizle';
+                    } else {
+                        pw.type = 'password';
+                        btn.textContent = 'Goster';
+                    }
+                });
+            }
+        })();
+    </script>
+@endsection
