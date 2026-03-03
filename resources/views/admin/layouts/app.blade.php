@@ -605,13 +605,13 @@
           100% { transform: translateX(260%) skewX(-18deg); opacity:0; }
         }
         .logo img{
-          height: 58px !important;
-          width: auto;
-          filter: drop-shadow(0 0 8px rgba(255,50,50,.6));
+          height: 110px !important;
+          width: auto !important;
+          filter: drop-shadow(0 0 15px rgba(255,60,60,.7));
           transition: transform .3s ease;
         }
         .logo img:hover{
-          transform: scale(1.08);
+          transform: scale(1.1);
         }
         .topbar.admin-hero .topbar-title{
           font-size: 36px;
@@ -626,6 +626,39 @@
           font-size: 16px;
           letter-spacing: 4px;
           color: rgba(255,255,255,.9);
+        }
+        .menu-glow{
+          position: relative;
+          display:inline-block;
+          color: #fff;
+          font-weight:700;
+          text-shadow:
+            0 0 8px rgba(255,255,255,.25),
+            0 0 18px rgba(255,60,60,.35);
+        }
+        .menu-glow::after{
+          content:"";
+          position:absolute;
+          top:-20%;
+          left:-50%;
+          width:40%;
+          height:140%;
+          background: linear-gradient(120deg,
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,.35) 45%,
+            rgba(255,255,255,0) 85%
+          );
+          transform: skewX(-20deg);
+          opacity:.5;
+          animation: menuShine 6s ease-in-out infinite;
+          pointer-events:none;
+          mix-blend-mode: screen;
+        }
+        @keyframes menuShine{
+          0%   { transform: translateX(-150%) skewX(-20deg); opacity:0; }
+          15%  { opacity:.5; }
+          40%  { transform: translateX(250%) skewX(-20deg); opacity:0; }
+          100% { transform: translateX(250%) skewX(-20deg); opacity:0; }
         }
     </style>
     @stack('styles')
