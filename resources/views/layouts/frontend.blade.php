@@ -3,15 +3,39 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'RADYOYOL') - Radyo</title>
+    @php
+        $siteSettings = $siteSettings ?? [];
+        $siteName = $siteSettings['site_name'] ?? 'RADYOYOL';
+        $metaTitle = $siteSettings['seo_meta_title'] ?? $siteName;
+        $metaDesc = $siteSettings['seo_meta_description'] ?? '';
+        $metaKeywords = $siteSettings['seo_meta_keywords'] ?? '';
+        $ogImage = isset($siteSettings['seo_og_image_path']) && $siteSettings['seo_og_image_path']
+            ? asset('storage/' . $siteSettings['seo_og_image_path']) : '';
+        $faviconPath = isset($siteSettings['brand_favicon_path']) && $siteSettings['brand_favicon_path']
+            ? asset('storage/' . $siteSettings['brand_favicon_path']) : asset('favicon.ico');
+        $themePrimary = $siteSettings['theme_primary'] ?? '#0f1319';
+        $themeAccent = $siteSettings['theme_accent'] ?? '#c92a2a';
+        $themeBg = $siteSettings['theme_bg'] ?? '#0f1319';
+        $themeText = $siteSettings['theme_text'] ?? '#f0f2f5';
+        $themeGlow = $siteSettings['theme_glow'] ?? '#c92a2a';
+    @endphp
+    <link rel="icon" href="{{ $faviconPath }}" type="image/x-icon">
+    <title>@yield('title', $metaTitle) - Radyo</title>
+    @if($metaDesc)<meta name="description" content="{{ $metaDesc }}">@endif
+    @if($metaKeywords)<meta name="keywords" content="{{ $metaKeywords }}">@endif
+    <meta property="og:title" content="{{ $metaTitle }}">
+    @if($metaDesc)<meta property="og:description" content="{{ $metaDesc }}">@endif
+    @if($ogImage)<meta property="og:image" content="{{ $ogImage }}">@endif
     <style>
         :root {
-            --bg: #0f1319;
+            --bg: {{ $themeBg }};
             --panel: #161c24;
-            --text: #f0f2f5;
+            --text: {{ $themeText }};
             --muted: #8b95a5;
             --border: rgba(255, 255, 255, 0.08);
-            --accent: #c92a2a;
+            --accent: {{ $themeAccent }};
+            --primary: {{ $themePrimary }};
+            --glow: {{ $themeGlow }};
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { font-family: Arial, sans-serif; }
@@ -525,10 +549,16 @@
     <nav class="navbar">
         <div class="navbar-inner">
             <a href="{{ url('/') }}" class="nav-logo">
-                @if(file_exists(public_path('logo.png')))
-                    <img src="{{ asset('logo.png') }}" alt="RADYOYOL">
+                @php
+                    $logoPath = $siteSettings['brand_logo_path'] ?? null;
+                    $logoUrl = $logoPath ? asset('storage/' . $logoPath) : null;
+                @endphp
+                @if($logoUrl)
+                    <img src="{{ $logoUrl }}" alt="{{ $siteName }}">
+                @elseif(file_exists(public_path('logo.png')))
+                    <img src="{{ asset('logo.png') }}" alt="{{ $siteName }}">
                 @else
-                    <span class="nav-logo-text">RADYOYOL</span>
+                    <span class="nav-logo-text">{{ $siteName }}</span>
                 @endif
             </a>
             <div class="nav-center">
