@@ -225,50 +225,21 @@
             -webkit-backdrop-filter: blur(8px);
             padding: 14px 1rem;
         }
-        .legal-strip {
+        .legal-line {
             width: 100%;
-            display: flex !important;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            padding: 10px 0 14px;
-        }
-        .legal-left {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .legal-pretext {
-            font-family: Arial, sans-serif !important;
-            font-size: 14px !important;
-            font-weight: 700 !important;
-            color: rgba(255,255,255,0.85) !important;
-            margin: 0 !important;
-        }
-        .legal-sep {
-            color: rgba(255,255,255,0.35);
+            text-align: center;
+            font-family: Arial, sans-serif;
             font-size: 13px;
+            color: rgba(255,255,255,0.65);
+            padding: 12px 0;
         }
-        .legal-links {
-            display: flex !important;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-            font-family: Arial, sans-serif !important;
-            font-size: 13px !important;
-            color: rgba(255,255,255,0.70) !important;
+        .legal-line a {
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            margin: 0 6px;
         }
-        .legal-links a {
-            color: rgba(255,255,255,0.70) !important;
-            text-decoration: none !important;
-        }
-        .legal-links a:hover {
-            color: #fff !important;
-        }
-        .legal-links .sep {
-            margin: 0 12px;
-            color: rgba(255,255,255,0.35);
+        .legal-line a:hover {
+            color: #fff;
         }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
@@ -633,20 +604,12 @@
         </div>
     </div>
     <footer class="legal-footer">
-        <div class="legal-strip" id="legalStrip">
-            <div class="legal-left">
-                <span class="legal-pretext" id="legalText">Radyoyol Tüm Haklari Saklidir</span>
-                <span class="legal-sep">|</span>
-            </div>
-            <div class="legal-links" id="legalLinks">
-                <a href="{{ url('/gizlilik') }}">Gizlilik Politikasi</a>
-                <span class="sep">|</span>
-                <a href="{{ url('/cerez') }}">Cerez Politikasi</a>
-                <span class="sep">|</span>
-                <a href="{{ url('/kullanim') }}">Kullanim Sartlari</a>
-                <span class="sep">|</span>
-                <a href="{{ url('/kvkk') }}">KVKK Aydinlatma Metni</a>
-            </div>
+        <div class="legal-line">
+            | Radyoyol Tum Haklari Saklidir |
+            <a href="{{ url('/gizlilik') }}">Gizlilik Politikasi</a> |
+            <a href="{{ url('/cerez') }}">Cerez Politikasi</a> |
+            <a href="{{ url('/kullanim') }}">Kullanim Sartlari</a> |
+            <a href="{{ url('/kvkk') }}">KVKK Aydinlatma Metni</a> |
         </div>
     </footer>
     @php
