@@ -302,7 +302,7 @@
                 <li><a href="{{ url('/haberler') }}">Haberler</a></li>
                 <li><a href="{{ url('/videolar') }}">Video Galeri</a></li>
                 <li><a href="{{ url('/galeri') }}">Foto Galeri</a></li>
-                <li><a href="{{ url('/reklam') }}">Reklam & Isbirligi</a></li>
+                <li><a href="{{ url('/reklam') }}">Reklam & İşbirliği</a></li>
                 <li class="nav-dropdown">
                     <a href="{{ url('/hakkimizda/biz-kimiz') }}">Hakkimizda<span class="arrow">▾</span></a>
                     <ul class="nav-dropdown-menu">
