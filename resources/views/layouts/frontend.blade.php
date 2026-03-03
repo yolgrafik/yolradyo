@@ -470,7 +470,11 @@
         <a href="{{ url('/kullanim') }}">Kullanım Şartları</a><span class="sep">|</span>
         <a href="{{ url('/kvkk') }}">KVKK Aydınlatma Metni</a>
     </footer>
-    <audio id="radioAudio" src="https://example.com/stream" preload="none"></audio>
+    @php
+        $streamUrl = $radioSettings ? ($radioSettings->radio_stream_url ?? '') : '';
+        $backupUrl = $radioSettings ? ($radioSettings->radio_backup_stream_url ?? '') : '';
+    @endphp
+    <audio id="radioAudio" src="{{ $streamUrl }}" data-stream-url="{{ $streamUrl }}" data-backup-url="{{ $backupUrl }}" preload="none"></audio>
 
     <script>
         (function() {
@@ -490,17 +494,28 @@
             var quickLive = document.getElementById('quickMenuLive');
             if (!audio || !btn) return;
             audio.volume = 0.8;
+            var streamUrl = audio.getAttribute('data-stream-url') || '';
+            var backupUrl = audio.getAttribute('data-backup-url') || '';
+            var usedBackup = false;
+            function tryPlay() {
+                if (!streamUrl && !backupUrl) return;
+                var url = (usedBackup ? backupUrl : streamUrl) || backupUrl || streamUrl;
+                if (!url) return;
+                audio.src = url;
+                audio.load();
+                audio.play().catch(function() {});
+            }
             if (quickLive) {
                 quickLive.addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (audio.paused) audio.play().catch(function() {});
+                    if (audio.paused) tryPlay();
                     else audio.pause();
                     return false;
                 });
             }
             btn.addEventListener('click', function() {
                 if (audio.paused) {
-                    audio.play().catch(function() {});
+                    tryPlay();
                 } else {
                     audio.pause();
                 }
@@ -508,7 +523,7 @@
             if (navLogo) {
                 navLogo.addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (audio.paused) audio.play().catch(function() {});
+                    if (audio.paused) tryPlay();
                     else audio.pause();
                     return false;
                 });
@@ -526,8 +541,18 @@
                 if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
             });
             audio.addEventListener('error', function() {
-                document.body.classList.remove('playing');
-                if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
+                if (!usedBackup && backupUrl) {
+                    usedBackup = true;
+                    audio.src = backupUrl;
+                    audio.load();
+                    audio.play().catch(function() {
+                        document.body.classList.remove('playing');
+                        if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
+                    });
+                } else {
+                    document.body.classList.remove('playing');
+                    if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
+                }
             });
         })();
     </script>

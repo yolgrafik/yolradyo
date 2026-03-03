@@ -14,7 +14,7 @@ class StreamSettingsController extends Controller
             return redirect()->route('admin.login');
         }
 
-        $settings = Setting::getSettings();
+        $settings = Setting::getSettings() ?? new Setting();
 
         return view('admin.stream-settings', [
             'settings' => $settings,
