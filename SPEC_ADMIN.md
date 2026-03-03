@@ -93,6 +93,36 @@ Cursor her zaman bu dosyayi referans alarak ilerlemelidir.
 - Aktivite Loglari
 - 2FA Guvenlik
 
+
+
+
+
+RADYOYOL WEB SITE MENU YAPISI (TEMIZ
+VERSIYON)
+ANA MENU
+• Anasayfa
+• Programlar
+• Haberler
+• Video Galeri
+• Foto Galeri
+• Reklam & Isbirligi
+• Hakkimizda
+• Iletisim
+HAKKIMIZDA - ALT SAYFALAR
+• Biz Kimiz
+• Misyon & Vizyon
+• Yayin Politikamiz
+FOOTER (ALT BOLUM - YASAL ALAN)
+• Gizlilik Politikasi
+• Cerez Politikasi
+• Kullanim Sartlari
+• KVKK Aydinlatma Metni
+ANASAYFA IC BUTONLAR (MENU DISI)
+• Canli Yayin
+• Yayin Akisi
+• DJ'lerimiz
+• Sarki Istek
+
 ---
 
 KURAL:
