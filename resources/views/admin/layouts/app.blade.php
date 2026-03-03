@@ -852,19 +852,19 @@
                             <li><a href="#" class="nav-item">Kara Liste</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section" data-section="ayarlar">
-                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                    <div class="nav-section {{ request()->routeIs('admin.settings.*') ? 'is-open' : '' }}" data-section="ayarlar">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.settings.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                             <span>Ayarlar</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="#" class="nav-item">Genel Site Ayarlari</a></li>
-                            <li><a href="#" class="nav-item">Logo & Favicon</a></li>
-                            <li><a href="#" class="nav-item">SEO Ayarlari</a></li>
-                            <li><a href="#" class="nav-item">Sosyal Medya Linkleri</a></li>
-                            <li><a href="#" class="nav-item">Footer Yonetimi</a></li>
-                            <li><a href="#" class="nav-item">Tema & Renk Ayarlari</a></li>
+                            <li><a href="{{ route('admin.settings.general') }}" class="nav-item {{ request()->routeIs('admin.settings.general') ? 'is-active' : '' }}">Genel Site Ayarlari</a></li>
+                            <li><a href="{{ route('admin.settings.branding') }}" class="nav-item {{ request()->routeIs('admin.settings.branding') ? 'is-active' : '' }}">Logo & Favicon</a></li>
+                            <li><a href="{{ route('admin.settings.seo') }}" class="nav-item {{ request()->routeIs('admin.settings.seo') ? 'is-active' : '' }}">SEO Ayarlari</a></li>
+                            <li><a href="{{ route('admin.settings.social') }}" class="nav-item {{ request()->routeIs('admin.settings.social') ? 'is-active' : '' }}">Sosyal Medya Linkleri</a></li>
+                            <li><a href="{{ route('admin.settings.footer') }}" class="nav-item {{ request()->routeIs('admin.settings.footer') ? 'is-active' : '' }}">Footer Yonetimi</a></li>
+                            <li><a href="{{ route('admin.settings.theme') }}" class="nav-item {{ request()->routeIs('admin.settings.theme') ? 'is-active' : '' }}">Tema & Renk Ayarlari</a></li>
                         </ul>
                     </div>
                     <div class="nav-section" data-section="kullanici">
