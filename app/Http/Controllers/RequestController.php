@@ -28,7 +28,7 @@ class RequestController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Istek alindi, onaydan sonra yayinlanacaktir.',
+            'message' => 'İstek alındı, onaydan sonra yayınlanacaktır.',
         ]);
     }
 

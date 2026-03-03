@@ -463,12 +463,12 @@
             </div>
             <div class="home-schedule">Yayın Akışı</div>
             <div class="home-requests">
-                <h4 class="home-requests__title">Istekler</h4>
+                <h4 class="home-requests__title">İstekler</h4>
                 @php $approvedSongRequests = $approvedSongRequests ?? collect(); @endphp
                 @if($approvedSongRequests->isNotEmpty())
                     @include('partials.song-request-ticker')
                 @else
-                    <p class="home-requests__empty">Henuz onaylanmis istek yok.</p>
+                    <p class="home-requests__empty">Henüz onaylanmış istek yok.</p>
                 @endif
             </div>
         </div>

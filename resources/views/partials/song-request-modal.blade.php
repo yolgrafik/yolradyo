@@ -2,11 +2,11 @@
     <div class="request-modal__backdrop" data-close-modal></div>
     <div class="request-modal__box">
         <button type="button" class="request-modal__close" data-close-modal aria-label="Kapat">&times;</button>
-        <h3 class="request-modal__title">Sarki Istek</h3>
+        <h3 class="request-modal__title">Şarkı İstek</h3>
         <form id="songRequestForm" class="request-form">
             @csrf
             <div class="request-form__group">
-                <label for="isim_soyad">Isim Soyad *</label>
+                <label for="isim_soyad">İsim Soyad *</label>
                 <input type="text" name="isim_soyad" id="isim_soyad" required class="request-form__input">
                 <span class="request-form__error" id="err_isim_soyad"></span>
             </div>
@@ -16,12 +16,12 @@
                 <span class="request-form__error" id="err_email"></span>
             </div>
             <div class="request-form__group">
-                <label for="sanatci_ismi">Sanatci Ismi *</label>
+                <label for="sanatci_ismi">Sanatçı İsmi *</label>
                 <input type="text" name="sanatci_ismi" id="sanatci_ismi" required class="request-form__input">
                 <span class="request-form__error" id="err_sanatci_ismi"></span>
             </div>
             <div class="request-form__group">
-                <label for="turku_ismi">Turku Ismi *</label>
+                <label for="turku_ismi">Türkü İsmi *</label>
                 <input type="text" name="turku_ismi" id="turku_ismi" required class="request-form__input">
                 <span class="request-form__error" id="err_turku_ismi"></span>
             </div>
@@ -30,10 +30,10 @@
                 <textarea name="mesaj" id="mesaj" rows="3" class="request-form__input"></textarea>
                 <span class="request-form__error" id="err_mesaj"></span>
             </div>
-            <div class="request-form__success" id="formSuccess" style="display:none">Isteginiz alindi.</div>
+            <div class="request-form__success" id="formSuccess" style="display:none">İsteğiniz alındı.</div>
             <div class="request-form__actions">
-                <button type="submit" class="request-form__btn">Gonder</button>
-                <button type="button" class="request-form__btn request-form__btn--cancel" data-close-modal>Iptal</button>
+                <button type="submit" class="request-form__btn">Gönder</button>
+                <button type="button" class="request-form__btn request-form__btn--cancel" data-close-modal>İptal</button>
             </div>
         </form>
     </div>
@@ -96,7 +96,7 @@
             }).then(function(r){return r.json();}).then(function(data){
                 if(data.success){successEl.style.display='block';form.reset();setTimeout(closeModal,1500);}
                 else if(data.errors){Object.keys(data.errors).forEach(function(k){var m=data.errors[k][0];var errEl=document.getElementById('err_'+k);if(errEl){errEl.textContent=m;}});}
-            }).catch(function(){successEl.textContent='Bir hata olustu. Lutfen tekrar deneyin.';successEl.style.background='rgba(239,68,68,0.2)';successEl.style.color='#fca5a5';successEl.style.display='block';});
+            }).catch(function(){successEl.textContent='Bir hata oluştu. Lütfen tekrar deneyin.';successEl.style.background='rgba(239,68,68,0.2)';successEl.style.color='#fca5a5';successEl.style.display='block';});
         });
     }
 })();
