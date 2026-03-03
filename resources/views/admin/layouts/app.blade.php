@@ -30,13 +30,17 @@
             flex-direction: column;
             min-height: 100vh;
         }
+        @keyframes topbar-eq {
+            0%, 100% { background-position: 0 0, 2px 0, 4px 0; }
+            50% { background-position: 8px 0, 10px 0, 12px 0; }
+        }
         .topbar {
             background: linear-gradient(90deg, #7f1d1d 0%, #991b1b 25%, #b91c1c 50%, #991b1b 75%, #7f1d1d 100%);
-            padding: 1rem 1.5rem;
+            padding: 1.5rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 76px;
+            min-height: 100px;
             position: relative;
             overflow: hidden;
         }
@@ -45,21 +49,36 @@
             position: absolute;
             inset: 0;
             background:
-                repeating-linear-gradient(90deg, transparent 0px, transparent 2px, rgba(255,255,255,0.12) 2px, rgba(255,255,255,0.12) 3px),
-                repeating-linear-gradient(90deg, transparent 1px, transparent 3px, rgba(255,255,255,0.08) 3px, rgba(255,255,255,0.08) 4px),
-                repeating-linear-gradient(90deg, transparent 2px, transparent 5px, rgba(255,255,255,0.1) 5px, rgba(255,255,255,0.1) 6px);
-            background-size: 8px 100%, 12px 100%, 16px 100%;
-            background-position: 0 0, 3px 0, 1px 0;
+                repeating-linear-gradient(90deg, transparent 0px, transparent 3px, rgba(255,255,255,0.2) 3px, rgba(255,255,255,0.2) 4px),
+                repeating-linear-gradient(90deg, transparent 1px, transparent 4px, rgba(255,255,255,0.15) 4px, rgba(255,255,255,0.15) 5px),
+                repeating-linear-gradient(90deg, transparent 2px, transparent 6px, rgba(255,255,255,0.18) 6px, rgba(255,255,255,0.18) 7px);
+            background-size: 12px 100%, 16px 100%, 20px 100%;
+            background-position: 0 0, 2px 0, 4px 0;
             filter: blur(2px);
-            opacity: 0.7;
+            opacity: 0.22;
             pointer-events: none;
+            animation: topbar-eq 7s ease-in-out infinite;
         }
         .topbar::after {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%);
             pointer-events: none;
+        }
+        .topbar-inner {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        .topbar-spacer {
+            flex: 1;
+        }
+        .topbar-spacer--right {
+            display: flex;
+            justify-content: flex-end;
         }
         .topbar-top-line {
             position: absolute;
@@ -67,7 +86,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
             pointer-events: none;
             z-index: 2;
         }
@@ -77,64 +96,70 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent 10%, var(--accent) 30%, var(--accent) 70%, transparent 90%);
-            opacity: 0.9;
+            background: linear-gradient(90deg, transparent 5%, var(--accent) 25%, rgba(255,255,255,0.6) 50%, var(--accent) 75%, transparent 95%);
+            opacity: 0.95;
+            box-shadow: 0 0 8px rgba(201, 42, 42, 0.5);
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
         .topbar-brand {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            position: relative;
-            z-index: 1;
+            gap: 1.25rem;
+            flex: 0 0 auto;
         }
         .topbar-logo-wrap {
-            height: 40px;
+            height: 42px;
             display: flex;
             align-items: center;
         }
         .topbar-logo {
-            height: 40px;
+            height: 42px;
             width: auto;
             object-fit: contain;
         }
         .topbar-logo-fallback {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
             color: #fff;
         }
         .topbar-brand-text {
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
+            gap: 0.2rem;
+            align-items: center;
         }
         .topbar-title {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.12em;
             color: #fff;
         }
         .topbar-sub {
-            font-size: 0.65rem;
-            letter-spacing: 0.24em;
-            font-variant: small-caps;
-            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            color: rgba(255,255,255,0.9);
         }
         .user-box {
             display: flex;
             align-items: center;
             gap: 1rem;
-            background: rgba(0,0,0,0.2);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(0,0,0,0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             padding: 0.6rem 1rem;
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.15);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
             position: relative;
             z-index: 1;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+        .user-box:hover {
+            border-color: rgba(255,255,255,0.35);
+            box-shadow: 0 0 20px rgba(255,255,255,0.08);
         }
         .user-info {
             display: flex;
@@ -457,6 +482,14 @@
             .topbar-logo {
                 height: 32px;
             }
+            .topbar-title {
+                font-size: 1rem;
+                letter-spacing: 0.08em;
+            }
+            .topbar-sub {
+                font-size: 0.7rem;
+                letter-spacing: 0.18em;
+            }
             .nav-section + .nav-section {
                 margin-top: 0.25rem;
                 padding-top: 0.25rem;
@@ -490,22 +523,27 @@
         <header class="topbar">
             <div class="topbar-top-line"></div>
             <div class="topbar-bottom-line"></div>
-            <div class="topbar-brand">
-                <div class="topbar-logo-wrap">
-                    <img src="{{ asset('logo.png') }}" alt="RADYOYOL" class="topbar-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <span class="topbar-logo-fallback" style="display:none">RADYOYOL</span>
+            <div class="topbar-inner">
+                <div class="topbar-spacer"></div>
+                <div class="topbar-brand">
+                    <div class="topbar-logo-wrap">
+                        <img src="{{ asset('logo.png') }}" alt="RADYOYOL" class="topbar-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="topbar-logo-fallback" style="display:none">RADYOYOL</span>
+                    </div>
+                    <div class="topbar-brand-text">
+                        <div class="topbar-title">RADYOYOL ADMIN PANEL</div>
+                        <div class="topbar-sub">TAM OZELLIK LISTESI</div>
+                    </div>
                 </div>
-                <div class="topbar-brand-text">
-                    <div class="topbar-title">RADYOYOL ADMIN PANEL</div>
-                    <div class="topbar-sub">TAM OZELLIK LISTESI</div>
-                </div>
-            </div>
-            <div class="user-box">
+                <div class="topbar-spacer topbar-spacer--right">
+                <div class="user-box">
                 <div class="user-info">
                     <span class="user-badge">Yetkili</span>
                     <span class="user-role">Yonetici</span>
                 </div>
                 <a href="{{ route('admin.logout') }}" class="btn-logout">Cikis</a>
+                </div>
+                </div>
             </div>
         </header>
 
