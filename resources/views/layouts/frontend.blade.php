@@ -214,6 +214,7 @@
             text-transform: none;
         }
         .cinematic-footer {
+            font-family: Arial, sans-serif;
             margin-top: auto;
             position: relative;
             background: linear-gradient(180deg, #0a0e1a 0%, #050810 50%, #020408 100%);
@@ -286,6 +287,8 @@
         }
         .footer-links {
             list-style: none;
+            padding: 0;
+            margin: 0;
         }
         .footer-links a {
             color: #fff;
@@ -323,6 +326,7 @@
         .footer-social svg { width: 20px; height: 20px; }
         .footer-menu-right .footer-links { text-align: right; }
         .quick-menu-bar {
+            font-family: Arial, sans-serif;
             position: fixed;
             bottom: 0;
             left: 0;
@@ -355,9 +359,11 @@
         .quick-menu-item svg {
             width: 24px;
             height: 24px;
-            stroke: #fff;
             fill: none;
+            stroke: currentColor;
             stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
         @media (max-width: 992px) {
             .navbar { min-height: 100px; padding: 0 1rem; }
@@ -593,7 +599,7 @@
         <div class="quick-menu-bar">
             <a href="{{ url('/') }}" class="quick-menu-item"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Anasayfa</a>
             <a href="{{ url('/programlar') }}" class="quick-menu-item"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Yayın Akışı</a>
-            <a href="#" class="quick-menu-item" id="quickMenuLive"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>Canlı Dinle</a>
+            <a href="#" class="quick-menu-item" id="quickMenuLive" title="Canlı yayını başlat"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>Canlı Dinle</a>
             <a href="{{ url('/iletisim') }}" class="quick-menu-item"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>İstek Gönder</a>
         </div>
         <audio id="radioAudio" src="https://example.com/stream" preload="none"></audio>
@@ -613,7 +619,6 @@
             var btn = document.getElementById('discBtn');
             var audio = document.getElementById('radioAudio');
             var icon = btn ? btn.querySelector('.icon') : null;
-            var titleEl = document.getElementById('radioTitle');
             var navLogo = document.querySelector('.nav-logo');
             var quickLive = document.getElementById('quickMenuLive');
             if (!audio || !btn) return;
@@ -644,22 +649,18 @@
             audio.addEventListener('play', function() {
                 document.body.classList.add('playing');
                 if (icon) { icon.classList.remove('play'); icon.classList.add('pause'); }
-                if (titleEl) titleEl.textContent = 'Canlı Yayın';
             });
             audio.addEventListener('pause', function() {
                 document.body.classList.remove('playing');
                 if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
-                if (titleEl) titleEl.textContent = 'Duraklatıldı';
             });
             audio.addEventListener('ended', function() {
                 document.body.classList.remove('playing');
                 if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
-                if (titleEl) titleEl.textContent = 'Duraklatıldı';
             });
             audio.addEventListener('error', function() {
                 document.body.classList.remove('playing');
                 if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
-                if (titleEl) titleEl.textContent = 'Yayın başlatılamadı';
             });
         })();
     </script>
