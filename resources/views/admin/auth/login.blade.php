@@ -1,5 +1,16 @@
 @extends('admin.layouts.auth')
 
+@section('hero')
+<div class="login-hero">
+    <div class="login-hero-overlay"></div>
+    <div class="login-hero-content">
+        <img src="{{ asset('logo.png') }}" class="login-logo" alt="RADYOYOL">
+        <h1>RADYOYOL ADMIN PANEL</h1>
+        <p>TAM OZELLIK LISTESI</p>
+    </div>
+</div>
+@endsection
+
 @push('styles')
 <style>
     .alert-error {
@@ -109,6 +120,53 @@
         font-size: 0.75rem;
         color: #f87171;
         margin-top: 0.35rem;
+    }
+    .login-hero{
+        position:relative;
+        height:240px;
+        margin: -2rem -2rem 1.5rem -2rem;
+        background: url("{{ asset('assets/images/admin-hero.png') }}");
+        background-size:cover;
+        background-position:center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        overflow:hidden;
+        border-radius: 20px 20px 0 0;
+    }
+    .login-hero-overlay{
+        position:absolute;
+        inset:0;
+        background:linear-gradient(135deg, rgba(0,0,0,.75), rgba(180,30,30,.65));
+    }
+    .login-hero-content{
+        position:relative;
+        z-index:2;
+        color:#fff;
+    }
+    .login-logo{
+        height:90px;
+        margin-bottom:10px;
+        filter: drop-shadow(0 0 15px rgba(255,60,60,.7));
+    }
+    .login-hero h1{
+        font-size:28px;
+        letter-spacing:2px;
+        margin:0;
+    }
+    .login-hero p{
+        font-size:14px;
+        letter-spacing:3px;
+        opacity:.85;
+    }
+    .auth-body form{
+        margin-top: 0;
+    }
+    @media (max-width: 480px) {
+        .login-hero{
+            margin: -1.5rem -1.25rem 1.25rem -1.25rem;
+        }
     }
 </style>
 @endpush

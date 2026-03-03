@@ -111,12 +111,16 @@
 </head>
 <body>
     <div class="auth-card">
+        @hasSection('hero')
+            @yield('hero')
+        @else
         <div class="auth-logo">
             <img src="{{ asset('assets/brand/radyoyol-logo.png') }}" alt="RADYOYOL" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
             <span class="logo-fallback" style="display:none">RADYOYOL</span>
         </div>
         <p class="auth-subtitle">ADMIN PANEL</p>
         <h1 class="auth-title">Hosgeldiniz</h1>
+        @endif
 
         <div class="auth-body">
             @yield('content')
