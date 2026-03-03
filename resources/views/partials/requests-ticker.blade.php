@@ -17,7 +17,7 @@
 
 @push('styles')
 <style>
-.ticker-wrap { margin-top: 1rem; }
+.ticker-wrap { margin-top: -1.25rem; }
 .ticker {
     height: 48px;
     border-radius: 12px;
