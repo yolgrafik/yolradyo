@@ -20,21 +20,105 @@
         flex-direction: column;
         gap: 1.25rem;
     }
-    .home-slider {
+    .home-slider-wrap {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+        min-height: 280px;
         background: var(--panel);
         border: 1px solid var(--border);
-        border-radius: 14px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+    }
+    .home-slider {
+        position: relative;
+        width: 100%;
+        min-height: 280px;
+        overflow: hidden;
+    }
+    .home-slider__slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+    }
+    .home-slider__slide.is-active { opacity: 1; z-index: 1; }
+    .home-slider__slide::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+        pointer-events: none;
+    }
+    .home-slider__content {
+        position: relative;
+        z-index: 2;
+        padding: 2rem;
+        max-width: 60%;
+        text-align: left;
+    }
+    .home-slider__title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .home-slider__subtitle {
+        font-size: 1.1rem;
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 1rem;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+    .home-slider__btn {
+        display: inline-block;
+        padding: 0.6rem 1.25rem;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 16px rgba(201, 42, 42, 0.4);
+    }
+    .home-slider__btn:hover {
+        box-shadow: 0 0 24px rgba(201, 42, 42, 0.5);
+        transform: translateY(-1px);
+    }
+    .home-slider__nav {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        display: flex;
+        gap: 0.5rem;
+    }
+    .home-slider__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.4);
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition: background 0.2s;
+    }
+    .home-slider__dot.is-active { background: var(--accent); }
+    .home-slider-placeholder {
         min-height: 280px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: var(--muted);
         font-size: 1.25rem;
-        transition: box-shadow 0.2s ease;
-    }
-    .home-slider:hover {
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 14px;
     }
     .home-day-tabs {
         display: flex;
@@ -273,7 +357,30 @@
 <div class="home-layout">
     <div class="home-main">
         <div class="home-left">
-            <div class="home-slider">slider</div>
+            @if(isset($sliders) && $sliders->isNotEmpty())
+            <div class="home-slider-wrap">
+                <div class="home-slider" id="homeSlider">
+                    @foreach($sliders as $i => $s)
+                    <div class="home-slider__slide {{ $i === 0 ? 'is-active' : '' }}" data-index="{{ $i }}" style="background-image: url('{{ asset($s->image_path) }}');">
+                        <div class="home-slider__content">
+                            <h2 class="home-slider__title">{{ $s->title }}</h2>
+                            @if($s->subtitle)<p class="home-slider__subtitle">{{ $s->subtitle }}</p>@endif
+                            @if($s->button_text && $s->button_link)<a href="{{ url($s->button_link) }}" class="home-slider__btn">{{ $s->button_text }}</a>@endif
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @if($sliders->count() > 1)
+                <div class="home-slider__nav" id="sliderNav">
+                    @foreach($sliders as $i => $s)
+                    <button type="button" class="home-slider__dot {{ $i === 0 ? 'is-active' : '' }}" data-index="{{ $i }}" aria-label="Slide {{ $i + 1 }}"></button>
+                    @endforeach
+                </div>
+                @endif
+            </div>
+            @else
+            <div class="home-slider-placeholder">Slider</div>
+            @endif
             <div class="home-day-tabs">
                 <button type="button" class="active">Pazartesi</button>
                 <button type="button">Salı</button>
@@ -323,6 +430,33 @@
             btn.classList.add('active');
         });
     });
+
+    var slider = document.getElementById('homeSlider');
+    var nav = document.getElementById('sliderNav');
+    if (slider && nav) {
+        var slides = slider.querySelectorAll('.home-slider__slide');
+        var dots = nav.querySelectorAll('.home-slider__dot');
+        var current = 0;
+        var total = slides.length;
+
+        function goTo(i) {
+            current = (i + total) % total;
+            slides.forEach(function(s, idx) {
+                s.classList.toggle('is-active', idx === current);
+            });
+            dots.forEach(function(d, idx) {
+                d.classList.toggle('is-active', idx === current);
+            });
+        }
+
+        dots.forEach(function(dot, i) {
+            dot.addEventListener('click', function() { goTo(i); });
+        });
+
+        setInterval(function() {
+            if (total > 1) goTo(current + 1);
+        }, 5000);
+    }
 })();
 </script>
 @endpush

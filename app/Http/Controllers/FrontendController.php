@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Slider;
+
 class FrontendController extends Controller
 {
     public function home()
     {
-        return view('frontend.home');
+        $sliders = Slider::active()->ordered()->get();
+        return view('frontend.home', compact('sliders'));
     }
 
     public function programlar()

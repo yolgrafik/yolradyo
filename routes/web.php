@@ -83,5 +83,15 @@ Route::prefix('admin')->group(function () {
             Route::post('2fa/confirm', [App\Http\Controllers\Admin\TwoFactorController::class, 'confirmEnable'])->name('2fa.confirm');
             Route::post('2fa/disable', [App\Http\Controllers\Admin\TwoFactorController::class, 'disable'])->name('2fa.disable');
         });
+
+        Route::prefix('sliders')->name('admin.sliders.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\SliderController::class, 'index'])->name('index');
+            Route::get('create', [App\Http\Controllers\Admin\SliderController::class, 'create'])->name('create');
+            Route::post('/', [App\Http\Controllers\Admin\SliderController::class, 'store'])->name('store');
+            Route::post('reorder', [App\Http\Controllers\Admin\SliderController::class, 'reorder'])->name('reorder');
+            Route::get('{slider}/edit', [App\Http\Controllers\Admin\SliderController::class, 'edit'])->name('edit');
+            Route::put('{slider}', [App\Http\Controllers\Admin\SliderController::class, 'update'])->name('update');
+            Route::delete('{slider}', [App\Http\Controllers\Admin\SliderController::class, 'destroy'])->name('destroy');
+        });
     });
 });

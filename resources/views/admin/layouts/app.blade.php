@@ -767,6 +767,16 @@
                             <li><a href="{{ route('admin.shoutcast.player.index') }}" class="nav-item {{ request()->routeIs('admin.shoutcast.player.*') ? 'is-active' : '' }}">Web Player Yonetimi</a></li>
                         </ul>
                     </div>
+                    <div class="nav-section {{ request()->routeIs('admin.sliders.*') ? 'is-open' : '' }}" data-section="icerik">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.sliders.*') ? 'true' : 'false' }}">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                            <span>Icerik Yonetimi</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="{{ route('admin.sliders.index') }}" class="nav-item {{ request()->routeIs('admin.sliders.*') ? 'is-active' : '' }}">Slider Yonetimi</a></li>
+                        </ul>
+                    </div>
                     <div class="nav-section" data-section="haberler">
                         <button class="nav-section__toggle" type="button" aria-expanded="false">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
