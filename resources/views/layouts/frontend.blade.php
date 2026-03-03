@@ -265,30 +265,6 @@
         .legal-line a:hover {
             color: #fff;
         }
-        /* Global İstek Gönder button - fixed sag alt, HER SAYFADA */
-        .global-request-btn {
-            position: fixed;
-            right: 24px;
-            bottom: 110px;
-            z-index: 9998;
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, #dc2626, var(--accent));
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(201, 42, 42, 0.35);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .global-request-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(201, 42, 42, 0.45);
-        }
-        @media (max-width: 768px) {
-            .global-request-btn { bottom: 100px; right: 16px; font-size: 0.8rem; padding: 0.45rem 0.85rem; }
-        }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
             position: fixed;
@@ -652,8 +628,6 @@
     <main class="main-content">
         @yield('content')
     </main>
-
-    <button type="button" id="openRequestModal" class="global-request-btn" data-open-song-request aria-label="Şarkı isteği gönder">İstek Gönder</button>
 
     <div class="bottom-bar-player">
         <div class="player-logo-wrap">
