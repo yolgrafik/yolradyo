@@ -26,7 +26,7 @@
                 <span class="request-form__error" id="err_turku_ismi"></span>
             </div>
             <div class="request-form__group">
-                <label for="mesaj">Mesaj (opsiyonel)</label>
+                <label for="mesaj">Mesaj (isteğe bağlı)</label>
                 <textarea name="mesaj" id="mesaj" rows="3" class="request-form__input"></textarea>
                 <span class="request-form__error" id="err_mesaj"></span>
             </div>

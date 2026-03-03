@@ -28,20 +28,20 @@ class SongRequestAdminController extends Controller
             'approved_at' => now(),
         ]);
 
-        return back()->with('success', 'Istek onaylandi.');
+        return back()->with('success', 'İstek onaylandı.');
     }
 
     public function reject(SongRequest $songRequest)
     {
         $songRequest->update(['status' => 'rejected']);
 
-        return back()->with('success', 'Istek reddedildi.');
+        return back()->with('success', 'İstek reddedildi.');
     }
 
     public function destroy(SongRequest $songRequest)
     {
         $songRequest->delete();
 
-        return back()->with('success', 'Istek silindi.');
+        return back()->with('success', 'İstek silindi.');
     }
 }

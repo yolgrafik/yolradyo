@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card">
-    <div class="card-header">Sarki Istekleri</div>
+    <div class="card-header">Şarkı İstekleri</div>
     <div class="card-body">
         @if(session('success'))
             <div class="alert-success">{{ session('success') }}</div>
@@ -12,9 +12,9 @@
         @endif
 
         <div class="request-tabs">
-            <a href="{{ route('admin.requests.index') }}" class="request-tab {{ !request('status') ? 'is-active' : '' }}">Tumu</a>
+            <a href="{{ route('admin.requests.index') }}" class="request-tab {{ !request('status') ? 'is-active' : '' }}">Tümü</a>
             <a href="{{ route('admin.requests.index', ['status' => 'pending']) }}" class="request-tab {{ request('status') === 'pending' ? 'is-active' : '' }}">Beklemede</a>
-            <a href="{{ route('admin.requests.index', ['status' => 'approved']) }}" class="request-tab {{ request('status') === 'approved' ? 'is-active' : '' }}">Onaylandi</a>
+            <a href="{{ route('admin.requests.index', ['status' => 'approved']) }}" class="request-tab {{ request('status') === 'approved' ? 'is-active' : '' }}">Onaylandı</a>
             <a href="{{ route('admin.requests.index', ['status' => 'rejected']) }}" class="request-tab {{ request('status') === 'rejected' ? 'is-active' : '' }}">Reddedildi</a>
         </div>
 
@@ -23,13 +23,13 @@
                 <thead>
                     <tr>
                         <th>Tarih</th>
-                        <th>Isim</th>
+                        <th>İsim</th>
                         <th>E-posta</th>
-                        <th>Sanatci</th>
-                        <th>Turku</th>
+                        <th>Sanatçı</th>
+                        <th>Türkü</th>
                         <th>Mesaj</th>
                         <th>Durum</th>
-                        <th style="width:180px;">Islemler</th>
+                        <th style="width:180px;">İşlemler</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +43,7 @@
                         <td>{{ Str::limit($req->message, 30) ?: '-' }}</td>
                         <td>
                             @if($req->status === 'approved')
-                                <span class="badge badge-success">Onaylandi</span>
+                                <span class="badge badge-success">Onaylandı</span>
                             @elseif($req->status === 'rejected')
                                 <span class="badge badge-muted">Reddedildi</span>
                             @else
@@ -62,7 +62,7 @@
                                     <button type="submit" class="btn-sm btn-warn">Reddet</button>
                                 </form>
                                 @endif
-                                <form action="{{ route('admin.requests.destroy', $req) }}" method="POST" class="d-inline" onsubmit="return confirm('Silmek istediginize emin misiniz?');">
+                                <form action="{{ route('admin.requests.destroy', $req) }}" method="POST" class="d-inline" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn-sm btn-danger">Sil</button>
@@ -71,7 +71,7 @@
                         </td>
                     </tr>
                     @empty
-                    <tr><td colspan="8" class="text-center">Henuz istek yok.</td></tr>
+                    <tr><td colspan="8" class="text-center">Henüz istek yok.</td></tr>
                     @endforelse
                 </tbody>
             </table>
