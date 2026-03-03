@@ -609,8 +609,6 @@
         @yield('content')
     </main>
 
-    @include('partials.song-request-ticker')
-
     <div class="bottom-bar-player">
         <div class="player-logo-wrap">
             <div class="logo-player bottom-bar-logo-wrap">

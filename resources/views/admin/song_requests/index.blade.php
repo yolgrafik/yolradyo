@@ -11,22 +11,12 @@
             <div class="alert-error">{{ session('error') }}</div>
         @endif
 
-        <form method="GET" action="{{ route('admin.requests.index') }}" class="filter-form">
-            <div class="filter-row">
-                <div class="filter-item">
-                    <label>Durum</label>
-                    <select name="status" class="form-input role-select">
-                        <option value="">Tumu</option>
-                        <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Beklemede</option>
-                        <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Onaylandi</option>
-                        <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Reddedildi</option>
-                    </select>
-                </div>
-                <div class="filter-item" style="align-self:flex-end;">
-                    <button type="submit" class="btn-save">Filtrele</button>
-                </div>
-            </div>
-        </form>
+        <div class="request-tabs">
+            <a href="{{ route('admin.requests.index') }}" class="request-tab {{ !request('status') ? 'is-active' : '' }}">Tumu</a>
+            <a href="{{ route('admin.requests.index', ['status' => 'pending']) }}" class="request-tab {{ request('status') === 'pending' ? 'is-active' : '' }}">Beklemede</a>
+            <a href="{{ route('admin.requests.index', ['status' => 'approved']) }}" class="request-tab {{ request('status') === 'approved' ? 'is-active' : '' }}">Onaylandi</a>
+            <a href="{{ route('admin.requests.index', ['status' => 'rejected']) }}" class="request-tab {{ request('status') === 'rejected' ? 'is-active' : '' }}">Reddedildi</a>
+        </div>
 
         <div class="table-wrap" style="margin-top:1.5rem;">
             <table class="data-table">
@@ -36,7 +26,7 @@
                         <th>Isim</th>
                         <th>E-posta</th>
                         <th>Sanatci</th>
-                        <th>Eser</th>
+                        <th>Turku</th>
                         <th>Mesaj</th>
                         <th>Durum</th>
                         <th style="width:180px;">Islemler</th>
@@ -92,10 +82,10 @@
 
 @push('styles')
 <style>
-.filter-form{margin-bottom:1rem;}
-.filter-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
-.filter-item{min-width:140px;}
-.filter-item label{display:block;font-size:0.8rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;}
+.request-tabs{display:flex;gap:0.5rem;margin-bottom:1.25rem;flex-wrap:wrap;}
+.request-tab{padding:0.5rem 1rem;font-size:0.9rem;font-weight:600;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--muted);text-decoration:none;transition:all 0.2s;}
+.request-tab:hover{background:rgba(255,255,255,0.1);color:var(--text);}
+.request-tab.is-active{background:linear-gradient(135deg,#dc2626,var(--accent));border-color:rgba(255,255,255,0.2);color:#fff;}
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;font-size:0.9rem;margin-bottom:1rem;}
 .alert-error{padding:0.75rem 1rem;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.9rem;margin-bottom:1rem;}
 .table-wrap{overflow-x:auto;}

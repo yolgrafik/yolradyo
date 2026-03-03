@@ -21,16 +21,16 @@
                 <span class="request-form__error" id="err_sanatci_ismi"></span>
             </div>
             <div class="request-form__group">
-                <label for="eserin_ismi">Eserin Ismi *</label>
-                <input type="text" name="eserin_ismi" id="eserin_ismi" required class="request-form__input">
-                <span class="request-form__error" id="err_eserin_ismi"></span>
+                <label for="turku_ismi">Turku Ismi *</label>
+                <input type="text" name="turku_ismi" id="turku_ismi" required class="request-form__input">
+                <span class="request-form__error" id="err_turku_ismi"></span>
             </div>
             <div class="request-form__group">
                 <label for="mesaj">Mesaj (opsiyonel)</label>
                 <textarea name="mesaj" id="mesaj" rows="3" class="request-form__input"></textarea>
                 <span class="request-form__error" id="err_mesaj"></span>
             </div>
-            <div class="request-form__success" id="formSuccess" style="display:none">Istek alindi, onay sonrasi yayinlanacaktir.</div>
+            <div class="request-form__success" id="formSuccess" style="display:none">Istek alindi, onaydan sonra yayinlanacaktir.</div>
             <div class="request-form__actions">
                 <button type="submit" class="request-form__btn">Gonder</button>
                 <button type="button" class="request-form__btn request-form__btn--cancel" data-close-modal>Iptal</button>
@@ -75,7 +75,7 @@
     closeBtns.forEach(function(btn){btn.addEventListener('click',closeModal);});
     if(modal){modal.addEventListener('click',function(e){if(e.target===modal){closeModal();}});}
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal&&modal.classList.contains('is-open')){closeModal();}});
-    function clearErrors(){['isim_soyad','email','sanatci_ismi','eserin_ismi','mesaj'].forEach(function(id){var el=document.getElementById('err_'+id);if(el){el.textContent='';}});}
+    function clearErrors(){['isim_soyad','email','sanatci_ismi','turku_ismi','mesaj'].forEach(function(id){var el=document.getElementById('err_'+id);if(el){el.textContent='';}});}
     if(form){
         form.addEventListener('submit',function(e){
             e.preventDefault();

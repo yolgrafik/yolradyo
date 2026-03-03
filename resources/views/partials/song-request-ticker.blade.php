@@ -1,6 +1,6 @@
 @php
     $approvedRequests = $approvedSongRequests ?? collect();
-    $sepUrl = file_exists(public_path('logo.png')) ? asset('logo.png') : asset('assets/images/play.svg');
+    $sepUrl = file_exists(public_path('logo.png')) ? asset('logo.png') : (file_exists(public_path('assets/images/play.png')) ? asset('assets/images/play.png') : asset('assets/images/play.svg'));
 @endphp
 @push('styles')
 <style>

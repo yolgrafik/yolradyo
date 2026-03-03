@@ -9,7 +9,14 @@ class FrontendController extends Controller
     public function home()
     {
         $sliders = Slider::active()->ordered()->get();
-        return view('frontend.home', compact('sliders'));
+        $approvedSongRequests = collect();
+        if (\Illuminate\Support\Facades\Schema::hasTable('song_requests')) {
+            $approvedSongRequests = \App\Models\SongRequest::where('status', 'approved')
+                ->orderByDesc('approved_at')
+                ->limit(30)
+                ->get(['full_name', 'artist_name', 'song_name']);
+        }
+        return view('frontend.home', compact('sliders', 'approvedSongRequests'));
     }
 
     public function programlar()

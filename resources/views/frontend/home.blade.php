@@ -215,16 +215,31 @@
         border: 1px solid var(--border);
         border-radius: 14px;
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-        min-height: 280px;
-        padding: 1.5rem;
+        padding: 1.25rem 1.5rem;
         display: flex;
-        align-items: flex-start;
+        flex-direction: column;
+        gap: 1rem;
         color: var(--text);
         font-size: 1rem;
         transition: box-shadow 0.2s ease;
     }
     .home-requests:hover {
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    }
+    .home-requests__title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0;
+    }
+    .home-requests .request-ticker-wrap {
+        margin: 0 -0.5rem;
+        border-radius: 8px;
+    }
+    .home-requests__empty {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin: 0;
     }
     .home-right {
         display: flex;
@@ -445,7 +460,15 @@
                 <button type="button">Pazar</button>
             </div>
             <div class="home-schedule">Yayın Akışı</div>
-            <div class="home-requests">İstekler</div>
+            <div class="home-requests">
+                <h4 class="home-requests__title">Istekler</h4>
+                @php $approvedSongRequests = $approvedSongRequests ?? collect(); @endphp
+                @if($approvedSongRequests->isNotEmpty())
+                    @include('partials.song-request-ticker')
+                @else
+                    <p class="home-requests__empty">Henuz onaylanmis istek yok.</p>
+                @endif
+            </div>
         </div>
         <div class="home-right">
             <div class="home-actions">

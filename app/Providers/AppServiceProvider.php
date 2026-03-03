@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
             if (Schema::hasTable('song_requests')) {
                 $approvedRequests = \App\Models\SongRequest::where('status', 'approved')
                     ->orderByDesc('approved_at')
-                    ->limit(50)
+                    ->limit(30)
                     ->get(['full_name', 'artist_name', 'song_name']);
             }
             $view->with('approvedSongRequests', $approvedRequests);
