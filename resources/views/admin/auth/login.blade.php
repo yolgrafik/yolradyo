@@ -2,7 +2,6 @@
 
 @section('hero')
 <div class="login-hero login-header">
-    <div class="login-hero-overlay"></div>
     <div class="login-hero-content">
         <img src="{{ asset('logo.png') }}" class="login-logo" alt="RADYOYOL">
         <h1>RADYOYOL ADMIN PANEL</h1>
@@ -165,11 +164,6 @@
         text-align:center;
         overflow:hidden;
         border-radius: 18px 18px 0 0;
-    }
-    .login-hero-overlay{
-        position:absolute;
-        inset:0;
-        background:linear-gradient(135deg, rgba(0,0,0,.75), rgba(180,30,30,.65));
     }
     .login-hero-content{
         position:relative;
