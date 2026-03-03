@@ -116,7 +116,6 @@
         <div class="module-card__body">
             <ul class="module-card__list">
                 <li class="module-card__item">Gelen Mesajlar</li>
-                <li class="module-card__item">Şarkı İstekleri</li>
                 <li class="module-card__item">Moderasyon</li>
                 <li class="module-card__item">Kara Liste</li>
             </ul>

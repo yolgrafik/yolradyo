@@ -210,37 +210,6 @@
     .home-schedule:hover {
         box-shadow: 0 6px 28px rgba(0, 0, 0, 0.3);
     }
-    .home-requests {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-        padding: 1.25rem 1.5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        color: var(--text);
-        font-size: 1rem;
-        transition: box-shadow 0.2s ease;
-    }
-    .home-requests:hover {
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-    }
-    .home-requests__title {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--text);
-        margin: 0;
-    }
-    .home-requests .request-ticker-wrap {
-        margin: 0 -0.5rem;
-        border-radius: 8px;
-    }
-    .home-requests__empty {
-        color: var(--muted);
-        font-size: 0.95rem;
-        margin: 0;
-    }
     .home-right {
         display: flex;
         flex-direction: column;
@@ -271,29 +240,6 @@
     .btn-live:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 28px rgba(37, 99, 235, 0.5);
-    }
-    .btn-request {
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        font-family: inherit;
-        padding: 1rem 1.5rem;
-        background: linear-gradient(135deg, #16a34a, var(--accent));
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 12px;
-        color: #fff;
-        font-family: Arial, sans-serif;
-        font-size: 1rem;
-        font-weight: 700;
-        text-decoration: none;
-        text-transform: none;
-        box-shadow: 0 4px 20px rgba(22, 163, 74, 0.35);
-        transition: all 0.25s ease;
-    }
-    .btn-request:hover {
-        transform: translateY(-2px);
-        background: linear-gradient(135deg, #22c55e, #dc2626);
-        box-shadow: 0 0 24px rgba(34, 197, 94, 0.4), 0 0 40px rgba(220, 38, 38, 0.35);
     }
     .home-icon-buttons {
         display: flex;
@@ -408,7 +354,7 @@
             grid-column: 1 / -1;
             flex-direction: row;
         }
-        .btn-live, .btn-request { flex: 1; }
+        .btn-live { flex: 1; }
         .home-dj-card {
             grid-column: 1 / -1;
         }
