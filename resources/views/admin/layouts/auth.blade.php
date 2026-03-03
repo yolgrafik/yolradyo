@@ -37,7 +37,7 @@
             body.cursor-ready input, body.cursor-ready textarea { cursor: text; }
             body.cursor-ready [disabled] { cursor: not-allowed; }
         }
-        .custom-cursor {
+        .cursor-wrap {
             position: fixed;
             left: 0;
             top: 0;
@@ -46,45 +46,35 @@
             opacity: 0;
             transition: opacity 0.25s ease;
         }
-        .custom-cursor.is-visible { opacity: 1; }
-        .cursor-inner {
-            position: fixed;
-            width: 5px;
-            height: 5px;
+        .cursor-wrap.is-visible { opacity: 1; }
+        .custom-cursor {
+            width: 8px;
+            height: 8px;
+            background: #ff2a2a;
             border-radius: 50%;
-            background: rgba(220, 50, 50, 0.95);
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 6px rgba(200, 40, 40, 0.35);
-            animation: cursorPulseInner 4s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 100000;
-        }
-        .cursor-outer {
             position: fixed;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 70, 70, 0.3);
-            background: transparent;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 12px rgba(255, 50, 50, 0.18), inset 0 0 8px rgba(255, 50, 50, 0.06);
-            animation: cursorPulseOuter 4s ease-in-out infinite;
+            left: 0;
+            top: 0;
             pointer-events: none;
-            z-index: 99999;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
         }
-        .custom-cursor.is-button .cursor-inner { width: 6px; height: 6px; }
-        .custom-cursor.is-button .cursor-outer { width: 16px; height: 16px; }
-        .custom-cursor.is-link .cursor-outer {
-            border-color: rgba(255, 90, 90, 0.45);
-            box-shadow: 0 0 14px rgba(255, 60, 60, 0.28), inset 0 0 10px rgba(255, 60, 60, 0.1);
+        .cursor-ring {
+            width: 28px;
+            height: 28px;
+            border: 1.5px solid rgba(255, 0, 0, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9998;
+            transition: transform 0.15s ease, border 0.2s ease;
         }
-        @keyframes cursorPulseInner {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.88; }
-        }
-        @keyframes cursorPulseOuter {
-            0%, 100% { opacity: 0.9; box-shadow: 0 0 12px rgba(255, 50, 50, 0.18), inset 0 0 8px rgba(255, 50, 50, 0.06); }
-            50% { opacity: 1; box-shadow: 0 0 16px rgba(255, 50, 50, 0.25), inset 0 0 10px rgba(255, 50, 50, 0.1); }
+        .cursor-wrap.cursor-hover .cursor-ring {
+            transform: translate(-50%, -50%) scale(1.4);
+            border-color: #ff3b3b;
         }
         body::before {
             content: '';
@@ -165,9 +155,9 @@
     @stack('styles')
 </head>
 <body>
-    <div class="custom-cursor" id="customCursor" aria-hidden="true">
-        <div class="cursor-outer" id="cursorOuter"></div>
-        <div class="cursor-inner" id="cursorInner"></div>
+    <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
+        <div class="cursor-ring" id="cursorRing"></div>
+        <div class="custom-cursor" id="cursorDot"></div>
     </div>
     <div class="auth-card {{ View::hasSection('hero') ? 'login-card' : '' }}">
         @hasSection('hero')
@@ -191,39 +181,33 @@
     </div>
     <script>
         (function() {
-            var cursor = document.getElementById('customCursor');
-            var inner = document.getElementById('cursorInner');
-            var outer = document.getElementById('cursorOuter');
-            if (!cursor || !inner || !outer || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            var wrap = document.getElementById('cursorWrap');
+            var dot = document.getElementById('cursorDot');
+            var ring = document.getElementById('cursorRing');
+            if (!wrap || !dot || !ring || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
             document.body.classList.add('cursor-ready');
-            var mx = 0, my = 0, ix = 0, iy = 0, ox = 0, oy = 0;
+            var mx = 0, my = 0, x = 0, y = 0;
             function move() {
-                ix += (mx - ix) * 0.22;
-                iy += (my - iy) * 0.22;
-                ox += (mx - ox) * 0.09;
-                oy += (my - oy) * 0.09;
-                inner.style.left = ix + 'px';
-                inner.style.top = iy + 'px';
-                outer.style.left = ox + 'px';
-                outer.style.top = oy + 'px';
+                x += (mx - x) * 0.18;
+                y += (my - y) * 0.18;
+                dot.style.left = x + 'px';
+                dot.style.top = y + 'px';
+                ring.style.left = x + 'px';
+                ring.style.top = y + 'px';
                 requestAnimationFrame(move);
             }
             move();
             document.addEventListener('mousemove', function(e) {
                 mx = e.clientX;
                 my = e.clientY;
-                cursor.classList.add('is-visible');
+                wrap.classList.add('is-visible');
             });
-            var linkSel = 'a, .forgot-link';
-            var btnSel = 'button, [role="button"], .btn-login, .pw-toggle, input[type="submit"], label[for]';
-            function updateCursor(el) {
-                var overLink = el && el.closest && el.closest(linkSel);
-                var overBtn = el && el.closest && el.closest(btnSel);
-                cursor.classList.toggle('is-link', !!overLink);
-                cursor.classList.toggle('is-button', !!overBtn && !overLink);
+            var hoverSel = 'a, button, [role="button"], .btn-login, .pw-toggle, .forgot-link, input[type="submit"], label[for]';
+            function updateHover(el) {
+                wrap.classList.toggle('cursor-hover', !!(el && el.closest && el.closest(hoverSel)));
             }
-            document.addEventListener('mouseover', function(e) { updateCursor(e.target); });
-            document.addEventListener('mouseout', function(e) { updateCursor(e.relatedTarget); });
+            document.addEventListener('mouseover', function(e) { updateHover(e.target); });
+            document.addEventListener('mouseout', function(e) { updateHover(e.relatedTarget); });
         })();
     </script>
     @stack('scripts')

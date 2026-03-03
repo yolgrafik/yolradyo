@@ -47,6 +47,8 @@
             background: #ff2a2a;
             border-radius: 50%;
             position: fixed;
+            left: 0;
+            top: 0;
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 9999;
@@ -57,6 +59,8 @@
             border: 1.5px solid rgba(255, 0, 0, 0.4);
             border-radius: 50%;
             position: fixed;
+            left: 0;
+            top: 0;
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 9998;
@@ -933,39 +937,33 @@
     </script>
     <script>
         (function() {
-            var cursor = document.getElementById('customCursor');
-            var inner = document.getElementById('cursorInner');
-            var outer = document.getElementById('cursorOuter');
-            if (!cursor || !inner || !outer || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            var wrap = document.getElementById('cursorWrap');
+            var dot = document.getElementById('cursorDot');
+            var ring = document.getElementById('cursorRing');
+            if (!wrap || !dot || !ring || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
             document.body.classList.add('cursor-ready');
-            var mx = 0, my = 0, ix = 0, iy = 0, ox = 0, oy = 0;
+            var mx = 0, my = 0, x = 0, y = 0;
             function move() {
-                ix += (mx - ix) * 0.22;
-                iy += (my - iy) * 0.22;
-                ox += (mx - ox) * 0.09;
-                oy += (my - oy) * 0.09;
-                inner.style.left = ix + 'px';
-                inner.style.top = iy + 'px';
-                outer.style.left = ox + 'px';
-                outer.style.top = oy + 'px';
+                x += (mx - x) * 0.18;
+                y += (my - y) * 0.18;
+                dot.style.left = x + 'px';
+                dot.style.top = y + 'px';
+                ring.style.left = x + 'px';
+                ring.style.top = y + 'px';
                 requestAnimationFrame(move);
             }
             move();
             document.addEventListener('mousemove', function(e) {
                 mx = e.clientX;
                 my = e.clientY;
-                cursor.classList.add('is-visible');
+                wrap.classList.add('is-visible');
             });
-            var linkSel = 'a, .forgot-link';
-            var btnSel = 'button, [role="button"], .nav-item, .nav-section__toggle, .quick-btn, .btn-logout, .btn-login, .module-card, input[type="submit"], input[type="button"]';
-            function updateCursor(el) {
-                var overLink = el && el.closest && el.closest(linkSel);
-                var overBtn = el && el.closest && el.closest(btnSel);
-                cursor.classList.toggle('is-link', !!overLink);
-                cursor.classList.toggle('is-button', !!overBtn && !overLink);
+            var hoverSel = 'a, button, [role="button"], .nav-item, .nav-section__toggle, .quick-btn, .btn-logout, .btn-login, .module-card, .forgot-link, input[type="submit"], input[type="button"]';
+            function updateHover(el) {
+                wrap.classList.toggle('cursor-hover', !!(el && el.closest && el.closest(hoverSel)));
             }
-            document.addEventListener('mouseover', function(e) { updateCursor(e.target); });
-            document.addEventListener('mouseout', function(e) { updateCursor(e.relatedTarget); });
+            document.addEventListener('mouseover', function(e) { updateHover(e.target); });
+            document.addEventListener('mouseout', function(e) { updateHover(e.relatedTarget); });
         })();
     </script>
     @stack('scripts')
