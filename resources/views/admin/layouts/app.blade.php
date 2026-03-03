@@ -31,19 +31,19 @@
             min-height: 100vh;
         }
         .topbar {
-            background: linear-gradient(90deg, #5c1010 0%, #7f1d1d 30%, #991b1b 55%, #8b1a1a 80%, #6b1515 100%);
+            background: linear-gradient(90deg, #7f1d1d 0%, #991b1b 25%, #b91c1c 50%, #991b1b 75%, #7f1d1d 100%);
             padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 72px;
+            min-height: 76px;
             position: relative;
         }
         .topbar::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
             pointer-events: none;
         }
         .topbar::after {
@@ -53,7 +53,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
             pointer-events: none;
         }
         .topbar-bottom-line {
@@ -62,7 +62,8 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            background: linear-gradient(90deg, transparent 10%, var(--accent) 30%, var(--accent) 70%, transparent 90%);
+            opacity: 0.9;
             pointer-events: none;
             z-index: 1;
         }
@@ -74,12 +75,12 @@
             z-index: 1;
         }
         .topbar-logo-wrap {
-            height: 38px;
+            height: 40px;
             display: flex;
             align-items: center;
         }
         .topbar-logo {
-            height: 38px;
+            height: 40px;
             width: auto;
             object-fit: contain;
         }
@@ -101,9 +102,10 @@
             color: #fff;
         }
         .topbar-sub {
-            font-size: 0.68rem;
-            letter-spacing: 0.22em;
-            color: rgba(255,255,255,0.8);
+            font-size: 0.65rem;
+            letter-spacing: 0.24em;
+            font-variant: small-caps;
+            color: rgba(255,255,255,0.7);
         }
         .user-box {
             display: flex;
@@ -163,24 +165,14 @@
             border-right: 1px solid var(--border);
         }
         .sidebar-brand {
-            padding: 1rem 1rem 0.75rem;
+            padding: 0.85rem 1rem;
             border-bottom: 1px solid var(--border);
             margin-bottom: 0.5rem;
         }
-        .sidebar-brand-inner {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-        .sidebar-brand-inner .sidebar-brand-logo {
-            height: 28px;
-            width: auto;
-            object-fit: contain;
-        }
         .sidebar-brand-text {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.12em;
             color: var(--accent);
         }
         .nav-accordion {
@@ -214,12 +206,13 @@
             transition: background 0.18s;
         }
         .nav-section__toggle:hover {
-            background: rgba(255, 255, 255, 0.09);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
         }
         .nav-section.is-open .nav-section__toggle {
-            background: rgba(255, 255, 255, 0.08);
-            border-left: 3px solid var(--accent);
-            padding-left: 11px;
+            background: rgba(255, 255, 255, 0.06);
+            border-left: 4px solid var(--accent);
+            padding-left: 10px;
         }
         .nav-section.is-open .nav-section__items {
             background: rgba(255, 255, 255, 0.04);
@@ -256,19 +249,19 @@
             font-size: 0.8rem;
             color: var(--muted);
             text-decoration: none;
-            border-left: 3px solid transparent;
+            border-left: 4px solid transparent;
             transition: background 0.18s, color 0.18s, border-color 0.18s, box-shadow 0.18s;
         }
         .nav-item:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text);
             border-left-color: var(--accent);
-            box-shadow: inset 0 0 20px rgba(201, 42, 42, 0.08);
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.12);
         }
         .nav-item.is-active {
-            background: var(--accent);
+            background: linear-gradient(90deg, rgba(201, 42, 42, 0.95), var(--accent));
             color: #fff;
-            border-left-color: rgba(255, 255, 255, 0.3);
+            border-left-color: rgba(255, 255, 255, 0.4);
         }
         .content-area {
             flex: 1;
@@ -276,21 +269,29 @@
             overflow-x: hidden;
             min-width: 0;
             position: relative;
-            background: linear-gradient(180deg, #0a0d12 0%, #0f1319 35%, #131820 70%, #0d1015 100%);
+            background: linear-gradient(180deg, #0c0f14 0%, #0f1319 30%, #12161e 60%, #080a0d 100%);
         }
         .content-area::before {
             content: '';
             position: absolute;
             inset: 0;
             pointer-events: none;
-            background: radial-gradient(ellipse 100% 80% at 50% 20%, rgba(201, 42, 42, 0.04) 0%, transparent 50%);
+            background: radial-gradient(ellipse 90% 70% at 50% 30%, rgba(201, 42, 42, 0.05) 0%, transparent 55%);
         }
         .content-area::after {
             content: '';
             position: absolute;
             inset: 0;
             pointer-events: none;
-            background: radial-gradient(ellipse 120% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 100%);
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        }
+        .content-area .content-bg-vignette {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(ellipse 110% 90% at 50% 50%, transparent 35%, rgba(0,0,0,0.45) 100%);
         }
         .content-area .waveform-line {
             position: absolute;
@@ -316,7 +317,7 @@
             background: var(--card);
             border-radius: 15px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 8px 32px rgba(201, 42, 42, 0.04);
             overflow: hidden;
             position: relative;
         }
@@ -324,7 +325,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
             pointer-events: none;
         }
         .card-header {
@@ -332,14 +333,14 @@
             font-size: 0.95rem;
             font-weight: 700;
             color: #fff;
-            background: linear-gradient(135deg, var(--accent) 0%, #a61f1f 50%, #8b1a1a 100%);
+            background: linear-gradient(135deg, #dc2626 0%, var(--accent) 40%, #a61f1f 100%);
             letter-spacing: 0.02em;
             position: relative;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
         }
         .card-body {
             padding: 1.5rem 1.35rem;
-            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 40%, transparent 100%);
             position: relative;
         }
         .card-value {
@@ -479,8 +480,8 @@
                     <span class="topbar-logo-fallback" style="display:none">RADYOYOL</span>
                 </div>
                 <div class="topbar-brand-text">
-                    <div class="topbar-title">RADYOYOL ADMIN PANEL</div>
-                    <div class="topbar-sub">TAM OZELLIK LISTESI</div>
+                    <div class="topbar-title">ADMIN PANEL</div>
+                    <div class="topbar-sub">Tam Ozellik Listesi</div>
                 </div>
             </div>
             <div class="user-box">
@@ -495,10 +496,7 @@
         <div class="main-row">
             <aside class="sidebar">
                 <div class="sidebar-brand">
-                    <div class="sidebar-brand-inner">
-                        <img src="{{ asset('assets/brand/radyoyol-logo.png') }}" alt="" class="sidebar-brand-logo" onerror="this.style.display='none'">
-                        <span class="sidebar-brand-text">RADYOYOL</span>
-                    </div>
+                    <span class="sidebar-brand-text">RADYOYOL</span>
                 </div>
                 <nav class="nav-accordion" id="navAccordion">
                     <div class="nav-section is-open" data-section="dashboard">
@@ -646,6 +644,7 @@
 
             <main class="content-area">
                 <div class="waveform-line"></div>
+                <div class="content-bg-vignette"></div>
                 <div class="content-inner">
                     @yield('content')
                 </div>
