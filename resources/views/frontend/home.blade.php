@@ -475,7 +475,7 @@
         <div class="home-right">
             <div class="home-actions">
                 <a href="#" class="btn-live">CANLI DİNLE</a>
-                <button type="button" class="btn-request" data-open-song-request>ISTEK Gönder</button>
+                <button type="button" class="btn-request" data-open-song-request>ISTEK GÖNDER</button>
             </div>
             <div class="home-icon-buttons">
                 <button type="button" class="icon-placeholder" aria-label="Play">▶</button>
