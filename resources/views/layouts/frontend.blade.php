@@ -258,7 +258,7 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 10px;
+            bottom: -50px;
             z-index: 1001;
         }
         .bottom-bar-logo-wrap {
