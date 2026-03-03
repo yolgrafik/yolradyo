@@ -417,11 +417,13 @@
             transform: scale(1.05);
             box-shadow: 0 6px 28px rgba(201, 42, 42, 0.4), inset 0 1px 0 rgba(255,255,255,0.8);
         }
-        .radio-player-play img {
+        .radio-player-play img,
+        .radio-player-play svg {
             width: 28px;
             height: 28px;
             object-fit: contain;
         }
+        .radio-player-play .pause-icon { width: 24px; height: 24px; }
         .radio-player-play.playing img.play-icon { display: none; }
         .radio-player-play.playing img.pause-icon { display: block; }
         .radio-player-play img.pause-icon { display: none; }
@@ -639,9 +641,9 @@
                     @if(file_exists(public_path('assets/images/play-logo.png')))
                     <img src="{{ asset('assets/images/play-logo.png') }}" alt="" class="play-icon">
                     @else
-                    <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M8 5v14l11-7z"/></svg>
                     @endif
-                    <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                    <svg class="pause-icon" viewBox="0 0 24 24" fill="var(--accent)" width="24" height="24" style="display:none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                 </button>
                 <button type="button" class="radio-player-btn" id="radioNext" aria-label="Sonraki">⏭</button>
             </div>
