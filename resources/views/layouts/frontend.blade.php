@@ -39,7 +39,7 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { font-family: Arial, sans-serif; }
-        body{{ request()->is('/') ? '.page-home' : '' }} {
+        body {
             font-family: Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
@@ -286,6 +286,7 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(201, 42, 42, 0.45);
         }
+        .page-home .global-request-btn { display: none; }
         @media (max-width: 768px) {
             .global-request-btn { bottom: 168px; right: 1rem; font-size: 0.8rem; padding: 0.45rem 0.85rem; }
         }
@@ -569,7 +570,7 @@
     </style>
     @stack('styles')
 </head>
-<body>
+<body class="{{ request()->is('/') ? 'page-home' : '' }}">
     <nav class="navbar">
         <div class="navbar-inner">
             <a href="{{ url('/') }}" class="nav-logo">
