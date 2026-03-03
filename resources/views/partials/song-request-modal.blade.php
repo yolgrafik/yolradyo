@@ -28,7 +28,6 @@
             <div class="request-form__success" id="formSuccess" style="display:none">İsteğiniz alındı.</div>
             <div class="request-form__actions">
                 <button type="submit" class="request-form__btn">Gönder</button>
-                <button type="button" class="request-form__btn request-form__btn--cancel" data-close-modal>Vazgeç</button>
             </div>
         </form>
     </div>
@@ -39,10 +38,12 @@
 (function(){
     var modal=document.getElementById('songRequestModal');
     var form=document.getElementById('songRequestForm');
+    var openBtn=document.getElementById('openRequestModal');
     var closeBtns=document.querySelectorAll('[data-close-modal]');
     var successEl=document.getElementById('formSuccess');
     function openModal(){if(modal){modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}}
     function closeModal(){if(modal){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}}
+    if(openBtn){openBtn.addEventListener('click',function(e){e.preventDefault();openModal();});}
     document.addEventListener('click',function(e){
         var t=e.target;
         while(t){
@@ -51,6 +52,7 @@
         }
     });
     closeBtns.forEach(function(btn){btn.addEventListener('click',closeModal);});
+    if(modal){modal.querySelector('.request-modal__backdrop').addEventListener('click',closeModal);}
     if(modal){modal.addEventListener('click',function(e){if(e.target===modal){closeModal();}});}
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal&&modal.classList.contains('is-open')){closeModal();}});
     function clearErrors(){['isim_soyad','sanatci_ismi','turku_ismi','mesaj'].forEach(function(id){var el=document.getElementById('err_'+id);if(el){el.textContent='';}});}

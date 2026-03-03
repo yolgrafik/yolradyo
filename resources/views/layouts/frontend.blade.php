@@ -654,7 +654,7 @@
         @yield('content')
     </main>
 
-    <button type="button" class="global-request-btn" data-open-song-request aria-label="Şarkı isteği gönder">İstek Gönder</button>
+    <button type="button" id="openRequestModal" class="global-request-btn" data-open-song-request aria-label="Şarkı isteği gönder">İstek Gönder</button>
 
     <div class="bottom-bar-player">
         <div class="player-logo-wrap">
