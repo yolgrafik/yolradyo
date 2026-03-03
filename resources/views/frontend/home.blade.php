@@ -429,6 +429,7 @@
                 <button type="button">Pazar</button>
             </div>
             <div class="home-schedule">Yayın Akışı</div>
+            @include('partials.requests-ticker')
         </div>
         <div class="home-right">
             <div class="home-actions">

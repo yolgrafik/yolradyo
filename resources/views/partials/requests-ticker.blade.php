@@ -1,0 +1,140 @@
+@php
+    $logoUrl = isset($siteSettings['brand_logo_path']) && $siteSettings['brand_logo_path']
+        ? asset('storage/' . $siteSettings['brand_logo_path'])
+        : asset('logo.png');
+@endphp
+<div class="ticker-wrap">
+    <h4 class="ticker-title">İstekler</h4>
+    <div class="ticker" id="requestsTicker">
+        <div class="ticker__mask">
+            <div class="ticker__track" id="tickerTrack">
+                {{-- Content injected by JS --}}
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('styles')
+<style>
+.ticker-wrap { margin-top: 1rem; }
+.ticker-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
+.ticker {
+    height: 48px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    position: relative;
+}
+.ticker::before, .ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 48px;
+    z-index: 2;
+    pointer-events: none;
+}
+.ticker::before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
+}
+.ticker::after {
+    right: 0;
+    background: linear-gradient(270deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
+}
+.ticker__mask { overflow: hidden; height: 100%; }
+.ticker__track {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    height: 100%;
+    white-space: nowrap;
+    animation: tickerScroll 30s linear infinite;
+}
+.ticker:hover .ticker__track { animation-play-state: paused; }
+@keyframes tickerScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+.ticker__item {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.95;
+}
+.ticker__logo {
+    height: 22px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.85;
+    flex-shrink: 0;
+    margin: 0 0.5rem;
+}
+.ticker__empty {
+    padding: 0 1rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+@media (max-width: 768px) {
+    .ticker { height: 44px; }
+    .ticker__item { font-size: 0.85rem; padding: 0 0.5rem; }
+    .ticker__logo { height: 18px; margin: 0 0.35rem; }
+}
+</style>
+@endpush
+
+@push('scripts')
+<script>
+(function() {
+    var apiUrl = '{{ url("/api/requests/approved") }}';
+    var logoUrl = '{{ $logoUrl }}';
+    var track = document.getElementById('tickerTrack');
+    if (!track) return;
+
+    var fallback = [
+        { artist: 'Ahmet Kaya', song: 'Ben Beni', name: 'Ali Çelik' },
+        { artist: 'İbrahim Tatlıses', song: 'Mavi Mavi', name: 'Ayşe Yılmaz' },
+        { artist: 'Mahsun Kırmızıgül', song: 'Sevda', name: 'Mehmet Demir' },
+    ];
+
+    function formatItem(r) {
+        return (r.artist || '') + ' - ' + (r.song || '') + ' | ' + (r.name || '');
+    }
+
+    function renderItems(items) {
+        if (!items || items.length === 0) {
+            track.innerHTML = '<span class="ticker__empty">Henüz onaylı istek yok.</span>';
+            return;
+        }
+        var html = '';
+        var logo = '<img class="ticker__logo" src="' + logoUrl + '" alt="RADYOYOL" onerror="this.style.display=\'none\'">';
+        items.forEach(function(r, i) {
+            html += '<span class="ticker__item">' + escapeHtml(formatItem(r)) + '</span>' + logo;
+        });
+        track.innerHTML = html + html;
+    }
+
+    function escapeHtml(s) {
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+    }
+
+    fetch(apiUrl)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            renderItems(Array.isArray(data) && data.length > 0 ? data : fallback);
+        })
+        .catch(function() {
+            renderItems(fallback);
+        });
+})();
+</script>
+@endpush
