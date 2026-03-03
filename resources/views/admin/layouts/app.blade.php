@@ -30,13 +30,12 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        @keyframes topbar-eq {
-            0%, 100% { background-position: 0 0, 2px 0, 4px 0; }
-            50% { background-position: 8px 0, 10px 0, 12px 0; }
-        }
         .topbar {
-            background: linear-gradient(90deg, #7f1d1d 0%, #991b1b 25%, #b91c1c 50%, #991b1b 75%, #7f1d1d 100%);
-            padding: 1.5rem 1.5rem;
+            background-image: url("{{ asset('assets/images/admin-hero.png') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 1.25rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -48,16 +47,8 @@
             content: '';
             position: absolute;
             inset: 0;
-            background:
-                repeating-linear-gradient(90deg, transparent 0px, transparent 3px, rgba(255,255,255,0.2) 3px, rgba(255,255,255,0.2) 4px),
-                repeating-linear-gradient(90deg, transparent 1px, transparent 4px, rgba(255,255,255,0.15) 4px, rgba(255,255,255,0.15) 5px),
-                repeating-linear-gradient(90deg, transparent 2px, transparent 6px, rgba(255,255,255,0.18) 6px, rgba(255,255,255,0.18) 7px);
-            background-size: 12px 100%, 16px 100%, 20px 100%;
-            background-position: 0 0, 2px 0, 4px 0;
-            filter: blur(2px);
-            opacity: 0.22;
+            background: linear-gradient(135deg, rgba(60, 15, 15, 0.82) 0%, rgba(40, 25, 25, 0.78) 50%, rgba(25, 22, 28, 0.80) 100%);
             pointer-events: none;
-            animation: topbar-eq 7s ease-in-out infinite;
         }
         .topbar::after {
             content: '';
