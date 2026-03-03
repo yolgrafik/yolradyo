@@ -6,11 +6,11 @@
     <title>RADYOYOL ADMIN PANEL</title>
     <style>
         :root {
-            --bg: #1a1f2e;
-            --panel: #212529;
-            --card: #252b38;
-            --text: #f5f5f5;
-            --muted: #9ca3af;
+            --bg: #151a24;
+            --panel: #1c2128;
+            --card: #1e2530;
+            --text: #f0f2f5;
+            --muted: #8b95a5;
             --border: rgba(255, 255, 255, 0.06);
             --accent: #dc2626;
         }
@@ -21,7 +21,7 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(180deg, #0f1219 0%, #151a24 50%, #12161f 100%);
+            background: linear-gradient(180deg, #0d1017 0%, #151a24 50%, #12161f 100%);
             color: var(--text);
             min-height: 100vh;
         }
@@ -31,54 +31,43 @@
             min-height: 100vh;
         }
         .topbar {
-            background: linear-gradient(90deg, #8b1a1a 0%, #5c1010 50%, #2d0808 100%);
+            background: linear-gradient(90deg, #b91c1c 0%, #991b1b 35%, #7f1d1d 70%, #450a0a 100%);
             padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            min-height: 64px;
-        }
-        .topbar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            opacity: 0.6;
+            min-height: 68px;
         }
         .topbar-brand {
             display: flex;
             flex-direction: column;
-            gap: 0.15rem;
+            gap: 0.2rem;
         }
         .topbar-title {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             color: #fff;
         }
         .topbar-sub {
             font-size: 0.7rem;
-            letter-spacing: 0.18em;
-            color: rgba(255,255,255,0.75);
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.85);
         }
         .user-box {
             display: flex;
             align-items: center;
             gap: 1rem;
-            background: rgba(0,0,0,0.35);
-            padding: 0.5rem 1rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.3);
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.08);
         }
         .user-info {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 0.1rem;
+            gap: 0.15rem;
         }
         .user-badge {
             font-size: 0.7rem;
@@ -87,8 +76,8 @@
             letter-spacing: 0.05em;
         }
         .user-role {
-            font-size: 0.75rem;
-            color: var(--muted);
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.9);
         }
         .btn-logout {
             padding: 0.5rem 1rem;
@@ -100,6 +89,7 @@
             border-radius: 8px;
             text-decoration: none;
             cursor: pointer;
+            transition: background 0.15s;
         }
         .btn-logout:hover {
             background: #b91c1c;
@@ -124,15 +114,15 @@
             border-top: 1px solid var(--border);
         }
         .sidebar-section-title {
-            font-size: 0.82rem;
+            font-size: 0.83rem;
             font-weight: 700;
             color: var(--text);
-            padding: 0.6rem 1rem;
+            padding: 0.65rem 1rem;
             display: flex;
             align-items: center;
             gap: 0.6rem;
             text-decoration: none;
-            transition: background 0.15s;
+            transition: background 0.2s;
             cursor: default;
         }
         a.sidebar-section-title {
@@ -145,22 +135,24 @@
             opacity: 0.9;
         }
         .sidebar-section-title:hover {
-            background: rgba(220, 38, 38, 0.25);
+            background: rgba(220, 38, 38, 0.2);
         }
         .sidebar-section.active .sidebar-section-title {
             background: var(--accent);
             color: #fff;
         }
-        .sidebar-section-title .icon {
-            fill: currentColor;
-        }
         .sidebar-item {
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             color: var(--muted);
-            padding: 0.4rem 1rem 0.4rem 2.25rem;
+            padding: 0.45rem 1rem 0.45rem 2.25rem;
             display: flex;
             align-items: center;
             gap: 0.4rem;
+            transition: color 0.15s, background 0.15s;
+        }
+        .sidebar-item:hover {
+            color: var(--text);
+            background: rgba(255,255,255,0.03);
         }
         .sidebar-item::before {
             content: '▸';
@@ -169,29 +161,28 @@
         }
         .content-area {
             flex: 1;
-            padding: 1.5rem;
+            padding: 28px 32px;
             overflow-x: hidden;
-            display: flex;
-            justify-content: center;
+            min-width: 0;
         }
         .content-inner {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
         }
         .card-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            gap: 20px;
         }
         .card {
             background: var(--card);
-            border-radius: 12px;
+            border-radius: 15px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             overflow: hidden;
         }
         .card-header {
-            padding: 0.9rem 1.25rem;
+            padding: 13px 1.25rem;
             font-size: 0.95rem;
             font-weight: 700;
             color: #fff;
@@ -200,17 +191,15 @@
         }
         .card-body {
             padding: 1.5rem 1.25rem;
-            font-size: 0.875rem;
-            color: var(--muted);
         }
         .card-value {
-            font-size: 2rem;
+            font-size: 32px;
             font-weight: 700;
             color: var(--text);
             line-height: 1.2;
         }
         .card-value-muted {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: 400;
             color: var(--muted);
         }
@@ -242,13 +231,20 @@
                 border-top: none;
             }
             .sidebar-section-title {
-                padding: 0.45rem 0.75rem;
+                padding: 0.5rem 0.75rem;
             }
             .sidebar-item {
                 display: none;
             }
+            .content-area {
+                padding: 20px 24px;
+            }
             .card-grid {
                 grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .card-value {
+                font-size: 28px;
             }
         }
     </style>
@@ -259,7 +255,7 @@
         <header class="topbar">
             <div class="topbar-brand">
                 <div class="topbar-title">RADYOYOL ADMIN PANEL</div>
-                <div class="topbar-sub">Tam Ozellik Listesi</div>
+                <div class="topbar-sub">TAM OZELLIK LISTESI</div>
             </div>
             <div class="user-box">
                 <div class="user-info">
