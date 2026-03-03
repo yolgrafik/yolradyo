@@ -33,13 +33,13 @@
         .topbar {
             background-image: url("{{ asset('assets/images/admin-hero.png') }}");
             background-size: cover;
-            background-position: center;
+            background-position: center top;
             background-repeat: no-repeat;
             padding: 1.25rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 100px;
+            min-height: 140px;
             position: relative;
             overflow: hidden;
         }
@@ -47,14 +47,14 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(60, 15, 15, 0.82) 0%, rgba(40, 25, 25, 0.78) 50%, rgba(25, 22, 28, 0.80) 100%);
+            background: linear-gradient(90deg, rgba(50, 18, 18, 0.65) 0%, rgba(40, 22, 22, 0.58) 45%, rgba(25, 22, 28, 0.52) 100%);
             pointer-events: none;
         }
         .topbar::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(0,0,0,0.25) 100%);
+            background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(0,0,0,0.2) 100%);
             pointer-events: none;
         }
         .topbar-inner {
@@ -86,10 +86,9 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 5%, var(--accent) 25%, rgba(255,255,255,0.6) 50%, var(--accent) 75%, transparent 95%);
-            opacity: 0.95;
-            box-shadow: 0 0 8px rgba(201, 42, 42, 0.5);
+            height: 2px;
+            background: linear-gradient(90deg, transparent 5%, var(--accent) 25%, rgba(255,255,255,0.7) 50%, var(--accent) 75%, transparent 95%);
+            box-shadow: 0 0 12px rgba(201, 42, 42, 0.8), 0 0 24px rgba(201, 42, 42, 0.4);
             pointer-events: none;
             z-index: 2;
         }
@@ -98,6 +97,24 @@
             align-items: center;
             gap: 1.25rem;
             flex: 0 0 auto;
+            position: relative;
+        }
+        .topbar-brand::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 200%;
+            height: 220%;
+            background: radial-gradient(ellipse 45% 45% at 50% 50%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 50%, transparent 75%);
+            filter: blur(24px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .topbar-brand > * {
+            position: relative;
+            z-index: 1;
         }
         .topbar-logo-wrap {
             height: 42px;
