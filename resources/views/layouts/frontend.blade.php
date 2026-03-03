@@ -22,7 +22,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding-bottom: 88px;
         }
         .navbar {
             position: sticky;
@@ -218,7 +217,7 @@
             margin-top: auto;
             position: relative;
             background: linear-gradient(180deg, #0a0e1a 0%, #050810 50%, #020408 100%);
-            min-height: 320px;
+            padding: 1rem 1rem 1.25rem;
             overflow: hidden;
         }
         .cinematic-footer::before {
@@ -240,37 +239,39 @@
         }
         .footer-glass {
             position: relative;
-            background: rgba(15, 20, 35, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 2.5rem 2rem;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            padding: 1rem 1.5rem;
+            min-height: 130px;
             display: grid;
-            grid-template-columns: 1fr auto 1fr auto 1fr;
-            gap: 2rem;
+            grid-template-columns: 1fr 1fr auto 1fr 1fr;
+            gap: 1.5rem;
             align-items: center;
-            max-width: 1400px;
+            max-width: 1320px;
             margin: 0 auto;
         }
         .footer-copy {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #fff;
-            line-height: 1.5;
+            line-height: 1.4;
         }
-        .footer-copy strong { display: block; font-size: 1rem; }
+        .footer-copy strong { display: block; font-size: 0.95rem; margin-bottom: 0.2rem; }
         .footer-logo-zone {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem 2rem;
+            padding: 0.5rem;
         }
         .footer-logo-glow {
             position: absolute;
-            width: 180px;
-            height: 180px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,100,50,0.35) 0%, rgba(200,50,30,0.15) 40%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,100,50,0.4) 0%, rgba(200,50,30,0.2) 40%, transparent 70%);
             pointer-events: none;
         }
         .footer-logo-wrap {
@@ -281,7 +282,7 @@
             z-index: 1;
         }
         .footer-logo {
-            height: 100px;
+            height: 120px;
             width: auto;
             display: block;
         }
@@ -295,7 +296,7 @@
             text-decoration: none;
             font-size: 0.9rem;
             display: block;
-            padding: 0.4rem 0;
+            padding: 0.25rem 0;
             transition: color 0.2s, text-shadow 0.2s;
         }
         .footer-links a:hover {
@@ -304,14 +305,14 @@
         }
         .footer-social {
             display: flex;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
         .footer-social a {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 8px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -319,42 +320,38 @@
             transition: all 0.2s ease;
         }
         .footer-social a:hover {
-            box-shadow: 0 0 20px rgba(255,150,80,0.5);
+            box-shadow: 0 0 16px rgba(255,150,80,0.5);
             border-color: rgba(255,150,80,0.4);
             transform: scale(1.05);
         }
-        .footer-social svg { width: 20px; height: 20px; }
+        .footer-social svg { width: 18px; height: 18px; }
         .footer-menu-right .footer-links { text-align: right; }
         .quick-menu-bar {
             font-family: Arial, sans-serif;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 72px;
-            background: rgba(8, 12, 22, 0.95);
-            backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            height: 70px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 3rem;
-            z-index: 998;
+            gap: 2.5rem;
+            max-width: 1320px;
+            margin: 0.75rem auto 0;
+            padding: 0 1rem;
         }
         .quick-menu-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.3rem;
             color: #fff;
             text-decoration: none;
             font-size: 0.8rem;
-            transition: transform 0.2s, color 0.2s;
+            transition: transform 0.2s, text-shadow 0.2s;
         }
         .quick-menu-item:hover {
-            transform: scale(1.08);
+            transform: scale(1.06);
             color: #fff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            text-shadow: 0 0 10px rgba(255,255,255,0.6);
         }
         .quick-menu-item svg {
             width: 24px;
@@ -420,17 +417,6 @@
             .nav-toggle { display: none; }
         }
         /* Footer Logo Player */
-        .footer-logo-wrap {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .footer-logo {
-            height: 80px;
-            width: auto;
-            display: block;
-        }
         .disc-overlay {
             position: absolute;
             width: 48px;
@@ -489,15 +475,17 @@
             .footer-glass {
                 grid-template-columns: 1fr 1fr;
                 grid-template-rows: auto auto auto;
+                gap: 1rem;
             }
-            .footer-logo-zone { grid-column: 1 / -1; order: -1; }
+            .footer-logo-zone { grid-column: 1 / -1; order: -1; padding: 0.5rem; }
+            .footer-logo { height: 100px; }
         }
         @media (max-width: 600px) {
-            .footer-glass { grid-template-columns: 1fr; gap: 1.5rem; }
+            .footer-glass { grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
             .footer-menu-right .footer-links { text-align: left; }
-            .quick-menu-bar { gap: 1.5rem; }
+            .quick-menu-bar { gap: 1.25rem; padding: 0.5rem; }
             .quick-menu-item { font-size: 0.7rem; }
-            .footer-logo { height: 80px; }
+            .footer-logo { height: 90px; }
             .disc-overlay { width: 42px; height: 42px; }
             .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
             .disc-overlay .icon.pause { width: 12px; height: 12px; }
@@ -570,6 +558,11 @@
                 <strong>© {{ date('Y') }} RADYO YOL</strong>
                 Tüm Hakları Saklıdır
             </div>
+            <ul class="footer-links footer-links-mid">
+                <li><a href="{{ url('/hakkimizda/biz-kimiz') }}">Hakkımızda</a></li>
+                <li><a href="{{ url('/iletisim') }}">İletişim</a></li>
+                <li><a href="{{ url('/gizlilik') }}">Gizlilik Politikası</a></li>
+            </ul>
             <div class="footer-logo-zone">
                 <div class="footer-logo-glow"></div>
                 <div class="footer-logo-wrap">
@@ -577,11 +570,6 @@
                     <button type="button" id="discBtn" class="disc-overlay" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
                 </div>
             </div>
-            <ul class="footer-links">
-                <li><a href="{{ url('/hakkimizda/biz-kimiz') }}">Hakkımızda</a></li>
-                <li><a href="{{ url('/iletisim') }}">İletişim</a></li>
-                <li><a href="{{ url('/gizlilik') }}">Gizlilik Politikası</a></li>
-            </ul>
             <div class="footer-social">
                 <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
                 <a href="#" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
@@ -633,7 +621,7 @@
             }
             btn.addEventListener('click', function() {
                 if (audio.paused) {
-                    audio.play().catch(function() { if (titleEl) titleEl.textContent = 'Yayın başlatılamadı'; });
+                    audio.play().catch(function() {});
                 } else {
                     audio.pause();
                 }
