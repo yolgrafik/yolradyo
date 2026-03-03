@@ -87,6 +87,13 @@ Route::prefix('admin')->group(function () {
             Route::post('2fa/disable', [App\Http\Controllers\Admin\TwoFactorController::class, 'disable'])->name('2fa.disable');
         });
 
+        Route::prefix('song-requests')->name('admin.song-requests.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'index'])->name('index');
+            Route::post('{songRequest}/approve', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'approve'])->name('approve');
+            Route::post('{songRequest}/reject', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'reject'])->name('reject');
+            Route::delete('{songRequest}', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'destroy'])->name('destroy');
+        });
+
         Route::prefix('sliders')->name('admin.sliders.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SliderController::class, 'index'])->name('index');
             Route::get('create', [App\Http\Controllers\Admin\SliderController::class, 'create'])->name('create');
