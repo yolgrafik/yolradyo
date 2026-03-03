@@ -22,6 +22,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-bottom: 100px;
         }
         .navbar {
             position: sticky;
@@ -212,156 +213,119 @@
         .main-content button {
             text-transform: none;
         }
-        .cinematic-footer {
+        /* Fixed bottom bar */
+        .bottom-bar-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            z-index: 1000;
             font-family: Arial, sans-serif;
-            margin-top: auto;
-            position: relative;
-            background: linear-gradient(180deg, #0a0e1a 0%, #050810 50%, #020408 100%);
-            padding: 1rem 1rem 1.25rem;
-            overflow: hidden;
-        }
-        .cinematic-footer::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
-                radial-gradient(2px 2px at 50px 160px, rgba(255,255,255,0.25), transparent),
-                radial-gradient(2px 2px at 90px 40px, rgba(255,255,255,0.2), transparent),
-                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.3), transparent);
-            background-size: 200px 200px;
-            animation: particles 20s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes particles {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-200px); }
-        }
-        .footer-glass {
-            position: relative;
-            background: rgba(255,255,255,0.06);
+            background: rgba(10,12,20,0.75);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 14px;
-            padding: 1rem 1.5rem;
-            min-height: 130px;
+            border-top: 1px solid rgba(255,0,0,0.35);
+            box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
             display: grid;
-            grid-template-columns: 1fr 1fr auto 1fr 1fr;
-            gap: 1.5rem;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            max-width: 1320px;
-            margin: 0 auto;
+            padding: 0 1.5rem;
+            gap: 1rem;
         }
-        .footer-copy {
-            font-size: 0.85rem;
+        .bottom-bar-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            min-width: 0;
+        }
+        .bottom-bar-copy {
+            font-size: 0.8rem;
             color: #fff;
-            line-height: 1.4;
         }
-        .footer-copy strong { display: block; font-size: 0.95rem; margin-bottom: 0.2rem; }
-        .footer-logo-zone {
-            position: relative;
+        .bottom-bar-copy strong { font-size: 0.9rem; }
+        .bottom-bar-canli {
+            font-size: 0.7rem;
+            color: #ff4444;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 0.5rem;
+            gap: 0.35rem;
         }
-        .footer-logo-glow {
-            position: absolute;
-            width: 200px;
-            height: 200px;
+        .bottom-bar-canli .dot {
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,100,50,0.4) 0%, rgba(200,50,30,0.2) 40%, transparent 70%);
-            pointer-events: none;
+            background: #ff4444;
+            animation: pulse 1.5s ease-in-out infinite;
         }
-        .footer-logo-wrap {
+        body.playing .bottom-bar-canli { display: flex; }
+        body:not(.playing) .bottom-bar-canli { display: none; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .bottom-bar-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .bottom-bar-player > .bottom-bar-left { justify-self: start; }
+        .bottom-bar-player > .bottom-bar-center { justify-self: center; }
+        .bottom-bar-player > .bottom-bar-right { justify-self: end; }
+        .bottom-bar-logo-wrap {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1;
         }
-        .footer-logo {
-            height: 120px;
+        .bottom-bar-logo {
+            height: 70px;
             width: auto;
             display: block;
         }
-        .footer-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .footer-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: block;
-            padding: 0.25rem 0;
-            transition: color 0.2s, text-shadow 0.2s;
-        }
-        .footer-links a:hover {
-            color: #fff;
-            text-shadow: 0 0 12px rgba(255,255,255,0.6);
-        }
-        .footer-social {
+        .bottom-bar-right {
             display: flex;
-            gap: 0.5rem;
+            align-items: center;
+            gap: 1rem;
+            justify-content: flex-end;
+            min-width: 0;
         }
-        .footer-social a {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+        .bottom-bar-social {
+            display: flex;
+            gap: 0.4rem;
+        }
+        .bottom-bar-social a {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
             background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             transition: all 0.2s ease;
         }
-        .footer-social a:hover {
-            box-shadow: 0 0 16px rgba(255,150,80,0.5);
-            border-color: rgba(255,150,80,0.4);
-            transform: scale(1.05);
+        .bottom-bar-social a:hover {
+            background: rgba(255,0,0,0.2);
+            border-color: rgba(255,0,0,0.4);
         }
-        .footer-social svg { width: 18px; height: 18px; }
-        .footer-menu-right .footer-links { text-align: right; }
-        .quick-menu-bar {
-            font-family: Arial, sans-serif;
-            position: relative;
-            height: 70px;
+        .bottom-bar-social svg { width: 16px; height: 16px; }
+        .bottom-bar-links {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5rem;
-            max-width: 1320px;
-            margin: 0.75rem auto 0;
-            padding: 0 1rem;
+            gap: 0.75rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
-        .quick-menu-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.3rem;
+        .bottom-bar-links a {
             color: #fff;
             text-decoration: none;
             font-size: 0.8rem;
-            transition: transform 0.2s, text-shadow 0.2s;
+            white-space: nowrap;
+            transition: color 0.2s;
         }
-        .quick-menu-item:hover {
-            transform: scale(1.06);
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.6);
-        }
-        .quick-menu-item svg {
-            width: 24px;
-            height: 24px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
+        .bottom-bar-links a:hover { color: #ff6666; }
         @media (max-width: 992px) {
             .navbar { min-height: 100px; padding: 0 1rem; }
             .nav-logo img { height: 70px; }
@@ -471,26 +435,44 @@
         @media (prefers-reduced-motion: reduce) {
             body.playing .disc-overlay { animation: none; }
         }
-        @media (max-width: 992px) {
-            .footer-glass {
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: auto auto auto;
-                gap: 1rem;
-            }
-            .footer-logo-zone { grid-column: 1 / -1; order: -1; padding: 0.5rem; }
-            .footer-logo { height: 100px; }
+        .bottom-bar-mobile-menu {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            left: 0;
+            right: 0;
+            height: 44px;
+            background: rgba(10,12,20,0.9);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 0 1rem;
         }
-        @media (max-width: 600px) {
-            .footer-glass { grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
-            .footer-menu-right .footer-links { text-align: left; }
-            .quick-menu-bar { gap: 1.25rem; padding: 0.5rem; }
-            .quick-menu-item { font-size: 0.7rem; }
-            .footer-logo { height: 90px; }
-            .disc-overlay { width: 42px; height: 42px; }
+        .bottom-bar-mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .bottom-bar-mobile-menu a svg { width: 18px; height: 18px; }
+        @media (max-width: 768px) {
+            .bottom-bar-player { padding: 0 1rem; gap: 0.5rem; }
+            .bottom-bar-logo { height: 56px; }
+            .bottom-bar-links { display: none; }
+            .bottom-bar-copy { font-size: 0.75rem; }
+            .bottom-bar-mobile-menu { display: flex; }
+            body { padding-bottom: 144px; }
+            .disc-overlay { width: 40px; height: 40px; }
             .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
-            .disc-overlay .icon.pause { width: 12px; height: 12px; }
+            .disc-overlay .icon.pause { width: 14px; height: 14px; }
             .disc-overlay .icon.pause::before,
-            .disc-overlay .icon.pause::after { width: 3px; height: 12px; }
+            .disc-overlay .icon.pause::after { width: 4px; height: 14px; }
         }
     </style>
     @stack('styles')
@@ -552,46 +534,38 @@
         @yield('content')
     </main>
 
-    <footer class="cinematic-footer">
-        <div class="footer-glass">
-            <div class="footer-copy">
-                <strong>© {{ date('Y') }} RADYO YOL</strong>
-                Tüm Hakları Saklıdır
+    <div class="bottom-bar-mobile-menu" aria-hidden="true">
+        <a href="{{ url('/') }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Anasayfa</a>
+        <a href="{{ url('/programlar') }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Yayın Akışı</a>
+        <a href="#" id="quickMenuLive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>Canlı Dinle</a>
+        <a href="{{ url('/iletisim') }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>İstek Gönder</a>
+    </div>
+    <div class="bottom-bar-player">
+        <div class="bottom-bar-left">
+            <div class="bottom-bar-copy"><strong>© {{ date('Y') }} RADYO YOL</strong></div>
+            <div class="bottom-bar-canli"><span class="dot"></span>CANLI</div>
+        </div>
+        <div class="bottom-bar-center">
+            <div class="bottom-bar-logo-wrap">
+                <img src="{{ asset('assets/images/play.png') }}" class="bottom-bar-logo" alt="RADYOYOL">
+                <button type="button" id="discBtn" class="disc-overlay" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
             </div>
-            <ul class="footer-links footer-links-mid">
-                <li><a href="{{ url('/hakkimizda/biz-kimiz') }}">Hakkımızda</a></li>
-                <li><a href="{{ url('/iletisim') }}">İletişim</a></li>
-                <li><a href="{{ url('/gizlilik') }}">Gizlilik Politikası</a></li>
-            </ul>
-            <div class="footer-logo-zone">
-                <div class="footer-logo-glow"></div>
-                <div class="footer-logo-wrap">
-                    <img src="{{ asset('assets/images/play.png') }}" class="footer-logo" alt="RADYOYOL">
-                    <button type="button" id="discBtn" class="disc-overlay" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
-                </div>
-            </div>
-            <div class="footer-social">
+        </div>
+        <div class="bottom-bar-right">
+            <div class="bottom-bar-social">
                 <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
                 <a href="#" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
                 <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
                 <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
             </div>
-            <div class="footer-menu-right">
-                <ul class="footer-links">
-                    <li><a href="{{ url('/') }}">Anasayfa</a></li>
-                    <li><a href="{{ url('/programlar') }}">Programlar</a></li>
-                    <li><a href="{{ url('/iletisim') }}">İstek Hattı</a></li>
-                </ul>
-            </div>
+            <ul class="bottom-bar-links">
+                <li><a href="{{ url('/') }}">Anasayfa</a></li>
+                <li><a href="{{ url('/programlar') }}">Programlar</a></li>
+                <li><a href="{{ url('/iletisim') }}">İstek Hattı</a></li>
+            </ul>
         </div>
-        <div class="quick-menu-bar">
-            <a href="{{ url('/') }}" class="quick-menu-item"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Anasayfa</a>
-            <a href="{{ url('/programlar') }}" class="quick-menu-item"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Yayın Akışı</a>
-            <a href="#" class="quick-menu-item" id="quickMenuLive" title="Canlı yayını başlat"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>Canlı Dinle</a>
-            <a href="{{ url('/iletisim') }}" class="quick-menu-item"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>İstek Gönder</a>
-        </div>
-        <audio id="radioAudio" src="https://example.com/stream" preload="none"></audio>
-    </footer>
+    </div>
+    <audio id="radioAudio" src="https://example.com/stream" preload="none"></audio>
 
     <script>
         (function() {
