@@ -18,6 +18,7 @@ Route::get('/kullanim', [FrontendController::class, 'kullanim']);
 Route::get('/kvkk', [FrontendController::class, 'kvkk']);
 
 Route::get('/api/radio/status', App\Http\Controllers\Api\RadioStatusController::class);
+Route::get('/api/requests/approved', App\Http\Controllers\Api\ApprovedRequestsController::class);
 
 Route::post('/istek-gonder', [App\Http\Controllers\RequestController::class, 'store'])->name('song.request');
 
