@@ -1,4 +1,4 @@
-<div id="songRequestModal" class="request-modal" aria-hidden="true">
+<div id="songRequestModal" class="request-modal hidden" aria-hidden="true">
     <div class="request-modal__backdrop" data-close-modal></div>
     <div class="request-modal__box">
         <button type="button" class="request-modal__close" data-close-modal aria-label="Kapat">&times;</button>
@@ -41,8 +41,8 @@
     var openBtn=document.getElementById('openRequestModal');
     var closeBtns=document.querySelectorAll('[data-close-modal]');
     var successEl=document.getElementById('formSuccess');
-    function openModal(){if(modal){modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}}
-    function closeModal(){if(modal){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}}
+    function openModal(){if(modal){modal.classList.remove('hidden');modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}}
+    function closeModal(){if(modal){modal.classList.add('hidden');modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}}
     if(openBtn){openBtn.addEventListener('click',function(e){e.preventDefault();openModal();});}
     document.addEventListener('click',function(e){
         var t=e.target;

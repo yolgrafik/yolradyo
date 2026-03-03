@@ -265,12 +265,12 @@
         .legal-line a:hover {
             color: #fff;
         }
-        /* Global İstek Gönder button - fixed right, above player */
+        /* Global İstek Gönder button - fixed sag alt, HER SAYFADA */
         .global-request-btn {
             position: fixed;
-            bottom: 178px;
-            right: 1.5rem;
-            z-index: 998;
+            right: 24px;
+            bottom: 110px;
+            z-index: 9998;
             padding: 0.5rem 1rem;
             font-size: 0.85rem;
             font-weight: 600;
@@ -286,9 +286,8 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(201, 42, 42, 0.45);
         }
-        .page-home .global-request-btn { display: none; }
         @media (max-width: 768px) {
-            .global-request-btn { bottom: 168px; right: 1rem; font-size: 0.8rem; padding: 0.45rem 0.85rem; }
+            .global-request-btn { bottom: 100px; right: 16px; font-size: 0.8rem; padding: 0.45rem 0.85rem; }
         }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
@@ -555,8 +554,9 @@
         @media (prefers-reduced-motion: reduce) {
             body.playing .disc-overlay { animation: none; }
         }
-        /* Song request modal - overlay: fixed, full screen, z-index 9999 */
-        .request-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.25s ease,visibility 0.25s ease;}
+        /* Song request modal - overlay: fixed inset 0, z-index 9999, default hidden */
+        .request-modal.hidden{display:none !important;}
+        .request-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.25s ease,visibility 0.25s ease;}
         .request-modal.is-open{opacity:1;visibility:visible;pointer-events:auto;}
         .request-modal__backdrop{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
         .request-modal__box{position:relative;background:rgba(22,28,36,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:1.5rem;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto;transform:scale(0.95);transition:transform 0.25s ease;}
