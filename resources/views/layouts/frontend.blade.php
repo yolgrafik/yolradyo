@@ -459,7 +459,7 @@
     </main>
 
     <div class="bottom-bar-player">
-        <div class="bottom-bar-logo-wrap">
+        <div class="logo-player bottom-bar-logo-wrap">
             <img src="{{ asset('assets/images/play.png') }}" class="bottom-bar-logo" alt="RADYOYOL">
             <button type="button" id="discBtn" class="disc-overlay" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
         </div>
