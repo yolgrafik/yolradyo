@@ -249,8 +249,8 @@
             .nav-section__toggle {
                 padding: 10px 12px;
             }
-            .nav-section__items {
-                max-height: 300px;
+            .nav-section.is-open .nav-section__items {
+                max-height: 350px;
             }
             .content-area {
                 padding: 20px 24px;
@@ -284,116 +284,148 @@
 
         <div class="main-row">
             <aside class="sidebar">
-                <div class="sidebar-section active">
-                    <a href="{{ route('admin.dashboard') }}" class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                        Dashboard
-                    </a>
-                    <div class="sidebar-item">Genel Bakis</div>
-                    <div class="sidebar-item">Anlik Dinleyici</div>
-                    <div class="sidebar-item">Yayin Durumu</div>
-                    <div class="sidebar-item">Now Playing</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-                        Yayin Yonetimi (Shoutcast)
+                <nav class="nav-accordion" id="navAccordion">
+                    <div class="nav-section is-open" data-section="dashboard">
+                        <button class="nav-section__toggle" type="button" aria-expanded="true">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                            <span>Dashboard</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">Genel Bakis</a></li>
+                            <li><a href="#" class="nav-item">Anlik Dinleyici</a></li>
+                            <li><a href="#" class="nav-item">Yayin Durumu</a></li>
+                            <li><a href="#" class="nav-item">Now Playing</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-item">Stream Link Ayarlari</div>
-                    <div class="sidebar-item">Online / Offline Kontrol</div>
-                    <div class="sidebar-item">Now Playing Kontrol</div>
-                    <div class="sidebar-item">Yedek Stream</div>
-                    <div class="sidebar-item">Web Player Yonetimi</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
-                        Haberler
+                    <div class="nav-section" data-section="yayin">
+                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                            <span>Yayin Yonetimi (Shoutcast)</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="#" class="nav-item">Stream Link Ayarlari</a></li>
+                            <li><a href="#" class="nav-item">Online / Offline Kontrol</a></li>
+                            <li><a href="#" class="nav-item">Now Playing Kontrol</a></li>
+                            <li><a href="#" class="nav-item">Yedek Stream</a></li>
+                            <li><a href="#" class="nav-item">Web Player Yonetimi</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-item">Tum Haberler (liste + arama)</div>
-                    <div class="sidebar-item">Haber Ekle</div>
-                    <div class="sidebar-item">Haber Duzenle</div>
-                    <div class="sidebar-item">Haber Sil</div>
-                    <div class="sidebar-item">Kategori Yonetimi</div>
-                    <div class="sidebar-item">One Cikan Ayari</div>
-                    <div class="sidebar-item">Yayin Tarihi Planlama</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                        Videolar
+                    <div class="nav-section" data-section="haberler">
+                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                            <span>Haberler</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="#" class="nav-item">Tum Haberler (liste + arama)</a></li>
+                            <li><a href="#" class="nav-item">Haber Ekle</a></li>
+                            <li><a href="#" class="nav-item">Haber Duzenle</a></li>
+                            <li><a href="#" class="nav-item">Haber Sil</a></li>
+                            <li><a href="#" class="nav-item">Kategori Yonetimi</a></li>
+                            <li><a href="#" class="nav-item">One Cikan Ayari</a></li>
+                            <li><a href="#" class="nav-item">Yayin Tarihi Planlama</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-item">Tum Videolar</div>
-                    <div class="sidebar-item">Video Ekle</div>
-                    <div class="sidebar-item">Video Duzenle</div>
-                    <div class="sidebar-item">Video Sil</div>
-                    <div class="sidebar-item">One Cikan Video</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                        Foto Galeri
+                    <div class="nav-section" data-section="videolar">
+                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                            <span>Videolar</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="#" class="nav-item">Tum Videolar</a></li>
+                            <li><a href="#" class="nav-item">Video Ekle</a></li>
+                            <li><a href="#" class="nav-item">Video Duzenle</a></li>
+                            <li><a href="#" class="nav-item">Video Sil</a></li>
+                            <li><a href="#" class="nav-item">One Cikan Video</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-item">Albumler</div>
-                    <div class="sidebar-item">Foto Ekle</div>
-                    <div class="sidebar-item">Toplu Foto Yukleme</div>
-                    <div class="sidebar-item">Foto Duzenle</div>
-                    <div class="sidebar-item">Foto Sil</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
-                        Program & DJ
+                    <div class="nav-section" data-section="foto">
+                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                            <span>Foto Galeri</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="#" class="nav-item">Albumler</a></li>
+                            <li><a href="#" class="nav-item">Foto Ekle</a></li>
+                            <li><a href="#" class="nav-item">Toplu Foto Yukleme</a></li>
+                            <li><a href="#" class="nav-item">Foto Duzenle</a></li>
+                            <li><a href="#" class="nav-item">Foto Sil</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-item">Program Listesi</div>
-                    <div class="sidebar-item">Program Ekle</div>
-                    <div class="sidebar-item">Program Duzenle</div>
-                    <div class="sidebar-item">Program Sil</div>
-                    <div class="sidebar-item">DJ Profilleri</div>
-                    <div class="sidebar-item">Yayin Takvimi</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="7" y1="10" x2="7.01" y2="10"/><line x1="11" y1="10" x2="13" y2="10"/></svg>
-                        Reklam Yonetimi
+                    <div class="nav-section" data-section="program">
+                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                            <span>Program & DJ</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="#" class="nav-item">Program Listesi</a></li>
+                            <li><a href="#" class="nav-item">Program Ekle</a></li>
+                            <li><a href="#" class="nav-item">Program Duzenle</a></li>
+                            <li><a href="#" class="nav-item">Program Sil</a></li>
+                            <li><a href="#" class="nav-item">DJ Profilleri</a></li>
+                            <li><a href="#" class="nav-item">Yayin Takvimi</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-item">Banner Alanlari</div>
-                    <div class="sidebar-item">Popup Reklam</div>
-                    <div class="sidebar-item">Sponsor Yonetimi</div>
-                    <div class="sidebar-item">Kampanya Takibi</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        Mesaj & Istek
+                    <div class="nav-section" data-section="reklam">
+                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="7" y1="10" x2="7.01" y2="10"/><line x1="11" y1="10" x2="13" y2="10"/></svg>
+                            <span>Reklam Yonetimi</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="#" class="nav-item">Banner Alanlari</a></li>
+                            <li><a href="#" class="nav-item">Popup Reklam</a></li>
+                            <li><a href="#" class="nav-item">Sponsor Yonetimi</a></li>
+                            <li><a href="#" class="nav-item">Kampanya Takibi</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-item">Gelen Mesajlar</div>
-                    <div class="sidebar-item">Sarki Istekleri</div>
-                    <div class="sidebar-item">Moderasyon</div>
-                    <div class="sidebar-item">Kara Liste</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                        Ayarlar
+                    <div class="nav-section" data-section="mesaj">
+                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <span>Mesaj & Istek</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="#" class="nav-item">Gelen Mesajlar</a></li>
+                            <li><a href="#" class="nav-item">Sarki Istekleri</a></li>
+                            <li><a href="#" class="nav-item">Moderasyon</a></li>
+                            <li><a href="#" class="nav-item">Kara Liste</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-item">Genel Site Ayarlari</div>
-                    <div class="sidebar-item">Logo & Favicon</div>
-                    <div class="sidebar-item">SEO Ayarlari</div>
-                    <div class="sidebar-item">Sosyal Medya Linkleri</div>
-                    <div class="sidebar-item">Footer Yonetimi</div>
-                    <div class="sidebar-item">Tema & Renk Ayarlari</div>
-                </div>
-                <div class="sidebar-section">
-                    <div class="sidebar-section-title">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        Kullanici Yonetimi
+                    <div class="nav-section" data-section="ayarlar">
+                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            <span>Ayarlar</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="#" class="nav-item">Genel Site Ayarlari</a></li>
+                            <li><a href="#" class="nav-item">Logo & Favicon</a></li>
+                            <li><a href="#" class="nav-item">SEO Ayarlari</a></li>
+                            <li><a href="#" class="nav-item">Sosyal Medya Linkleri</a></li>
+                            <li><a href="#" class="nav-item">Footer Yonetimi</a></li>
+                            <li><a href="#" class="nav-item">Tema & Renk Ayarlari</a></li>
+                        </ul>
                     </div>
-                    <div class="sidebar-item">Yonetici Hesaplari</div>
-                    <div class="sidebar-item">Rol & Yetkiler</div>
-                    <div class="sidebar-item">Aktivite Loglari</div>
-                    <div class="sidebar-item">2FA Guvenlik</div>
-                </div>
+                    <div class="nav-section" data-section="kullanici">
+                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <span>Kullanici Yonetimi</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="#" class="nav-item">Yonetici Hesaplari</a></li>
+                            <li><a href="#" class="nav-item">Rol & Yetkiler</a></li>
+                            <li><a href="#" class="nav-item">Aktivite Loglari</a></li>
+                            <li><a href="#" class="nav-item">2FA Guvenlik</a></li>
+                        </ul>
+                    </div>
+                </nav>
             </aside>
 
             <main class="content-area">
@@ -403,6 +435,42 @@
             </main>
         </div>
     </div>
+    <script>
+        (function() {
+            var accordion = document.getElementById('navAccordion');
+            if (!accordion) return;
+
+            var sections = accordion.querySelectorAll('.nav-section');
+            var toggles = accordion.querySelectorAll('.nav-section__toggle');
+
+            function closeAllExcept(openSection) {
+                sections.forEach(function(section) {
+                    if (section !== openSection) {
+                        section.classList.remove('is-open');
+                        var btn = section.querySelector('.nav-section__toggle');
+                        if (btn) btn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            toggles.forEach(function(toggle) {
+                toggle.addEventListener('click', function() {
+                    var section = toggle.closest('.nav-section');
+                    var isOpen = section.classList.contains('is-open');
+
+                    closeAllExcept(isOpen ? null : section);
+
+                    if (isOpen) {
+                        section.classList.remove('is-open');
+                        toggle.setAttribute('aria-expanded', 'false');
+                    } else {
+                        section.classList.add('is-open');
+                        toggle.setAttribute('aria-expanded', 'true');
+                    }
+                });
+            });
+        })();
+    </script>
     @stack('scripts')
 </body>
 </html>
