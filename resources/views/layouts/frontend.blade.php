@@ -517,6 +517,22 @@
             to { opacity: 1; }
         }
         .radio-player.playing .radio-player-eq span { background: var(--accent); }
+        @keyframes spinDisc {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .logo-disc {
+            transform-origin: center;
+            display: inline-block;
+        }
+        .radio-player.playing .logo-disc {
+            animation: spinDisc 2.8s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .radio-player.playing .logo-disc {
+                animation: none;
+            }
+        }
         @media (max-width: 768px) {
             body { padding-bottom: 96px; }
             .radio-player { padding: 0 1rem; gap: 0.75rem; }
@@ -623,11 +639,13 @@
         <audio id="radioAudio" preload="none"></audio>
         <div class="radio-player-left">
             <a href="{{ url('/') }}" class="radio-player-logo" id="radioPlayerLogo" title="Radyoyu başlat">
+                <div class="logo-disc" id="logoDisc">
                 @if(file_exists(public_path('logo.png')))
                     <img src="{{ asset('logo.png') }}" alt="RADYOYOL">
                 @else
                     <span class="nav-logo-text" style="font-size:1.25rem;">RADYOYOL</span>
                 @endif
+                </div>
             </a>
             <div class="radio-player-live">
                 <span class="radio-player-live-dot"></span>
@@ -740,6 +758,28 @@
             }
             prevBtn.addEventListener('click', function() { audio.currentTime = 0; });
             nextBtn.addEventListener('click', function() { audio.currentTime = 0; });
+            audio.addEventListener('playing', function() {
+                setLoading(false);
+                setPlaying(true);
+                titleEl.textContent = 'Canlı Yayın';
+            });
+            audio.addEventListener('pause', function() {
+                setPlaying(false);
+                if (audio.ended) titleEl.textContent = 'Yayın bitti';
+                else titleEl.textContent = 'Duraklatıldı';
+            });
+            audio.addEventListener('ended', function() {
+                setPlaying(false);
+                titleEl.textContent = 'Yayın bitti';
+            });
+            audio.addEventListener('error', function() {
+                setLoading(false);
+                setPlaying(false);
+                titleEl.textContent = 'Yayın başlatılamadı';
+            });
+            audio.addEventListener('waiting', function() {
+                setLoading(true);
+            });
         })();
     </script>
     @stack('scripts')
