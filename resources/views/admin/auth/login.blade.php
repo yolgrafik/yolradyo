@@ -1,7 +1,7 @@
 @extends('admin.layouts.auth')
 
 @section('hero')
-<div class="login-hero">
+<div class="login-hero login-header">
     <div class="login-hero-overlay"></div>
     <div class="login-hero-content">
         <img src="{{ asset('logo.png') }}" class="login-logo" alt="RADYOYOL">
@@ -13,6 +13,38 @@
 
 @push('styles')
 <style>
+    body{
+        background:
+            radial-gradient(circle at 20% 30%, rgba(200,0,0,.35), transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(255,80,0,.25), transparent 40%),
+            linear-gradient(135deg, #0b0f1a, #111827 60%, #1a0f14);
+        min-height:100vh;
+    }
+    .login-card{
+        background: rgba(20, 24, 38, .65);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255,255,255,.08);
+        box-shadow:
+            0 0 60px rgba(255,0,0,.15),
+            0 25px 60px rgba(0,0,0,.65);
+        border-radius: 18px;
+        overflow: hidden;
+    }
+    .login-header{
+        background: linear-gradient(135deg,#7a0f14,#c1121f,#ff2e2e);
+        position:relative;
+    }
+    .login-header::after{
+        content:"";
+        position:absolute;
+        inset:0;
+        background: linear-gradient(90deg,
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,.15) 50%,
+            rgba(255,255,255,0) 100%);
+        mix-blend-mode:overlay;
+    }
     .alert-error {
         background: rgba(185, 28, 28, 0.3);
         color: #fecaca;
@@ -106,15 +138,17 @@
         padding: 0.875rem 1rem;
         font-size: 1rem;
         font-weight: 600;
-        background: var(--accent);
+        background: linear-gradient(90deg,#c1121f,#ff2e2e);
         color: #fff;
         border: none;
         border-radius: 10px;
         cursor: pointer;
-        transition: background 0.15s;
+        box-shadow: 0 0 15px rgba(255,0,0,.5);
+        transition: .3s ease;
     }
     .btn-login:hover {
-        background: #b91c1c;
+        box-shadow: 0 0 25px rgba(255,0,0,.8);
+        transform: translateY(-2px);
     }
     .error-text {
         font-size: 0.75rem;
@@ -125,15 +159,12 @@
         position:relative;
         height:240px;
         margin: -2rem -2rem 1.5rem -2rem;
-        background: url("{{ asset('assets/images/admin-hero.png') }}");
-        background-size:cover;
-        background-position:center;
         display:flex;
         align-items:center;
         justify-content:center;
         text-align:center;
         overflow:hidden;
-        border-radius: 20px 20px 0 0;
+        border-radius: 18px 18px 0 0;
     }
     .login-hero-overlay{
         position:absolute;
@@ -146,9 +177,11 @@
         color:#fff;
     }
     .login-logo{
-        height:90px;
+        height:115px;
         margin-bottom:10px;
-        filter: drop-shadow(0 0 15px rgba(255,60,60,.7));
+        filter:
+            drop-shadow(0 0 15px rgba(255,0,0,.6))
+            drop-shadow(0 0 35px rgba(255,60,60,.4));
     }
     .login-hero h1{
         font-size:28px;

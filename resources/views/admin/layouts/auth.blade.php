@@ -110,7 +110,7 @@
     @stack('styles')
 </head>
 <body>
-    <div class="auth-card">
+    <div class="auth-card {{ View::hasSection('hero') ? 'login-card' : '' }}">
         @hasSection('hero')
             @yield('hero')
         @else
