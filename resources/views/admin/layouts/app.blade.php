@@ -501,6 +501,22 @@
             color: var(--text);
             font-weight: 600;
         }
+        .role-select {
+            background: rgba(10,12,20,0.75) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255,255,255,0.18) !important;
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+        .role-select:focus {
+            outline: none;
+            border-color: rgba(255,0,0,0.45) !important;
+            box-shadow: 0 0 0 3px rgba(255,0,0,0.15) !important;
+        }
+        .role-select option {
+            background: #0b0f1a !important;
+            color: #ffffff !important;
+        }
         @media (max-width: 1024px) {
             .card-grid {
                 grid-template-columns: repeat(2, 1fr);

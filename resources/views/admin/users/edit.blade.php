@@ -47,8 +47,8 @@
             </div>
             <div class="form-group">
                 <label for="role_id">Rol</label>
-                <select name="role_id" id="role_id" class="form-input">
-                    <option value="">-- Seciniz --</option>
+                <select name="role_id" id="role_id" class="form-input form-select role-select">
+                    <option value="" disabled {{ !old('role_id', $user->role_id) ? 'selected' : '' }}>Rol Sec</option>
                     @foreach($roles as $role)
                         <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
                     @endforeach
