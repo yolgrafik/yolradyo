@@ -331,8 +331,84 @@
         .radio-player-left {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.25rem;
             min-width: 0;
+        }
+        .player-logo-block {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .logo-stack {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .logo-radyo {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.08em;
+        }
+        .logo-yol {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+        }
+        .logo-disc {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #1a1d24;
+            border: 2px solid rgba(255,255,255,0.25);
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin: 0 2px;
+            flex-shrink: 0;
+            transform-origin: center;
+            transition: all 0.2s ease;
+        }
+        .logo-disc:hover {
+            border-color: rgba(201, 42, 42, 0.6);
+            box-shadow: 0 0 12px rgba(201, 42, 42, 0.3);
+        }
+        .logo-disc svg {
+            width: 18px;
+            height: 18px;
+        }
+        .radio-player.playing .logo-disc {
+            animation: spinDisc 3s linear infinite;
+        }
+        .radio-player.playing .logo-disc .play-icon { display: none; }
+        .radio-player.playing .logo-disc .pause-icon { display: block; }
+        .logo-disc .pause-icon { display: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .radio-player.playing .logo-disc { animation: none; }
+        }
+        .radio-player-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.06);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        .radio-player-btn:hover {
+            background: rgba(201, 42, 42, 0.2);
+            border-color: rgba(201, 42, 42, 0.4);
+            color: #fff;
         }
         .radio-player-live {
             display: flex;
@@ -364,28 +440,10 @@
             justify-content: center;
             min-width: 0;
         }
-        .player-logo {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.2s ease;
-        }
-        .player-logo:hover { opacity: 0.9; }
-        .player-logo .logo-img {
-            width: 90px;
-            height: auto;
-            display: block;
-            transform-origin: center;
-            transition: transform 0.3s ease;
-        }
-        .radio-player.playing .player-logo .logo-img {
-            animation: spinDisc 3s linear infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .radio-player.playing .player-logo .logo-img {
-                animation: none;
-            }
+        .radio-player-title {
+            font-size: 0.9rem;
+            color: var(--muted);
+            text-align: center;
         }
         .radio-player-right {
             display: flex;
@@ -464,7 +522,9 @@
         @media (max-width: 768px) {
             body { padding-bottom: 96px; }
             .radio-player { padding: 0 1rem; gap: 0.75rem; }
-            .player-logo .logo-img { width: 70px; }
+            .logo-disc { width: 38px; height: 38px; }
+            .logo-disc svg { width: 14px; height: 14px; }
+            .logo-yol { font-size: 1.35rem; }
             .radio-player-volume input[type="range"] { width: 60px; }
         }
     </style>
@@ -564,17 +624,23 @@
     </footer>
 
     <div class="radio-player" id="radioPlayer">
+        <audio id="radioStream" src="https://example.com/stream" preload="none"></audio>
         <div class="radio-player-left">
+            <div class="player-logo-block">
+                <div class="logo-stack">
+                    <span class="logo-radyo">RADIYO</span>
+                    <span class="logo-yol">Y<span class="logo-disc" id="logoDisc" title="Oynat / Duraklat"><svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></span>L</span>
+                </div>
+                <button type="button" class="radio-player-btn" id="radioPrev" aria-label="Önceki">⏮</button>
+                <button type="button" class="radio-player-btn" id="radioNext" aria-label="Sonraki">⏭</button>
+            </div>
             <div class="radio-player-live">
                 <span class="radio-player-live-dot"></span>
                 <span>CANLI</span>
             </div>
         </div>
         <div class="radio-player-center">
-            <div class="player-logo" id="playerLogo" title="Oynat / Duraklat">
-                <img src="{{ asset('assets/images/play.png') }}" class="logo-img" alt="RADYOYOL">
-                <audio id="radioStream" src="https://example.com/stream" preload="none"></audio>
-            </div>
+            <div class="radio-player-title" id="radioTitle">Duraklatıldı</div>
         </div>
         <div class="radio-player-right">
             <div class="radio-player-volume">
@@ -600,11 +666,14 @@
         (function() {
             var audio = document.getElementById('radioStream');
             var player = document.getElementById('radioPlayer');
-            var logoEl = document.getElementById('playerLogo');
+            var logoDisc = document.getElementById('logoDisc');
+            var titleEl = document.getElementById('radioTitle');
             var volInput = document.getElementById('radioVol');
             var volBtn = document.getElementById('radioVolBtn');
+            var prevBtn = document.getElementById('radioPrev');
+            var nextBtn = document.getElementById('radioNext');
             var navLogo = document.querySelector('.nav-logo');
-            if (!audio || !logoEl) return;
+            if (!audio || !logoDisc) return;
             audio.volume = 0.8;
             if (volInput) volInput.value = 80;
             if (volInput && volBtn) {
@@ -615,15 +684,16 @@
             }
             function setPlaying(playing) {
                 player.classList.toggle('playing', playing);
+                if (titleEl) titleEl.textContent = playing ? 'Canlı Yayın' : 'Duraklatıldı';
             }
             function togglePlay() {
                 if (audio.paused) {
-                    audio.play().catch(function() {});
+                    audio.play().catch(function() { if (titleEl) titleEl.textContent = 'Yayın başlatılamadı'; });
                 } else {
                     audio.pause();
                 }
             }
-            logoEl.addEventListener('click', function(e) {
+            logoDisc.addEventListener('click', function(e) {
                 e.preventDefault();
                 togglePlay();
             });
@@ -634,6 +704,8 @@
                     return false;
                 });
             }
+            if (prevBtn) prevBtn.addEventListener('click', function() { audio.currentTime = 0; });
+            if (nextBtn) nextBtn.addEventListener('click', function() { audio.currentTime = 0; });
             audio.addEventListener('playing', function() {
                 setPlaying(true);
             });
@@ -642,6 +714,10 @@
             });
             audio.addEventListener('ended', function() {
                 setPlaying(false);
+            });
+            audio.addEventListener('error', function() {
+                setPlaying(false);
+                if (titleEl) titleEl.textContent = 'Yayın başlatılamadı';
             });
         })();
     </script>
