@@ -17,6 +17,8 @@ Route::get('/cerez', [FrontendController::class, 'cerez']);
 Route::get('/kullanim', [FrontendController::class, 'kullanim']);
 Route::get('/kvkk', [FrontendController::class, 'kvkk']);
 
+Route::get('/api/radio/status', App\Http\Controllers\Api\RadioStatusController::class);
+
 Route::prefix('admin')->group(function () {
     Route::get('', function () {
         return session('admin_logged_in') ? redirect('/admin/dashboard') : redirect('/admin/login');
