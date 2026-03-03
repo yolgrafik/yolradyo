@@ -131,16 +131,16 @@
             align-items: center;
         }
         .topbar-title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
             letter-spacing: 0.12em;
             color: #fff;
         }
         .topbar-sub {
-            font-size: 0.95rem;
+            font-size: 1.35rem;
             font-weight: 700;
             letter-spacing: 0.28em;
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.95);
         }
         .user-box {
             display: flex;
@@ -483,11 +483,11 @@
                 height: 32px;
             }
             .topbar-title {
-                font-size: 1rem;
+                font-size: 0.95rem;
                 letter-spacing: 0.08em;
             }
             .topbar-sub {
-                font-size: 0.7rem;
+                font-size: 1rem;
                 letter-spacing: 0.18em;
             }
             .nav-section + .nav-section {
