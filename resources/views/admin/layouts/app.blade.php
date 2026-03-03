@@ -552,10 +552,12 @@
           position: relative !important;
         }
         .topbar.admin-hero{
-          background-image: url("{{ asset('assets/images/admin-hero.png') }}");
+          background:
+            linear-gradient(135deg, #3b0008 0%, #6e0d14 35%, #c1121f 70%, #ff2b2b 100%),
+            url("{{ asset('assets/images/admin-hero.png') }}");
+          background-blend-mode: overlay;
           background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
+          background-position: center 30%;
           height: 170px !important;
           min-height: 170px !important;
           padding: 25px 40px !important;
@@ -602,6 +604,29 @@
           35%  { transform: translateX(260%) skewX(-18deg); opacity:0; }
           100% { transform: translateX(260%) skewX(-18deg); opacity:0; }
         }
+        .logo img{
+          height: 58px !important;
+          width: auto;
+          filter: drop-shadow(0 0 8px rgba(255,50,50,.6));
+          transition: transform .3s ease;
+        }
+        .logo img:hover{
+          transform: scale(1.08);
+        }
+        .topbar.admin-hero .topbar-title{
+          font-size: 36px;
+          font-weight: 800;
+          letter-spacing: 3px;
+          text-shadow:
+            0 0 15px rgba(255,255,255,.25),
+            0 0 30px rgba(255,60,60,.45),
+            0 0 60px rgba(255,0,0,.35);
+        }
+        .topbar-subtitle{
+          font-size: 16px;
+          letter-spacing: 4px;
+          color: rgba(255,255,255,.9);
+        }
     </style>
     @stack('styles')
 </head>
@@ -613,13 +638,13 @@
             <div class="topbar-inner">
                 <div class="topbar-spacer"></div>
                 <div class="topbar-brand">
-                    <div class="topbar-logo-wrap">
+                    <div class="topbar-logo-wrap logo">
                         <img src="{{ asset('logo.png') }}" alt="RADYOYOL" class="topbar-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                         <span class="topbar-logo-fallback" style="display:none">RADYOYOL</span>
                     </div>
                     <div class="topbar-brand-text">
                         <div class="topbar-title"><span class="shine">RADYOYOL ADMIN PANEL</span></div>
-                        <div class="topbar-sub">TAM OZELLIK LISTESI</div>
+                        <div class="topbar-sub topbar-subtitle">TAM OZELLIK LISTESI</div>
                     </div>
                 </div>
                 <div class="topbar-spacer topbar-spacer--right">
