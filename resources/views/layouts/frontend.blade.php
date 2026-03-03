@@ -334,29 +334,22 @@
             gap: 1.25rem;
             min-width: 0;
         }
-        .player-logo-block {
+        .player-logo-wrap {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: center;
         }
-        .logo-stack {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.1;
+        .player-logo-img {
+            height: 78px;
+            width: auto;
+            display: block;
         }
-        .logo-radyo {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.08em;
-        }
-        .logo-yol {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: 0.02em;
-            display: flex;
-            align-items: center;
+        .player-logo-wrap .disc-btn {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -24px 0 0 -24px;
         }
         .disc-btn {
             width: 48px;
@@ -459,6 +452,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 1rem;
             min-width: 0;
         }
         .radio-player-title {
@@ -548,7 +542,7 @@
             .disc-btn .icon.pause { width: 10px; height: 10px; }
             .disc-btn .icon.pause::before,
             .disc-btn .icon.pause::after { width: 3px; height: 10px; }
-            .logo-yol { font-size: 1.35rem; }
+            .player-logo-img { height: 68px; }
             .radio-player-volume input[type="range"] { width: 60px; }
         }
     </style>
@@ -650,20 +644,22 @@
     <div class="radio-player" id="radioPlayer">
         <audio id="radioStream" src="https://example.com/stream" preload="none"></audio>
         <div class="radio-player-left">
-            <div class="player-logo-block">
-                <div class="logo-stack">
-                    <span class="logo-radyo">RADIYO</span>
-                    <span class="logo-yol">Y<button type="button" id="discBtn" class="disc-btn" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>L</span>
-                </div>
-                <button type="button" class="radio-player-btn" id="radioPrev" aria-label="Önceki">⏮</button>
-                <button type="button" class="radio-player-btn" id="radioNext" aria-label="Sonraki">⏭</button>
-            </div>
             <div class="radio-player-live">
                 <span class="radio-player-live-dot"></span>
                 <span>CANLI</span>
             </div>
         </div>
         <div class="radio-player-center">
+            <div class="player-logo-wrap">
+                @if(file_exists(public_path('assets/images/play.png')))
+                    <img src="{{ asset('assets/images/play.png') }}" class="player-logo-img" alt="RADYOYOL">
+                @elseif(file_exists(public_path('logo.png')))
+                    <img src="{{ asset('logo.png') }}" class="player-logo-img" alt="RADYOYOL">
+                @else
+                    <span class="nav-logo-text" style="font-size:1.5rem;">RADYOYOL</span>
+                @endif
+                <button type="button" id="discBtn" class="disc-btn" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
+            </div>
             <div class="radio-player-title" id="radioTitle">Duraklatıldı</div>
         </div>
         <div class="radio-player-right">
