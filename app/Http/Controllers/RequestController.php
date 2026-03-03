@@ -27,10 +27,16 @@ class RequestController extends Controller
             'status' => 'pending',
         ]);
 
-        return response()->json([
-            'ok' => true,
-            'message' => 'İsteğiniz alındı.',
-        ]);
+            return response()->json([
+                'ok' => true,
+                'message' => 'İsteğiniz alındı.',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'ok' => false,
+                'errors' => $e->errors(),
+            ], 422);
+        }
     }
 
     public function approvedList()
