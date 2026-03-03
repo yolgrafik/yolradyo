@@ -314,6 +314,7 @@
         }
         /* Radio Player Bar */
         .radio-player {
+            font-family: Arial, sans-serif;
             position: fixed;
             bottom: 0;
             left: 0;
@@ -334,46 +335,37 @@
             gap: 1.25rem;
             min-width: 0;
         }
-        .player-logo-wrap {
+        .footer-logo-wrap {
             position: relative;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
         }
-        .player-logo-img {
-            height: 78px;
+        .footer-logo {
+            height: 80px;
             width: auto;
             display: block;
         }
-        .player-logo-wrap .disc-btn {
+        .disc-overlay {
             position: absolute;
-            left: 50%;
-            top: 50%;
-            margin: -24px 0 0 -24px;
-        }
-        .disc-btn {
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: var(--accent);
+            background: #ff2a2a;
             border: none;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             cursor: pointer;
-            margin: 0 2px;
-            flex-shrink: 0;
-            transform-origin: center;
-            transition: box-shadow 0.2s ease;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
-        .disc-btn:hover {
-            box-shadow: 0 0 16px rgba(201, 42, 42, 0.5);
-        }
-        .disc-btn .icon {
+        .disc-overlay .icon {
             flex-shrink: 0;
             display: block;
         }
-        .disc-btn .icon.play {
+        .disc-overlay .icon.play {
             width: 0;
             height: 0;
             border-top: 8px solid transparent;
@@ -381,29 +373,32 @@
             border-left: 14px solid #fff;
             margin-left: 4px;
         }
-        .disc-btn .icon.pause {
-            width: 14px;
-            height: 14px;
+        .disc-overlay .icon.pause {
+            width: 16px;
+            height: 16px;
             position: relative;
             display: block;
         }
-        .disc-btn .icon.pause::before,
-        .disc-btn .icon.pause::after {
+        .disc-overlay .icon.pause::before,
+        .disc-overlay .icon.pause::after {
             content: '';
             position: absolute;
             top: 0;
-            width: 4px;
-            height: 14px;
+            width: 5px;
+            height: 16px;
             background: #fff;
-            border-radius: 2px;
         }
-        .disc-btn .icon.pause::before { left: 0; }
-        .disc-btn .icon.pause::after { right: 0; }
-        .radio-player.is-playing .disc-btn {
+        .disc-overlay .icon.pause::before { left: 0; }
+        .disc-overlay .icon.pause::after { right: 0; }
+        @keyframes spinDisc {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        body.playing .disc-overlay {
             animation: spinDisc 2.5s linear infinite;
         }
         @media (prefers-reduced-motion: reduce) {
-            .radio-player.is-playing .disc-btn { animation: none; }
+            body.playing .disc-overlay { animation: none; }
         }
         .radio-player-btn {
             width: 36px;
@@ -529,20 +524,16 @@
             from { opacity: 0.5; }
             to { opacity: 1; }
         }
-        .radio-player.is-playing .radio-player-eq span { background: var(--accent); }
-        @keyframes spinDisc {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        body.playing .radio-player-eq span { background: var(--accent); }
         @media (max-width: 768px) {
             body { padding-bottom: 96px; }
             .radio-player { padding: 0 1rem; gap: 0.75rem; }
-            .disc-btn { width: 42px; height: 42px; }
-            .disc-btn .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
-            .disc-btn .icon.pause { width: 10px; height: 10px; }
-            .disc-btn .icon.pause::before,
-            .disc-btn .icon.pause::after { width: 3px; height: 10px; }
-            .player-logo-img { height: 68px; }
+            .disc-overlay { width: 42px; height: 42px; }
+            .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
+            .disc-overlay .icon.pause { width: 12px; height: 12px; }
+            .disc-overlay .icon.pause::before,
+            .disc-overlay .icon.pause::after { width: 3px; height: 12px; }
+            .footer-logo { height: 68px; }
             .radio-player-volume input[type="range"] { width: 60px; }
         }
     </style>
@@ -642,7 +633,7 @@
     </footer>
 
     <div class="radio-player" id="radioPlayer">
-        <audio id="radioStream" src="https://example.com/stream" preload="none"></audio>
+        <audio id="radioAudio" src="https://example.com/stream" preload="none"></audio>
         <div class="radio-player-left">
             <div class="radio-player-live">
                 <span class="radio-player-live-dot"></span>
@@ -650,15 +641,9 @@
             </div>
         </div>
         <div class="radio-player-center">
-            <div class="player-logo-wrap">
-                @if(file_exists(public_path('assets/images/play.png')))
-                    <img src="{{ asset('assets/images/play.png') }}" class="player-logo-img" alt="RADYOYOL">
-                @elseif(file_exists(public_path('logo.png')))
-                    <img src="{{ asset('logo.png') }}" class="player-logo-img" alt="RADYOYOL">
-                @else
-                    <span class="nav-logo-text" style="font-size:1.5rem;">RADYOYOL</span>
-                @endif
-                <button type="button" id="discBtn" class="disc-btn" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
+            <div class="footer-logo-wrap">
+                <img src="{{ asset('assets/images/play.png') }}" class="footer-logo" alt="RADYOYOL">
+                <button type="button" id="discBtn" class="disc-overlay" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
             </div>
             <div class="radio-player-title" id="radioTitle">Duraklatıldı</div>
         </div>
@@ -684,17 +669,14 @@
             }
         })();
         (function() {
-            var audio = document.getElementById('radioStream');
-            var player = document.getElementById('radioPlayer');
-            var discBtn = document.getElementById('discBtn');
-            var iconEl = discBtn ? discBtn.querySelector('.icon') : null;
+            var btn = document.getElementById('discBtn');
+            var audio = document.getElementById('radioAudio');
+            var icon = btn ? btn.querySelector('.icon') : null;
             var titleEl = document.getElementById('radioTitle');
             var volInput = document.getElementById('radioVol');
             var volBtn = document.getElementById('radioVolBtn');
-            var prevBtn = document.getElementById('radioPrev');
-            var nextBtn = document.getElementById('radioNext');
             var navLogo = document.querySelector('.nav-logo');
-            if (!audio || !discBtn) return;
+            if (!audio || !btn) return;
             audio.volume = 0.8;
             if (volInput) volInput.value = 80;
             if (volInput && volBtn) {
@@ -703,45 +685,39 @@
                     volBtn.textContent = this.value == 0 ? '🔇' : (this.value < 50 ? '🔉' : '🔊');
                 });
             }
-            function setPlaying(playing) {
-                player.classList.toggle('is-playing', playing);
-                if (iconEl) {
-                    iconEl.classList.remove('play', 'pause');
-                    iconEl.classList.add(playing ? 'pause' : 'play');
-                }
-                if (titleEl) titleEl.textContent = playing ? 'Canlı Yayın' : 'Duraklatıldı';
-            }
-            function togglePlay() {
+            btn.addEventListener('click', function() {
                 if (audio.paused) {
                     audio.play().catch(function() { if (titleEl) titleEl.textContent = 'Yayın başlatılamadı'; });
                 } else {
                     audio.pause();
                 }
-            }
-            discBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                togglePlay();
             });
             if (navLogo) {
                 navLogo.addEventListener('click', function(e) {
                     e.preventDefault();
-                    togglePlay();
+                    if (audio.paused) audio.play().catch(function() {});
+                    else audio.pause();
                     return false;
                 });
             }
-            if (prevBtn) prevBtn.addEventListener('click', function() { audio.currentTime = 0; });
-            if (nextBtn) nextBtn.addEventListener('click', function() { audio.currentTime = 0; });
-            audio.addEventListener('playing', function() {
-                setPlaying(true);
+            audio.addEventListener('play', function() {
+                document.body.classList.add('playing');
+                if (icon) { icon.classList.remove('play'); icon.classList.add('pause'); }
+                if (titleEl) titleEl.textContent = 'Canlı Yayın';
             });
             audio.addEventListener('pause', function() {
-                setPlaying(false);
+                document.body.classList.remove('playing');
+                if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
+                if (titleEl) titleEl.textContent = 'Duraklatıldı';
             });
             audio.addEventListener('ended', function() {
-                setPlaying(false);
+                document.body.classList.remove('playing');
+                if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
+                if (titleEl) titleEl.textContent = 'Duraklatıldı';
             });
             audio.addEventListener('error', function() {
-                setPlaying(false);
+                document.body.classList.remove('playing');
+                if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
                 if (titleEl) titleEl.textContent = 'Yayın başlatılamadı';
             });
         })();
