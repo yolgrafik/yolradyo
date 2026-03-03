@@ -22,6 +22,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-bottom: 96px;
         }
         .navbar {
             position: sticky;
@@ -311,6 +312,215 @@
         @media (min-width: 993px) {
             .nav-toggle { display: none; }
         }
+        /* Radio Player Bar */
+        .radio-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(180deg, #0b0f1a 0%, #111 100%);
+            border-top: 1px solid rgba(201, 42, 42, 0.4);
+            box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            gap: 1.5rem;
+        }
+        .radio-player-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 0;
+        }
+        .radio-player-logo {
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+        .radio-player-logo:hover { opacity: 0.9; }
+        .radio-player-logo img {
+            height: 44px;
+            width: auto;
+            display: block;
+        }
+        .radio-player-live {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+        .radio-player-live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px var(--accent);
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--accent); }
+            50% { opacity: 0.7; box-shadow: 0 0 6px var(--accent); }
+        }
+        .radio-player-live span {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .radio-player-center {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            min-width: 0;
+        }
+        .radio-player-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .radio-player-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .radio-player-btn:hover {
+            background: rgba(201, 42, 42, 0.2);
+            border-color: rgba(201, 42, 42, 0.4);
+            color: #fff;
+        }
+        .radio-player-btn svg { width: 18px; height: 18px; }
+        .radio-player-play {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(230,230,230,0.9));
+            border: 2px solid rgba(201, 42, 42, 0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.8);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .radio-player-play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 28px rgba(201, 42, 42, 0.4), inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+        .radio-player-play img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+        .radio-player-play.playing img.play-icon { display: none; }
+        .radio-player-play.playing img.pause-icon { display: block; }
+        .radio-player-play img.pause-icon { display: none; }
+        .radio-player-title {
+            max-width: 280px;
+            font-size: 0.9rem;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .radio-player-loading {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .radio-player.loading .radio-player-loading { display: block; }
+        .radio-player.loading .radio-player-play { opacity: 0.6; pointer-events: none; }
+        .radio-player-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 0;
+        }
+        .radio-player-volume {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .radio-player-volume button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .radio-player-volume button:hover {
+            background: rgba(201, 42, 42, 0.15);
+            color: #fff;
+        }
+        .radio-player-volume button svg { width: 18px; height: 18px; }
+        .radio-player-volume input[type="range"] {
+            width: 80px;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--border);
+            border-radius: 2px;
+            outline: none;
+        }
+        .radio-player-volume input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .radio-player-volume input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+        .radio-player-eq {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 24px;
+        }
+        .radio-player-eq span {
+            width: 4px;
+            background: var(--muted);
+            border-radius: 2px;
+            animation: eq-bars 0.5s ease-in-out infinite alternate;
+        }
+        .radio-player-eq span:nth-child(1) { height: 8px; animation-delay: 0s; }
+        .radio-player-eq span:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+        .radio-player-eq span:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+        .radio-player-eq span:nth-child(4) { height: 12px; animation-delay: 0.3s; }
+        .radio-player-eq span:nth-child(5) { height: 18px; animation-delay: 0.4s; }
+        @keyframes eq-bars {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+        .radio-player.playing .radio-player-eq span { background: var(--accent); }
+        @media (max-width: 768px) {
+            body { padding-bottom: 96px; }
+            .radio-player { padding: 0 1rem; gap: 0.75rem; }
+            .radio-player-title { max-width: 120px; font-size: 0.8rem; }
+            .radio-player-volume input[type="range"] { width: 60px; }
+        }
     </style>
     @stack('styles')
 </head>
@@ -407,6 +617,48 @@
         </div>
     </footer>
 
+    <div class="radio-player" id="radioPlayer">
+        <audio id="radioAudio" preload="none"></audio>
+        <div class="radio-player-left">
+            <a href="{{ url('/') }}" class="radio-player-logo" id="radioPlayerLogo" title="Radyoyu başlat">
+                @if(file_exists(public_path('logo.png')))
+                    <img src="{{ asset('logo.png') }}" alt="RADYOYOL">
+                @else
+                    <span class="nav-logo-text" style="font-size:1.25rem;">RADYOYOL</span>
+                @endif
+            </a>
+            <div class="radio-player-live">
+                <span class="radio-player-live-dot"></span>
+                <span>CANLI</span>
+            </div>
+        </div>
+        <div class="radio-player-center">
+            <div class="radio-player-controls">
+                <button type="button" class="radio-player-btn" id="radioPrev" aria-label="Önceki">⏮</button>
+                <button type="button" class="radio-player-play" id="radioPlay" aria-label="Oynat/Duraklat">
+                    @if(file_exists(public_path('assets/images/play-logo.png')))
+                    <img src="{{ asset('assets/images/play-logo.png') }}" alt="" class="play-icon">
+                    @else
+                    <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    @endif
+                    <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                </button>
+                <button type="button" class="radio-player-btn" id="radioNext" aria-label="Sonraki">⏭</button>
+            </div>
+            <div class="radio-player-loading" id="radioLoading"></div>
+            <div class="radio-player-title" id="radioTitle">Şarkı bilgisi yükleniyor...</div>
+        </div>
+        <div class="radio-player-right">
+            <div class="radio-player-volume">
+                <button type="button" id="radioVolBtn" aria-label="Ses">🔊</button>
+                <input type="range" id="radioVol" min="0" max="100" value="80" aria-label="Ses seviyesi">
+            </div>
+            <div class="radio-player-eq">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+
     <script>
         (function() {
             var toggle = document.getElementById('navToggle');
@@ -416,6 +668,76 @@
                     center.classList.toggle('is-open');
                 });
             }
+        })();
+        (function() {
+            var STREAM_URL = 'https://example.com/stream';
+            var audio = document.getElementById('radioAudio');
+            var player = document.getElementById('radioPlayer');
+            var playBtn = document.getElementById('radioPlay');
+            var prevBtn = document.getElementById('radioPrev');
+            var nextBtn = document.getElementById('radioNext');
+            var volInput = document.getElementById('radioVol');
+            var volBtn = document.getElementById('radioVolBtn');
+            var titleEl = document.getElementById('radioTitle');
+            var loadingEl = document.getElementById('radioLoading');
+            var logoLink = document.getElementById('radioPlayerLogo');
+            var navLogo = document.querySelector('.nav-logo');
+            if (!audio || !playBtn) return;
+            audio.volume = 0.8;
+            volInput.value = 80;
+            volInput.addEventListener('input', function() {
+                audio.volume = this.value / 100;
+                volBtn.textContent = this.value == 0 ? '🔇' : (this.value < 50 ? '🔉' : '🔊');
+            });
+            function setPlaying(playing) {
+                player.classList.toggle('playing', playing);
+                playBtn.classList.toggle('playing', playing);
+                var playIcon = playBtn.querySelector('.play-icon');
+                var pauseIcon = playBtn.querySelector('.pause-icon');
+                if (playIcon) playIcon.style.display = playing ? 'none' : 'block';
+                if (pauseIcon) pauseIcon.style.display = playing ? 'block' : 'none';
+            }
+            function setLoading(loading) {
+                player.classList.toggle('loading', loading);
+            }
+            function togglePlay() {
+                if (audio.paused) {
+                    setLoading(true);
+                    audio.src = STREAM_URL;
+                    audio.play().then(function() {
+                        setLoading(false);
+                        setPlaying(true);
+                        titleEl.textContent = 'Canlı Yayın';
+                    }).catch(function() {
+                        setLoading(false);
+                        titleEl.textContent = 'Yayın başlatılamadı';
+                    });
+                } else {
+                    audio.pause();
+                    setPlaying(false);
+                    titleEl.textContent = 'Duraklatıldı';
+                }
+            }
+            playBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                togglePlay();
+            });
+            if (logoLink) {
+                logoLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    togglePlay();
+                    return false;
+                });
+            }
+            if (navLogo) {
+                navLogo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    togglePlay();
+                    return false;
+                });
+            }
+            prevBtn.addEventListener('click', function() { audio.currentTime = 0; });
+            nextBtn.addEventListener('click', function() { audio.currentTime = 0; });
         })();
     </script>
     @stack('scripts')
