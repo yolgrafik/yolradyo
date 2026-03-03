@@ -6,13 +6,13 @@
     <title>RADYOYOL ADMIN PANEL - Giris</title>
     <style>
         :root {
-            --bg1: #0a0a12;
-            --bg2: #12121a;
-            --card: rgba(26, 26, 36, 0.75);
+            --bg: #0d0d14;
+            --panel: #12121a;
+            --card: rgba(30, 30, 45, 0.6);
             --text: #f5f5f5;
-            --muted: #a3a3a3;
-            --accent: #dc2626;
+            --muted: #9ca3af;
             --border: rgba(255, 255, 255, 0.08);
+            --accent: #dc2626;
         }
         * {
             box-sizing: border-box;
@@ -21,7 +21,7 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, #0d0d14 100%);
+            background: linear-gradient(180deg, #1a0a12 0%, #0d0d18 40%, #0a0a12 100%);
             color: var(--text);
             min-height: 100vh;
             display: flex;
@@ -35,7 +35,8 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
             pointer-events: none;
         }
         body::after {
@@ -45,8 +46,9 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%);
-            opacity: 0.4;
+            z-index: 0;
+            background: linear-gradient(90deg, transparent 0%, var(--accent) 25%, var(--accent) 75%, transparent 100%);
+            opacity: 0.5;
             pointer-events: none;
         }
         .auth-card {
@@ -55,11 +57,11 @@
             width: 100%;
             max-width: 420px;
             background: var(--card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-radius: 20px;
             border: 1px solid var(--border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
             padding: 2rem 2rem 2.5rem;
         }
         .auth-logo {
@@ -81,10 +83,10 @@
             letter-spacing: 0.2em;
             color: var(--muted);
             text-align: center;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
         }
         .auth-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--text);
             text-align: center;
