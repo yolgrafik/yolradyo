@@ -25,14 +25,14 @@
         border-radius: 14px;
         overflow: hidden;
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-        min-height: 322px;
+        min-height: 386px;
         background: var(--panel);
         border: 1px solid var(--border);
     }
     .home-slider {
         position: relative;
         width: 100%;
-        min-height: 322px;
+        min-height: 386px;
         overflow: hidden;
     }
     .home-slider__slide {
@@ -51,13 +51,24 @@
         opacity: 1;
         z-index: 1;
         transform: translateX(0) translateY(0) scale(1);
-        transition: transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.7s ease;
     }
-    .home-slider__slide.is-exiting {
-        opacity: 0;
-        transform: translateX(-80%) translateY(3%) scale(0.97);
-        transition: transform 1.1s cubic-bezier(0.55, 0.06, 0.68, 0.19), opacity 0.6s ease;
-    }
+    .home-slider__slide.is-exiting { opacity: 0; }
+    .home-slider__slide.effect-1.is-active { transition: transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.7s ease; }
+    .home-slider__slide.effect-1 { transform: translateX(100%) translateY(0) scale(1.02); }
+    .home-slider__slide.effect-1.is-active { transform: translateX(0) translateY(0) scale(1); }
+    .home-slider__slide.effect-1.is-exiting { transform: translateX(-80%) translateY(3%) scale(0.97); transition: transform 1.1s cubic-bezier(0.55, 0.06, 0.68, 0.19), opacity 0.6s ease; }
+    .home-slider__slide.effect-2 { transform: translateY(100%) scale(0.95); }
+    .home-slider__slide.effect-2.is-active { transform: translateY(0) scale(1); transition: transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease; }
+    .home-slider__slide.effect-2.is-exiting { transform: translateY(-50%) scale(0.9); transition: transform 1s ease, opacity 0.5s ease; }
+    .home-slider__slide.effect-3 { transform: translateX(-100%) scale(1.05); }
+    .home-slider__slide.effect-3.is-active { transform: translateX(0) scale(1); transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease; }
+    .home-slider__slide.effect-3.is-exiting { transform: translateX(80%) scale(0.95); transition: transform 1s ease, opacity 0.5s ease; }
+    .home-slider__slide.effect-4 { transform: scale(0.8); opacity: 0; }
+    .home-slider__slide.effect-4.is-active { transform: scale(1); transition: transform 1.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease; }
+    .home-slider__slide.effect-4.is-exiting { transform: scale(1.2); transition: transform 0.9s ease, opacity 0.4s ease; }
+    .home-slider__slide.effect-5 { transform: translate(100%, 100%) scale(0.9); }
+    .home-slider__slide.effect-5.is-active { transform: translate(0, 0) scale(1); transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.7s ease; }
+    .home-slider__slide.effect-5.is-exiting { transform: translate(-60%, -40%) scale(0.92); transition: transform 1s ease, opacity 0.5s ease; }
     .home-slider__slide::after {
         content: '';
         position: absolute;
@@ -152,7 +163,7 @@
     }
     .home-slider__dot.is-active { background: var(--accent); }
     .home-slider-placeholder {
-        min-height: 322px;
+        min-height: 386px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -403,7 +414,7 @@
             <div class="home-slider-wrap">
                 <div class="home-slider" id="homeSlider">
                     @foreach($sliders as $i => $s)
-                    <div class="home-slider__slide {{ $i === 0 ? 'is-active' : '' }}" data-index="{{ $i }}" style="background-image: url('{{ asset($s->image_path) }}');">
+                    <div class="home-slider__slide effect-{{ ($i % 5) + 1 }} {{ $i === 0 ? 'is-active' : '' }}" data-index="{{ $i }}" data-effect="{{ ($i % 5) + 1 }}" style="background-image: url('{{ asset($s->image_path) }}');">
                         <div class="home-slider__content">
                             <h2 class="home-slider__title">{{ $s->title }}</h2>
                             @if($s->subtitle)<p class="home-slider__subtitle">{{ $s->subtitle }}</p>@endif
@@ -481,22 +492,28 @@
         var current = 0;
         var total = slides.length;
         var isTransitioning = false;
+        var effectIndex = 0;
 
         function goTo(i) {
             if (isTransitioning || i === current) return;
             isTransitioning = true;
             var prev = current;
+            var next = (i + total) % total;
+            slides[prev].classList.remove('is-active');
             slides[prev].classList.add('is-exiting');
-            current = (i + total) % total;
-            slides[current].classList.add('is-active');
-            slides[current].classList.remove('is-exiting');
+            var eff = (effectIndex % 5) + 1;
+            slides[next].className = 'home-slider__slide effect-' + eff + ' is-active';
+            slides[next].classList.remove('is-exiting');
+            current = next;
+            effectIndex++;
             dots.forEach(function(d, idx) {
                 d.classList.toggle('is-active', idx === current);
             });
             setTimeout(function() {
                 slides[prev].classList.remove('is-active', 'is-exiting');
+                slides[prev].className = 'home-slider__slide effect-' + ((effectIndex - 1) % 5 + 1);
                 isTransitioning = false;
-            }, 1100);
+            }, 1200);
         }
 
         dots.forEach(function(dot, i) {
