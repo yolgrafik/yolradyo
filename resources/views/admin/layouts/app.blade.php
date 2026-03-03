@@ -47,6 +47,7 @@
         .custom-cursor.is-button {
             width: 9px;
             height: 9px;
+            transform: translate(-50%, -50%) scale(1.15);
             box-shadow: 0 0 14px rgba(255, 46, 46, 0.55), 0 0 28px rgba(255, 46, 46, 0.3);
         }
         .custom-cursor.is-link {
@@ -696,6 +697,7 @@
     @stack('styles')
 </head>
 <body>
+    <div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
     <div class="app-wrap">
         <header class="topbar admin-topbar admin-hero">
             <div class="topbar-top-line"></div>
@@ -916,6 +918,36 @@
                     }
                 });
             });
+        })();
+    </script>
+    <script>
+        (function() {
+            var cursor = document.getElementById('customCursor');
+            if (!cursor || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            document.body.classList.add('cursor-ready');
+            var x = 0, y = 0, tx = 0, ty = 0;
+            function move() {
+                tx += (x - tx) * 0.18;
+                ty += (y - ty) * 0.18;
+                cursor.style.left = tx + 'px';
+                cursor.style.top = ty + 'px';
+                requestAnimationFrame(move);
+            }
+            move();
+            document.addEventListener('mousemove', function(e) {
+                x = e.clientX;
+                y = e.clientY;
+            });
+            var linkSel = 'a, .forgot-link';
+            var btnSel = 'button, [role="button"], .nav-item, .nav-section__toggle, .quick-btn, .btn-logout, .btn-login, .module-card, input[type="submit"], input[type="button"]';
+            function updateCursor(el) {
+                var overLink = el && el.closest && el.closest(linkSel);
+                var overBtn = el && el.closest && el.closest(btnSel);
+                cursor.classList.toggle('is-link', !!overLink);
+                cursor.classList.toggle('is-button', !!overBtn && !overLink);
+            }
+            document.addEventListener('mouseover', function(e) { updateCursor(e.target); });
+            document.addEventListener('mouseout', function(e) { updateCursor(e.relatedTarget); });
         })();
     </script>
     @stack('scripts')

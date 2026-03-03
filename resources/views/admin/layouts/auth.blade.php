@@ -13,8 +13,6 @@
             --muted: #9ca3af;
             --border: rgba(255, 255, 255, 0.08);
             --accent: #dc2626;
-            --cursor-mic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3Cfilter id='mg'%3E%3CfeGaussianBlur stdDeviation='1.2' result='b'/%3E%3CfeFlood flood-color='%23ff2e2e' flood-opacity='0.6'/%3E%3CfeComposite in2='b' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23mg)' stroke='%23ff2e2e' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 5a4 4 0 0 0-4 4v7a4 4 0 0 0 8 0V9a4 4 0 0 0-4-4z'/%3E%3Cpath d='M24 14v2a8 8 0 0 1-16 0v-2'/%3E%3Cline x1='16' y1='24' x2='16' y2='28'/%3E%3C/g%3E%3C/svg%3E") 16 16;
-            --cursor-mic-ptr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3Cfilter id='mg2'%3E%3CfeGaussianBlur stdDeviation='1.2' result='b'/%3E%3CfeFlood flood-color='%23ff6b6b' flood-opacity='0.5'/%3E%3CfeComposite in2='b' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23mg2)' stroke='%23ff6b6b' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 5a4 4 0 0 0-4 4v7a4 4 0 0 0 8 0V9a4 4 0 0 0-4-4z'/%3E%3Cpath d='M24 14v2a8 8 0 0 1-16 0v-2'/%3E%3Cline x1='16' y1='24' x2='16' y2='28'/%3E%3C/g%3E%3C/svg%3E") 16 16;
         }
         * {
             box-sizing: border-box;
@@ -32,14 +30,40 @@
             padding: 1rem;
             position: relative;
             overflow-x: hidden;
-            cursor: var(--cursor-mic);
-            transition: cursor 0.2s ease;
+            cursor: none;
         }
-        a, button, [role="button"], .btn-login, .pw-toggle, .forgot-link, input[type="submit"], label[for], [tabindex]:not([tabindex="-1"]) {
-            cursor: var(--cursor-mic-ptr);
+        @media (hover: hover) and (pointer: fine) {
+            body.cursor-ready * { cursor: none; }
+            body.cursor-ready input, body.cursor-ready textarea { cursor: text; }
+            body.cursor-ready [disabled] { cursor: not-allowed; }
         }
-        input, textarea { cursor: text; }
-        [disabled] { cursor: not-allowed; }
+        .custom-cursor {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 60, 60, 0.9);
+            box-shadow: 0 0 12px rgba(255, 46, 46, 0.5), 0 0 24px rgba(255, 46, 46, 0.25);
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.12s ease-out, width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease;
+            animation: cursorPulse 3s ease-in-out infinite;
+        }
+        .custom-cursor.is-link {
+            animation: none;
+            box-shadow: 0 0 18px rgba(255, 80, 80, 0.75), 0 0 36px rgba(255, 46, 46, 0.45);
+        }
+        .custom-cursor.is-button {
+            width: 9px;
+            height: 9px;
+            transform: translate(-50%, -50%) scale(1.15);
+            box-shadow: 0 0 14px rgba(255, 46, 46, 0.55), 0 0 28px rgba(255, 46, 46, 0.3);
+        }
+        @keyframes cursorPulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(255, 46, 46, 0.5), 0 0 24px rgba(255, 46, 46, 0.25); }
+            50% { opacity: 0.92; box-shadow: 0 0 16px rgba(255, 46, 46, 0.45), 0 0 30px rgba(255, 46, 46, 0.22); }
+        }
         body::before {
             content: '';
             position: absolute;
@@ -119,6 +143,7 @@
     @stack('styles')
 </head>
 <body>
+    <div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
     <div class="auth-card {{ View::hasSection('hero') ? 'login-card' : '' }}">
         @hasSection('hero')
             @yield('hero')
