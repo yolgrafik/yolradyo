@@ -19,9 +19,6 @@ Route::get('/kvkk', [FrontendController::class, 'kvkk']);
 
 Route::get('/api/radio/status', App\Http\Controllers\Api\RadioStatusController::class);
 
-Route::post('/istek-gonder', [App\Http\Controllers\RequestController::class, 'store'])->name('song.request');
-Route::get('/istekler/approved', [App\Http\Controllers\RequestController::class, 'approvedList'])->name('song-request.approved');
-
 Route::prefix('admin')->group(function () {
     Route::get('', function () {
         return session('admin_logged_in') ? redirect('/admin/dashboard') : redirect('/admin/login');
@@ -86,13 +83,6 @@ Route::prefix('admin')->group(function () {
             Route::post('2fa/enable', [App\Http\Controllers\Admin\TwoFactorController::class, 'enable'])->name('2fa.enable');
             Route::post('2fa/confirm', [App\Http\Controllers\Admin\TwoFactorController::class, 'confirmEnable'])->name('2fa.confirm');
             Route::post('2fa/disable', [App\Http\Controllers\Admin\TwoFactorController::class, 'disable'])->name('2fa.disable');
-        });
-
-        Route::middleware('admin.permission:messages.moderate')->prefix('requests')->name('admin.requests.')->group(function () {
-            Route::get('/', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'index'])->name('index');
-            Route::post('{songRequest}/approve', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'approve'])->name('approve');
-            Route::post('{songRequest}/reject', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'reject'])->name('reject');
-            Route::delete('{songRequest}', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('sliders')->name('admin.sliders.')->group(function () {
