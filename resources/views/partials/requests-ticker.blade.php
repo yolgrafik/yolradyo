@@ -1,5 +1,6 @@
 @php
-    $logoUrl = isset($siteSettings['brand_logo_path']) && $siteSettings['brand_logo_path']
+    $siteSettings = $siteSettings ?? [];
+    $logoUrl = !empty($siteSettings['brand_logo_path'])
         ? asset('storage/' . $siteSettings['brand_logo_path'])
         : asset('logo.png');
 @endphp
@@ -111,14 +112,16 @@
     function renderItems(items) {
         if (!items || items.length === 0) {
             track.innerHTML = '<span class="ticker__empty">Henüz onaylı istek yok.</span>';
+            track.style.animation = 'none';
             return;
         }
         var html = '';
         var logo = '<img class="ticker__logo" src="' + logoUrl + '" alt="RADYOYOL" onerror="this.style.display=\'none\'">';
-        items.forEach(function(r, i) {
+        items.forEach(function(r) {
             html += '<span class="ticker__item">' + escapeHtml(formatItem(r)) + '</span>' + logo;
         });
         track.innerHTML = html + html;
+        track.style.animation = '';
     }
 
     function escapeHtml(s) {
