@@ -167,17 +167,8 @@
             width: auto;
             object-fit: contain;
         }
-        .sidebar-brand-inner .logo-fallback {
-            font-size: 0.85rem;
-        }
         .sidebar-brand-text {
             font-size: 0.95rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: var(--accent);
-        }
-        .sidebar-brand .logo-fallback {
-            font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 0.08em;
             color: var(--accent);
