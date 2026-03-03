@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\SongRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class RequestController extends Controller
 {
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        try {
+            $validated = $request->validate([
             'isim_soyad' => 'required|string|min:3|max:255',
-            'email' => 'required|email',
             'sanatci_ismi' => 'required|string|min:2|max:255',
             'turku_ismi' => 'required|string|min:2|max:255',
             'mesaj' => 'nullable|string|max:500',
@@ -19,7 +20,7 @@ class RequestController extends Controller
 
         SongRequest::create([
             'full_name' => $validated['isim_soyad'],
-            'email' => $validated['email'],
+            'email' => null,
             'artist_name' => $validated['sanatci_ismi'],
             'song_name' => $validated['turku_ismi'],
             'message' => $validated['mesaj'] ?? null,
@@ -27,8 +28,8 @@ class RequestController extends Controller
         ]);
 
         return response()->json([
-            'success' => true,
-            'message' => 'İstek alındı, onaydan sonra yayınlanacaktır.',
+            'ok' => true,
+            'message' => 'İsteğiniz alındı.',
         ]);
     }
 

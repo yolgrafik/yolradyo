@@ -11,11 +11,6 @@
                 <span class="request-form__error" id="err_isim_soyad"></span>
             </div>
             <div class="request-form__group">
-                <label for="email">E-posta *</label>
-                <input type="email" name="email" id="email" required class="request-form__input">
-                <span class="request-form__error" id="err_email"></span>
-            </div>
-            <div class="request-form__group">
                 <label for="sanatci_ismi">Sanatçı İsmi *</label>
                 <input type="text" name="sanatci_ismi" id="sanatci_ismi" required class="request-form__input">
                 <span class="request-form__error" id="err_sanatci_ismi"></span>
@@ -26,14 +21,14 @@
                 <span class="request-form__error" id="err_turku_ismi"></span>
             </div>
             <div class="request-form__group">
-                <label for="mesaj">Mesaj (isteğe bağlı)</label>
+                <label for="mesaj">Mesaj (opsiyonel)</label>
                 <textarea name="mesaj" id="mesaj" rows="3" class="request-form__input"></textarea>
                 <span class="request-form__error" id="err_mesaj"></span>
             </div>
             <div class="request-form__success" id="formSuccess" style="display:none">İsteğiniz alındı.</div>
             <div class="request-form__actions">
                 <button type="submit" class="request-form__btn">Gönder</button>
-                <button type="button" class="request-form__btn request-form__btn--cancel" data-close-modal>İptal</button>
+                <button type="button" class="request-form__btn request-form__btn--cancel" data-close-modal>Vazgeç</button>
             </div>
         </form>
     </div>
@@ -41,10 +36,11 @@
 
 @push('styles')
 <style>
-.request-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.request-modal.is-open{display:flex;}
-.request-modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
-.request-modal__box{position:relative;background:rgba(22,28,36,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:1.5rem;max-width:420px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.05) inset;margin:auto;}
+.request-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.25s ease,visibility 0.25s ease;}
+.request-modal.is-open{opacity:1;visibility:visible;pointer-events:auto;}
+.request-modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:opacity 0.25s ease;}
+.request-modal__box{position:relative;background:rgba(22,28,36,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:1.5rem;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.05) inset;margin:auto;transform:scale(0.95);transition:transform 0.25s ease;}
+.request-modal.is-open .request-modal__box{transform:scale(1);}
 .request-modal__close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;line-height:1;padding:0.25rem;}
 .request-modal__close:hover{color:var(--text);}
 .request-modal__title{font-size:1.25rem;font-weight:700;margin-bottom:1.25rem;color:var(--text);}
@@ -58,7 +54,7 @@
 .request-form__btn{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;border-radius:8px;cursor:pointer;border:none;}
 .request-form__btn[type=submit]{background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;}
 .request-form__btn--cancel{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
-@media(max-width:480px){.request-modal{padding:0.5rem;}.request-modal__box{padding:1.25rem;max-height:85vh;}}
+@media(max-width:520px){.request-modal{padding:0.5rem;}.request-modal__box{width:92%;max-width:none;padding:1.25rem;max-height:85vh;}}
 </style>
 @endpush
 
@@ -81,7 +77,7 @@
     closeBtns.forEach(function(btn){btn.addEventListener('click',closeModal);});
     if(modal){modal.addEventListener('click',function(e){if(e.target===modal){closeModal();}});}
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal&&modal.classList.contains('is-open')){closeModal();}});
-    function clearErrors(){['isim_soyad','email','sanatci_ismi','turku_ismi','mesaj'].forEach(function(id){var el=document.getElementById('err_'+id);if(el){el.textContent='';}});}
+    function clearErrors(){['isim_soyad','sanatci_ismi','turku_ismi','mesaj'].forEach(function(id){var el=document.getElementById('err_'+id);if(el){el.textContent='';}});}
     if(form){
         form.addEventListener('submit',function(e){
             e.preventDefault();
@@ -94,7 +90,7 @@
                 body:fd,
                 headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}
             }).then(function(r){return r.json();}).then(function(data){
-                if(data.success){successEl.style.display='block';form.reset();setTimeout(closeModal,1500);}
+                if(data.ok){successEl.style.display='block';form.reset();setTimeout(closeModal,1500);}
                 else if(data.errors){Object.keys(data.errors).forEach(function(k){var m=data.errors[k][0];var errEl=document.getElementById('err_'+k);if(errEl){errEl.textContent=m;}});}
             }).catch(function(){successEl.textContent='Bir hata oluştu. Lütfen tekrar deneyin.';successEl.style.background='rgba(239,68,68,0.2)';successEl.style.color='#fca5a5';successEl.style.display='block';});
         });
