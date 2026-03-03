@@ -44,20 +44,19 @@
             transition: transform 0.12s ease-out, width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
             animation: cursorPulse 3s ease-in-out infinite;
         }
-        .custom-cursor.is-link {
-            box-shadow: 0 0 16px rgba(255, 80, 80, 0.7), 0 0 32px rgba(255, 46, 46, 0.4);
-        }
         .custom-cursor.is-button {
             width: 9px;
             height: 9px;
             box-shadow: 0 0 14px rgba(255, 46, 46, 0.55), 0 0 28px rgba(255, 46, 46, 0.3);
         }
+        .custom-cursor.is-link {
+            animation: none;
+            box-shadow: 0 0 18px rgba(255, 80, 80, 0.75), 0 0 36px rgba(255, 46, 46, 0.45);
+        }
         @keyframes cursorPulse {
             0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(255, 46, 46, 0.5), 0 0 24px rgba(255, 46, 46, 0.25); }
             50% { opacity: 0.92; box-shadow: 0 0 16px rgba(255, 46, 46, 0.45), 0 0 30px rgba(255, 46, 46, 0.22); }
         }
-        .custom-cursor.is-link { animation: none; }
-        .custom-cursor.is-link { box-shadow: 0 0 16px rgba(255, 80, 80, 0.7), 0 0 32px rgba(255, 46, 46, 0.4); }
         .app-wrap {
             display: flex;
             flex-direction: column;
