@@ -31,7 +31,7 @@
             body.cursor-ready input, body.cursor-ready textarea, body.cursor-ready [contenteditable="true"] { cursor: text; }
             body.cursor-ready [disabled], body.cursor-ready [aria-disabled="true"] { cursor: not-allowed; }
         }
-        .custom-cursor {
+        .cursor-wrap {
             position: fixed;
             left: 0;
             top: 0;
@@ -40,51 +40,31 @@
             opacity: 0;
             transition: opacity 0.25s ease;
         }
-        .custom-cursor.is-visible { opacity: 1; }
-        .cursor-inner {
-            position: fixed;
-            width: 5px;
-            height: 5px;
+        .cursor-wrap.is-visible { opacity: 1; }
+        .custom-cursor {
+            width: 8px;
+            height: 8px;
+            background: #ff2a2a;
             border-radius: 50%;
-            background: rgba(220, 50, 50, 0.95);
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 6px rgba(200, 40, 40, 0.35);
-            animation: cursorPulseInner 4s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 100000;
-        }
-        .cursor-outer {
             position: fixed;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 70, 70, 0.3);
-            background: transparent;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 12px rgba(255, 50, 50, 0.18), inset 0 0 8px rgba(255, 50, 50, 0.06);
-            animation: cursorPulseOuter 4s ease-in-out infinite;
             pointer-events: none;
-            z-index: 99999;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
         }
-        .custom-cursor.is-button .cursor-inner {
-            width: 6px;
-            height: 6px;
+        .cursor-ring {
+            width: 28px;
+            height: 28px;
+            border: 1.5px solid rgba(255, 0, 0, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9998;
+            transition: transform 0.15s ease, border 0.2s ease;
         }
-        .custom-cursor.is-button .cursor-outer {
-            width: 16px;
-            height: 16px;
-        }
-        .custom-cursor.is-link .cursor-outer {
-            border-color: rgba(255, 90, 90, 0.45);
-            box-shadow: 0 0 14px rgba(255, 60, 60, 0.28), inset 0 0 10px rgba(255, 60, 60, 0.1);
-        }
-        @keyframes cursorPulseInner {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.88; }
-        }
-        @keyframes cursorPulseOuter {
-            0%, 100% { opacity: 0.9; box-shadow: 0 0 12px rgba(255, 50, 50, 0.2), inset 0 0 8px rgba(255, 50, 50, 0.08); }
-            50% { opacity: 1; box-shadow: 0 0 16px rgba(255, 50, 50, 0.25), inset 0 0 10px rgba(255, 50, 50, 0.1); }
+        .cursor-wrap.cursor-hover .cursor-ring {
+            transform: translate(-50%, -50%) scale(1.4);
+            border-color: #ff3b3b;
         }
         .app-wrap {
             display: flex;
@@ -725,9 +705,9 @@
     @stack('styles')
 </head>
 <body>
-    <div class="custom-cursor" id="customCursor" aria-hidden="true">
-        <div class="cursor-outer" id="cursorOuter"></div>
-        <div class="cursor-inner" id="cursorInner"></div>
+    <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
+        <div class="cursor-ring" id="cursorRing"></div>
+        <div class="custom-cursor" id="cursorDot"></div>
     </div>
     <div class="app-wrap">
         <header class="topbar admin-topbar admin-hero">
