@@ -19,6 +19,8 @@ Route::get('/kvkk', [FrontendController::class, 'kvkk']);
 
 Route::get('/api/radio/status', App\Http\Controllers\Api\RadioStatusController::class);
 
+Route::post('/istek-gonder', [App\Http\Controllers\RequestController::class, 'store'])->name('song.request');
+
 Route::prefix('admin')->group(function () {
     Route::get('', function () {
         return session('admin_logged_in') ? redirect('/admin/dashboard') : redirect('/admin/login');

@@ -542,6 +542,23 @@
             .disc-overlay .icon.pause::before,
             .disc-overlay .icon.pause::after { width: 4px; height: 14px; }
         }
+        /* Song request modal */
+        .request-modal { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
+        .request-modal.is-open { opacity: 1; visibility: visible; }
+        .request-modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.7); cursor: pointer; }
+        .request-modal__box { position: relative; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+        .request-modal__close { position: absolute; top: .75rem; right: .75rem; background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 4px; }
+        .request-modal__close:hover { color: var(--text); }
+        .request-modal__title { margin-bottom: 1rem; font-size: 1.25rem; }
+        .request-form__group { margin-bottom: 1rem; }
+        .request-form__group label { display: block; margin-bottom: .35rem; font-size: .9rem; }
+        .request-form__input { width: 100%; padding: .5rem .75rem; background: rgba(255,255,255,.06); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 1rem; }
+        .request-form__input:focus { outline: none; border-color: var(--accent); }
+        .request-form__error { display: block; font-size: .8rem; color: #f87171; margin-top: .25rem; }
+        .request-form__success { padding: .5rem; border-radius: 6px; margin-bottom: 1rem; }
+        .request-form__actions { margin-top: 1rem; }
+        .request-form__btn { padding: .75rem 1.5rem; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .request-form__btn:hover { opacity: .9; }
     </style>
     @stack('styles')
 </head>
@@ -798,6 +815,7 @@
             }
         })();
     </script>
+    @include('partials.song-request-modal')
     @stack('scripts')
 </body>
 </html>
