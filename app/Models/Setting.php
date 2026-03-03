@@ -13,6 +13,8 @@ class Setting extends Model
         'radio_backup_stream_url',
         'radio_auto_play',
         'radio_default_volume',
+        'shoutcast_base_url',
+        'shoutcast_sid',
     ];
 
     protected $casts = [
@@ -20,6 +22,8 @@ class Setting extends Model
         'radio_backup_stream_url' => 'string',
         'radio_auto_play' => 'boolean',
         'radio_default_volume' => 'float',
+        'shoutcast_base_url' => 'string',
+        'shoutcast_sid' => 'integer',
     ];
 
     /**
