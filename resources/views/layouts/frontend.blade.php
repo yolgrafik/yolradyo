@@ -225,28 +225,31 @@
             -webkit-backdrop-filter: blur(8px);
             padding: 14px 1rem;
         }
-        .legal-pretext {
+        #legalStrip {
             text-align: center;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            color: rgba(255,255,255,0.75);
-            letter-spacing: 0.2px;
-            margin: 0 0 10px 0;
+            padding: 10px 0 14px;
         }
-        .legal-links {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            color: rgba(255,255,255,0.65);
+        #legalText {
+            font-family: Arial, sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            color: rgba(255,255,255,0.85) !important;
+            margin: 0 0 10px 0 !important;
+            letter-spacing: 0.2px !important;
         }
-        .legal-links a {
-            color: rgba(255,255,255,0.65);
-            text-decoration: none;
-            padding: 0 10px;
-            transition: color 0.2s;
+        #legalLinks {
+            font-family: Arial, sans-serif !important;
+            font-size: 13px !important;
+            color: rgba(255,255,255,0.70) !important;
         }
-        .legal-links a:hover { color: #fff; }
+        #legalLinks a {
+            color: rgba(255,255,255,0.70) !important;
+            text-decoration: none !important;
+            padding: 0 10px !important;
+        }
+        #legalLinks a:hover {
+            color: #ffffff !important;
+        }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
             position: fixed;
@@ -515,9 +518,9 @@
         @media (max-width: 768px) {
             .bottom-bar-logo { height: 78px; }
             .legal-footer { padding: 12px 0.75rem; }
-            .legal-pretext { font-size: 12px; margin-bottom: 8px; }
-            .legal-links { font-size: 12px; }
-            .legal-links a { padding: 0 6px; }
+            #legalText { font-size: 12px !important; margin-bottom: 8px !important; }
+            #legalLinks { font-size: 12px !important; }
+            #legalLinks a { padding: 0 6px !important; }
             body { padding-bottom: 165px; }
             .disc-overlay { width: 40px; height: 40px; }
             .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
@@ -611,9 +614,9 @@
         </div>
     </div>
     <footer class="legal-footer">
-        <div class="legal-strip">
-            <div class="legal-pretext">RadyoYol Tum Haklari Saklidir</div>
-            <div class="legal-links">
+        <div id="legalStrip">
+            <div id="legalText">RadyoYol Tum Haklari Saklidir</div>
+            <div id="legalLinks">
                 <a href="{{ url('/gizlilik') }}">Gizlilik Politikasi</a> |
                 <a href="{{ url('/cerez') }}">Cerez Politikasi</a> |
                 <a href="{{ url('/kullanim') }}">Kullanim Sartlari</a> |
