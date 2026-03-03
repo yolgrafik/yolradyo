@@ -33,6 +33,8 @@
         }
         .custom-cursor {
             position: fixed;
+            left: 0;
+            top: 0;
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -41,8 +43,12 @@
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
-            transition: transform 0.12s ease-out, width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            transition: transform 0.12s ease-out, width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
             animation: cursorPulse 3s ease-in-out infinite;
+            opacity: 0;
+        }
+        .custom-cursor.is-visible {
+            opacity: 1;
         }
         .custom-cursor.is-button {
             width: 9px;
@@ -937,6 +943,7 @@
             document.addEventListener('mousemove', function(e) {
                 x = e.clientX;
                 y = e.clientY;
+                cursor.classList.add('is-visible');
             });
             var linkSel = 'a, .forgot-link';
             var btnSel = 'button, [role="button"], .nav-item, .nav-section__toggle, .quick-btn, .btn-logout, .btn-login, .module-card, input[type="submit"], input[type="button"]';

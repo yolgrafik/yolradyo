@@ -39,6 +39,8 @@
         }
         .custom-cursor {
             position: fixed;
+            left: 0;
+            top: 0;
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -47,9 +49,11 @@
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
-            transition: transform 0.12s ease-out, width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.12s ease-out, width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
             animation: cursorPulse 3s ease-in-out infinite;
+            opacity: 0;
         }
+        .custom-cursor.is-visible { opacity: 1; }
         .custom-cursor.is-link {
             animation: none;
             box-shadow: 0 0 18px rgba(255, 80, 80, 0.75), 0 0 36px rgba(255, 46, 46, 0.45);
@@ -164,6 +168,37 @@
             © 2026 RADYOYOL
         </div>
     </div>
+    <script>
+        (function() {
+            var cursor = document.getElementById('customCursor');
+            if (!cursor || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            document.body.classList.add('cursor-ready');
+            var x = 0, y = 0, tx = 0, ty = 0;
+            function move() {
+                tx += (x - tx) * 0.18;
+                ty += (y - ty) * 0.18;
+                cursor.style.left = tx + 'px';
+                cursor.style.top = ty + 'px';
+                requestAnimationFrame(move);
+            }
+            move();
+            document.addEventListener('mousemove', function(e) {
+                x = e.clientX;
+                y = e.clientY;
+                cursor.classList.add('is-visible');
+            });
+            var linkSel = 'a, .forgot-link';
+            var btnSel = 'button, [role="button"], .btn-login, .pw-toggle, input[type="submit"], label[for]';
+            function updateCursor(el) {
+                var overLink = el && el.closest && el.closest(linkSel);
+                var overBtn = el && el.closest && el.closest(btnSel);
+                cursor.classList.toggle('is-link', !!overLink);
+                cursor.classList.toggle('is-button', !!overBtn && !overLink);
+            }
+            document.addEventListener('mouseover', function(e) { updateCursor(e.target); });
+            document.addEventListener('mouseout', function(e) { updateCursor(e.relatedTarget); });
+        })();
+    </script>
     @stack('scripts')
 </body>
 </html>
