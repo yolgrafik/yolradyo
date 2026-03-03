@@ -135,20 +135,23 @@
         .topbar-brand-text {
             display: flex;
             flex-direction: column;
-            gap: 0.2rem;
+            gap: 0.25rem;
             align-items: center;
+            text-align: center;
         }
         .topbar-title {
-            font-size: 1.1rem;
+            font-size: 1.75rem;
             font-weight: 700;
             letter-spacing: 0.12em;
             color: #fff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.4), 0 1px 3px rgba(0,0,0,0.3);
         }
         .topbar-sub {
-            font-size: 1.35rem;
+            font-size: 1.0625rem;
             font-weight: 700;
             letter-spacing: 0.28em;
-            color: rgba(255,255,255,0.95);
+            color: #fff;
+            text-shadow: 0 0 16px rgba(255,255,255,0.35), 0 1px 2px rgba(0,0,0,0.25);
         }
         .user-box {
             display: flex;
@@ -491,11 +494,11 @@
                 height: 32px;
             }
             .topbar-title {
-                font-size: 0.95rem;
+                font-size: 1.25rem;
                 letter-spacing: 0.08em;
             }
             .topbar-sub {
-                font-size: 1rem;
+                font-size: 0.9375rem;
                 letter-spacing: 0.18em;
             }
             .nav-section + .nav-section {
