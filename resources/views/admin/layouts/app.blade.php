@@ -6,13 +6,13 @@
     <title>RADYOYOL ADMIN PANEL</title>
     <style>
         :root {
-            --bg: #151a24;
-            --panel: #1c2128;
-            --card: #1e2530;
+            --bg: #0f1319;
+            --panel: #161c24;
+            --card: #1a2029;
             --text: #f0f2f5;
             --muted: #8b95a5;
             --border: rgba(255, 255, 255, 0.06);
-            --accent: #dc2626;
+            --accent: #c92a2a;
         }
         * {
             box-sizing: border-box;
@@ -31,38 +31,72 @@
             min-height: 100vh;
         }
         .topbar {
-            background: linear-gradient(90deg, #6b1a1a 0%, #8b1a1a 25%, #a91c1c 50%, #991b1b 75%, #7f1d1d 100%);
+            background: linear-gradient(90deg, #5c1010 0%, #7f1d1d 30%, #991b1b 55%, #8b1a1a 80%, #6b1515 100%);
             padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 68px;
+            min-height: 72px;
+            position: relative;
+        }
+        .topbar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        .topbar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            pointer-events: none;
         }
         .topbar-brand {
             display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .topbar-logo {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+        }
+        .topbar-brand-text {
+            display: flex;
             flex-direction: column;
-            gap: 0.2rem;
+            gap: 0.15rem;
         }
         .topbar-title {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
             letter-spacing: 0.06em;
             color: #fff;
         }
         .topbar-sub {
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            color: rgba(255,255,255,0.85);
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            color: rgba(255,255,255,0.8);
         }
         .user-box {
             display: flex;
             align-items: center;
             gap: 1rem;
-            background: rgba(0,0,0,0.25);
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 0.6rem 1rem;
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.12);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            position: relative;
+            z-index: 1;
         }
         .user-info {
             display: flex;
@@ -93,8 +127,8 @@
             transition: background 0.18s, box-shadow 0.18s;
         }
         .btn-logout:hover {
-            background: #b91c1c;
-            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35);
+            background: #e63939;
+            box-shadow: 0 2px 12px rgba(201, 42, 42, 0.5);
         }
         .main-row {
             display: flex;
@@ -103,9 +137,39 @@
         .sidebar {
             width: 270px;
             background: var(--panel);
-            padding: 1rem;
+            padding: 0;
             flex-shrink: 0;
             border-right: 1px solid var(--border);
+        }
+        .sidebar-brand {
+            padding: 1rem 1rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 0.5rem;
+        }
+        .sidebar-brand-inner {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .sidebar-brand-logo {
+            height: 28px;
+            width: auto;
+            object-fit: contain;
+        }
+        .sidebar-brand-text {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+        }
+        .sidebar-brand .logo-fallback {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+        }
+        .nav-accordion {
+            padding: 0 1rem 1rem;
         }
         .nav-accordion {
             list-style: none;
@@ -184,7 +248,7 @@
             background: rgba(255, 255, 255, 0.06);
             color: var(--text);
             border-left-color: var(--accent);
-            box-shadow: inset 0 0 20px rgba(220, 38, 38, 0.06);
+            box-shadow: inset 0 0 20px rgba(201, 42, 42, 0.08);
         }
         .nav-item.is-active {
             background: var(--accent);
@@ -197,13 +261,30 @@
             overflow-x: hidden;
             min-width: 0;
             position: relative;
+            background: linear-gradient(180deg, #0a0d12 0%, #0f1319 35%, #131820 70%, #0d1015 100%);
         }
         .content-area::before {
             content: '';
             position: absolute;
             inset: 0;
             pointer-events: none;
-            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(220, 38, 38, 0.03) 0%, transparent 60%);
+            background: radial-gradient(ellipse 100% 80% at 50% 20%, rgba(201, 42, 42, 0.04) 0%, transparent 50%);
+        }
+        .content-area::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 120% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 100%);
+        }
+        .content-area .waveform-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(201, 42, 42, 0.15) 20%, rgba(201, 42, 42, 0.25) 50%, rgba(201, 42, 42, 0.15) 80%, transparent 100%);
+            pointer-events: none;
         }
         .content-inner {
             width: 100%;
@@ -220,20 +301,31 @@
             background: var(--card);
             border-radius: 15px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
             overflow: hidden;
+            position: relative;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+            pointer-events: none;
         }
         .card-header {
             padding: 13px 1.25rem;
             font-size: 0.95rem;
             font-weight: 700;
             color: #fff;
-            background: linear-gradient(135deg, var(--accent), #991b1b);
+            background: linear-gradient(135deg, var(--accent) 0%, #a61f1f 50%, #8b1a1a 100%);
             letter-spacing: 0.02em;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .card-body {
             padding: 1.5rem 1.35rem;
             background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            position: relative;
         }
         .card-value {
             font-size: 32px;
@@ -288,8 +380,8 @@
             transition: background 0.18s, border-color 0.18s, color 0.18s;
         }
         .quick-btn:hover {
-            background: rgba(220, 38, 38, 0.15);
-            border-color: rgba(220, 38, 38, 0.3);
+            background: rgba(201, 42, 42, 0.18);
+            border-color: rgba(201, 42, 42, 0.4);
             color: #fff;
         }
         .activity-list {
@@ -357,8 +449,14 @@
     <div class="app-wrap">
         <header class="topbar">
             <div class="topbar-brand">
-                <div class="topbar-title">RADYOYOL ADMIN PANEL</div>
-                <div class="topbar-sub">TAM OZELLIK LISTESI</div>
+                <div class="topbar-logo-wrap">
+                    <img src="{{ asset('assets/brand/radyoyol-logo.png') }}" alt="RADYOYOL" class="topbar-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="topbar-logo-fallback" style="display:none">RADYOYOL</span>
+                </div>
+                <div class="topbar-brand-text">
+                    <div class="topbar-title">RADYOYOL ADMIN PANEL</div>
+                    <div class="topbar-sub">TAM OZELLIK LISTESI</div>
+                </div>
             </div>
             <div class="user-box">
                 <div class="user-info">
@@ -371,6 +469,13 @@
 
         <div class="main-row">
             <aside class="sidebar">
+                <div class="sidebar-brand">
+                    <div class="sidebar-brand-inner">
+                        <img src="{{ asset('assets/brand/radyoyol-logo.png') }}" alt="RADYOYOL" class="sidebar-brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <span class="logo-fallback" style="display:none">RADYOYOL</span>
+                        <span class="sidebar-brand-text">RADYOYOL</span>
+                    </div>
+                </div>
                 <nav class="nav-accordion" id="navAccordion">
                     <div class="nav-section is-open" data-section="dashboard">
                         <button class="nav-section__toggle" type="button" aria-expanded="true">
@@ -516,6 +621,7 @@
             </aside>
 
             <main class="content-area">
+                <div class="waveform-line"></div>
                 <div class="content-inner">
                     @yield('content')
                 </div>
