@@ -38,23 +38,38 @@
             align-items: center;
             min-height: 76px;
             position: relative;
+            overflow: hidden;
         }
         .topbar::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+            background:
+                repeating-linear-gradient(90deg, transparent 0px, transparent 2px, rgba(255,255,255,0.12) 2px, rgba(255,255,255,0.12) 3px),
+                repeating-linear-gradient(90deg, transparent 1px, transparent 3px, rgba(255,255,255,0.08) 3px, rgba(255,255,255,0.08) 4px),
+                repeating-linear-gradient(90deg, transparent 2px, transparent 5px, rgba(255,255,255,0.1) 5px, rgba(255,255,255,0.1) 6px);
+            background-size: 8px 100%, 12px 100%, 16px 100%;
+            background-position: 0 0, 3px 0, 1px 0;
+            filter: blur(2px);
+            opacity: 0.7;
             pointer-events: none;
         }
         .topbar::after {
             content: '';
             position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        .topbar-top-line {
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
             pointer-events: none;
+            z-index: 2;
         }
         .topbar-bottom-line {
             position: absolute;
@@ -85,9 +100,9 @@
             object-fit: contain;
         }
         .topbar-logo-fallback {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             color: #fff;
         }
         .topbar-brand-text {
@@ -473,15 +488,16 @@
 <body>
     <div class="app-wrap">
         <header class="topbar">
+            <div class="topbar-top-line"></div>
             <div class="topbar-bottom-line"></div>
             <div class="topbar-brand">
                 <div class="topbar-logo-wrap">
-                    <img src="{{ asset('assets/brand/radyoyol-logo.png') }}" alt="RADYOYOL" class="topbar-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <img src="{{ asset('logo.png') }}" alt="RADYOYOL" class="topbar-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     <span class="topbar-logo-fallback" style="display:none">RADYOYOL</span>
                 </div>
                 <div class="topbar-brand-text">
-                    <div class="topbar-title">ADMIN PANEL</div>
-                    <div class="topbar-sub">Tam Ozellik Listesi</div>
+                    <div class="topbar-title">RADYOYOL ADMIN PANEL</div>
+                    <div class="topbar-sub">TAM OZELLIK LISTESI</div>
                 </div>
             </div>
             <div class="user-box">
