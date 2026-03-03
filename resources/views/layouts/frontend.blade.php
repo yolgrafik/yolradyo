@@ -234,6 +234,11 @@
             gap: 0.6rem;
             padding: 10px 0 14px;
         }
+        .legal-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
         .legal-pretext {
             font-family: Arial, sans-serif !important;
             font-size: 14px !important;
@@ -629,8 +634,10 @@
     </div>
     <footer class="legal-footer">
         <div class="legal-strip" id="legalStrip">
-            <div class="legal-pretext" id="legalText">Radyoyol Tüm Haklari Saklidir</div>
-            <span class="legal-sep">|</span>
+            <div class="legal-left">
+                <span class="legal-pretext" id="legalText">Radyoyol Tüm Haklari Saklidir</span>
+                <span class="legal-sep">|</span>
+            </div>
             <div class="legal-links" id="legalLinks">
                 <a href="{{ url('/gizlilik') }}">Gizlilik Politikasi</a>
                 <span class="sep">|</span>
