@@ -33,7 +33,7 @@
     .login-header{
         background:
             linear-gradient(135deg, rgba(0,0,0,.5), rgba(180,30,30,.6)),
-            url("{{ asset('assets/images/admin-hero.png') }}");
+            url("{{ asset('assets/images/login-hero.png') }}");
         background-size: cover;
         background-position: center;
         position:relative;
