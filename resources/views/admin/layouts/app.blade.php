@@ -529,6 +529,8 @@
         .admin-topbar{
           min-height:140px !important;
           position:relative;
+        }
+        .admin-topbar:not(.admin-hero){
           overflow:hidden;
         }
         .admin-topbar::before{
@@ -547,12 +549,18 @@
           height:2px;
           background: rgba(220,38,38,.8);
         }
+        .admin-hero{
+          height: 160px !important;
+          min-height: 160px !important;
+          overflow: visible !important;
+          position: relative !important;
+        }
     </style>
     @stack('styles')
 </head>
 <body>
     <div class="app-wrap">
-        <header class="topbar admin-topbar" style="background-image:url('{{ asset('assets/images/admin-hero.png') }}'); background-size:cover; background-position:center top; background-repeat:no-repeat;">
+        <header class="topbar admin-topbar admin-hero" style="background-image:url('{{ asset('assets/images/admin-hero.png') }}'); background-size:cover; background-position:center top; background-repeat:no-repeat;">
             <div class="topbar-top-line"></div>
             <div class="topbar-bottom-line"></div>
             <div class="topbar-inner">
