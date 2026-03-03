@@ -384,6 +384,7 @@
             .bottom-bar-logo { height: 56px; }
             .legal-footer { font-size: 12px; padding: 12px 0.75rem; }
             .legal-footer .sep { margin: 0 0.4rem; }
+            body { padding-bottom: 135px; }
             .disc-overlay { width: 40px; height: 40px; }
             .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
             .disc-overlay .icon.pause { width: 14px; height: 14px; }
