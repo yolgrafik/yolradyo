@@ -1,0 +1,257 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Services\SettingsService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class SettingsController extends Controller
+{
+    public function __construct(
+        protected SettingsService $settings
+    ) {}
+
+    protected function ensureAdmin(): void
+    {
+        if (!session('admin_logged_in')) {
+            abort(redirect()->route('admin.login'));
+        }
+    }
+
+    public function generalForm()
+    {
+        $this->ensureAdmin();
+        return view('admin.settings.general', [
+            'site_name' => $this->settings->get('site_name', 'RADYOYOL'),
+            'site_slogan' => $this->settings->get('site_slogan'),
+            'contact_email' => $this->settings->get('contact_email'),
+            'contact_phone' => $this->settings->get('contact_phone'),
+            'address_text' => $this->settings->get('address_text'),
+            'maintenance_mode' => $this->settings->get('maintenance_mode', false),
+        ]);
+    }
+
+    public function saveGeneral(Request $request)
+    {
+        $this->ensureAdmin();
+        $validated = $request->validate([
+            'site_name' => 'required|string|max:255',
+            'site_slogan' => 'nullable|string|max:255',
+            'contact_email' => 'nullable|email|max:255',
+            'contact_phone' => 'nullable|string|max:50',
+            'address_text' => 'nullable|string|max:500',
+            'maintenance_mode' => 'nullable|boolean',
+        ]);
+
+        $this->settings->setMany([
+            'site_name' => ['value' => $validated['site_name'], 'type' => 'text'],
+            'site_slogan' => ['value' => $validated['site_slogan'] ?? '', 'type' => 'text'],
+            'contact_email' => ['value' => $validated['contact_email'] ?? '', 'type' => 'text'],
+            'contact_phone' => ['value' => $validated['contact_phone'] ?? '', 'type' => 'text'],
+            'address_text' => ['value' => $validated['address_text'] ?? '', 'type' => 'text'],
+            'maintenance_mode' => ['value' => (bool) ($validated['maintenance_mode'] ?? false), 'type' => 'boolean'],
+        ]);
+
+        return redirect()->route('admin.settings.general')->with('success', 'Kaydedildi');
+    }
+
+    public function brandingForm()
+    {
+        $this->ensureAdmin();
+        return view('admin.settings.branding', [
+            'brand_logo_path' => $this->settings->get('brand_logo_path'),
+            'brand_favicon_path' => $this->settings->get('brand_favicon_path'),
+        ]);
+    }
+
+    public function saveBranding(Request $request)
+    {
+        $this->ensureAdmin();
+        $validated = $request->validate([
+            'logo_file' => 'nullable|file|mimes:png,jpg,jpeg,svg|max:2048',
+            'favicon_file' => 'nullable|file|mimes:png,ico|max:1024',
+        ]);
+
+        $dir = 'assets/brand';
+        if (!Storage::disk('public')->exists($dir)) {
+            Storage::disk('public')->makeDirectory($dir);
+        }
+
+        if ($request->hasFile('logo_file')) {
+            $oldPath = $this->settings->get('brand_logo_path');
+            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+            $path = $request->file('logo_file')->store($dir, 'public');
+            $this->settings->set('brand_logo_path', $path, 'text');
+        }
+
+        if ($request->hasFile('favicon_file')) {
+            $oldPath = $this->settings->get('brand_favicon_path');
+            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+            $path = $request->file('favicon_file')->store($dir, 'public');
+            $this->settings->set('brand_favicon_path', $path, 'text');
+        }
+
+        return redirect()->route('admin.settings.branding')->with('success', 'Kaydedildi');
+    }
+
+    public function seoForm()
+    {
+        $this->ensureAdmin();
+        return view('admin.settings.seo', [
+            'seo_meta_title' => $this->settings->get('seo_meta_title'),
+            'seo_meta_description' => $this->settings->get('seo_meta_description'),
+            'seo_meta_keywords' => $this->settings->get('seo_meta_keywords'),
+            'seo_og_image_path' => $this->settings->get('seo_og_image_path'),
+        ]);
+    }
+
+    public function saveSeo(Request $request)
+    {
+        $this->ensureAdmin();
+        $validated = $request->validate([
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:160',
+            'meta_keywords' => 'nullable|string|max:500',
+            'og_image_file' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
+        ]);
+
+        $this->settings->set('seo_meta_title', $validated['meta_title'] ?? '', 'text');
+        $this->settings->set('seo_meta_description', $validated['meta_description'] ?? '', 'text');
+        $this->settings->set('seo_meta_keywords', $validated['meta_keywords'] ?? '', 'text');
+
+        $dir = 'assets/seo';
+        if ($request->hasFile('og_image_file')) {
+            if (!Storage::disk('public')->exists($dir)) {
+                Storage::disk('public')->makeDirectory($dir);
+            }
+            $oldPath = $this->settings->get('seo_og_image_path');
+            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+            $path = $request->file('og_image_file')->store($dir, 'public');
+            $this->settings->set('seo_og_image_path', $path, 'text');
+        }
+
+        return redirect()->route('admin.settings.seo')->with('success', 'Kaydedildi');
+    }
+
+    public function socialForm()
+    {
+        $this->ensureAdmin();
+        return view('admin.settings.social', [
+            'social_facebook' => $this->settings->get('social_facebook'),
+            'social_x' => $this->settings->get('social_x'),
+            'social_youtube' => $this->settings->get('social_youtube'),
+            'social_instagram' => $this->settings->get('social_instagram'),
+            'social_tiktok' => $this->settings->get('social_tiktok'),
+        ]);
+    }
+
+    public function saveSocial(Request $request)
+    {
+        $this->ensureAdmin();
+        $validated = $request->validate([
+            'social_facebook' => 'nullable|url|max:500',
+            'social_x' => 'nullable|url|max:500',
+            'social_youtube' => 'nullable|url|max:500',
+            'social_instagram' => 'nullable|url|max:500',
+            'social_tiktok' => 'nullable|url|max:500',
+        ]);
+
+        $this->settings->setMany([
+            'social_facebook' => ['value' => $validated['social_facebook'] ?? '', 'type' => 'url'],
+            'social_x' => ['value' => $validated['social_x'] ?? '', 'type' => 'url'],
+            'social_youtube' => ['value' => $validated['social_youtube'] ?? '', 'type' => 'url'],
+            'social_instagram' => ['value' => $validated['social_instagram'] ?? '', 'type' => 'url'],
+            'social_tiktok' => ['value' => $validated['social_tiktok'] ?? '', 'type' => 'url'],
+        ]);
+
+        return redirect()->route('admin.settings.social')->with('success', 'Kaydedildi');
+    }
+
+    public function footerForm()
+    {
+        $this->ensureAdmin();
+        $defaultLinks = [
+            ['label' => 'Gizlilik Politikasi', 'url' => '/gizlilik'],
+            ['label' => 'Cerez Politikasi', 'url' => '/cerez'],
+            ['label' => 'Kullanim Sartlari', 'url' => '/kullanim'],
+            ['label' => 'KVKK Aydinlatma Metni', 'url' => '/kvkk'],
+        ];
+        $linksJson = $this->settings->get('footer_legal_links_json');
+        $links = is_array($linksJson) ? $linksJson : $defaultLinks;
+        return view('admin.settings.footer', [
+            'footer_legal_text' => $this->settings->get('footer_legal_text', 'Radyoyol Tum Haklari Saklidir'),
+            'footer_legal_links' => $links,
+        ]);
+    }
+
+    public function saveFooter(Request $request)
+    {
+        $this->ensureAdmin();
+        $validated = $request->validate([
+            'footer_legal_text' => 'required|string|max:255',
+            'footer_legal_links_json' => 'nullable|string',
+        ]);
+
+        $this->settings->set('footer_legal_text', $validated['footer_legal_text'], 'text');
+
+        $json = $validated['footer_legal_links_json'] ?? '[]';
+        $decoded = json_decode($json, true);
+        if (!is_array($decoded)) {
+            $decoded = [];
+        }
+        $sanitized = [];
+        foreach ($decoded as $item) {
+            if (is_array($item) && isset($item['label'], $item['url'])) {
+                $sanitized[] = [
+                    'label' => (string) $item['label'],
+                    'url' => filter_var($item['url'], FILTER_SANITIZE_URL) ?: '/',
+                ];
+            }
+        }
+        $this->settings->set('footer_legal_links_json', $sanitized, 'json');
+
+        return redirect()->route('admin.settings.footer')->with('success', 'Kaydedildi');
+    }
+
+    public function themeForm()
+    {
+        $this->ensureAdmin();
+        return view('admin.settings.theme', [
+            'theme_primary' => $this->settings->get('theme_primary', '#0f1319'),
+            'theme_accent' => $this->settings->get('theme_accent', '#c92a2a'),
+            'theme_bg' => $this->settings->get('theme_bg', '#0f1319'),
+            'theme_text' => $this->settings->get('theme_text', '#f0f2f5'),
+            'theme_glow' => $this->settings->get('theme_glow', '#c92a2a'),
+        ]);
+    }
+
+    public function saveTheme(Request $request)
+    {
+        $this->ensureAdmin();
+        $validated = $request->validate([
+            'theme_primary' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
+            'theme_accent' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
+            'theme_bg' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
+            'theme_text' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
+            'theme_glow' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
+        ]);
+
+        $this->settings->setMany([
+            'theme_primary' => ['value' => $validated['theme_primary'] ?? '#0f1319', 'type' => 'color'],
+            'theme_accent' => ['value' => $validated['theme_accent'] ?? '#c92a2a', 'type' => 'color'],
+            'theme_bg' => ['value' => $validated['theme_bg'] ?? '#0f1319', 'type' => 'color'],
+            'theme_text' => ['value' => $validated['theme_text'] ?? '#f0f2f5', 'type' => 'color'],
+            'theme_glow' => ['value' => $validated['theme_glow'] ?? '#c92a2a', 'type' => 'color'],
+        ]);
+
+        return redirect()->route('admin.settings.theme')->with('success', 'Kaydedildi');
+    }
+}

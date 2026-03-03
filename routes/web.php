@@ -41,4 +41,17 @@ Route::prefix('admin')->group(function () {
     Route::get('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'index'])->name('admin.shoutcast.player.index');
     Route::post('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'store'])->name('admin.shoutcast.player.store');
     Route::redirect('stream-settings', '/admin/shoutcast/player', 301);
+
+    Route::get('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'generalForm'])->name('admin.settings.general');
+    Route::post('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'saveGeneral']);
+    Route::get('settings/branding', [App\Http\Controllers\Admin\SettingsController::class, 'brandingForm'])->name('admin.settings.branding');
+    Route::post('settings/branding', [App\Http\Controllers\Admin\SettingsController::class, 'saveBranding']);
+    Route::get('settings/seo', [App\Http\Controllers\Admin\SettingsController::class, 'seoForm'])->name('admin.settings.seo');
+    Route::post('settings/seo', [App\Http\Controllers\Admin\SettingsController::class, 'saveSeo']);
+    Route::get('settings/social', [App\Http\Controllers\Admin\SettingsController::class, 'socialForm'])->name('admin.settings.social');
+    Route::post('settings/social', [App\Http\Controllers\Admin\SettingsController::class, 'saveSocial']);
+    Route::get('settings/footer', [App\Http\Controllers\Admin\SettingsController::class, 'footerForm'])->name('admin.settings.footer');
+    Route::post('settings/footer', [App\Http\Controllers\Admin\SettingsController::class, 'saveFooter']);
+    Route::get('settings/theme', [App\Http\Controllers\Admin\SettingsController::class, 'themeForm'])->name('admin.settings.theme');
+    Route::post('settings/theme', [App\Http\Controllers\Admin\SettingsController::class, 'saveTheme']);
 });
