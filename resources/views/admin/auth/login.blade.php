@@ -31,7 +31,11 @@
         overflow: hidden;
     }
     .login-header{
-        background: linear-gradient(135deg,#7a0f14,#c1121f,#ff2e2e);
+        background:
+            linear-gradient(135deg, rgba(0,0,0,.5), rgba(180,30,30,.6)),
+            url("{{ asset('assets/images/admin-hero.png') }}");
+        background-size: cover;
+        background-position: center;
         position:relative;
     }
     .login-header::after{
