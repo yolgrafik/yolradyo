@@ -225,30 +225,37 @@
             -webkit-backdrop-filter: blur(8px);
             padding: 14px 1rem;
         }
-        #legalStrip {
-            text-align: center;
+        .legal-strip {
+            width: 100%;
+            text-align: center !important;
+            display: block !important;
             padding: 10px 0 14px;
         }
-        #legalText {
+        .legal-pretext {
             font-family: Arial, sans-serif !important;
             font-size: 14px !important;
             font-weight: 700 !important;
             color: rgba(255,255,255,0.85) !important;
             margin: 0 0 10px 0 !important;
-            letter-spacing: 0.2px !important;
         }
-        #legalLinks {
+        .legal-links {
+            width: 100%;
+            text-align: center !important;
+            display: block !important;
             font-family: Arial, sans-serif !important;
             font-size: 13px !important;
             color: rgba(255,255,255,0.70) !important;
         }
-        #legalLinks a {
+        .legal-links a {
             color: rgba(255,255,255,0.70) !important;
             text-decoration: none !important;
-            padding: 0 10px !important;
         }
-        #legalLinks a:hover {
-            color: #ffffff !important;
+        .legal-links a:hover {
+            color: #fff !important;
+        }
+        .legal-links .sep {
+            margin: 0 12px;
+            color: rgba(255,255,255,0.35);
         }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
@@ -518,9 +525,8 @@
         @media (max-width: 768px) {
             .bottom-bar-logo { height: 78px; }
             .legal-footer { padding: 12px 0.75rem; }
-            #legalText { font-size: 12px !important; margin-bottom: 8px !important; }
-            #legalLinks { font-size: 12px !important; }
-            #legalLinks a { padding: 0 6px !important; }
+            .legal-pretext { font-size: 12px !important; margin-bottom: 8px !important; }
+            .legal-links { font-size: 12px !important; }
             body { padding-bottom: 165px; }
             .disc-overlay { width: 40px; height: 40px; }
             .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
@@ -614,12 +620,15 @@
         </div>
     </div>
     <footer class="legal-footer">
-        <div id="legalStrip">
-            <div id="legalText">RadyoYol Tum Haklari Saklidir</div>
-            <div id="legalLinks">
-                <a href="{{ url('/gizlilik') }}">Gizlilik Politikasi</a> |
-                <a href="{{ url('/cerez') }}">Cerez Politikasi</a> |
-                <a href="{{ url('/kullanim') }}">Kullanim Sartlari</a> |
+        <div class="legal-strip" id="legalStrip">
+            <div class="legal-pretext" id="legalText">RadyoYol Tum Haklari Saklidir</div>
+            <div class="legal-links" id="legalLinks">
+                <a href="{{ url('/gizlilik') }}">Gizlilik Politikasi</a>
+                <span class="sep">|</span>
+                <a href="{{ url('/cerez') }}">Cerez Politikasi</a>
+                <span class="sep">|</span>
+                <a href="{{ url('/kullanim') }}">Kullanim Sartlari</a>
+                <span class="sep">|</span>
                 <a href="{{ url('/kvkk') }}">KVKK Aydinlatma Metni</a>
             </div>
         </div>
