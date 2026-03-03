@@ -29,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
                 $settings = Setting::getSettings();
             }
             $view->with('radioSettings', $settings);
+
+            $siteSettings = [];
+            if (Schema::hasTable('site_settings')) {
+                $siteSettings = app(SettingsService::class)->getAll();
+            }
+            $view->with('siteSettings', $siteSettings);
         });
     }
 }
