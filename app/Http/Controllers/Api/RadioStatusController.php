@@ -39,6 +39,7 @@ class RadioStatusController extends Controller
         $urls = [
             "{$baseUrl}/stats?sid={$sid}&json=1",
             "{$baseUrl}/stats?json=1",
+            "{$baseUrl}/status-json.xsl",
         ];
 
         foreach ($urls as $url) {
@@ -82,8 +83,10 @@ class RadioStatusController extends Controller
             $song = (string) $json['currentsong'];
         } elseif (isset($json['streams'][0]['song'])) {
             $song = (string) $json['streams'][0]['song'];
-        } elseif (isset($json['icestats']['source']['title'])) {
-            $song = (string) $json['icestats']['source']['title'];
+        } elseif (isset($json['icestats']['source'])) {
+            $src = $json['icestats']['source'];
+            $src = is_array($src) && isset($src[0]) ? $src[0] : $src;
+            $song = (string) ($src['title'] ?? $src['yp_current'] ?? '-');
         }
 
         if (isset($json['listeners'])) {
@@ -92,8 +95,10 @@ class RadioStatusController extends Controller
             $listeners = (int) $json['currentlisteners'];
         } elseif (isset($json['streams'][0]['listeners'])) {
             $listeners = (int) $json['streams'][0]['listeners'];
-        } elseif (isset($json['icestats']['source']['listeners'])) {
-            $listeners = (int) $json['icestats']['source']['listeners'];
+        } elseif (isset($json['icestats']['source'])) {
+            $src = $json['icestats']['source'];
+            $src = is_array($src) && isset($src[0]) ? $src[0] : $src;
+            $listeners = (int) ($src['listeners'] ?? 0);
         }
 
         if ($listeners > 0 || !empty($song) && $song !== '-') {
