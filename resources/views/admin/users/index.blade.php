@@ -65,7 +65,7 @@
                         </td>
                     </tr>
                     @empty
-                    <tr><td colspan="5" class="text-center">Henuz yonetici yok.</td></tr>
+                    <tr><td colspan="6" class="text-center">Henuz yonetici yok.</td></tr>
                     @endforelse
                 </tbody>
             </table>
