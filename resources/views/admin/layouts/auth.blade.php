@@ -41,32 +41,50 @@
             position: fixed;
             left: 0;
             top: 0;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 60, 60, 0.9);
-            box-shadow: 0 0 12px rgba(255, 46, 46, 0.5), 0 0 24px rgba(255, 46, 46, 0.25);
             pointer-events: none;
             z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.12s ease-out, width 0.2s ease, height 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-            animation: cursorPulse 3s ease-in-out infinite;
             opacity: 0;
+            transition: opacity 0.25s ease;
         }
         .custom-cursor.is-visible { opacity: 1; }
-        .custom-cursor.is-link {
-            animation: none;
-            box-shadow: 0 0 18px rgba(255, 80, 80, 0.75), 0 0 36px rgba(255, 46, 46, 0.45);
+        .cursor-inner {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(220, 50, 50, 0.95);
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 6px rgba(200, 40, 40, 0.35);
+            animation: cursorPulseInner 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 100000;
         }
-        .custom-cursor.is-button {
-            width: 9px;
-            height: 9px;
-            transform: translate(-50%, -50%) scale(1.15);
-            box-shadow: 0 0 14px rgba(255, 46, 46, 0.55), 0 0 28px rgba(255, 46, 46, 0.3);
+        .cursor-outer {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 70, 70, 0.3);
+            background: transparent;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 12px rgba(255, 50, 50, 0.18), inset 0 0 8px rgba(255, 50, 50, 0.06);
+            animation: cursorPulseOuter 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 99999;
         }
-        @keyframes cursorPulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(255, 46, 46, 0.5), 0 0 24px rgba(255, 46, 46, 0.25); }
-            50% { opacity: 0.92; box-shadow: 0 0 16px rgba(255, 46, 46, 0.45), 0 0 30px rgba(255, 46, 46, 0.22); }
+        .custom-cursor.is-button .cursor-inner { width: 6px; height: 6px; }
+        .custom-cursor.is-button .cursor-outer { width: 16px; height: 16px; }
+        .custom-cursor.is-link .cursor-outer {
+            border-color: rgba(255, 90, 90, 0.45);
+            box-shadow: 0 0 14px rgba(255, 60, 60, 0.28), inset 0 0 10px rgba(255, 60, 60, 0.1);
+        }
+        @keyframes cursorPulseInner {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.88; }
+        }
+        @keyframes cursorPulseOuter {
+            0%, 100% { opacity: 0.9; box-shadow: 0 0 12px rgba(255, 50, 50, 0.18), inset 0 0 8px rgba(255, 50, 50, 0.06); }
+            50% { opacity: 1; box-shadow: 0 0 16px rgba(255, 50, 50, 0.25), inset 0 0 10px rgba(255, 50, 50, 0.1); }
         }
         body::before {
             content: '';
@@ -147,7 +165,10 @@
     @stack('styles')
 </head>
 <body>
-    <div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
+    <div class="custom-cursor" id="customCursor" aria-hidden="true">
+        <div class="cursor-outer" id="cursorOuter"></div>
+        <div class="cursor-inner" id="cursorInner"></div>
+    </div>
     <div class="auth-card {{ View::hasSection('hero') ? 'login-card' : '' }}">
         @hasSection('hero')
             @yield('hero')
@@ -171,20 +192,26 @@
     <script>
         (function() {
             var cursor = document.getElementById('customCursor');
-            if (!cursor || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            var inner = document.getElementById('cursorInner');
+            var outer = document.getElementById('cursorOuter');
+            if (!cursor || !inner || !outer || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
             document.body.classList.add('cursor-ready');
-            var x = 0, y = 0, tx = 0, ty = 0;
+            var mx = 0, my = 0, ix = 0, iy = 0, ox = 0, oy = 0;
             function move() {
-                tx += (x - tx) * 0.18;
-                ty += (y - ty) * 0.18;
-                cursor.style.left = tx + 'px';
-                cursor.style.top = ty + 'px';
+                ix += (mx - ix) * 0.22;
+                iy += (my - iy) * 0.22;
+                ox += (mx - ox) * 0.09;
+                oy += (my - oy) * 0.09;
+                inner.style.left = ix + 'px';
+                inner.style.top = iy + 'px';
+                outer.style.left = ox + 'px';
+                outer.style.top = oy + 'px';
                 requestAnimationFrame(move);
             }
             move();
             document.addEventListener('mousemove', function(e) {
-                x = e.clientX;
-                y = e.clientY;
+                mx = e.clientX;
+                my = e.clientY;
                 cursor.classList.add('is-visible');
             });
             var linkSel = 'a, .forgot-link';
