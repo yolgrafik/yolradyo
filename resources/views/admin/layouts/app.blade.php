@@ -867,17 +867,17 @@
                             <li><a href="{{ route('admin.settings.theme') }}" class="nav-item {{ request()->routeIs('admin.settings.theme') ? 'is-active' : '' }}">Tema & Renk Ayarlari</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section" data-section="kullanici">
-                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                    <div class="nav-section {{ request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.activity-logs.*', 'admin.security.*') ? 'is-open' : '' }}" data-section="kullanici">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.activity-logs.*', 'admin.security.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                             <span>Kullanici Yonetimi</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="#" class="nav-item">Yonetici Hesaplari</a></li>
-                            <li><a href="#" class="nav-item">Rol & Yetkiler</a></li>
-                            <li><a href="#" class="nav-item">Aktivite Loglari</a></li>
-                            <li><a href="#" class="nav-item">2FA Guvenlik</a></li>
+                            <li><a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Yonetici Hesaplari</a></li>
+                            <li><a href="{{ route('admin.roles.index') }}" class="nav-item {{ request()->routeIs('admin.roles.*') ? 'is-active' : '' }}">Rol & Yetkiler</a></li>
+                            <li><a href="{{ route('admin.activity-logs.index') }}" class="nav-item {{ request()->routeIs('admin.activity-logs.*') ? 'is-active' : '' }}">Aktivite Loglari</a></li>
+                            <li><a href="{{ route('admin.security.2fa') }}" class="nav-item {{ request()->routeIs('admin.security.*') ? 'is-active' : '' }}">2FA Guvenlik</a></li>
                         </ul>
                     </div>
                 </nav>
