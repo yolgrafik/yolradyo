@@ -394,9 +394,9 @@
             body { padding-bottom: 75px; }
             .disc-overlay { width: 20px; height: 20px; }
             .disc-overlay .icon.play { border-top-width: 3px; border-bottom-width: 3px; border-left-width: 5px; margin-left: 1px; }
-            .disc-overlay .icon.pause { width: 12px; height: 12px; }
+            .disc-overlay .icon.pause { width: 6px; height: 6px; }
             .disc-overlay .icon.pause::before,
-            .disc-overlay .icon.pause::after { width: 2px; height: 12px; }
+            .disc-overlay .icon.pause::after { width: 3px; height: 6px; }
         }
     </style>
     @stack('styles')
