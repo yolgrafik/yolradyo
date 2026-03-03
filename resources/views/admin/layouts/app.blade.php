@@ -39,7 +39,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 140px;
             position: relative;
             overflow: hidden;
         }
@@ -527,7 +526,6 @@
             }
         }
         .admin-topbar{
-          min-height:140px !important;
           position:relative;
         }
         .admin-topbar:not(.admin-hero){
@@ -550,8 +548,6 @@
           background: rgba(220,38,38,.8);
         }
         .admin-hero{
-          height: 160px !important;
-          min-height: 160px !important;
           overflow: visible !important;
           position: relative !important;
         }
