@@ -448,6 +448,12 @@
         }
         @media (max-width: 768px) {
             .nav-logo img { height: 70px; }
+            .bottom-bar-player { padding: 0 1rem; gap: 0.5rem; }
+            .player-left { font-size: 0.7rem; }
+            .player-now-playing { font-size: 0.75rem; max-width: 120px; }
+            .player-volume-wrap { min-width: 60px; }
+            .player-volume-wrap input[type="range"] { width: 50px; }
+            .player-eq { display: none; }
         }
         @media (min-width: 993px) {
             .nav-toggle { display: none; }
@@ -634,11 +640,21 @@
             var icon = btn ? btn.querySelector('.icon') : null;
             var navLogo = document.querySelector('.nav-logo');
             var quickLive = document.getElementById('quickMenuLive');
+            var statusEl = document.getElementById('playerStatus');
+            var statusText = document.getElementById('playerStatusText');
+            var nowPlayingEl = document.getElementById('playerNowPlaying');
+            var listenersEl = document.getElementById('playerListeners');
+            var muteBtn = document.getElementById('playerMuteBtn');
+            var volumeSlider = document.getElementById('playerVolume');
             if (!audio || !btn) return;
-            audio.volume = parseFloat(audio.getAttribute('data-default-volume')) || 0.8;
+            var defaultVol = parseFloat(audio.getAttribute('data-default-volume')) || 0.7;
+            var volPct = Math.round(defaultVol * 100);
+            if (volumeSlider) { volumeSlider.value = volPct; }
+            audio.volume = defaultVol;
             var streamUrl = audio.getAttribute('data-stream-url') || '';
             var backupUrl = audio.getAttribute('data-backup-url') || '';
             var usedBackup = false;
+            var savedVolume = defaultVol;
             function tryPlay() {
                 if (!streamUrl && !backupUrl) return;
                 var url = (usedBackup ? backupUrl : streamUrl) || backupUrl || streamUrl;
@@ -647,6 +663,21 @@
                 audio.load();
                 audio.play().catch(function() {});
             }
+            function updateStatusUI() {
+                if (!statusEl || !statusText) return;
+                var playing = !audio.paused && !audio.ended;
+                statusText.textContent = playing ? 'CANLI' : 'Duraklatildi';
+                statusEl.classList.toggle('paused', !playing);
+                statusEl.querySelector('.dot').classList.toggle('pulse', playing);
+            }
+            function fetchRadioStatus() {
+                fetch('/api/radio/status').then(function(r) { return r.json(); }).then(function(d) {
+                    if (nowPlayingEl) nowPlayingEl.textContent = d.song || '-';
+                    if (listenersEl) listenersEl.textContent = 'Dinleyici: ' + (d.listeners || 0);
+                }).catch(function() {});
+            }
+            fetchRadioStatus();
+            setInterval(fetchRadioStatus, 7000);
             if (quickLive) {
                 quickLive.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -656,11 +687,8 @@
                 });
             }
             btn.addEventListener('click', function() {
-                if (audio.paused) {
-                    tryPlay();
-                } else {
-                    audio.pause();
-                }
+                if (audio.paused) tryPlay();
+                else audio.pause();
             });
             if (navLogo) {
                 navLogo.addEventListener('click', function(e) {
@@ -673,18 +701,19 @@
             audio.addEventListener('play', function() {
                 document.body.classList.add('playing');
                 if (icon) { icon.classList.remove('play'); icon.classList.add('pause'); }
+                updateStatusUI();
             });
             audio.addEventListener('pause', function() {
                 document.body.classList.remove('playing');
                 if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
+                updateStatusUI();
             });
             audio.addEventListener('ended', function() {
                 document.body.classList.remove('playing');
                 if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
+                updateStatusUI();
             });
-            if (audio.getAttribute('data-auto-play') === '1' && (streamUrl || backupUrl)) {
-                tryPlay();
-            }
+            if (audio.getAttribute('data-auto-play') === '1' && (streamUrl || backupUrl)) tryPlay();
             audio.addEventListener('error', function() {
                 if (!usedBackup && backupUrl) {
                     usedBackup = true;
@@ -693,12 +722,37 @@
                     audio.play().catch(function() {
                         document.body.classList.remove('playing');
                         if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
+                        updateStatusUI();
                     });
                 } else {
                     document.body.classList.remove('playing');
                     if (icon) { icon.classList.remove('pause'); icon.classList.add('play'); }
+                    updateStatusUI();
                 }
             });
+            updateStatusUI();
+            if (muteBtn) {
+                muteBtn.addEventListener('click', function() {
+                    if (audio.muted) {
+                        audio.muted = false;
+                        muteBtn.classList.remove('muted');
+                        if (muteBtn.querySelector('.icon-unmuted')) muteBtn.querySelector('.icon-unmuted').style.display = '';
+                        if (muteBtn.querySelector('.icon-muted')) muteBtn.querySelector('.icon-muted').style.display = 'none';
+                    } else {
+                        audio.muted = true;
+                        muteBtn.classList.add('muted');
+                        if (muteBtn.querySelector('.icon-unmuted')) muteBtn.querySelector('.icon-unmuted').style.display = 'none';
+                        if (muteBtn.querySelector('.icon-muted')) muteBtn.querySelector('.icon-muted').style.display = '';
+                    }
+                });
+            }
+            if (volumeSlider) {
+                volumeSlider.addEventListener('input', function() {
+                    var v = parseInt(this.value, 10) / 100;
+                    audio.volume = v;
+                    if (audio.muted && v > 0) { audio.muted = false; if (muteBtn) { muteBtn.classList.remove('muted'); muteBtn.querySelector('.icon-unmuted').style.display = ''; muteBtn.querySelector('.icon-muted').style.display = 'none'; } }
+                });
+            }
         })();
     </script>
     @stack('scripts')
