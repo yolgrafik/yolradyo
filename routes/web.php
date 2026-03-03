@@ -36,6 +36,6 @@ Route::prefix('admin')->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    Route::get('stream-settings', [App\Http\Controllers\Admin\StreamSettingsController::class, 'index'])->name('admin.stream-settings.index');
-    Route::post('stream-settings', [App\Http\Controllers\Admin\StreamSettingsController::class, 'store'])->name('admin.stream-settings.store');
+    Route::get('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'index'])->name('admin.shoutcast.player.index');
+    Route::post('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'store'])->name('admin.shoutcast.player.store');
 });

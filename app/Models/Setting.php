@@ -11,11 +11,15 @@ class Setting extends Model
     protected $fillable = [
         'radio_stream_url',
         'radio_backup_stream_url',
+        'radio_auto_play',
+        'radio_default_volume',
     ];
 
     protected $casts = [
         'radio_stream_url' => 'string',
         'radio_backup_stream_url' => 'string',
+        'radio_auto_play' => 'boolean',
+        'radio_default_volume' => 'float',
     ];
 
     /**
