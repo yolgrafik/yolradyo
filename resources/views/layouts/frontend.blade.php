@@ -128,6 +128,8 @@
         .nav-menu > li > a.active::after {
             transform: scaleX(1);
         }
+        .nav-menu > li > a.nav-item--accent { color: var(--accent); font-weight: 600; }
+        .nav-menu > li > a.nav-item--accent:hover { color: #fff; }
         .nav-social {
             display: flex;
             align-items: center;
@@ -578,6 +580,7 @@
                     </ul>
                 </li>
                 <li><a href="{{ url('/iletisim') }}">İletişim</a></li>
+                <li><a href="#" class="nav-item nav-item--accent" data-open-song-request>Sarki Istek</a></li>
             </ul>
             <div class="nav-social nav-social-mobile" aria-hidden="true">
                 @php
@@ -609,6 +612,8 @@
         @yield('content')
     </main>
 
+    @include('partials.song-request-ticker')
+
     <div class="bottom-bar-player">
         <div class="player-logo-wrap">
             <div class="logo-player bottom-bar-logo-wrap">
@@ -635,6 +640,8 @@
             <div class="player-listeners" id="playerListeners">Dinleyici: 0</div>
         </div>
     </div>
+    @include('partials.song-request-modal')
+
     <footer class="legal-footer">
         <div class="legal-line">
             @php

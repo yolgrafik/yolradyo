@@ -35,6 +35,15 @@ class AppServiceProvider extends ServiceProvider
                 $siteSettings = app(SettingsService::class)->getAll();
             }
             $view->with('siteSettings', $siteSettings);
+
+            $approvedRequests = [];
+            if (Schema::hasTable('song_requests')) {
+                $approvedRequests = \App\Models\SongRequest::where('status', 'approved')
+                    ->orderByDesc('approved_at')
+                    ->limit(50)
+                    ->get(['full_name', 'artist_name', 'song_name']);
+            }
+            $view->with('approvedSongRequests', $approvedRequests);
         });
 
         View::composer('admin.layouts.app', function ($view) {
