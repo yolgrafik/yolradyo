@@ -25,36 +25,38 @@
         border-radius: 14px;
         overflow: hidden;
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-        min-height: 280px;
+        min-height: 322px;
         background: var(--panel);
         border: 1px solid var(--border);
     }
     .home-slider {
         position: relative;
         width: 100%;
-        min-height: 280px;
+        min-height: 322px;
         overflow: hidden;
     }
     .home-slider__slide {
         position: absolute;
         inset: 0;
         opacity: 0;
-        clip-path: inset(0 100% 0 0 round 0);
-        transition: opacity 0.5s ease, clip-path 1s cubic-bezier(0.65, 0, 0.35, 1);
         display: flex;
         align-items: center;
         justify-content: center;
         background-size: cover;
         background-position: center;
+        transform: translateX(100%) translateY(0) scale(1.02);
+        transition: none;
     }
     .home-slider__slide.is-active {
         opacity: 1;
         z-index: 1;
-        clip-path: inset(0 0 0 0 round 0);
+        transform: translateX(0) translateY(0) scale(1);
+        transition: transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.7s ease;
     }
     .home-slider__slide.is-exiting {
         opacity: 0;
-        clip-path: inset(0 0 0 100% round 0);
+        transform: translateX(-80%) translateY(3%) scale(0.97);
+        transition: transform 1.1s cubic-bezier(0.55, 0.06, 0.68, 0.19), opacity 0.6s ease;
     }
     .home-slider__slide::after {
         content: '';
@@ -62,21 +64,23 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 80px;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C150,120 350,0 600,60 C850,120 1050,0 1200,60 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.3)'/%3E%3Cpath d='M0,80 C200,40 400,120 600,80 C800,40 1000,120 1200,80 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.2)'/%3E%3C/svg%3E") no-repeat bottom center;
+        height: 120px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C150,0 300,120 450,60 S600,0 750,60 S900,120 1050,60 1200,60 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.35)'/%3E%3Cpath d='M0,85 C200,45 400,125 600,85 S800,45 1000,85 1200,85 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.2)'/%3E%3Cpath d='M0,100 C250,60 500,140 750,100 S1000,60 1200,100 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.1)'/%3E%3C/svg%3E") no-repeat bottom center;
         background-size: 200% 100%;
         pointer-events: none;
         z-index: 1;
         opacity: 0;
-        animation: none;
     }
     .home-slider__slide.is-active::after {
         opacity: 1;
-        animation: waveFloat 4s ease-in-out infinite;
+        animation: waveRoll 5s ease-in-out infinite;
     }
-    @keyframes waveFloat {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
+    @keyframes waveRoll {
+        0%, 100% { background-position-x: 0%; }
+        25% { background-position-x: 25%; }
+        50% { background-position-x: 50%; }
+        75% { background-position-x: 75%; }
+        100% { background-position-x: 100%; }
     }
     .home-slider__slide::before {
         content: '';
@@ -84,14 +88,6 @@
         inset: 0;
         background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
         pointer-events: none;
-    }
-    @keyframes waveRevealIn {
-        0% { clip-path: polygon(100% 0, 100% 100%, 100% 100%, 100% 0); }
-        100% { clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); }
-    }
-    @keyframes waveRevealOut {
-        0% { clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); }
-        100% { clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); }
     }
     .home-slider__content {
         position: relative;
@@ -156,7 +152,7 @@
     }
     .home-slider__dot.is-active { background: var(--accent); }
     .home-slider-placeholder {
-        min-height: 280px;
+        min-height: 322px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -500,7 +496,7 @@
             setTimeout(function() {
                 slides[prev].classList.remove('is-active', 'is-exiting');
                 isTransitioning = false;
-            }, 700);
+            }, 1100);
         }
 
         dots.forEach(function(dot, i) {
