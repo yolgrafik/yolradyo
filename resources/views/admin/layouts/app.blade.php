@@ -53,8 +53,18 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
             pointer-events: none;
+        }
+        .topbar-bottom-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            pointer-events: none;
+            z-index: 1;
         }
         .topbar-brand {
             display: flex;
@@ -418,9 +428,18 @@
             }
             .sidebar {
                 width: 100%;
-                padding: 0.5rem;
+                padding: 0;
                 border-right: none;
                 border-bottom: 1px solid var(--border);
+            }
+            .sidebar-brand {
+                padding: 0.75rem 1rem;
+            }
+            .topbar-logo-wrap {
+                height: 32px;
+            }
+            .topbar-logo {
+                height: 32px;
             }
             .nav-section + .nav-section {
                 margin-top: 0.25rem;
@@ -453,6 +472,7 @@
 <body>
     <div class="app-wrap">
         <header class="topbar">
+            <div class="topbar-bottom-line"></div>
             <div class="topbar-brand">
                 <div class="topbar-logo-wrap">
                     <img src="{{ asset('assets/brand/radyoyol-logo.png') }}" alt="RADYOYOL" class="topbar-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
