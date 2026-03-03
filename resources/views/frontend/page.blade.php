@@ -13,6 +13,7 @@
         font-size: 1.75rem;
         font-weight: 700;
         color: #fff;
+        text-transform: none;
         max-width: 1200px;
         margin: 0 auto;
     }

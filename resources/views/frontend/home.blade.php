@@ -28,6 +28,7 @@
         font-weight: 800;
         letter-spacing: 0.12em;
         color: #fff;
+        text-transform: none;
         margin-bottom: 2rem;
         text-shadow: 0 0 30px rgba(201, 42, 42, 0.3);
         position: relative;
@@ -48,6 +49,7 @@
         padding: 1.25rem 1.5rem;
         font-size: 1.1rem;
         font-weight: 700;
+        text-transform: none;
         color: #fff;
         text-decoration: none;
         background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), rgba(150, 30, 30, 0.95));
