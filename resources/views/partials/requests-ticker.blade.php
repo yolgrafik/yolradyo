@@ -5,8 +5,8 @@
         : asset('logo.png');
 @endphp
 <div class="ticker-wrap">
-    <h4 class="ticker-title">İstekler</h4>
     <div class="ticker" id="requestsTicker">
+        <span class="ticker__label">İstekler</span>
         <div class="ticker__mask">
             <div class="ticker__track" id="tickerTrack">
                 {{-- Content injected by JS --}}
@@ -18,7 +18,6 @@
 @push('styles')
 <style>
 .ticker-wrap { margin-top: 1rem; }
-.ticker-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; letter-spacing: 0.02em; }
 .ticker {
     height: 48px;
     border-radius: 12px;
@@ -29,6 +28,23 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
     position: relative;
+    display: flex;
+    align-items: center;
+}
+.ticker__label {
+    flex-shrink: 0;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 1rem;
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), var(--accent));
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.03em;
 }
 .ticker::before, .ticker::after {
     content: '';
@@ -43,11 +59,12 @@
     left: 0;
     background: linear-gradient(90deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
 }
+.ticker .ticker__mask ~ .ticker__mask + * { }
 .ticker::after {
     right: 0;
     background: linear-gradient(270deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
 }
-.ticker__mask { overflow: hidden; height: 100%; }
+.ticker__mask { overflow: hidden; height: 100%; flex: 1; min-width: 0; }
 .ticker__track {
     display: flex;
     align-items: center;
