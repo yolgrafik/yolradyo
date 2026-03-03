@@ -39,14 +39,23 @@
         position: absolute;
         inset: 0;
         opacity: 0;
-        transition: opacity 0.5s ease;
+        transform: translateX(40px) scale(0.98);
+        transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         align-items: center;
         justify-content: center;
         background-size: cover;
         background-position: center;
     }
-    .home-slider__slide.is-active { opacity: 1; z-index: 1; }
+    .home-slider__slide.is-active {
+        opacity: 1;
+        z-index: 1;
+        transform: translateX(0) scale(1);
+    }
+    .home-slider__slide.is-exiting {
+        opacity: 0;
+        transform: translateX(-40px) scale(0.98);
+    }
     .home-slider__slide::before {
         content: '';
         position: absolute;
@@ -60,6 +69,13 @@
         padding: 2rem;
         max-width: 60%;
         text-align: left;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    }
+    .home-slider__slide.is-active .home-slider__content {
+        opacity: 1;
+        transform: translateY(0);
     }
     .home-slider__title {
         font-size: 2rem;
@@ -438,15 +454,23 @@
         var dots = nav.querySelectorAll('.home-slider__dot');
         var current = 0;
         var total = slides.length;
+        var isTransitioning = false;
 
         function goTo(i) {
+            if (isTransitioning || i === current) return;
+            isTransitioning = true;
+            var prev = current;
+            slides[prev].classList.add('is-exiting');
             current = (i + total) % total;
-            slides.forEach(function(s, idx) {
-                s.classList.toggle('is-active', idx === current);
-            });
+            slides[current].classList.add('is-active');
+            slides[current].classList.remove('is-exiting');
             dots.forEach(function(d, idx) {
                 d.classList.toggle('is-active', idx === current);
             });
+            setTimeout(function() {
+                slides[prev].classList.remove('is-active', 'is-exiting');
+                isTransitioning = false;
+            }, 700);
         }
 
         dots.forEach(function(dot, i) {
