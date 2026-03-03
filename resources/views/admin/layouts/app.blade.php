@@ -156,52 +156,81 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            background: rgba(0,0,0,0.15);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 0.6rem 1rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0.5rem 1rem 0.5rem 0.5rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
             position: relative;
             z-index: 1;
-            transition: box-shadow 0.2s, border-color 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: Arial, sans-serif;
         }
         .user-box:hover {
-            border-color: rgba(255,255,255,0.35);
-            box-shadow: 0 0 20px rgba(255,255,255,0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), 0 0 24px rgba(201, 42, 42, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+            transform: translateY(-1px);
+        }
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), rgba(180, 30, 30, 0.95));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(201, 42, 42, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .user-box:hover .user-avatar {
+            box-shadow: 0 0 18px rgba(201, 42, 42, 0.5), 0 2px 12px rgba(0, 0, 0, 0.25);
+            transform: scale(1.05);
         }
         .user-info {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 0.15rem;
+            gap: 0.2rem;
+            min-width: 0;
         }
         .user-badge {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
             color: var(--accent);
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1.2;
         }
         .user-role {
             font-size: 0.8rem;
-            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.2;
         }
         .btn-logout {
             padding: 0.5rem 1rem;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            background: var(--accent);
+            background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), var(--accent));
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
             cursor: pointer;
-            transition: background 0.18s, box-shadow 0.18s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(201, 42, 42, 0.3);
         }
         .btn-logout:hover {
-            background: #e63939;
-            box-shadow: 0 2px 12px rgba(201, 42, 42, 0.5);
+            background: linear-gradient(135deg, #e63939, #d62828);
+            box-shadow: 0 4px 16px rgba(201, 42, 42, 0.45);
+            transform: translateY(-1px);
         }
         .main-row {
             display: flex;
@@ -500,6 +529,18 @@
                 font-size: 0.9375rem;
                 letter-spacing: 0.18em;
             }
+            .user-box {
+                padding: 0.4rem 0.75rem 0.4rem 0.4rem;
+                gap: 0.75rem;
+            }
+            .user-avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+            .user-badge { font-size: 0.6rem; }
+            .user-role { font-size: 0.75rem; }
+            .btn-logout { padding: 0.45rem 0.85rem; font-size: 0.75rem; }
             .nav-section + .nav-section {
                 margin-top: 0.25rem;
                 padding-top: 0.25rem;
@@ -682,11 +723,12 @@
                 </div>
                 <div class="topbar-spacer topbar-spacer--right">
                 <div class="user-box">
-                <div class="user-info">
-                    <span class="user-badge">Yetkili</span>
-                    <span class="user-role">Yonetici</span>
-                </div>
-                <a href="{{ route('admin.logout') }}" class="btn-logout">Cikis</a>
+                    <div class="user-avatar" aria-hidden="true">Y</div>
+                    <div class="user-info">
+                        <span class="user-badge">Yetkili</span>
+                        <span class="user-role">Yonetici</span>
+                    </div>
+                    <a href="{{ route('admin.logout') }}" class="btn-logout">Cikis</a>
                 </div>
                 </div>
             </div>
