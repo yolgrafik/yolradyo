@@ -358,38 +358,59 @@
             display: flex;
             align-items: center;
         }
-        .logo-disc {
-            width: 44px;
-            height: 44px;
+        .disc-btn {
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: #1a1d24;
-            border: 2px solid rgba(255,255,255,0.25);
-            color: var(--accent);
-            display: inline-flex;
+            background: var(--accent);
+            border: none;
+            display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             margin: 0 2px;
             flex-shrink: 0;
             transform-origin: center;
-            transition: all 0.2s ease;
+            transition: box-shadow 0.2s ease;
         }
-        .logo-disc:hover {
-            border-color: rgba(201, 42, 42, 0.6);
-            box-shadow: 0 0 12px rgba(201, 42, 42, 0.3);
+        .disc-btn:hover {
+            box-shadow: 0 0 16px rgba(201, 42, 42, 0.5);
         }
-        .logo-disc svg {
-            width: 18px;
-            height: 18px;
+        .disc-btn .icon {
+            flex-shrink: 0;
+            display: block;
         }
-        .radio-player.playing .logo-disc {
-            animation: spinDisc 3s linear infinite;
+        .disc-btn .icon.play {
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 14px solid #fff;
+            margin-left: 4px;
         }
-        .radio-player.playing .logo-disc .play-icon { display: none; }
-        .radio-player.playing .logo-disc .pause-icon { display: block; }
-        .logo-disc .pause-icon { display: none; }
+        .disc-btn .icon.pause {
+            width: 14px;
+            height: 14px;
+            position: relative;
+            display: block;
+        }
+        .disc-btn .icon.pause::before,
+        .disc-btn .icon.pause::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 4px;
+            height: 14px;
+            background: #fff;
+            border-radius: 2px;
+        }
+        .disc-btn .icon.pause::before { left: 0; }
+        .disc-btn .icon.pause::after { right: 0; }
+        .radio-player.is-playing .disc-btn {
+            animation: spinDisc 2.5s linear infinite;
+        }
         @media (prefers-reduced-motion: reduce) {
-            .radio-player.playing .logo-disc { animation: none; }
+            .radio-player.is-playing .disc-btn { animation: none; }
         }
         .radio-player-btn {
             width: 36px;
@@ -514,7 +535,7 @@
             from { opacity: 0.5; }
             to { opacity: 1; }
         }
-        .radio-player.playing .radio-player-eq span { background: var(--accent); }
+        .radio-player.is-playing .radio-player-eq span { background: var(--accent); }
         @keyframes spinDisc {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -522,8 +543,11 @@
         @media (max-width: 768px) {
             body { padding-bottom: 96px; }
             .radio-player { padding: 0 1rem; gap: 0.75rem; }
-            .logo-disc { width: 38px; height: 38px; }
-            .logo-disc svg { width: 14px; height: 14px; }
+            .disc-btn { width: 42px; height: 42px; }
+            .disc-btn .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
+            .disc-btn .icon.pause { width: 10px; height: 10px; }
+            .disc-btn .icon.pause::before,
+            .disc-btn .icon.pause::after { width: 3px; height: 10px; }
             .logo-yol { font-size: 1.35rem; }
             .radio-player-volume input[type="range"] { width: 60px; }
         }
@@ -629,7 +653,7 @@
             <div class="player-logo-block">
                 <div class="logo-stack">
                     <span class="logo-radyo">RADIYO</span>
-                    <span class="logo-yol">Y<span class="logo-disc" id="logoDisc" title="Oynat / Duraklat"><svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg></span>L</span>
+                    <span class="logo-yol">Y<button type="button" id="discBtn" class="disc-btn" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>L</span>
                 </div>
                 <button type="button" class="radio-player-btn" id="radioPrev" aria-label="Önceki">⏮</button>
                 <button type="button" class="radio-player-btn" id="radioNext" aria-label="Sonraki">⏭</button>
@@ -666,14 +690,15 @@
         (function() {
             var audio = document.getElementById('radioStream');
             var player = document.getElementById('radioPlayer');
-            var logoDisc = document.getElementById('logoDisc');
+            var discBtn = document.getElementById('discBtn');
+            var iconEl = discBtn ? discBtn.querySelector('.icon') : null;
             var titleEl = document.getElementById('radioTitle');
             var volInput = document.getElementById('radioVol');
             var volBtn = document.getElementById('radioVolBtn');
             var prevBtn = document.getElementById('radioPrev');
             var nextBtn = document.getElementById('radioNext');
             var navLogo = document.querySelector('.nav-logo');
-            if (!audio || !logoDisc) return;
+            if (!audio || !discBtn) return;
             audio.volume = 0.8;
             if (volInput) volInput.value = 80;
             if (volInput && volBtn) {
@@ -683,7 +708,11 @@
                 });
             }
             function setPlaying(playing) {
-                player.classList.toggle('playing', playing);
+                player.classList.toggle('is-playing', playing);
+                if (iconEl) {
+                    iconEl.classList.remove('play', 'pause');
+                    iconEl.classList.add(playing ? 'pause' : 'play');
+                }
                 if (titleEl) titleEl.textContent = playing ? 'Canlı Yayın' : 'Duraklatıldı';
             }
             function togglePlay() {
@@ -693,7 +722,7 @@
                     audio.pause();
                 }
             }
-            logoDisc.addEventListener('click', function(e) {
+            discBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 togglePlay();
             });
