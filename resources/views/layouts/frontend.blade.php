@@ -555,11 +555,11 @@
         @media (prefers-reduced-motion: reduce) {
             body.playing .disc-overlay { animation: none; }
         }
-        /* Song request modal - KESIN gizli, overlay fixed z-index 9999 */
-        .request-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.25s ease,visibility 0.25s ease;}
+        /* Song request modal - overlay: fixed, full screen, z-index 9999 */
+        .request-modal{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.25s ease,visibility 0.25s ease;}
         .request-modal.is-open{opacity:1;visibility:visible;pointer-events:auto;}
-        .request-modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
-        .request-modal__box{position:relative;background:rgba(22,28,36,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:1.5rem;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto;transform:scale(0.95);transition:transform 0.25s ease;}
+        .request-modal__backdrop{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+        .request-modal__box{position:relative;background:rgba(22,28,36,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:1.5rem;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5);margin:auto;transform:scale(0.95);transition:transform 0.25s ease;}
         .request-modal.is-open .request-modal__box{transform:scale(1);}
         .request-modal__close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;line-height:1;padding:0.25rem;}
         .request-modal__close:hover{color:var(--text);}
@@ -573,7 +573,6 @@
         .request-form__actions{display:flex;gap:0.75rem;margin-top:1.25rem;}
         .request-form__btn{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;border-radius:8px;cursor:pointer;border:none;}
         .request-form__btn[type=submit]{background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;}
-        .request-form__btn--cancel{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
         @media(max-width:520px){.request-modal{padding:0.5rem;}.request-modal__box{width:92%;max-width:none;padding:1.25rem;max-height:85vh;}}
         @media (max-width: 768px) {
             .bottom-bar-logo { height: 78px; }
