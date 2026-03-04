@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blacklist;
 use App\Models\SongRequest;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,38 @@ class MessagesController extends Controller
         $messages = $query->paginate(20)->withQueryString();
 
         return view('admin.messages.index', compact('messages'));
+    }
+
+    public function approve(SongRequest $songRequest)
+    {
+        if ($songRequest->status === 'approved') {
+            return back()->with('success', 'Kayıt zaten onaylı.');
+        }
+        $songRequest->update(['status' => 'approved', 'approved_at' => now()]);
+        return back()->with('success', 'İstek onaylandı.');
+    }
+
+    public function blacklist(Request $request, SongRequest $songRequest)
+    {
+        $reason = $request->input('reason', 'Spam/uygunsuz');
+
+        $entries = [];
+        if ($songRequest->full_name) {
+            $entries[] = ['type' => 'name', 'value' => trim($songRequest->full_name), 'reason' => $reason];
+        }
+        if ($songRequest->email) {
+            $entries[] = ['type' => 'email', 'value' => trim(strtolower($songRequest->email)), 'reason' => $reason];
+        }
+
+        foreach ($entries as $entry) {
+            Blacklist::firstOrCreate(
+                ['type' => $entry['type'], 'value' => $entry['value']],
+                ['reason' => $entry['reason']]
+            );
+        }
+
+        $songRequest->update(['status' => 'rejected']);
+        return back()->with('success', 'Kara listeye alındı ve listeden kaldırıldı.');
     }
 
     public function bulkDestroy(Request $request)
