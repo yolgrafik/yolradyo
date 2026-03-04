@@ -245,34 +245,49 @@
     .schedule-list-wrap {
         padding: 0 1rem 1rem;
     }
-    .schedule-list {
+    .schedule-strip {
         display: flex;
-        flex-direction: column;
+        align-items: center;
         gap: 10px;
+        white-space: nowrap;
+        overflow-x: auto;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
         margin-top: 10px;
     }
-    .schedule-item {
-        display: flex;
-        justify-content: space-between;
+    .schedule-strip::-webkit-scrollbar { display: none; }
+    .schedule-strip {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .schedule-chip {
+        display: inline-flex;
         align-items: center;
-        padding: 10px 14px;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 8px;
-        font-size: 0.95rem;
-    }
-    .schedule-item.active-program {
-        background: #ff2d2d;
-        color: #fff;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         font-weight: 700;
+        flex-shrink: 0;
     }
-    .schedule-item .live-badge {
-        margin-left: 10px;
-        background: #fff;
-        color: #ff2d2d;
-        font-size: 12px;
+    .schedule-chip .sep { opacity: 0.6; font-weight: 900; }
+    .schedule-strip .dot { opacity: 0.35; flex-shrink: 0; }
+    .schedule-chip.is-live {
+        background: linear-gradient(135deg, #ff3b3b, #b30000);
+        border: none;
+        box-shadow: 0 0 10px rgba(255, 60, 60, 0.35);
+    }
+    .schedule-chip .live-badge {
+        margin-left: 6px;
         padding: 2px 8px;
-        border-radius: 20px;
-        font-weight: 700;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        font-size: 12px;
+        font-weight: 900;
     }
     .home-right {
         display: flex;
@@ -446,13 +461,13 @@
     }
     @media (max-width: 768px) {
         .schedule-day { padding: 8px 12px; font-size: 0.75rem; min-height: 34px; }
-        .schedule-item { font-size: 0.9rem; }
+        .schedule-chip { font-size: 0.9rem; }
     }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
         .schedule-top-bar { flex-direction: column; align-items: stretch; }
         .schedule-days-bar { justify-content: flex-start; }
-        .schedule-item { font-size: 0.85rem; padding: 8px 12px; }
+        .schedule-chip { font-size: 0.85rem; padding: 6px 10px; }
         .home-right {
             grid-template-columns: 1fr;
         }
@@ -554,24 +569,38 @@
         if (!container) return;
         if (loadingEl) loadingEl.style.display='none';
         if (emptyEl) emptyEl.style.display=items.length===0?'block':'none';
-        container.querySelectorAll('.schedule-list').forEach(function(el){ el.remove(); });
+        container.querySelectorAll('.schedule-strip').forEach(function(el){ el.remove(); });
         if (items.length===0) return;
-        var list = document.createElement('div');
-        list.className = 'schedule-list';
-        items.forEach(function(it){
-            var item = document.createElement('div');
-            item.className = 'schedule-item' + (it.is_live ? ' active-program' : '');
-            item.textContent = (it.title || '') + ' | ' + (it.host || '');
-            if (it.is_live) {
-                var liveSpan = document.createElement('span');
-                liveSpan.className = 'live-badge';
-                liveSpan.textContent = 'CANLI';
-                item.appendChild(document.createTextNode(' | '));
-                item.appendChild(liveSpan);
+        var strip = document.createElement('div');
+        strip.className = 'schedule-strip';
+        items.forEach(function(it, i){
+            var chip = document.createElement('span');
+            chip.className = 'schedule-chip' + (it.is_live ? ' is-live' : '');
+            chip.appendChild(document.createTextNode(it.title || ''));
+            if (it.host) {
+                var sep = document.createElement('span');
+                sep.className = 'sep';
+                sep.textContent = '|';
+                chip.appendChild(document.createTextNode(' '));
+                chip.appendChild(sep);
+                chip.appendChild(document.createTextNode(' ' + it.host));
             }
-            list.appendChild(item);
+            if (it.is_live) {
+                var badge = document.createElement('span');
+                badge.className = 'live-badge';
+                badge.textContent = 'CANLI';
+                chip.appendChild(document.createTextNode(' '));
+                chip.appendChild(badge);
+            }
+            strip.appendChild(chip);
+            if (i < items.length - 1) {
+                var dot = document.createElement('span');
+                dot.className = 'dot';
+                dot.textContent = '•';
+                strip.appendChild(dot);
+            }
         });
-        container.appendChild(list);
+        container.appendChild(strip);
     }
 
     function loadSchedule(day) {
