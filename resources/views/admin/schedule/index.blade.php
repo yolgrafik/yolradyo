@@ -131,9 +131,8 @@
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;font-size:0.9rem;margin-bottom:1rem;}
 .alert-error{padding:0.75rem 1rem;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.9rem;margin-bottom:1rem;}
 .day-tabs-wrapper{background:linear-gradient(180deg,#111722,#0b0f18);padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);margin-bottom:20px;}
-.day-tabs{display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
-.day-tabs::-webkit-scrollbar{display:none;}
-.day-tab{padding:10px 18px;border-radius:10px;background:#1b2230;color:#ffffff;border:1px solid rgba(255,255,255,0.15);font-weight:600;text-decoration:none;font-size:0.9rem;flex:0 0 auto;transition:all 0.2s ease;}
+.day-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+.day-tab{padding:8px 14px;font-size:14px;font-weight:600;border-radius:10px;background:#1b2230;color:#ffffff;border:1px solid rgba(255,255,255,0.15);text-decoration:none;flex:0 0 auto;transition:all 0.2s ease;}
 .day-tab:hover{background:#273043;}
 .day-tab.active{background:linear-gradient(135deg,#ff3b3b,#b30000);color:white;border:none;}
 .schedule-day-header{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;background:linear-gradient(180deg,#131a26,#0c1018);color:#ffffff;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);font-weight:600;margin-bottom:1rem;}

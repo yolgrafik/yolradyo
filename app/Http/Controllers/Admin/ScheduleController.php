@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-    private const DAY_LABELS = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+    private const DAY_LABELS = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
 
     public function index(Request $request)
     {
