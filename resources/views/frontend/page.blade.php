@@ -6,8 +6,8 @@
 <style>
     .page-hero {
         padding: 2.5rem 1.5rem;
-        background: linear-gradient(135deg, #1a0a0e 0%, #0f1319 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: var(--ry-header-bg);
+        border-bottom: 1px solid var(--ry-border);
     }
     .page-hero h1 {
         font-size: 1.75rem;

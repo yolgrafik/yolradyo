@@ -1,24 +1,17 @@
 @php
     $settings = $themeSettings ?? [];
     $vars = $settings['vars'] ?? [];
-    $theme = $vars['theme'] ?? '#c92a2a';
-    $themeDark = $vars['theme_dark'] ?? '#991b1b';
-    $themeLight = $vars['theme_light'] ?? '#dc2626';
-    $headerBg = $vars['header_bg'] ?? 'linear-gradient(180deg, rgba(11,15,26,0.95) 0%, rgba(17,24,39,0.93) 100%)';
-    $footerBg = $vars['footer_bg'] ?? 'rgba(5,7,12,0.95)';
-    $barBg = $vars['bar_bg'] ?? "linear-gradient(135deg, {$theme}, {$themeDark})";
+    $headerBg = $vars['header_bg'] ?? 'rgba(70,9,10,0.97)';
+    $footerBg = $vars['footer_bg'] ?? 'rgba(70,9,10,0.97)';
+    $barBg = $vars['bar_bg'] ?? 'rgba(70,9,10,0.97)';
     $btnBg = $settings['button_color'] ?? '#c92a2a';
     $btnHover = $settings['button_hover_color'] ?? '#dc2626';
     $scheduleBg = $settings['schedule_color'] ?? '#1e2430';
     $scheduleActive = $settings['schedule_active_color'] ?? '#c92a2a';
 @endphp
-{{-- STRICT COLOR SYSTEM: Theme ONLY for header/footer/player/istekler backgrounds. Text=#fff. Buttons=config. --}}
+{{-- STRICT COLOR SYSTEM: Theme=header/footer/player/istekler. Text=#fff. Buttons=config. --}}
 <style id="theme-vars">
 :root {
-    /* Theme vars - ONLY for background areas */
-    --ry-theme: {{ $theme }};
-    --ry-theme-dark: {{ $themeDark }};
-    --ry-theme-light: {{ $themeLight }};
     --ry-header-bg: {{ $headerBg }};
     --ry-footer-bg: {{ $footerBg }};
     --ry-bar-bg: {{ $barBg }};
