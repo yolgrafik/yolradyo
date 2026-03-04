@@ -93,6 +93,42 @@
             </div>
         </section>
 
+        {{-- Button & Schedule Colors (theme independent) --}}
+        <section class="theme-section">
+            <h2 class="theme-section__title">Buton ve Program Renkleri</h2>
+            <p class="theme-section__desc">Temadan bağımsız. Tüm butonlar ve program blokları bu renkleri kullanır.</p>
+            <div class="form-row color-fields">
+                <div class="form-group">
+                    <label for="button_color">Buton Rengi</label>
+                    <div class="color-input-wrap">
+                        <input type="color" id="button_color_picker" value="{{ $settings['button_color'] ?? '#c92a2a' }}">
+                        <input type="text" name="button_color" id="button_color" value="{{ old('button_color', $settings['button_color'] ?? '#c92a2a') }}" maxlength="16">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="button_hover_color">Buton Hover</label>
+                    <div class="color-input-wrap">
+                        <input type="color" id="button_hover_color_picker" value="{{ $settings['button_hover_color'] ?? '#dc2626' }}">
+                        <input type="text" name="button_hover_color" id="button_hover_color" value="{{ old('button_hover_color', $settings['button_hover_color'] ?? '#dc2626') }}" maxlength="16">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="schedule_color">Program Blok Rengi</label>
+                    <div class="color-input-wrap">
+                        <input type="color" id="schedule_color_picker" value="{{ $settings['schedule_color'] ?? '#1e2430' }}">
+                        <input type="text" name="schedule_color" id="schedule_color" value="{{ old('schedule_color', $settings['schedule_color'] ?? '#1e2430') }}" maxlength="16">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="schedule_active_color">Program Aktif Rengi</label>
+                    <div class="color-input-wrap">
+                        <input type="color" id="schedule_active_color_picker" value="{{ $settings['schedule_active_color'] ?? '#c92a2a' }}">
+                        <input type="text" name="schedule_active_color" id="schedule_active_color" value="{{ old('schedule_active_color', $settings['schedule_active_color'] ?? '#c92a2a') }}" maxlength="16">
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <div class="form-actions">
             <button type="submit" class="btn-save">Kaydet</button>
         </div>

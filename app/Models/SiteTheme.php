@@ -16,6 +16,10 @@ class SiteTheme extends Model
         'overlay_color',
         'overlay_opacity',
         'bg_blur',
+        'button_color',
+        'button_hover_color',
+        'schedule_color',
+        'schedule_active_color',
     ];
 
     protected $casts = [

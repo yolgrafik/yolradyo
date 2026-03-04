@@ -1,22 +1,38 @@
 @php
     $settings = $themeSettings ?? [];
     $vars = $settings['vars'] ?? [];
-    $accent = $vars['accent'] ?? '#c92a2a';
+    $theme = $vars['theme'] ?? '#c92a2a';
+    $themeDark = $vars['theme_dark'] ?? '#991b1b';
+    $themeLight = $vars['theme_light'] ?? '#dc2626';
     $headerBg = $vars['header_bg'] ?? 'linear-gradient(180deg, rgba(11,15,26,0.95) 0%, rgba(17,24,39,0.93) 100%)';
     $footerBg = $vars['footer_bg'] ?? 'rgba(5,7,12,0.95)';
-    $barBg = $vars['bar_bg'] ?? 'linear-gradient(135deg, #c92a2a, #991b1b)';
-    $btnBg = $accent;
-    $btnHover = $vars['btn_hover'] ?? '#dc2626';
+    $barBg = $vars['bar_bg'] ?? "linear-gradient(135deg, {$theme}, {$themeDark})";
+    $btnBg = $settings['button_color'] ?? '#c92a2a';
+    $btnHover = $settings['button_hover_color'] ?? '#dc2626';
+    $scheduleBg = $settings['schedule_color'] ?? '#1e2430';
+    $scheduleActive = $settings['schedule_active_color'] ?? '#c92a2a';
 @endphp
-{{-- radyoyol.de referans: koyu zemin + kırmızı vurgu --}}
+{{-- STRICT COLOR SYSTEM: Theme ONLY for header/footer/player/istekler backgrounds. Text=#fff. Buttons=config. --}}
 <style id="theme-vars">
 :root {
-    --ry-accent: {{ $accent }};
+    /* Theme vars - ONLY for background areas */
+    --ry-theme: {{ $theme }};
+    --ry-theme-dark: {{ $themeDark }};
+    --ry-theme-light: {{ $themeLight }};
     --ry-header-bg: {{ $headerBg }};
     --ry-footer-bg: {{ $footerBg }};
     --ry-bar-bg: {{ $barBg }};
+    --ry-istekler-bg: linear-gradient(135deg, {{ $theme }}, {{ $themeDark }});
+
+    /* Button colors - theme independent, from admin */
     --ry-btn-bg: {{ $btnBg }};
     --ry-btn-hover: {{ $btnHover }};
+
+    /* Schedule colors - theme independent, from admin */
+    --ry-schedule-bg: {{ $scheduleBg }};
+    --ry-schedule-active: {{ $scheduleActive }};
+
+    /* Fixed - never change */
     --ry-text: #ffffff;
     --ry-text-muted: rgba(255,255,255,.78);
     --ry-bg: {{ $settings['bg_color'] ?? '#0b0f16' }};

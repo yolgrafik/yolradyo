@@ -46,30 +46,41 @@ class ThemeService
             'overlay_color' => $row->overlay_color ?? '#000000',
             'overlay_opacity' => (int) ($row->overlay_opacity ?? 55),
             'bg_blur' => (int) ($row->bg_blur ?? 0),
+            'button_color' => $row->button_color ?? '#c92a2a',
+            'button_hover_color' => $row->button_hover_color ?? '#dc2626',
+            'schedule_color' => $row->schedule_color ?? '#1e2430',
+            'schedule_active_color' => $row->schedule_active_color ?? '#c92a2a',
             'vars' => $vars,
         ];
     }
 
     protected function deriveVars(array $preset): array
     {
-        $primary = $preset['primary'] ?? '#ff0033';
-        $primaryHover = $preset['primary_hover'] ?? '#ff3355';
-        $accent = $preset['accent'] ?? $primary;
-        $glow = $preset['glow'] ?? $primary;
+        $accent = $preset['accent'] ?? $preset['primary'] ?? '#c92a2a';
 
         $headerBg = $preset['header_bg'] ?? 'linear-gradient(180deg, rgba(11,15,26,0.95) 0%, rgba(17,24,39,0.93) 100%)';
         $footerBg = $preset['footer_bg'] ?? 'rgba(5,7,12,0.95)';
         $barBg = $preset['bar_bg'] ?? "linear-gradient(135deg, {$accent}, " . $this->darken($accent, 0.2) . ")";
 
-        $btnHover = $preset['primary_hover'] ?? $accent;
-
         return [
-            'accent' => $accent,
-            'btn_hover' => $btnHover,
+            'theme' => $accent,
+            'theme_dark' => $this->darken($accent, 0.2),
+            'theme_light' => $this->lighten($accent, 0.1),
             'header_bg' => $headerBg,
             'footer_bg' => $footerBg,
             'bar_bg' => $barBg,
         ];
+    }
+
+    protected function lighten(string $hex, float $amount): string
+    {
+        if (!preg_match('/^#([0-9A-Fa-f]{6})$/', $hex, $m)) {
+            return '#ffffff';
+        }
+        $r = min(255, hexdec(substr($m[1], 0, 2)) + (int)(255 * $amount));
+        $g = min(255, hexdec(substr($m[1], 2, 2)) + (int)(255 * $amount));
+        $b = min(255, hexdec(substr($m[1], 4, 2)) + (int)(255 * $amount));
+        return sprintf('#%02x%02x%02x', $r, $g, $b);
     }
 
     protected function darken(string $hex, float $amount): string
@@ -112,6 +123,10 @@ class ThemeService
             'overlay_color' => $data['overlay_color'] ?? '#000000',
             'overlay_opacity' => min(80, max(0, (int) ($data['overlay_opacity'] ?? 55))),
             'bg_blur' => min(12, max(0, (int) ($data['bg_blur'] ?? 0))),
+            'button_color' => $data['button_color'] ?? '#c92a2a',
+            'button_hover_color' => $data['button_hover_color'] ?? '#dc2626',
+            'schedule_color' => $data['schedule_color'] ?? '#1e2430',
+            'schedule_active_color' => $data['schedule_active_color'] ?? '#c92a2a',
         ];
 
         if (isset($data['bg_image'])) {

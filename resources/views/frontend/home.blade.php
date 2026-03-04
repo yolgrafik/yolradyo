@@ -125,7 +125,7 @@
         padding: 0;
         transition: background 0.2s;
     }
-    .home-slider__dot.is-active { background: var(--ry-accent); }
+    .home-slider__dot.is-active { background: rgba(255,255,255,0.9); }
     .home-slider-placeholder {
         min-height: 386px;
         display: flex;
@@ -179,8 +179,8 @@
         min-width: 0;
         padding: 6px 8px;
         border-radius: 8px;
-        background: #1e2430;
-        color: #e6e6e6;
+        background: var(--ry-schedule-bg);
+        color: #ffffff;
         border: 1px solid rgba(255, 255, 255, 0.15);
         font-family: Arial, sans-serif;
         font-size: 0.75rem;
@@ -197,13 +197,12 @@
     }
     .schedule-day:hover {
         background: var(--ry-surface-2);
-        border-color: var(--ry-btn-hover);
+        border-color: rgba(255,255,255,0.25);
     }
     .schedule-day.active {
-        background: linear-gradient(135deg, var(--ry-btn-bg), var(--ry-btn-hover));
+        background: var(--ry-schedule-active);
         border: none;
-        color: var(--ry-text);
-        box-shadow: 0 0 10px color-mix(in srgb, var(--ry-btn-hover) 50%, transparent);
+        color: #ffffff;
     }
     .schedule-list-wrap {
         padding: 0 1rem 1rem;
@@ -244,9 +243,9 @@
     .schedule-chip .sep { opacity: 0.6; font-weight: 900; flex-shrink: 0; }
     .schedule-strip .dot { opacity: 0.35; flex-shrink: 0; }
     .schedule-chip.is-live {
-        background: linear-gradient(135deg, var(--ry-btn-bg), var(--ry-btn-hover));
+        background: var(--ry-schedule-active);
         border: none;
-        box-shadow: 0 0 10px color-mix(in srgb, var(--ry-btn-hover) 40%, transparent);
+        color: #ffffff;
     }
     .schedule-chip .live-badge {
         margin-left: 4px;
@@ -267,6 +266,10 @@
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
+        padding: 1rem;
+        border-radius: var(--ry-radius);
+        background: var(--ry-istekler-bg);
+        border: 1px solid rgba(255,255,255,0.1);
     }
     .btn-live {
         display: grid;
@@ -341,9 +344,9 @@
         transition: all 0.2s ease;
     }
     .home-icon-buttons button:hover {
-        background: color-mix(in srgb, var(--ry-btn-hover) 20%, transparent);
-        border-color: var(--ry-btn-hover);
-        color: var(--ry-text);
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.2);
+        color: #ffffff;
     }
     .home-badges {
         display: flex;
@@ -359,13 +362,13 @@
         background: var(--ry-surface);
         border: 1px solid var(--ry-border);
         border-radius: 10px;
-        color: var(--ry-text-muted);
+        color: rgba(255,255,255,0.78);
         font-size: 0.85rem;
         transition: all 0.2s ease;
     }
     .badge-placeholder:hover {
         background: var(--ry-surface-2);
-        color: var(--ry-text);
+        color: #ffffff;
     }
     .live-dj-card {
         background: var(--panel);
@@ -377,7 +380,7 @@
     }
     .live-banner {
         background: var(--ry-bar-bg);
-        color: var(--ry-text);
+        color: #ffffff;
         font-weight: 900;
         font-size: 14px;
         padding: 10px 14px;
@@ -449,16 +452,14 @@
     }
     .live-live-btn {
         position: relative;
-        background: linear-gradient(135deg, var(--ry-btn-bg), var(--ry-btn-hover));
-        color: var(--ry-text);
+        background: var(--ry-btn-bg);
+        color: #ffffff;
         padding: 8px 16px;
         border-radius: 8px;
         font-size: 12px;
         font-weight: 800;
         display: inline-block;
         letter-spacing: 1px;
-        text-shadow: 0 0 12px color-mix(in srgb, var(--ry-btn-hover) 60%, transparent);
-        box-shadow: 0 2px 12px color-mix(in srgb, var(--ry-btn-hover) 40%, transparent);
     }
     .live-live-btn::after {
         content: '';
@@ -467,10 +468,9 @@
         right: 0;
         bottom: -4px;
         height: 2px;
-        background: linear-gradient(90deg, transparent, var(--ry-btn-hover), color-mix(in srgb, var(--ry-btn-hover) 80%, transparent), var(--ry-btn-hover), transparent);
+        background: rgba(255,255,255,0.5);
         opacity: 0.7;
         border-radius: 2px;
-        box-shadow: 0 0 8px color-mix(in srgb, var(--ry-btn-hover) 50%, transparent);
     }
     .live-dj-card .live-empty {
         color: var(--muted);
