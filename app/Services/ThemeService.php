@@ -74,14 +74,18 @@ class ThemeService
 
     protected function themeHeaderBg(string $accent): string
     {
-        $rgba = $this->hexToRgba($accent, 0.35);
-        $dark = $this->hexToRgba($this->darken($accent, 0.35), 0.9);
-        return "linear-gradient(180deg, {$rgba} 0%, {$dark} 50%, rgba(11,15,26,0.98) 100%)";
+        return $this->themeSolidBg($accent);
     }
 
     protected function themeFooterBg(string $accent): string
     {
-        return $this->hexToRgba($this->darken($accent, 0.5), 0.95);
+        return $this->themeSolidBg($accent);
+    }
+
+    /** Header ve footer aynı düz renk, gradient yok */
+    protected function themeSolidBg(string $accent): string
+    {
+        return $this->hexToRgba($this->darken($accent, 0.45), 0.97);
     }
 
     protected function hexToRgba(string $hex, float $alpha): string
