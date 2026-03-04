@@ -395,69 +395,71 @@
     }
     .live-dj-card {
         background: #f07f16;
-        border-radius: 28px;
+        border-radius: 18px;
         padding: 0;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         text-align: center;
     }
     .live-banner {
         background: #e91515;
         color: white;
         font-weight: 900;
-        font-size: 28px;
-        padding: 18px;
+        font-size: 16px;
+        padding: 10px 14px;
         letter-spacing: 2px;
     }
     .live-content {
-        padding: 30px;
+        padding: 16px;
         transition: opacity 0.3s ease;
     }
     .live-content.updating {
         opacity: 0.6;
     }
     .live-dj-photo {
-        width: 120px;
-        height: 120px;
+        width: 72px;
+        height: 72px;
         border-radius: 50%;
         object-fit: cover;
-        margin-bottom: 20px;
-        border: 4px solid #fff;
+        margin: 0 auto 10px;
+        display: block;
+        border: 3px solid #fff;
     }
     .live-dj-photo-wrap {
-        width: 120px;
-        height: 120px;
+        width: 72px;
+        height: 72px;
         border-radius: 50%;
-        margin: 0 auto 20px;
-        border: 4px solid #fff;
+        margin: 0 auto 10px;
+        border: 3px solid #fff;
         background: rgba(255, 255, 255, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2.5rem;
+        font-size: 1.6rem;
         font-weight: 800;
         color: #fff;
     }
     .live-dj-name {
-        font-size: 32px;
+        font-size: 20px;
         font-weight: 800;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
         color: #fff;
     }
     .live-program {
-        font-size: 22px;
+        font-size: 14px;
         background: white;
-        border-radius: 40px;
-        padding: 10px 20px;
+        border-radius: 20px;
+        padding: 6px 14px;
         display: inline-block;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         color: #333;
     }
     .live-live-btn {
         background: #e91515;
         color: white;
-        padding: 12px 26px;
-        border-radius: 40px;
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-size: 12px;
         font-weight: 800;
         display: inline-block;
     }
@@ -489,9 +491,9 @@
     @media (max-width: 768px) {
         .schedule-day { padding: 4px 8px; font-size: 0.7rem; min-height: 26px; }
         .schedule-chip { font-size: 0.75rem; padding: 4px 8px; }
-        .live-banner { font-size: 22px; padding: 14px; }
-        .live-dj-name { font-size: 26px; }
-        .live-program { font-size: 18px; }
+        .live-banner { font-size: 14px; padding: 8px; }
+        .live-dj-name { font-size: 18px; }
+        .live-program { font-size: 13px; }
     }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
