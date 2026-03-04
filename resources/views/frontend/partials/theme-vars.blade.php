@@ -1,6 +1,7 @@
 @php
     $settings = $themeSettings ?? [];
     $vars = $settings['vars'] ?? [];
+    $themeAccent = $vars['theme'] ?? ($settings['button_color'] ?? '#c92a2a');
     $headerBg = $vars['header_bg'] ?? 'rgba(70,9,10,0.97)';
     $footerBg = $vars['footer_bg'] ?? 'rgba(70,9,10,0.97)';
     $barBg = $vars['bar_bg'] ?? 'rgba(70,9,10,0.97)';
@@ -12,6 +13,7 @@
 {{-- STRICT COLOR SYSTEM: Theme=header/footer/player/istekler. Text=#fff. Buttons=config. --}}
 <style id="theme-vars">
 :root {
+    --ry-theme: {{ $themeAccent }};
     --ry-header-bg: {{ $headerBg }};
     --ry-footer-bg: {{ $footerBg }};
     --ry-bar-bg: {{ $barBg }};

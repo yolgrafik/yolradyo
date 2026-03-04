@@ -50,7 +50,7 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--ry-border);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2), 0 1px 0 0 var(--ry-theme), 0 0 20px color-mix(in srgb, var(--ry-theme) 35%, transparent);
             padding: 0 1.5rem;
             transition: height 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
         }
@@ -58,7 +58,7 @@
             height: 68px;
             min-height: 68px;
             background: var(--ry-header-bg);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 1px 0 0 var(--ry-theme), 0 0 24px color-mix(in srgb, var(--ry-theme) 40%, transparent);
         }
         .navbar-inner {
             max-width: 1280px;
@@ -118,7 +118,8 @@
             left: 0.75rem;
             right: 0.75rem;
             height: 2px;
-            background: rgba(255,255,255,0.6);
+            background: var(--ry-theme);
+            box-shadow: 0 0 8px color-mix(in srgb, var(--ry-theme) 70%, transparent);
             transform: scaleX(0);
             transition: transform 0.2s ease;
             border-radius: 1px;
