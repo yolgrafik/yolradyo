@@ -16,6 +16,16 @@
     <form method="POST" action="{{ route('admin.settings.theme') }}" enctype="multipart/form-data">
         @csrf
 
+        {{-- Apply Theme Everywhere Toggle --}}
+        <section class="theme-section">
+            <h2 class="theme-section__title">Sadece Temaya Uygula</h2>
+            <p class="theme-section__desc">Açıkken tema rengi header, footer, player bar, butonlar, sekmeler ve rozetler dahil neredeyse tüm arayüzü kontrol eder.</p>
+            <label class="toggle-row">
+                <input type="checkbox" name="apply_all" value="1" {{ ($settings['apply_all'] ?? false) ? 'checked' : '' }}>
+                <span class="toggle-label">Sadece Temaya Uygula (tek tıkla tema rengi her yerde)</span>
+            </label>
+        </section>
+
         {{-- Theme Presets --}}
         <section class="theme-section">
             <h2 class="theme-section__title">Tema Presetleri</h2>
@@ -169,6 +179,9 @@
 .current-image { font-size: 0.85rem; color: #9ca3af; margin-top: 0.25rem; }
 .form-actions { margin-top: 1.5rem; }
 .btn-save { padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, #c92a2a); color: #fff; border: none; border-radius: 10px; cursor: pointer; }
+.toggle-row { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; color: #e5e7eb; }
+.toggle-row input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent); }
+.toggle-label { font-size: 0.95rem; }
 </style>
 @endpush
 @push('scripts')

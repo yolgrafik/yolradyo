@@ -20,10 +20,12 @@ class SiteTheme extends Model
         'button_hover_color',
         'schedule_color',
         'schedule_active_color',
+        'apply_all',
     ];
 
     protected $casts = [
         'theme_id' => 'integer',
+        'apply_all' => 'boolean',
         'overlay_opacity' => 'integer',
         'bg_blur' => 'integer',
     ];
