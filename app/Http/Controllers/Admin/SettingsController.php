@@ -270,6 +270,7 @@ class SettingsController extends Controller
             'button_hover_color' => 'nullable|string|max:16',
             'schedule_color' => 'nullable|string|max:16',
             'schedule_active_color' => 'nullable|string|max:16',
+            'line_color' => 'nullable|string|max:32',
         ]);
 
         $data = [
@@ -283,6 +284,7 @@ class SettingsController extends Controller
             'button_hover_color' => $validated['button_hover_color'] ?? '#dc2626',
             'schedule_color' => $validated['schedule_color'] ?? '#1e2430',
             'schedule_active_color' => $validated['schedule_active_color'] ?? '#c92a2a',
+            'line_color' => !empty(trim($validated['line_color'] ?? '')) ? trim($validated['line_color']) : null,
         ];
 
         if ($request->boolean('remove_bg_image')) {
