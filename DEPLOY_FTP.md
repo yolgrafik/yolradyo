@@ -16,7 +16,7 @@ php deploy-cpanel.php
 ```
 
 ### 2. FTP
-`deploy-cpanel/` klasörünün **içeriğini** (tüm dosya ve klasörleri) `public_html/` klasörüne yükleyin.
+`release/` klasörünün **içeriğini** (tüm dosya ve klasörleri) `public_html/` klasörüne yükleyin.
 
 ### 3. Sunucuda (cPanel Terminal veya SSH)
 ```bash
@@ -37,9 +37,10 @@ php artisan migrate --force
 chmod -R 775 storage bootstrap/cache
 ```
 
-### Yapı
-- `public_html/` = document root (index.php, assets, build, uploads)
+### Yapı (release/ çıktısı)
+- `public_html/` = document root (index.php, .htaccess, assets, build, uploads)
 - `public_html/yolcu/` = Laravel backend (app, vendor, config, storage)
+- `yolcu/.htaccess` = Backend'e doğrudan web erişimini engeller (.env koruması)
 
 ---
 

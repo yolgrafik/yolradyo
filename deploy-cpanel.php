@@ -10,11 +10,11 @@
  */
 
 $root = __DIR__;
-$out = $root . '/deploy-cpanel';
-$backend = 'yolcu'; // Backend klasör adı
+$out = $root . '/release';  // FTP ile public_html'e yüklenecek paket
+$backend = 'yolcu';
 
 if (is_dir($out)) {
-    echo "Mevcut deploy-cpanel siliniyor...\n";
+    echo "Mevcut release siliniyor...\n";
     rmdirRecursive($out);
 }
 mkdir($out, 0755, true);
@@ -112,9 +112,51 @@ foreach (['artisan', 'composer.json', 'composer.lock'] as $f) {
     }
 }
 
-echo "\n✓ deploy-cpanel/ hazır!\n";
-echo "FTP ile deploy-cpanel/ İÇERİĞİNİ public_html/ klasörüne yükleyin.\n";
-echo "(deploy-cpanel içindeki tüm dosyalar public_html'e gelsin)\n\n";
+// 6. yolcu/.htaccess - Doğrudan web erişimini engelle (.env, config koruması)
+$yolcuHtaccess = <<<'HTA'
+# Backend klasörüne doğrudan HTTP erişimini engelle
+# Sadece index.php üzerinden bootstrap edilir
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+</IfModule>
+HTA;
+file_put_contents($out . '/' . $backend . '/.htaccess', $yolcuHtaccess);
+
+// 7. Kök .user.ini (cPanel PHP ayarları - opsiyonel)
+$userIni = "upload_max_filesize = 32M\npost_max_size = 32M\nmax_execution_time = 120\nmemory_limit = 256M";
+file_put_contents($out . '/.user.ini', $userIni);
+
+// 8. KURULUM.txt
+$kurulum = <<<'TXT'
+CPANEL / FTP KURULUM
+===================
+
+1. FTP ile bu klasörün İÇERİĞİNİ public_html'e yükleyin.
+   (index.php, .htaccess, assets, build, uploads, yolcu hepsi public_html'de olmalı)
+
+2. cPanel > Terminal veya SSH:
+   cd ~/public_html/yolcu
+   cp .env.example .env
+   php artisan key:generate
+
+3. .env düzenleyin (APP_URL, DB_*, APP_ENV=production, APP_DEBUG=false)
+
+4. Devam:
+   php artisan storage:link
+   php artisan migrate --force
+   chmod -R 775 storage bootstrap/cache
+
+5. Tarayıcıda siteyi açın.
+TXT;
+file_put_contents($out . '/KURULUM.txt', $kurulum);
+
+echo "\n✓ release/ hazır!\n";
+echo "FTP ile release/ İÇERİĞİNİ public_html/ klasörüne yükleyin.\n";
+echo "(release içindeki tüm dosya ve klasörler public_html'e gelsin)\n\n";
 echo "Sunucuda (SSH veya cPanel Terminal):\n";
 echo "  cd ~/public_html/{$backend}\n";
 echo "  cp .env.example .env\n";
