@@ -243,70 +243,68 @@
         box-shadow: 0 0 10px rgba(255, 60, 60, 0.5);
     }
     .schedule-list-wrap {
-        max-height: 300px;
+        max-height: 360px;
         overflow-y: auto;
-        padding: 0 0.5rem 0.5rem;
+        padding: 0 1rem 1rem;
     }
     .schedule-list, .schedule-list-inner {
         display: flex;
         flex-direction: column;
-        gap: 0;
+        gap: 10px;
+        margin-top: 14px;
     }
     .schedule-item {
         display: flex;
         align-items: center;
         gap: 16px;
-        padding: 12px 14px;
-        min-height: 44px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        font-size: 0.9rem;
-        transition: background 0.2s ease;
+        padding: 14px 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 14px;
+        transition: all 0.2s ease;
     }
     .schedule-item:hover {
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 60, 60, 0.35);
     }
-    .schedule-item:last-child { border-bottom: none; }
     .schedule-item.is-live {
-        background: linear-gradient(90deg, rgba(201, 42, 42, 0.2), rgba(185, 28, 28, 0.15));
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 12px;
-        margin: 6px 0;
-        padding: 12px 14px;
-        box-shadow: 0 0 20px rgba(201, 42, 42, 0.15);
+        background: linear-gradient(90deg, rgba(255, 60, 60, 0.12), rgba(0, 0, 0, 0));
+        border-color: rgba(255, 60, 60, 0.35);
     }
     .schedule-item.is-live:hover {
-        background: linear-gradient(90deg, rgba(201, 42, 42, 0.25), rgba(185, 28, 28, 0.2));
+        background: linear-gradient(90deg, rgba(255, 60, 60, 0.18), rgba(0, 0, 0, 0));
     }
     .schedule-time {
-        width: 70px;
+        width: 80px;
         flex-shrink: 0;
+        font-weight: 800;
         color: #ff3b3b;
-        font-weight: 700;
-        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        font-size: 1rem;
     }
-    .schedule-program {
+    .schedule-title {
         flex: 1;
-        color: var(--text);
-        font-weight: 600;
+        font-weight: 700;
+        color: #fff;
         min-width: 0;
     }
-    .schedule-dj {
+    .schedule-host {
         width: 160px;
         flex-shrink: 0;
         text-align: right;
-        color: var(--muted);
-        font-size: 0.85rem;
-        opacity: 0.85;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
     }
-    .schedule-badge {
+    .schedule-live {
         flex-shrink: 0;
         margin-left: 10px;
-        padding: 0.25rem 0.6rem;
-        background: rgba(34, 197, 94, 0.35);
-        color: #86efac;
-        font-size: 0.7rem;
-        font-weight: 700;
-        border-radius: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(0, 200, 100, 0.15);
+        border: 1px solid rgba(0, 200, 100, 0.45);
+        color: #7CFFB0;
+        font-weight: 800;
+        font-size: 12px;
     }
     .home-right {
         display: flex;
@@ -480,13 +478,17 @@
     }
     @media (max-width: 768px) {
         .schedule-day { padding: 8px 12px; font-size: 0.75rem; min-height: 34px; }
-        .schedule-dj { width: 120px; }
+        .schedule-host { width: 120px; }
+    }
+    @media (max-width: 640px) {
+        .schedule-item { align-items: flex-start; flex-wrap: wrap; }
+        .schedule-host { width: 100%; flex-basis: 100%; text-align: left; color: rgba(255, 255, 255, 0.75); padding-left: 96px; }
     }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
         .schedule-top-bar { flex-direction: column; align-items: stretch; }
         .schedule-days-bar { justify-content: flex-start; }
-        .schedule-dj { width: 100px; }
+        .schedule-host { width: auto; }
         .home-right {
             grid-template-columns: 1fr;
         }
@@ -542,7 +544,7 @@
                 <div class="schedule-list-wrap">
                     <div class="schedule-list" id="scheduleListContainer">
                         <div class="schedule-loading" id="scheduleLoading">Yükleniyor...</div>
-                        <div class="schedule-empty" id="scheduleEmpty" style="display:none;padding:2rem;text-align:center;color:var(--muted);">Bu gün için program yok.</div>
+                        <div class="schedule-empty" id="scheduleEmpty" style="display:none;padding:2.5rem;text-align:center;color:rgba(255,255,255,0.6);font-size:0.95rem;margin-top:14px;">Bu gün için program yok.</div>
                     </div>
                 </div>
             </div>
@@ -596,9 +598,9 @@
             var row = document.createElement('div');
             row.className = 'schedule-item' + (it.is_live ? ' is-live' : '');
             row.innerHTML = '<span class="schedule-time">' + (it.start_time||'') + '</span>' +
-                '<span class="schedule-program">' + (it.title||'') + '</span>' +
-                '<span class="schedule-dj">' + (it.host||'') + '</span>' +
-                (it.is_live ? '<span class="schedule-badge">CANLI</span>' : '');
+                '<span class="schedule-title">' + (it.title||'') + '</span>' +
+                '<span class="schedule-host">' + (it.host||'') + '</span>' +
+                (it.is_live ? '<span class="schedule-live">CANLI</span>' : '');
             wrap.appendChild(row);
         });
         container.appendChild(wrap);
