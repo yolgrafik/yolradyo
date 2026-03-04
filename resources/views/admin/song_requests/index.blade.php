@@ -10,15 +10,17 @@
             <div class="alert-success">{{ session('success') }}</div>
         @endif
 
+        <div class="filter-tabs" style="margin-bottom:1.25rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <a href="{{ route('admin.song-requests.index', array_merge(request()->except('status'), ['status' => 'pending'])) }}" class="filter-tab {{ ($status ?? '') === 'pending' ? 'is-active' : '' }}">Bekleyen</a>
+            <a href="{{ route('admin.song-requests.index', array_merge(request()->except('status'), ['status' => 'approved'])) }}" class="filter-tab {{ ($status ?? '') === 'approved' ? 'is-active' : '' }}">Onaylanan</a>
+            <a href="{{ route('admin.song-requests.index', array_merge(request()->except('status'), ['status' => 'rejected'])) }}" class="filter-tab {{ ($status ?? '') === 'rejected' ? 'is-active' : '' }}">Reddedilen</a>
+            <a href="{{ route('admin.song-requests.index', array_merge(request()->except('status'), ['status' => 'all'])) }}" class="filter-tab {{ ($status ?? '') === 'all' ? 'is-active' : '' }}">Tümü</a>
+        </div>
+
         <form method="GET" class="filter-form" style="margin-bottom:1.25rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+            <input type="hidden" name="status" value="{{ $status ?? 'pending' }}">
             <input type="text" name="q" value="{{ request('q') }}" placeholder="Ara (isim, sanatçı, türkü...)" class="filter-input" style="flex:1;min-width:200px;padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);">
-            <select name="status" class="filter-select" style="padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);">
-                <option value="">Tümü</option>
-                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Beklemede</option>
-                <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Onaylı</option>
-                <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Reddedildi</option>
-            </select>
-            <button type="submit" class="quick-btn">Filtrele</button>
+            <button type="submit" class="quick-btn">Ara</button>
         </form>
 
         <div class="request-table-wrap" style="overflow-x:auto;">
@@ -31,6 +33,7 @@
                         <th style="padding:0.75rem;text-align:left;font-size:0.8rem;color:var(--muted);">Türkü</th>
                         <th style="padding:0.75rem;text-align:left;font-size:0.8rem;color:var(--muted);">Mesaj</th>
                         <th style="padding:0.75rem;text-align:left;font-size:0.8rem;color:var(--muted);">Durum</th>
+                        <th style="padding:0.75rem;text-align:left;font-size:0.8rem;color:var(--muted);">Onay Tarihi</th>
                         <th style="padding:0.75rem;text-align:right;font-size:0.8rem;color:var(--muted);">İşlem</th>
                     </tr>
                 </thead>
@@ -44,13 +47,14 @@
                         <td style="padding:0.75rem;font-size:0.85rem;color:var(--muted);max-width:200px;">{{ Str::limit($r->message, 50) ?: '—' }}</td>
                         <td style="padding:0.75rem;">
                             @if($r->status === 'pending')
-                                <span class="badge badge-warning">Beklemede</span>
+                                <span class="badge badge-warning">Bekleyen</span>
                             @elseif($r->status === 'approved')
-                                <span class="badge badge-success">Onaylı</span>
+                                <span class="badge badge-success">Onaylanan</span>
                             @else
-                                <span class="badge badge-danger">Reddedildi</span>
+                                <span class="badge badge-danger">Reddedilen</span>
                             @endif
                         </td>
+                        <td style="padding:0.75rem;font-size:0.85rem;color:var(--muted);">{{ $r->approved_at ? $r->approved_at->format('d.m.Y H:i') : '—' }}</td>
                         <td style="padding:0.75rem;text-align:right;">
                             @if($r->status === 'pending')
                                 <form action="{{ route('admin.song-requests.approve', $r) }}" method="POST" class="d-inline">
@@ -71,7 +75,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" style="padding:2rem;text-align:center;color:var(--muted);">Henüz istek bulunmuyor.</td>
+                        <td colspan="8" style="padding:2rem;text-align:center;color:var(--muted);">Henüz istek bulunmuyor.</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -86,6 +90,10 @@
 
 @push('styles')
 <style>
+.filter-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.filter-tab{padding:0.5rem 1rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:var(--muted);text-decoration:none;font-size:0.9rem;transition:all 0.2s;}
+.filter-tab:hover{background:rgba(255,255,255,0.08);color:var(--text);}
+.filter-tab.is-active{background:rgba(201,42,42,0.25);border-color:rgba(201,42,42,0.5);color:#fff;}
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;font-size:0.9rem;margin-bottom:1rem;}
 .badge{padding:0.25rem 0.5rem;border-radius:6px;font-size:0.75rem;font-weight:600;}
 .badge-warning{background:rgba(234,179,8,0.25);color:#fde047;}

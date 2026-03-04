@@ -4,7 +4,7 @@
 <div class="card">
     <div class="card-header">{{ $title ?? 'Sayfa' }}</div>
     <div class="card-body">
-        <p class="muted">Bu sayfa henüz hazırlanıyor.</p>
+        <p style="color:var(--muted);">Bu sayfa henüz hazırlanıyor.</p>
     </div>
 </div>
 @endsection

@@ -12,11 +12,11 @@ class SongRequestAdminController extends Controller
     {
         $query = SongRequest::query()->orderBy('created_at', 'desc');
 
-        $status = $request->get('status');
-        if ($status === null) {
-            $status = 'pending';
+        $status = $request->get('status', 'pending');
+        if ($status === 'all' || $status === '') {
+            $status = 'all';
         }
-        if ($status !== '') {
+        if ($status !== 'all') {
             $query->where('status', $status);
         }
 
