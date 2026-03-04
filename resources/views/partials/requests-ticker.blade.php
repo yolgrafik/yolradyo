@@ -5,8 +5,8 @@
         : asset('logo.png');
 @endphp
 <div class="ticker-wrap">
+    <span class="ticker-btn"><span class="ticker-btn__icon">🎵</span> İstekler</span>
     <div class="ticker" id="requestsTicker">
-        <span class="ticker__label">İstekler</span>
         <div class="ticker__mask">
             <div class="ticker__track" id="tickerTrack">
                 {{-- Content injected by JS --}}
@@ -17,7 +17,29 @@
 
 @push('styles')
 <style>
-.ticker-wrap { margin-top: -1.25rem; }
+.ticker-wrap { margin-top: -1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.ticker-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: linear-gradient(90deg, #ff4d4d, #ff7a18);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 20px;
+    border: none;
+    cursor: default;
+    box-shadow: 0 0 16px rgba(255, 77, 77, 0.35), 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    align-self: flex-start;
+}
+.ticker-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 24px rgba(255, 77, 77, 0.5), 0 0 32px rgba(255, 122, 24, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+.ticker-btn__icon { font-size: 1.1em; line-height: 1; }
 .ticker {
     height: 48px;
     border-radius: 12px;
@@ -31,29 +53,6 @@
     display: flex;
     align-items: center;
 }
-.ticker__label {
-    flex-shrink: 0;
-    height: 100%;
-    display: inline-flex;
-    align-items: center;
-    padding: 0 1rem;
-    margin-right: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #fff;
-    background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), var(--accent));
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    letter-spacing: 0.03em;
-    position: relative;
-    z-index: 3;
-    cursor: default;
-    transition: filter 0.2s ease, box-shadow 0.2s ease;
-}
-.ticker__label:hover {
-    filter: brightness(1.1);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 12px rgba(201, 42, 42, 0.3);
-}
 .ticker::before, .ticker::after {
     content: '';
     position: absolute;
@@ -64,7 +63,7 @@
     pointer-events: none;
 }
 .ticker::before {
-    left: 92px;
+    left: 0;
     background: linear-gradient(90deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
 }
 .ticker::after {
@@ -109,8 +108,7 @@
 }
 @media (max-width: 768px) {
     .ticker { height: 44px; }
-    .ticker__label { padding: 0 0.75rem; font-size: 0.85rem; }
-    .ticker::before { left: 78px; }
+    .ticker-btn { padding: 6px 14px; font-size: 0.9rem; }
     .ticker__item { font-size: 0.85rem; padding: 0 0.5rem; }
     .ticker__logo { height: 18px; margin: 0 0.35rem; }
 }
