@@ -408,6 +408,10 @@
     .home-dj-card:hover {
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
     }
+    .home-dj-card--empty {
+        justify-content: center;
+        min-height: 120px;
+    }
     .dj-avatar {
         width: 100px;
         height: 100px;
@@ -416,11 +420,19 @@
         border: 3px solid rgba(201, 42, 42, 0.4);
         margin-bottom: 1rem;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .dj-avatar img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+    .dj-avatar .dj-initials {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
     }
     .home-dj-card h3 {
         font-size: 1.75rem;
@@ -553,14 +565,7 @@
                 <a href="#" class="badge-placeholder">GET IT ON Google Play</a>
                 <a href="#" class="badge-placeholder">Download on the App Store</a>
             </div>
-            <div class="home-dj-card">
-                <div class="dj-avatar">
-                    <img src="https://ui-avatars.com/api/?name=Desmal&size=100&background=374151&color=fff" alt="Desmal">
-                </div>
-                <h3>Desmal</h3>
-                <p class="dj-slogan">Türküler bizim</p>
-                <span class="live-badge">CANLI YAYINDA</span>
-            </div>
+            @include('partials.live-dj-card', ['dj' => $liveDj ?? null])
         </div>
     </div>
 </div>

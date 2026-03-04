@@ -106,6 +106,17 @@ Route::prefix('admin')->group(function () {
             Route::delete('{songRequest}', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'destroy'])->name('destroy');
         });
 
+        Route::prefix('djs')->name('admin.djs.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\DjProfileController::class, 'index'])->name('index');
+            Route::get('create', [App\Http\Controllers\Admin\DjProfileController::class, 'create'])->name('create');
+            Route::post('/', [App\Http\Controllers\Admin\DjProfileController::class, 'store'])->name('store');
+            Route::get('{dj}/edit', [App\Http\Controllers\Admin\DjProfileController::class, 'edit'])->name('edit');
+            Route::put('{dj}', [App\Http\Controllers\Admin\DjProfileController::class, 'update'])->name('update');
+            Route::delete('{dj}', [App\Http\Controllers\Admin\DjProfileController::class, 'destroy'])->name('destroy');
+            Route::post('{dj}/set-live', [App\Http\Controllers\Admin\DjProfileController::class, 'setLive'])->name('set-live');
+            Route::post('{dj}/set-offline', [App\Http\Controllers\Admin\DjProfileController::class, 'setOffline'])->name('set-offline');
+        });
+
         Route::prefix('schedule')->name('admin.schedule.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\ScheduleController::class, 'index'])->name('index');
             Route::post('/', [App\Http\Controllers\Admin\ScheduleController::class, 'store'])->name('store');
