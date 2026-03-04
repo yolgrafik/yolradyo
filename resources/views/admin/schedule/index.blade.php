@@ -25,10 +25,10 @@
         <div class="schedule-day-header">
             <span>{{ $dayLabels[$currentDay] }} programları</span>
             @if($schedules->isNotEmpty())
-                <div class="copy-form" style="margin-left:auto;">
+                <div class="schedule-controls" style="margin-left:auto;">
                     <form action="{{ route('admin.schedule.copy', $currentDay) }}" method="POST" class="d-inline" onsubmit="return confirm('Bu günü seçilen güne kopyalamak istiyor musunuz?');">
                         @csrf
-                        <select name="to_day" class="copy-select">
+                        <select name="to_day" class="schedule-day-select">
                             @foreach($dayLabels as $d => $label)
                                 @if($d != $currentDay)
                                     <option value="{{ $d }}">→ {{ $label }}</option>
@@ -137,7 +137,10 @@
 .day-tab.active{background:linear-gradient(135deg,#ff3b3b,#b30000);color:white;border:none;}
 .schedule-day-header{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;background:linear-gradient(180deg,#131a26,#0c1018);color:#ffffff;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);font-weight:600;margin-bottom:1rem;}
 .schedule-day-header small,.schedule-day-header span{color:#cbd5e1;}
-.schedule-day-header .copy-select{padding:0.4rem 0.6rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#e6e6e6;font-size:0.85rem;}
+.schedule-controls{display:flex;gap:10px;align-items:center;}
+.schedule-day-select{background:#1b2230;color:#ffffff;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:8px 12px;font-weight:600;font-size:0.9rem;}
+.schedule-day-select:focus{outline:none;border-color:#ff3b3b;box-shadow:0 0 6px rgba(255,60,60,0.5);}
+.schedule-day-select option{background:#1b2230;color:#ffffff;}
 .schedule-container,.schedule-wrapper{background:transparent !important;}
 .badge{padding:0.25rem 0.5rem;border-radius:6px;font-size:0.75rem;font-weight:600;}
 .badge-success{background:rgba(34,197,94,0.25);color:#86efac;}
