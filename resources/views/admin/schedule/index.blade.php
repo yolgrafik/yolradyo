@@ -57,7 +57,7 @@
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:0.75rem;font-size:0.9rem;font-weight:600;color:var(--accent);">{{ $s->start_time_formatted }}</td>
                         <td style="padding:0.75rem;font-size:0.9rem;">{{ $s->title }}</td>
-                        <td style="padding:0.75rem;font-size:0.9rem;color:var(--muted);">{{ $s->dj?->name ?? $s->host ?: '—' }}</td>
+                        <td style="padding:0.75rem;font-size:0.9rem;color:var(--muted);">{{ $s->dj_id ? ($s->dj?->name ?? '—') : 'DJ seçilmedi' }}</td>
                         <td style="padding:0.75rem;text-align:center;">
                             <form action="{{ route('admin.schedule.toggle', $s) }}" method="POST" class="d-inline">
                                 @csrf
@@ -67,7 +67,7 @@
                             </form>
                         </td>
                         <td style="padding:0.75rem;text-align:right;">
-                            <button type="button" class="btn-sm btn-edit" data-edit="{{ $s->id }}" data-title="{{ $s->title }}" data-host="{{ $s->host ?? '' }}" data-dj-id="{{ $s->dj_id ?? '' }}" data-start="{{ $s->start_time_formatted }}" data-end="{{ $s->end_time ? substr($s->end_time, 0, 5) : '' }}" data-active="{{ $s->is_active ? '1' : '0' }}">Düzenle</button>
+                            <button type="button" class="btn-sm btn-edit" data-edit="{{ $s->id }}" data-title="{{ $s->title }}" data-dj-id="{{ $s->dj_id ?? '' }}" data-start="{{ $s->start_time_formatted }}" data-end="{{ $s->end_time ? substr($s->end_time, 0, 5) : '' }}" data-active="{{ $s->is_active ? '1' : '0' }}">Düzenle</button>
                             <form action="{{ route('admin.schedule.destroy', $s) }}" method="POST" class="d-inline" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                                 @csrf
                                 @method('DELETE')
@@ -117,10 +117,6 @@
                         <option value="{{ $dj->id }}">{{ $dj->name }}</option>
                     @endforeach
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="host">Sunucu (fallback)</label>
-                <input type="text" name="host" id="host" maxlength="255" class="form-input" placeholder="DJ seçilmezse bu metin gösterilir">
             </div>
             <div class="form-group">
                 <label class="checkbox-label">
@@ -201,7 +197,6 @@
         btn.addEventListener('click',function(){
             var id=btn.dataset.edit;
             var title=btn.dataset.title;
-            var host=btn.dataset.host||'';
             var djId=btn.dataset.djId||'';
             var start=btn.dataset.start||'';
             var end=btn.dataset.end||'';
@@ -210,7 +205,6 @@
             form.querySelector('#formMethod').value='PUT';
             document.getElementById('modalTitle').textContent='Program Düzenle';
             document.getElementById('title').value=title;
-            document.getElementById('host').value=host;
             document.getElementById('dj_id').value=djId;
             document.getElementById('start_time').value=start;
             document.getElementById('end_time').value=end;

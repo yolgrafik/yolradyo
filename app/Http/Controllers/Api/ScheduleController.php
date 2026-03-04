@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\DjProfile;
 use App\Models\Schedule;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -44,7 +43,7 @@ class ScheduleController extends Controller
         $activeDj = null;
         if ($activeIdx !== null) {
             $activeItem = $schedulesArray[$activeIdx];
-            $dj = $this->resolveDj($activeItem);
+            $dj = $activeItem->dj_id ? $activeItem->dj : null;
             if ($dj) {
                 $activeDj = [
                     'id' => $dj->id,
@@ -52,15 +51,6 @@ class ScheduleController extends Controller
                     'avatar_url' => $dj->avatar_url,
                     'initials' => $dj->display_initials,
                     'tagline' => $dj->bio ?? '',
-                    'program_title' => $activeItem->title,
-                ];
-            } elseif ($activeItem->host) {
-                $activeDj = [
-                    'id' => null,
-                    'name' => $activeItem->host,
-                    'avatar_url' => null,
-                    'initials' => strtoupper(substr(trim($activeItem->host), 0, 2)),
-                    'tagline' => '',
                     'program_title' => $activeItem->title,
                 ];
             }
@@ -74,7 +64,7 @@ class ScheduleController extends Controller
 
             $isLive = ($idx === $activeIdx);
 
-            $dj = $this->resolveDj($s);
+            $dj = $s->dj_id ? $s->dj : null;
             $djData = $dj ? [
                 'id' => $dj->id,
                 'name' => $dj->name,
@@ -87,7 +77,7 @@ class ScheduleController extends Controller
                 'start_time' => $start,
                 'end_time' => $end,
                 'title' => $s->title,
-                'host' => $dj?->name ?? $s->host ?? '',
+                'host' => $dj ? $dj->name : '',
                 'dj' => $djData,
                 'is_live' => $isLive,
             ];
@@ -98,17 +88,5 @@ class ScheduleController extends Controller
             'items' => $items,
             'activeDj' => $activeDj,
         ]);
-    }
-
-    public function resolveDj(Schedule $s): ?DjProfile
-    {
-        if ($s->dj_id) {
-            return $s->dj;
-        }
-        if ($s->host) {
-            return DjProfile::whereRaw('LOWER(TRIM(name)) = ?', [strtolower(trim($s->host))])->first();
-        }
-
-        return null;
     }
 }

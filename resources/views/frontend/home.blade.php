@@ -614,7 +614,7 @@
             var chip = document.createElement('span');
             chip.className = 'schedule-chip' + (it.is_live ? ' is-live' : '');
             chip.appendChild(document.createTextNode(it.title || ''));
-            var hostName = (it.dj && it.dj.name) ? it.dj.name : (it.host || '');
+            var hostName = (it.dj && it.dj.name) ? it.dj.name : '';
             if (hostName) {
                 var sep = document.createElement('span');
                 sep.className = 'sep';
