@@ -103,7 +103,7 @@
         text-decoration: none;
         border-radius: var(--ry-radius);
         transition: all 0.2s ease;
-        border: 1px solid var(--ry-btn-border);
+        border: 1px solid #1e3a8a;
     }
     .home-slider__btn:hover { transform: translateY(-1px); }
     .home-slider__nav {
@@ -197,13 +197,13 @@
     }
     .schedule-day:hover {
         background: var(--ry-surface-2);
-        border-color: var(--ry-accent);
+        border-color: #2563eb;
     }
     .schedule-day.active {
-        background: linear-gradient(135deg, var(--ry-primary), var(--ry-accent));
+        background: linear-gradient(135deg, #1e3a8a, #2563eb);
         border: none;
         color: var(--ry-text);
-        box-shadow: 0 0 10px color-mix(in srgb, var(--ry-glow) 50%, transparent);
+        box-shadow: 0 0 10px rgba(37,99,235,0.5);
     }
     .schedule-list-wrap {
         padding: 0 1rem 1rem;
@@ -244,9 +244,9 @@
     .schedule-chip .sep { opacity: 0.6; font-weight: 900; flex-shrink: 0; }
     .schedule-strip .dot { opacity: 0.35; flex-shrink: 0; }
     .schedule-chip.is-live {
-        background: linear-gradient(135deg, var(--ry-primary), var(--ry-accent));
+        background: linear-gradient(135deg, #1e3a8a, #2563eb);
         border: none;
-        box-shadow: 0 0 10px color-mix(in srgb, var(--ry-glow) 40%, transparent);
+        box-shadow: 0 0 10px rgba(37,99,235,0.4);
     }
     .schedule-chip .live-badge {
         margin-left: 4px;
@@ -304,7 +304,7 @@
         white-space: nowrap;
         transition: all 0.25s ease;
     }
-    .btn-request-group > *:last-child { border-right: 1px solid var(--ry-btn-border); }
+    .btn-request-group > *:last-child { border-right: 1px solid rgba(255,255,255,0.2); }
     .btn-whatsapp-istek {
         flex: 1;
         display: grid;
@@ -341,8 +341,8 @@
         transition: all 0.2s ease;
     }
     .home-icon-buttons button:hover {
-        background: color-mix(in srgb, var(--ry-accent) 20%, transparent);
-        border-color: var(--ry-accent);
+        background: rgba(37,99,235,0.2);
+        border-color: #2563eb;
         color: var(--ry-text);
     }
     .home-badges {
@@ -376,7 +376,7 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     }
     .live-banner {
-        background: linear-gradient(135deg, var(--ry-primary), var(--ry-accent));
+        background: var(--ry-bar-bg);
         color: var(--ry-text);
         font-weight: 900;
         font-size: 14px;
@@ -449,7 +449,7 @@
     }
     .live-live-btn {
         position: relative;
-        background: linear-gradient(135deg, var(--ry-primary), var(--ry-accent));
+        background: linear-gradient(135deg, #1e3a8a, #2563eb);
         color: var(--ry-text);
         padding: 8px 16px;
         border-radius: 8px;
@@ -457,8 +457,8 @@
         font-weight: 800;
         display: inline-block;
         letter-spacing: 1px;
-        text-shadow: 0 0 12px color-mix(in srgb, var(--ry-glow) 60%, transparent);
-        box-shadow: 0 2px 12px color-mix(in srgb, var(--ry-glow) 40%, transparent);
+        text-shadow: 0 0 12px rgba(37,99,235,0.6);
+        box-shadow: 0 2px 12px rgba(37,99,235,0.4);
     }
     .live-live-btn::after {
         content: '';
@@ -467,10 +467,10 @@
         right: 0;
         bottom: -4px;
         height: 2px;
-        background: linear-gradient(90deg, transparent, var(--ry-accent), var(--ry-glow), var(--ry-accent), transparent);
+        background: linear-gradient(90deg, transparent, #2563eb, rgba(37,99,235,0.8), #2563eb, transparent);
         opacity: 0.7;
         border-radius: 2px;
-        box-shadow: 0 0 8px var(--ry-glow);
+        box-shadow: 0 0 8px rgba(37,99,235,0.5);
     }
     .live-dj-card .live-empty {
         color: var(--muted);
