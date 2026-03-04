@@ -20,6 +20,7 @@
             <div class="alert-error">{{ session('error') }}</div>
         @endif
 
+        <input type="hidden" name="_token" value="{{ csrf_token() }}" id="csrfToken">
         <form id="reorderForm" method="POST" action="{{ route('admin.menu.reorder') }}" style="display:none;">
             @csrf
             <input type="hidden" name="location" value="{{ $location }}">
@@ -120,25 +121,18 @@
             items.push({ id: parseInt(inp.dataset.id, 10), sort_order: parseInt(inp.value, 10) || 0 });
         });
         var form = document.getElementById('reorderForm');
-        var token = form.querySelector('input[name="_token"]');
-        if (!token) {
-            var t = document.createElement('input');
-            t.type = 'hidden';
-            t.name = '_token';
-            t.value = document.querySelector('meta[name="csrf-token"]')?.content || document.querySelector('input[name="_token"]')?.value;
-            form.appendChild(t);
-        }
+        var token = document.getElementById('csrfToken')?.value || document.querySelector('input[name="_token"]')?.value;
         fetch(form.action, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || document.querySelector('input[name="_token"]')?.value,
+                'X-CSRF-TOKEN': token,
                 'Accept': 'application/json',
             },
             body: JSON.stringify({
                 location: form.querySelector('input[name="location"]').value,
                 items: items,
-                _token: document.querySelector('input[name="_token"]')?.value
+                _token: token
             })
         }).then(function(r) {
             return r.json();
