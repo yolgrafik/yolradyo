@@ -1,0 +1,35 @@
+# FTP ile yüklerken HARİÇ TUTULACAK dosya/klasörler
+# FileZilla: Edit > Directory listing filters > Add filter
+# WinSCP: Transfer settings > Exclude
+
+.git
+.gitignore
+.gitattributes
+node_modules
+.env
+.env.backup
+.env.production
+.env.local
+.env.*.local
+tests
+.phpunit.cache
+.phpunit.result.cache
+.idea
+.vscode
+.fleet
+.nova
+.zed
+Homestead.json
+Homestead.yaml
+auth.json
+phpunit.xml
+*.log
+storage/logs/*.log
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/pail
+storage/*.key
+Thumbs.db
+.DS_Store
+DEPLOY_FTP.md
