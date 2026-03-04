@@ -394,79 +394,114 @@
         color: var(--text);
     }
     .live-dj-card {
-        background: #f07f16;
-        border-radius: 18px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 14px;
         padding: 0;
         overflow: hidden;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        text-align: center;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     }
     .live-banner {
-        background: #e91515;
+        background: linear-gradient(135deg, var(--accent), #a61f1f);
         color: white;
         font-weight: 900;
-        font-size: 16px;
+        font-size: 14px;
         padding: 10px 14px;
         letter-spacing: 2px;
     }
     .live-content {
-        padding: 16px;
+        padding: 14px;
         transition: opacity 0.3s ease;
     }
     .live-content.updating {
         opacity: 0.6;
     }
-    .live-dj-photo {
-        width: 72px;
-        height: 72px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin: 0 auto 10px;
-        display: block;
-        border: 3px solid #fff;
+    .live-dj-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
     }
     .live-dj-photo-wrap {
-        width: 72px;
-        height: 72px;
-        border-radius: 50%;
-        margin: 0 auto 10px;
-        border: 3px solid #fff;
-        background: rgba(255, 255, 255, 0.3);
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 2px solid var(--border);
+        background: rgba(255, 255, 255, 0.06);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         font-weight: 800;
-        color: #fff;
+        color: var(--muted);
+    }
+    .live-dj-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .live-dj-info {
+        flex: 1;
+        min-width: 0;
     }
     .live-dj-name {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 800;
-        margin-bottom: 6px;
-        color: #fff;
+        color: var(--text);
+        line-height: 1.2;
+    }
+    .live-dj-details {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border);
     }
     .live-program {
-        font-size: 14px;
-        background: white;
-        border-radius: 20px;
-        padding: 6px 14px;
-        display: inline-block;
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 4px;
+    }
+    .live-tagline {
+        font-size: 12px;
+        color: var(--muted);
+        opacity: 0.85;
         margin-bottom: 10px;
-        color: #333;
+    }
+    .live-live-wrap {
+        position: relative;
+        display: inline-block;
+        padding-bottom: 6px;
     }
     .live-live-btn {
-        background: #e91515;
+        position: relative;
+        background: linear-gradient(135deg, var(--accent), #a61f1f);
         color: white;
-        padding: 8px 18px;
-        border-radius: 20px;
+        padding: 8px 16px;
+        border-radius: 8px;
         font-size: 12px;
         font-weight: 800;
         display: inline-block;
+        letter-spacing: 1px;
+        text-shadow: 0 0 12px rgba(201, 42, 42, 0.6);
+        box-shadow: 0 2px 12px rgba(201, 42, 42, 0.35);
+    }
+    .live-live-btn::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -4px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--accent), var(--glow), var(--accent), transparent);
+        opacity: 0.7;
+        border-radius: 2px;
+        box-shadow: 0 0 8px var(--glow);
     }
     .live-dj-card .live-empty {
-        color: #fff;
-        opacity: 0.9;
+        color: var(--muted);
         padding: 1rem 0;
+        text-align: center;
     }
     @media (max-width: 992px) {
         .home-main {
@@ -491,9 +526,10 @@
     @media (max-width: 768px) {
         .schedule-day { padding: 4px 8px; font-size: 0.7rem; min-height: 26px; }
         .schedule-chip { font-size: 0.75rem; padding: 4px 8px; }
-        .live-banner { font-size: 14px; padding: 8px; }
-        .live-dj-name { font-size: 18px; }
-        .live-program { font-size: 13px; }
+        .live-banner { font-size: 12px; padding: 8px; }
+        .live-dj-name { font-size: 16px; }
+        .live-dj-photo-wrap { width: 52px; height: 52px; min-width: 52px; font-size: 1.2rem; }
+        .live-program { font-size: 12px; }
     }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
@@ -641,15 +677,17 @@
         cardContent.classList.add('updating');
         setTimeout(function() {
         if (activeDj) {
-            var html = '';
+            var html = '<div class="live-dj-row">';
             if (activeDj.avatar_url) {
-                html += '<img src="' + esc(activeDj.avatar_url) + '" alt="' + esc(activeDj.name) + '" class="live-dj-photo">';
+                html += '<div class="live-dj-photo-wrap"><img src="' + esc(activeDj.avatar_url) + '" alt="' + esc(activeDj.name) + '" class="live-dj-photo"></div>';
             } else {
                 html += '<div class="live-dj-photo-wrap">' + esc(activeDj.initials || '?') + '</div>';
             }
-            html += '<h2 class="live-dj-name">' + esc(activeDj.name) + '</h2>';
-            html += '<div class="live-program">' + esc(activeDj.program_title || '') + '</div>';
-            html += '<div class="live-live-btn">CANLI YAYINDA</div>';
+            html += '<div class="live-dj-info"><h2 class="live-dj-name">' + esc(activeDj.name) + '</h2></div></div>';
+            html += '<div class="live-dj-details">';
+            if (activeDj.program_title) html += '<div class="live-program">' + esc(activeDj.program_title) + '</div>';
+            if (activeDj.tagline) html += '<div class="live-tagline">' + esc(activeDj.tagline) + '</div>';
+            html += '<div class="live-live-wrap"><span class="live-live-btn">CANLI YAYINDA</span></div></div>';
             cardContent.innerHTML = html;
             cardContent.classList.add('has-dj');
             cardContent.classList.remove('empty');
