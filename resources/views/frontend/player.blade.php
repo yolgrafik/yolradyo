@@ -8,7 +8,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(145deg, #0a0e14 0%, #131a24 40%, #0d1219 100%);
+            background: url('{{ asset('assets/images/login-hero.png') }}') center center / cover no-repeat fixed;
+            background-color: #0a0e14;
             color: #f0f2f5;
             min-height: 100vh;
             display: flex;
@@ -22,7 +23,7 @@
             content: '';
             position: fixed;
             inset: 0;
-            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201,42,42,0.08) 0%, transparent 60%);
+            background: linear-gradient(145deg, rgba(10,14,20,0.85) 0%, rgba(19,26,36,0.9) 40%, rgba(13,18,25,0.92) 100%);
             pointer-events: none;
         }
         .player-wrap {
