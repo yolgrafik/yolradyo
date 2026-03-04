@@ -26,7 +26,7 @@
     height: 48px;
     border-radius: 12px;
     overflow: hidden;
-    background: rgba(20, 25, 35, 0.6);
+    background: var(--ry-bar-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -62,7 +62,7 @@
     width: 32px;
     z-index: 2;
     pointer-events: none;
-    background: linear-gradient(90deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, transparent 100%);
 }
 .ticker::after {
     content: '';
@@ -73,7 +73,7 @@
     width: 48px;
     z-index: 2;
     pointer-events: none;
-    background: linear-gradient(270deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0.5) 0%, transparent 100%);
 }
 .ticker__track {
     display: inline-flex;
