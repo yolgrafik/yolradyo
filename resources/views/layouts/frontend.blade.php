@@ -341,6 +341,7 @@
             color: #ffffff;
         }
         .footer-social svg { width: 16px; height: 16px; }
+        .footer-social i { font-size: 16px; }
         .footer-legal {
             display: flex;
             align-items: center;
@@ -654,6 +655,7 @@
             .site-footer-bar { min-height: 48px; gap: 10px; }
             .footer-social a { width: 32px; height: 32px; }
             .footer-social svg { width: 14px; height: 14px; }
+            .footer-social i { font-size: 14px; }
             .legal-pretext { font-size: 12px !important; margin-bottom: 8px !important; }
             .legal-links { font-size: 12px !important; }
             body { padding-bottom: 165px; }
@@ -798,6 +800,24 @@
                     @endif
                     @if(isset($social['x']) && ($social['x']['is_active'] ?? false) && !empty($social['x']['url'] ?? ''))
                     <a href="{{ $social['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter-x"></i></a>
+                    @endif
+                    @if(isset($social['android_app']) && ($social['android_app']['is_active'] ?? false) && !empty($social['android_app']['url'] ?? ''))
+                    <a href="{{ $social['android_app']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Android Uygulaması" aria-label="Android Uygulaması"><i class="bi bi-android"></i></a>
+                    @endif
+                    @if(isset($social['ios_app']) && ($social['ios_app']['is_active'] ?? false) && !empty($social['ios_app']['url'] ?? ''))
+                    <a href="{{ $social['ios_app']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="iOS Uygulaması" aria-label="iOS Uygulaması"><i class="bi bi-apple"></i></a>
+                    @endif
+                    @if(isset($social['winamp']) && ($social['winamp']['is_active'] ?? false) && !empty($social['winamp']['url'] ?? ''))
+                    <a href="{{ $social['winamp']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Winamp İle Dinle" aria-label="Winamp İle Dinle"><i class="bi bi-music-note-beamed"></i></a>
+                    @endif
+                    @if(isset($social['media_player']) && ($social['media_player']['is_active'] ?? false) && !empty($social['media_player']['url'] ?? ''))
+                    <a href="{{ $social['media_player']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Medya Player" aria-label="Medya Player"><i class="bi bi-play-circle"></i></a>
+                    @endif
+                    @if(isset($social['quicktime']) && ($social['quicktime']['is_active'] ?? false) && !empty($social['quicktime']['url'] ?? ''))
+                    <a href="{{ $social['quicktime']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="QuickTime Player" aria-label="QuickTime Player"><i class="bi bi-film"></i></a>
+                    @endif
+                    @if(isset($social['real_player']) && ($social['real_player']['is_active'] ?? false) && !empty($social['real_player']['url'] ?? ''))
+                    <a href="{{ $social['real_player']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Real Player" aria-label="Real Player"><i class="bi bi-broadcast"></i></a>
                     @endif
                 </div>
             </div>
