@@ -572,57 +572,44 @@
         .request-form__actions { margin-top: 1rem; }
         .request-form__btn { padding: .75rem 1.5rem; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
         .request-form__btn:hover { opacity: .9; }
-        /* Mobile fullscreen player overlay */
-        .mp-overlay.hidden { display: none !important; }
-        .mp-overlay {
-            position: fixed; inset: 0;
-            z-index: 99999;
-            display: flex; flex-direction: column;
-            padding: 14px;
-            min-height: 100vh;
-            min-height: 100dvh;
+        /* Mini player modal */
+        .mini-player-overlay.hidden { display: none !important; }
+        .mini-player-modal.hidden { display: none !important; }
+        .mini-player-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.25); z-index: 9998; cursor: pointer; }
+        .mini-player-modal { cursor: default; }
+        .mini-player-modal {
+            position: fixed; z-index: 9999;
+            width: min(420px, 92vw);
+            right: 18px; bottom: 120px;
+            background: rgba(18,22,30,.96);
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 16px;
+            box-shadow: 0 18px 60px rgba(0,0,0,.55);
+            overflow: hidden;
         }
-        .mp-overlay__backdrop {
-            position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,.88), rgba(0,0,0,.95));
-            cursor: pointer;
+        .mini-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,.06); }
+        .mini-head-left { display: flex; gap: 10px; align-items: center; }
+        .mini-logo { width: 32px; height: 32px; border-radius: 10px; object-fit: contain; background: rgba(255,255,255,.06); }
+        .mini-title { font-weight: 900; font-size: 0.95rem; color: #fff; }
+        .mini-close { background: transparent; border: 0; color: #fff; font-size: 18px; cursor: pointer; padding: 4px; line-height: 1; }
+        .mini-close:hover { opacity: .85; }
+        .mini-body { padding: 14px; }
+        .mini-track { font-weight: 800; font-size: 0.95rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mini-listeners { margin-top: 6px; font-size: 12px; color: rgba(255,255,255,.65); }
+        .mini-controls { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+        .mini-play, .mini-pause { width: 44px; height: 44px; border-radius: 12px; border: 0; background: #ff2d2d; color: #fff; font-weight: 900; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; flex-shrink: 0; }
+        .mini-play:hover, .mini-pause:hover { opacity: .9; }
+        .mini-play.hidden, .mini-pause.hidden { display: none !important; }
+        .mini-vol { flex: 1; accent-color: var(--accent); }
+        .mini-actions { display: flex; gap: 10px; margin-top: 12px; }
+        .mini-btn { flex: 1; padding: 10px 12px; border-radius: 12px; border: 0; font-weight: 900; font-size: 0.85rem; text-align: center; text-decoration: none; cursor: pointer; }
+        .mini-wa { background: #25D366; color: #fff; }
+        .mini-wa:hover { opacity: .9; }
+        .mini-req { background: #ff2d2d; color: #fff; }
+        .mini-req:hover { opacity: .9; }
+        @media (max-width: 768px) {
+            .mini-player-modal { right: 12px; bottom: 100px; }
         }
-        .mp-overlay__content {
-            position: relative; z-index: 1;
-            flex: 1;
-            display: flex; flex-direction: column;
-            min-height: 0;
-        }
-        .mp-top { display: flex; justify-content: space-between; align-items: center; color: #fff; flex-shrink: 0; }
-        .mp-title { font-weight: 900; letter-spacing: 1px; font-size: 1.1rem; }
-        .mp-close { background: transparent; border: 0; color: #fff; font-size: 22px; cursor: pointer; padding: 8px; line-height: 1; }
-        .mp-close:hover { opacity: .85; }
-        .mp-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: 0; }
-        .mp-cover { width: min(320px, 78vw); height: auto; border-radius: 18px; box-shadow: 0 18px 50px rgba(0,0,0,.55); object-fit: contain; }
-        .mp-track { color: #fff; font-weight: 800; text-align: center; max-width: 90vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1rem; }
-        .mp-listeners { color: rgba(255,255,255,.7); font-size: 12px; }
-        .mp-controls { margin-top: 8px; display: flex; gap: 8px; align-items: center; justify-content: center; }
-        .mp-play, .mp-pause {
-            width: 80px; height: 80px; border-radius: 22px;
-            border: 0; cursor: pointer;
-            background: #fff; color: #111; font-size: 28px; font-weight: 900;
-            box-shadow: 0 10px 30px rgba(0,0,0,.45);
-            display: flex; align-items: center; justify-content: center; padding: 0;
-        }
-        .mp-play:hover, .mp-pause:hover { opacity: .95; transform: scale(1.02); }
-        .mp-play.hidden, .mp-pause.hidden { display: none !important; }
-        .mp-vol { width: min(360px, 86vw); margin-top: 8px; accent-color: var(--accent); }
-        .mp-actions { display: flex; gap: 12px; padding: 12px 0; justify-content: center; flex-shrink: 0; flex-wrap: wrap; }
-        .mp-btn {
-            flex: 1; min-width: 140px; max-width: 220px;
-            padding: 12px 14px; border-radius: 14px;
-            border: 0; text-align: center; font-weight: 900; font-size: 0.95rem;
-            text-decoration: none; cursor: pointer;
-        }
-        .mp-wa { background: #25D366; color: #fff; }
-        .mp-wa:hover { opacity: .9; }
-        .mp-req { background: #ff2d2d; color: #fff; }
-        .mp-req:hover { opacity: .9; }
     </style>
     @stack('styles')
 </head>
@@ -889,94 +876,92 @@
     @include('partials.song-request-modal')
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var overlay = document.getElementById('mobilePlayerOverlay');
-        var mpClose = document.getElementById('mpClose');
-        var mpPlay = document.getElementById('mpPlay');
-        var mpPause = document.getElementById('mpPause');
-        var mpRequest = document.getElementById('mpRequest');
-        var mpVol = document.getElementById('mpVol');
+        var overlay = document.getElementById('miniPlayerOverlay');
+        var modal = document.getElementById('miniPlayerModal');
+        var miniClose = document.getElementById('miniClose');
+        var miniPlay = document.getElementById('miniPlay');
+        var miniPause = document.getElementById('miniPause');
+        var miniRequest = document.getElementById('miniRequest');
+        var miniVol = document.getElementById('miniVol');
         var audio = document.getElementById('radioAudio');
-        if (!overlay || !audio) return;
+        if (!overlay || !modal || !audio) return;
         var streamUrl = audio.getAttribute('data-stream-url') || '';
         var backupUrl = audio.getAttribute('data-backup-url') || '';
-        function closeOverlay() {
+        function closeMiniPlayer() {
             overlay.classList.add('hidden');
+            modal.classList.add('hidden');
             overlay.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
         }
         function updatePlayPauseUI() {
             var playing = !audio.paused && !audio.ended;
-            if (mpPlay) mpPlay.classList.toggle('hidden', playing);
-            if (mpPause) mpPause.classList.toggle('hidden', !playing);
+            if (miniPlay) miniPlay.classList.toggle('hidden', playing);
+            if (miniPause) miniPause.classList.toggle('hidden', !playing);
         }
-        function openOverlay() {
+        function openMiniPlayer() {
             overlay.classList.remove('hidden');
+            modal.classList.remove('hidden');
             overlay.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
             updatePlayPauseUI();
-            if (mpVol) mpVol.value = audio.volume;
+            if (miniVol) miniVol.value = audio.volume;
         }
-        window.openMobilePlayerOverlay = openOverlay;
-        if (mpClose) mpClose.addEventListener('click', closeOverlay);
+        window.openMobilePlayerOverlay = openMiniPlayer;
+        if (miniClose) miniClose.addEventListener('click', closeMiniPlayer);
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) closeMiniPlayer(); });
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && overlay && !overlay.classList.contains('hidden')) closeOverlay();
+            if (e.key === 'Escape' && overlay && !overlay.classList.contains('hidden')) closeMiniPlayer();
         });
-        if (mpPlay) {
-            mpPlay.addEventListener('click', function() {
+        if (miniPlay) {
+            miniPlay.addEventListener('click', function() {
                 var url = streamUrl || backupUrl;
                 if (url && !audio.src) { audio.src = url; audio.load(); }
                 audio.play().catch(function(){});
             });
         }
-        if (mpPause) mpPause.addEventListener('click', function() { audio.pause(); });
-        if (mpRequest) {
-            mpRequest.addEventListener('click', function() {
-                closeOverlay();
+        if (miniPause) miniPause.addEventListener('click', function() { audio.pause(); });
+        if (miniRequest) {
+            miniRequest.addEventListener('click', function() {
+                closeMiniPlayer();
                 if (typeof window.openSongRequestModal === 'function') window.openSongRequestModal();
             });
         }
-        if (mpVol) {
-            mpVol.addEventListener('input', function() { audio.volume = parseFloat(this.value); });
-        }
+        if (miniVol) miniVol.addEventListener('input', function() { audio.volume = parseFloat(this.value); });
         audio.addEventListener('play', updatePlayPauseUI);
         audio.addEventListener('pause', updatePlayPauseUI);
         audio.addEventListener('ended', updatePlayPauseUI);
-        var backdrop = overlay ? overlay.querySelector('[data-close-overlay]') : null;
-        if (backdrop) backdrop.addEventListener('click', closeOverlay);
     });
     </script>
 
     @php
-        $mpCover = isset($siteSettings['brand_logo_path']) && $siteSettings['brand_logo_path']
-            ? asset('storage/' . $siteSettings['brand_logo_path'])
-            : asset('assets/images/play.png');
-        $mpWhatsapp = !empty($siteSettings['whatsapp_url']) ? $siteSettings['whatsapp_url'] : 'javascript:void(0)';
+        $miniPlayerLogo = file_exists(public_path('assets/images/player-logo.png'))
+            ? asset('assets/images/player-logo.png')
+            : (file_exists(public_path('assets/images/play-logo.png')) ? asset('assets/images/play-logo.png') : asset('assets/images/play.svg'));
+        $miniWhatsapp = !empty($siteSettings['whatsapp_url']) ? $siteSettings['whatsapp_url'] : 'javascript:void(0)';
     @endphp
-    <div id="mobilePlayerOverlay" class="mp-overlay hidden" role="dialog" aria-modal="true" aria-label="Canlı dinle">
-        <div class="mp-overlay__backdrop" data-close-overlay aria-hidden="true"></div>
-        <div class="mp-overlay__content">
-        <div class="mp-top">
-            <div class="mp-title">{{ $siteName ?? 'RadyoYol' }}</div>
-            <button type="button" id="mpClose" class="mp-close" aria-label="Kapat">✕</button>
+    <div id="miniPlayerOverlay" class="mini-player-overlay hidden" role="dialog" aria-modal="true" aria-label="Canlı dinle"></div>
+    <div id="miniPlayerModal" class="mini-player-modal hidden" role="dialog" aria-label="Canlı yayın">
+        <div class="mini-head">
+            <div class="mini-head-left">
+                <img class="mini-logo" src="{{ $miniPlayerLogo }}" alt="">
+                <span class="mini-title">Canlı Yayın</span>
+            </div>
+            <button type="button" id="miniClose" class="mini-close" aria-label="Kapat">✕</button>
         </div>
-        <div class="mp-center">
-            <img class="mp-cover" src="{{ $mpCover }}" alt="RadyoYol">
-            <div class="mp-track">
+        <div class="mini-body">
+            <div class="mini-track">
                 <span class="cc_streaminfo" data-type="tracktitle" data-username="radyoyol"></span>
             </div>
-            <div class="mp-listeners">
+            <div class="mini-listeners">
                 <span class="cc_streaminfo" data-type="listeners" data-username="radyoyol"></span> dinleyici
             </div>
-            <div class="mp-controls">
-                <button type="button" id="mpPlay" class="mp-play" aria-label="Oynat">▶</button>
-                <button type="button" id="mpPause" class="mp-pause hidden" aria-label="Duraklat">⏸</button>
+            <div class="mini-controls">
+                <button type="button" id="miniPlay" class="mini-play" aria-label="Oynat">▶</button>
+                <button type="button" id="miniPause" class="mini-pause hidden" aria-label="Duraklat">⏸</button>
+                <input id="miniVol" class="mini-vol" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Ses seviyesi">
             </div>
-            <input id="mpVol" class="mp-vol" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Ses seviyesi">
-        </div>
-        <div class="mp-actions">
-            <a id="mpWhatsapp" class="mp-btn mp-wa" href="{{ $mpWhatsapp }}" target="_blank" rel="noopener">WhatsApp</a>
-            <button type="button" id="mpRequest" class="mp-btn mp-req">İSTEK HATTI</button>
-        </div>
+            <div class="mini-actions">
+                <a id="miniWhatsapp" class="mini-btn mini-wa" href="{{ $miniWhatsapp }}" target="_blank" rel="noopener">WhatsApp</a>
+                <button type="button" id="miniRequest" class="mini-btn mini-req">İSTEK HATTI</button>
+            </div>
         </div>
     </div>
 
