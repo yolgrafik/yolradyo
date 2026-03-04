@@ -138,7 +138,7 @@
         border-radius: 14px;
     }
     .schedule-card {
-        background: rgba(20, 25, 35, 0.6);
+        background: var(--ry-bar-bg);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.08);
