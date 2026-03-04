@@ -22,9 +22,9 @@
     height: 48px;
     border-radius: 12px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(20, 25, 35, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
     position: relative;
@@ -78,12 +78,12 @@
     flex-wrap: nowrap;
     height: 100%;
     white-space: nowrap;
-    animation: tickerScroll 30s linear infinite;
+    animation: tickerMove 25s linear infinite;
 }
 .ticker:hover .ticker__track { animation-play-state: paused; }
-@keyframes tickerScroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+@keyframes tickerMove {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
 }
 .ticker__item {
     display: inline-flex;
