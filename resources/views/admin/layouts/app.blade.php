@@ -901,6 +901,7 @@
                             <li><a href="{{ route('admin.settings.seo') }}" class="nav-item {{ request()->routeIs('admin.settings.seo') ? 'is-active' : '' }}">SEO Ayarlari</a></li>
                             <li><a href="{{ route('admin.settings.social') }}" class="nav-item {{ request()->routeIs('admin.settings.social') ? 'is-active' : '' }}">Sosyal Medya Linkleri</a></li>
                             <li><a href="{{ route('admin.settings.footer') }}" class="nav-item {{ request()->routeIs('admin.settings.footer') ? 'is-active' : '' }}">Footer Yonetimi</a></li>
+                            <li><a href="{{ route('admin.menu.index') }}" class="nav-item {{ request()->routeIs('admin.menu.*') ? 'is-active' : '' }}">Menu Yonetimi</a></li>
                             <li><a href="{{ route('admin.settings.theme') }}" class="nav-item {{ request()->routeIs('admin.settings.theme') ? 'is-active' : '' }}">Tema & Renk Ayarlari</a></li>
                         </ul>
                     </div>
