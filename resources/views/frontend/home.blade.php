@@ -245,27 +245,32 @@
     .schedule-list-wrap {
         padding: 0 1rem 1rem;
     }
-    .schedule-row {
+    .schedule-list {
         display: flex;
-        flex-wrap: wrap;
-        gap: 14px;
-        font-size: 16px;
-        font-weight: 600;
-        color: #fff;
+        flex-direction: column;
+        gap: 10px;
         margin-top: 10px;
     }
-    .schedule-row span {
-        padding: 6px 12px;
-        background: rgba(255, 255, 255, 0.05);
+    .schedule-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.04);
         border-radius: 8px;
+        font-size: 0.95rem;
     }
-    .schedule-row span::after {
-        content: " | ";
-        margin-left: 14px;
-        opacity: 0.5;
+    .schedule-item.is-live {
+        color: #ff3b3b;
+        font-weight: 700;
+        background: rgba(255, 60, 60, 0.08);
+        border: 1px solid rgba(255, 60, 60, 0.25);
     }
-    .schedule-row span:last-child::after {
-        display: none;
+    .schedule-live {
+        color: #ff3b3b;
+        font-weight: 700;
+        font-size: 0.75rem;
+        margin-left: 8px;
     }
     .home-right {
         display: flex;
@@ -439,13 +444,13 @@
     }
     @media (max-width: 768px) {
         .schedule-day { padding: 8px 12px; font-size: 0.75rem; min-height: 34px; }
-        .schedule-row { font-size: 14px; gap: 10px; }
+        .schedule-item { font-size: 0.9rem; }
     }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
         .schedule-top-bar { flex-direction: column; align-items: stretch; }
         .schedule-days-bar { justify-content: flex-start; }
-        .schedule-row { font-size: 13px; gap: 8px; }
+        .schedule-item { font-size: 0.85rem; padding: 8px 12px; }
         .home-right {
             grid-template-columns: 1fr;
         }
@@ -547,16 +552,28 @@
         if (!container) return;
         if (loadingEl) loadingEl.style.display='none';
         if (emptyEl) emptyEl.style.display=items.length===0?'block':'none';
-        container.querySelectorAll('.schedule-row').forEach(function(el){ el.remove(); });
+        container.querySelectorAll('.schedule-list').forEach(function(el){ el.remove(); });
         if (items.length===0) return;
-        var row = document.createElement('div');
-        row.className = 'schedule-row';
+        var list = document.createElement('div');
+        list.className = 'schedule-list';
         items.forEach(function(it){
-            var span = document.createElement('span');
-            span.textContent = it.title || '';
-            row.appendChild(span);
+            var item = document.createElement('div');
+            item.className = 'schedule-item' + (it.is_live ? ' is-live' : '');
+            var text = (it.title || '') + ' | ' + (it.host || '');
+            if (it.is_live) text += ' | CANLI';
+            item.textContent = text;
+            if (it.is_live) {
+                var liveSpan = document.createElement('span');
+                liveSpan.className = 'schedule-live';
+                liveSpan.textContent = 'CANLI';
+                item.textContent = (it.title || '') + ' | ' + (it.host || '') + ' | ';
+                item.appendChild(liveSpan);
+            } else {
+                item.textContent = (it.title || '') + ' | ' + (it.host || '');
+            }
+            list.appendChild(item);
         });
-        container.appendChild(row);
+        container.appendChild(list);
     }
 
     function loadSchedule(day) {
