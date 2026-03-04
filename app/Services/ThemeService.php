@@ -58,8 +58,8 @@ class ThemeService
     {
         $accent = $preset['accent'] ?? $preset['primary'] ?? '#c92a2a';
 
-        $headerBg = $preset['header_bg'] ?? 'linear-gradient(180deg, rgba(11,15,26,0.95) 0%, rgba(17,24,39,0.93) 100%)';
-        $footerBg = $preset['footer_bg'] ?? 'rgba(5,7,12,0.95)';
+        $headerBg = $preset['header_bg'] ?? $this->themeHeaderBg($accent);
+        $footerBg = $preset['footer_bg'] ?? $this->themeFooterBg($accent);
         $barBg = $preset['bar_bg'] ?? "linear-gradient(135deg, {$accent}, " . $this->darken($accent, 0.2) . ")";
 
         return [
@@ -70,6 +70,29 @@ class ThemeService
             'footer_bg' => $footerBg,
             'bar_bg' => $barBg,
         ];
+    }
+
+    protected function themeHeaderBg(string $accent): string
+    {
+        $rgba = $this->hexToRgba($accent, 0.35);
+        $dark = $this->hexToRgba($this->darken($accent, 0.35), 0.9);
+        return "linear-gradient(180deg, {$rgba} 0%, {$dark} 50%, rgba(11,15,26,0.98) 100%)";
+    }
+
+    protected function themeFooterBg(string $accent): string
+    {
+        return $this->hexToRgba($this->darken($accent, 0.5), 0.95);
+    }
+
+    protected function hexToRgba(string $hex, float $alpha): string
+    {
+        if (!preg_match('/^#([0-9A-Fa-f]{6})$/', $hex, $m)) {
+            return "rgba(11,15,26,{$alpha})";
+        }
+        $r = hexdec(substr($m[1], 0, 2));
+        $g = hexdec(substr($m[1], 2, 2));
+        $b = hexdec(substr($m[1], 4, 2));
+        return sprintf("rgba(%d,%d,%d,%.2f)", $r, $g, $b, $alpha);
     }
 
     protected function lighten(string $hex, float $amount): string
