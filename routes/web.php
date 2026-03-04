@@ -88,6 +88,10 @@ Route::prefix('admin')->group(function () {
             Route::post('2fa/disable', [App\Http\Controllers\Admin\TwoFactorController::class, 'disable'])->name('2fa.disable');
         });
 
+        Route::get('messages', fn () => view('admin.placeholder', ['title' => 'Gelen Mesajlar']))->name('admin.messages.index');
+        Route::get('moderation', fn () => view('admin.placeholder', ['title' => 'Moderasyon']))->name('admin.moderation.index');
+        Route::get('blacklist', fn () => view('admin.placeholder', ['title' => 'Kara Liste']))->name('admin.blacklist.index');
+
         Route::prefix('song-requests')->name('admin.song-requests.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'index'])->name('index');
             Route::post('{songRequest}/approve', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'approve'])->name('approve');

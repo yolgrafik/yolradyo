@@ -878,17 +878,17 @@
                             <li><a href="#" class="nav-item">Kampanya Takibi</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section {{ request()->routeIs('admin.song-requests.*') ? 'is-open' : '' }}" data-section="mesaj">
-                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.song-requests.*') ? 'true' : 'false' }}">
+                    <div class="nav-section {{ request()->routeIs('admin.song-requests.*', 'admin.messages.*', 'admin.moderation.*', 'admin.blacklist.*') ? 'is-open' : '' }}" data-section="mesaj">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.song-requests.*', 'admin.messages.*', 'admin.moderation.*', 'admin.blacklist.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                             <span>Mesaj & İstek</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
                             <li><a href="{{ route('admin.song-requests.index') }}" class="nav-item {{ request()->routeIs('admin.song-requests.*') ? 'is-active' : '' }}">Şarkı İstekleri</a></li>
-                            <li><a href="#" class="nav-item">Gelen Mesajlar</a></li>
-                            <li><a href="#" class="nav-item">Moderasyon</a></li>
-                            <li><a href="#" class="nav-item">Kara Liste</a></li>
+                            <li><a href="{{ route('admin.messages.index') }}" class="nav-item {{ request()->routeIs('admin.messages.*') ? 'is-active' : '' }}">Gelen Mesajlar</a></li>
+                            <li><a href="{{ route('admin.moderation.index') }}" class="nav-item {{ request()->routeIs('admin.moderation.*') ? 'is-active' : '' }}">Moderasyon</a></li>
+                            <li><a href="{{ route('admin.blacklist.index') }}" class="nav-item {{ request()->routeIs('admin.blacklist.*') ? 'is-active' : '' }}">Kara Liste</a></li>
                         </ul>
                     </div>
                     <div class="nav-section {{ request()->routeIs('admin.settings.*') ? 'is-open' : '' }}" data-section="ayarlar">

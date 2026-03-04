@@ -12,8 +12,12 @@ class SongRequestAdminController extends Controller
     {
         $query = SongRequest::query()->orderBy('created_at', 'desc');
 
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
+        $status = $request->get('status');
+        if ($status === null) {
+            $status = 'pending';
+        }
+        if ($status !== '') {
+            $query->where('status', $status);
         }
 
         if ($request->filled('q')) {
@@ -28,7 +32,7 @@ class SongRequestAdminController extends Controller
 
         $requests = $query->paginate(20)->withQueryString();
 
-        return view('admin.song_requests.index', compact('requests'));
+        return view('admin.song_requests.index', compact('requests', 'status'));
     }
 
     public function approve(SongRequest $songRequest)
