@@ -155,9 +155,9 @@
             transition: all 0.2s ease;
         }
         .nav-social a:hover {
-            background: rgba(37,99,235,0.25);
-            border-color: #2563eb;
-            box-shadow: 0 0 14px rgba(37,99,235,0.3);
+            background: color-mix(in srgb, var(--ry-btn-hover) 25%, transparent);
+            border-color: var(--ry-btn-hover);
+            box-shadow: 0 0 14px color-mix(in srgb, var(--ry-btn-hover) 30%, transparent);
             color: var(--ry-text);
         }
         .nav-social svg { width: 16px; height: 16px; }
@@ -177,21 +177,21 @@
         .navbar .header-social-icon::before {
             content: ''; position: absolute; inset: -2px;
             border-radius: 999px;
-            background: linear-gradient(135deg, #2563eb, transparent 50%, #2563eb);
+            background: linear-gradient(135deg, var(--ry-accent), transparent 50%, var(--ry-accent));
             opacity: 0;
             z-index: -1;
             transition: opacity 0.25s ease;
         }
         .navbar .header-social-icon:hover {
             transform: translateY(-1px) scale(1.06);
-            background: rgba(37,99,235,0.25);
-            border-color: #2563eb;
-            box-shadow: 0 0 20px rgba(37,99,235,0.35), 0 4px 12px rgba(0,0,0,0.2);
+            background: color-mix(in srgb, var(--ry-accent) 25%, transparent);
+            border-color: var(--ry-accent);
+            box-shadow: 0 0 20px color-mix(in srgb, var(--ry-accent) 35%, transparent), 0 4px 12px rgba(0,0,0,0.2);
             color: var(--ry-text);
         }
         .navbar .header-social-icon:hover::before { opacity: 0.15; }
         .navbar .header-social-icon:focus-visible {
-            outline: 2px solid #2563eb;
+            outline: 2px solid var(--ry-accent);
             outline-offset: 3px;
         }
         .navbar .header-social-icon i { font-size: 1.15rem; }
@@ -248,10 +248,10 @@
             transition: opacity 0.2s ease;
         }
         .nav-dropdown-menu a:hover {
-            background: rgba(37,99,235,0.15);
+            background: color-mix(in srgb, var(--ry-accent) 15%, transparent);
             color: var(--ry-text);
             padding-left: 22px;
-            box-shadow: inset 0 0 20px rgba(37,99,235,0.08);
+            box-shadow: inset 0 0 20px color-mix(in srgb, var(--ry-accent) 10%, transparent);
         }
         .nav-dropdown-menu a:hover::before {
             opacity: 1;
@@ -317,8 +317,8 @@
             transition: all 0.2s ease;
         }
         .footer-social a:hover {
-            background: rgba(37,99,235,0.25);
-            border-color: #2563eb;
+            background: color-mix(in srgb, var(--ry-accent) 25%, transparent);
+            border-color: var(--ry-accent);
             color: var(--ry-text);
         }
         .footer-social svg { width: 16px; height: 16px; }
@@ -337,7 +337,7 @@
             text-decoration: none;
         }
         .footer-legal a:hover {
-            color: #93c5fd;
+            color: var(--ry-btn-hover);
         }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
@@ -431,9 +431,9 @@
             transition: all 0.2s ease;
         }
         .player-mute-btn:hover {
-            background: rgba(37,99,235,0.25);
-            border-color: #2563eb;
-            box-shadow: 0 0 12px rgba(37,99,235,0.35);
+            background: color-mix(in srgb, var(--ry-accent) 25%, transparent);
+            border-color: var(--ry-accent);
+            box-shadow: 0 0 12px color-mix(in srgb, var(--ry-accent) 35%, transparent);
         }
         .player-mute-btn.muted { color: #94a3b8; }
         .player-mute-btn svg { width: 18px; height: 18px; }
@@ -455,9 +455,9 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: #2563eb;
+            background: var(--ry-accent);
             cursor: pointer;
-            box-shadow: 0 0 8px rgba(37,99,235,0.5);
+            box-shadow: 0 0 8px color-mix(in srgb, var(--ry-accent) 50%, transparent);
             transition: transform 0.2s;
         }
         .player-volume-wrap input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
@@ -480,7 +480,7 @@
         .player-eq span:nth-child(3) { height: 12px; animation-delay: 0.2s; }
         .player-eq span:nth-child(4) { height: 18px; animation-delay: 0.3s; }
         .player-eq span:nth-child(5) { height: 10px; animation-delay: 0.4s; }
-        body.playing .player-eq span { background: #2563eb; }
+        body.playing .player-eq span { background: var(--ry-accent); }
         @keyframes eqBars { 0%, 100% { transform: scaleY(0.6); } 50% { transform: scaleY(1); } }
         .player-eq { margin-left: 0.5rem; }
         .bottom-bar-logo-wrap {
@@ -709,7 +709,7 @@
         .glass-btn:focus-visible,
         a.glass-btn:focus-visible,
         button.glass-btn:focus-visible {
-            outline: 2px solid #2563eb !important;
+            outline: 2px solid var(--ry-btn-hover) !important;
             outline-offset: 3px !important;
         }
     </style>
