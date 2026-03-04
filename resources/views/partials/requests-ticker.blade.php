@@ -5,9 +5,13 @@
         : asset('logo.png');
 @endphp
 <div class="ticker-wrap">
-    <span class="ticker-btn"><span class="ticker-btn__icon">🎵</span> İstekler</span>
     <div class="ticker" id="requestsTicker">
-        <div class="ticker__mask">
+        <div class="ticker__label">
+            <span class="ticker__icon">🎵</span>
+            <span class="ticker__labelText">İstekler</span>
+            <span class="ticker__slash">/</span>
+        </div>
+        <div class="ticker__viewport">
             <div class="ticker__track" id="tickerTrack">
                 {{-- Content injected by JS --}}
             </div>
@@ -17,29 +21,7 @@
 
 @push('styles')
 <style>
-.ticker-wrap { margin-top: -1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
-.ticker-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px 18px;
-    background: linear-gradient(90deg, #ff4d4d, #ff7a18);
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.95rem;
-    border-radius: 20px;
-    border: none;
-    cursor: default;
-    box-shadow: 0 0 16px rgba(255, 77, 77, 0.35), 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    align-self: flex-start;
-}
-.ticker-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 24px rgba(255, 77, 77, 0.5), 0 0 32px rgba(255, 122, 24, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
-}
-.ticker-btn__icon { font-size: 1.1em; line-height: 1; }
+.ticker-wrap { margin-top: -1.25rem; }
 .ticker {
     height: 48px;
     border-radius: 12px;
@@ -53,31 +35,53 @@
     display: flex;
     align-items: center;
 }
-.ticker::before, .ticker::after {
+.ticker__label {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+}
+.ticker__icon { font-size: 1.1em; line-height: 1; }
+.ticker__slash { opacity: 0.7; margin-left: 6px; }
+.ticker__viewport {
+    overflow: hidden;
+    flex: 1;
+    min-width: 0;
+    position: relative;
+}
+.ticker__viewport::before {
     content: '';
     position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
+}
+.ticker::after {
+    content: '';
+    position: absolute;
+    right: 0;
     top: 0;
     bottom: 0;
     width: 48px;
     z-index: 2;
     pointer-events: none;
-}
-.ticker::before {
-    left: 0;
-    background: linear-gradient(90deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
-}
-.ticker::after {
-    right: 0;
     background: linear-gradient(270deg, rgba(22, 28, 36, 0.95) 0%, transparent 100%);
 }
-.ticker__mask { overflow: hidden; height: 100%; flex: 1; min-width: 0; }
 .ticker__track {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     flex-wrap: nowrap;
     height: 100%;
     white-space: nowrap;
-    animation: tickerMove 25s linear infinite;
+    animation: tickerMove 30s linear infinite;
 }
 .ticker:hover .ticker__track { animation-play-state: paused; }
 @keyframes tickerMove {
@@ -108,7 +112,7 @@
 }
 @media (max-width: 768px) {
     .ticker { height: 44px; }
-    .ticker-btn { padding: 6px 14px; font-size: 0.9rem; }
+    .ticker__label { padding: 0 0.75rem; font-size: 0.85rem; }
     .ticker__item { font-size: 0.85rem; padding: 0 0.5rem; }
     .ticker__logo { height: 18px; margin: 0 0.35rem; }
 }
