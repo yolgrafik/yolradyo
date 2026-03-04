@@ -1,58 +1,31 @@
 @php
     $settings = $themeSettings ?? [];
     $vars = $settings['vars'] ?? [];
-    $applyAll = (bool) ($settings['apply_all'] ?? false);
-
-    $theme = $vars['theme'] ?? '#c92a2a';
-    $themeHover = $vars['theme_hover'] ?? '#dc2626';
-    $themeDark = $vars['theme_dark'] ?? '#a61e1e';
-    $themeGradient = $vars['theme_gradient'] ?? "linear-gradient(180deg, {$themeDark}, {$theme})";
-
     $headerBg = $vars['header_bg'] ?? 'rgba(70,9,10,0.97)';
     $footerBg = $vars['footer_bg'] ?? 'rgba(70,9,10,0.97)';
     $barBg = $vars['bar_bg'] ?? 'rgba(70,9,10,0.97)';
-
     $btnBg = $settings['button_color'] ?? '#c92a2a';
     $btnHover = $settings['button_hover_color'] ?? '#dc2626';
     $scheduleBg = $settings['schedule_color'] ?? '#1e2430';
     $scheduleActive = $settings['schedule_active_color'] ?? '#c92a2a';
-
-    if ($applyAll) {
-        $headerBg = $themeGradient;
-        $footerBg = $themeGradient;
-        $barBg = $themeGradient;
-        $btnBg = $theme;
-        $btnHover = $themeHover;
-        $scheduleBg = '#111827';
-        $scheduleActive = $theme;
-    }
 @endphp
-{{-- DESIGN TOKENS: Single source of truth. When apply_all ON, theme controls nearly all UI. --}}
+{{-- STRICT COLOR SYSTEM: Theme=header/footer/player/istekler. Text=#fff. Buttons=config. --}}
 <style id="theme-vars">
 :root {
-    /* Theme primaries - always from preset */
-    --ry-theme: {{ $theme }};
-    --ry-theme-hover: {{ $themeHover }};
-    --ry-theme-dark: {{ $themeDark }};
-    --ry-theme-gradient: {{ $themeGradient }};
-
-    /* Header / Footer / Player bar */
     --ry-header-bg: {{ $headerBg }};
     --ry-footer-bg: {{ $footerBg }};
     --ry-bar-bg: {{ $barBg }};
     --ry-istekler-bg: {{ $barBg }};
 
-    /* Buttons - when apply_all: from theme; else: from admin */
+    /* Button colors - theme independent, from admin */
     --ry-btn-bg: {{ $btnBg }};
     --ry-btn-hover: {{ $btnHover }};
-    --ry-accent: {{ $applyAll ? $themeHover : $btnHover }};
-    --ry-btn-border: {{ $applyAll ? $themeHover : $btnBg }};
 
-    /* Schedule - when apply_all: theme active; else: from admin */
+    /* Schedule colors - theme independent, from admin */
     --ry-schedule-bg: {{ $scheduleBg }};
     --ry-schedule-active: {{ $scheduleActive }};
 
-    /* Fixed */
+    /* Fixed - never change */
     --ry-text: #ffffff;
     --ry-text-muted: rgba(255,255,255,.78);
     --ry-bg: {{ $settings['bg_color'] ?? '#0b0f16' }};

@@ -50,7 +50,6 @@ class ThemeService
             'button_hover_color' => $row->button_hover_color ?? '#dc2626',
             'schedule_color' => $row->schedule_color ?? '#1e2430',
             'schedule_active_color' => $row->schedule_active_color ?? '#c92a2a',
-            'apply_all' => (bool) ($row->apply_all ?? false),
             'vars' => $vars,
         ];
     }
@@ -63,18 +62,13 @@ class ThemeService
         $footerBg = $preset['footer_bg'] ?? $this->themeFooterBg($accent);
         $barBg = $preset['bar_bg'] ?? $this->themeSolidBg($accent);
 
-        $themeHover = $this->lighten($accent, 0.1);
-        $themeDark = $this->darken($accent, 0.2);
-        $themeGradient = "linear-gradient(180deg, {$themeDark}, {$accent})";
-
         return [
             'theme' => $accent,
-            'theme_hover' => $themeHover,
-            'theme_dark' => $themeDark,
+            'theme_dark' => $this->darken($accent, 0.2),
+            'theme_light' => $this->lighten($accent, 0.1),
             'header_bg' => $headerBg,
             'footer_bg' => $footerBg,
             'bar_bg' => $barBg,
-            'theme_gradient' => $themeGradient,
         ];
     }
 
@@ -142,7 +136,6 @@ class ThemeService
             'button_hover_color' => '#dc2626',
             'schedule_color' => '#1e2430',
             'schedule_active_color' => '#c92a2a',
-            'apply_all' => false,
             'vars' => $this->deriveVars($preset),
         ];
     }
@@ -165,7 +158,6 @@ class ThemeService
             'button_hover_color' => $data['button_hover_color'] ?? '#dc2626',
             'schedule_color' => $data['schedule_color'] ?? '#1e2430',
             'schedule_active_color' => $data['schedule_active_color'] ?? '#c92a2a',
-            'apply_all' => (bool) ($data['apply_all'] ?? false),
         ];
 
         if (isset($data['bg_image'])) {

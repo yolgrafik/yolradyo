@@ -260,7 +260,6 @@ class SettingsController extends Controller
 
         $validated = $request->validate([
             'theme_id' => 'required|integer|min:1|max:' . max(array_keys($this->themeService->getPresets())),
-            'apply_all' => 'nullable|boolean',
             'bg_mode' => 'required|in:color,image',
             'bg_color' => 'nullable|string|max:16',
             'bg_image' => 'nullable|file|mimes:jpeg,jpg,png,gif,webp|max:4096',
@@ -275,7 +274,6 @@ class SettingsController extends Controller
 
         $data = [
             'theme_id' => (int) $validated['theme_id'],
-            'apply_all' => $request->boolean('apply_all'),
             'bg_mode' => $validated['bg_mode'],
             'bg_color' => $validated['bg_color'] ?? '#0b0f16',
             'overlay_color' => $validated['overlay_color'] ?? '#000000',

@@ -141,7 +141,7 @@
         background: var(--ry-bar-bg);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 1px solid var(--ry-border);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -181,7 +181,7 @@
         border-radius: 8px;
         background: var(--ry-schedule-bg);
         color: #ffffff;
-        border: 1px solid var(--ry-border);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         font-family: Arial, sans-serif;
         font-size: 0.75rem;
         font-weight: 600;
@@ -197,7 +197,7 @@
     }
     .schedule-day:hover {
         background: var(--ry-surface-2);
-        border-color: var(--ry-accent);
+        border-color: rgba(255,255,255,0.25);
     }
     .schedule-day.active {
         background: var(--ry-schedule-active);
@@ -235,7 +235,7 @@
         padding: 6px 10px;
         border-radius: 999px;
         background: var(--ry-schedule-bg);
-        border: 1px solid var(--ry-border);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         font-size: 0.8rem;
         font-weight: 700;
         color: #ffffff;
@@ -361,7 +361,7 @@
         gap: 0.5rem;
         padding: 0.75rem 1rem;
         background: var(--ry-surface);
-        border: 1px solid var(--ry-border);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 10px;
         color: #ffffff;
         font-size: 0.85rem;
@@ -380,7 +380,7 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     }
     .live-banner {
-        background: var(--ry-theme);
+        background: var(--ry-bar-bg);
         color: #ffffff;
         font-weight: 900;
         font-size: 14px;
