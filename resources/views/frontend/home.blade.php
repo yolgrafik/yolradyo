@@ -234,10 +234,11 @@
         gap: 5px;
         padding: 6px 10px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--ry-schedule-bg);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         font-size: 0.8rem;
         font-weight: 700;
+        color: #ffffff;
         overflow: hidden;
     }
     .schedule-chip .sep { opacity: 0.6; font-weight: 900; flex-shrink: 0; }
