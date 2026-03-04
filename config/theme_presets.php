@@ -36,7 +36,8 @@ return [
         'primary' => '#F6C34F',
         'primary_hover' => '#FFD56A',
         'accent' => '#D9A441',
-        'header_bg' => 'linear-gradient(90deg, rgba(246,195,79,0.28), rgba(0,0,0,0.55))',
-        'footer_bg' => 'rgba(246,195,79,0.12)',
+        'header_bg' => 'linear-gradient(180deg, rgba(15,13,8,0.98), rgba(35,30,18,0.97))',
+        'footer_bg' => 'rgba(15,13,8,0.98)',
+        'bar_bg' => 'linear-gradient(180deg, rgba(18,15,10,0.98), rgba(35,30,18,0.97))',
     ],
 ];
