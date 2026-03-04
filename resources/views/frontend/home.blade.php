@@ -393,114 +393,78 @@
         background: #374151;
         color: var(--text);
     }
-    .live-card {
-        display: flex;
-        flex-direction: column;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
+    .live-dj-card {
+        background: #f07f16;
+        border-radius: 28px;
+        padding: 0;
         overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        text-align: center;
     }
-    .live-card-header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 12px 14px;
-        background: linear-gradient(180deg, rgba(255, 60, 60, 0.18), rgba(0, 0, 0, 0));
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    .live-banner {
+        background: #e91515;
+        color: white;
         font-weight: 900;
+        font-size: 28px;
+        padding: 18px;
         letter-spacing: 2px;
-        font-size: 12px;
-        text-transform: uppercase;
     }
-    .live-dot {
-        width: 10px;
-        height: 10px;
-        background: #ff2d2d;
-        border-radius: 50%;
-        box-shadow: 0 0 10px rgba(255, 45, 45, 0.6);
-        animation: livePulse 1.4s infinite;
-    }
-    @keyframes livePulse {
-        0% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(0.75); opacity: 0.5; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-    .live-icon { font-size: 14px; opacity: 0.95; }
-    .live-title { color: #fff; opacity: 0.95; }
-    .live-card-content {
+    .live-content {
+        padding: 30px;
         transition: opacity 0.3s ease;
     }
-    .live-card-content.updating {
+    .live-content.updating {
         opacity: 0.6;
     }
-    .home-dj-card {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-        padding: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        transition: box-shadow 0.2s ease;
-    }
-    .home-dj-card:hover {
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-    }
-    .home-dj-card--empty {
-        justify-content: center;
-        min-height: 120px;
-    }
-    .dj-avatar {
-        width: 100px;
-        height: 100px;
+    .live-dj-photo {
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #374151, #1f2937);
-        border: 3px solid rgba(201, 42, 42, 0.4);
-        margin-bottom: 1rem;
-        overflow: hidden;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 4px solid #fff;
+    }
+    .live-dj-photo-wrap {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        border: 4px solid #fff;
+        background: rgba(255, 255, 255, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    .dj-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .dj-avatar .dj-initials {
-        font-size: 2rem;
-        font-weight: 700;
+        font-size: 2.5rem;
+        font-weight: 800;
         color: #fff;
     }
-    .home-dj-card h3 {
-        font-size: 1.75rem;
-        font-weight: 700;
+    .live-dj-name {
+        font-size: 32px;
+        font-weight: 800;
+        margin-bottom: 10px;
         color: #fff;
-        margin-bottom: 0.4rem;
-        text-transform: none;
     }
-    .home-dj-card .dj-slogan {
-        font-size: 0.9rem;
-        color: var(--muted);
-        margin-bottom: 1rem;
-    }
-    .live-badge {
+    .live-program {
+        font-size: 22px;
+        background: white;
+        border-radius: 40px;
+        padding: 10px 20px;
         display: inline-block;
-        padding: 0.5rem 1.25rem;
-        background: var(--accent);
-        border-radius: 10px;
-        color: #fff;
-        font-size: 0.85rem;
-        font-weight: 700;
-        box-shadow: 0 4px 16px rgba(201, 42, 42, 0.4);
-        transition: all 0.2s ease;
+        margin-bottom: 20px;
+        color: #333;
     }
-    .live-badge:hover {
-        box-shadow: 0 0 30px rgba(201, 42, 42, 0.5);
+    .live-live-btn {
+        background: #e91515;
+        color: white;
+        padding: 12px 26px;
+        border-radius: 40px;
+        font-weight: 800;
+        display: inline-block;
+    }
+    .live-dj-card .live-empty {
+        color: #fff;
+        opacity: 0.9;
+        padding: 1rem 0;
     }
     @media (max-width: 992px) {
         .home-main {
@@ -518,13 +482,16 @@
             flex-direction: row;
         }
         .btn-live, .btn-request { flex: 1; }
-        .home-dj-card {
+        .live-dj-card {
             grid-column: 1 / -1;
         }
     }
     @media (max-width: 768px) {
         .schedule-day { padding: 4px 8px; font-size: 0.7rem; min-height: 26px; }
         .schedule-chip { font-size: 0.75rem; padding: 4px 8px; }
+        .live-banner { font-size: 22px; padding: 14px; }
+        .live-dj-name { font-size: 26px; }
+        .live-program { font-size: 18px; }
     }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
@@ -607,14 +574,10 @@
                 <a href="#" class="badge-placeholder">GET IT ON Google Play</a>
                 <a href="#" class="badge-placeholder">Download on the App Store</a>
             </div>
-            <div class="live-card" id="liveDjCard">
-                <div class="live-card-header">
-                    <span class="live-dot"></span>
-                    <span class="live-icon">🎙</span>
-                    <span class="live-title">YAYINDA</span>
-                </div>
-                <div class="live-card-content" id="liveDjCardContent">
-                    <p class="dj-slogan" style="margin:0;color:var(--muted);">Yükleniyor...</p>
+            <div class="live-dj-card" id="liveDjCard">
+                <div class="live-banner">CANLI YAYINDA</div>
+                <div class="live-content" id="liveDjCardContent">
+                    <p style="margin:0;color:#fff;opacity:.8;">Yükleniyor...</p>
                 </div>
             </div>
         </div>
@@ -676,22 +639,20 @@
         cardContent.classList.add('updating');
         setTimeout(function() {
         if (activeDj) {
-            var html = '<div class="home-dj-card">';
+            var html = '';
             if (activeDj.avatar_url) {
-                html += '<div class="dj-avatar"><img src="' + esc(activeDj.avatar_url) + '" alt="' + esc(activeDj.name) + '"></div>';
+                html += '<img src="' + esc(activeDj.avatar_url) + '" alt="' + esc(activeDj.name) + '" class="live-dj-photo">';
             } else {
-                html += '<div class="dj-avatar"><span class="dj-initials">' + esc(activeDj.initials || '?') + '</span></div>';
+                html += '<div class="live-dj-photo-wrap">' + esc(activeDj.initials || '?') + '</div>';
             }
-            html += '<h3>' + esc(activeDj.name) + '</h3>';
-            if (activeDj.tagline) {
-                html += '<p class="dj-slogan">' + esc(activeDj.tagline) + '</p>';
-            }
-            html += '<span class="live-badge">CANLI YAYINDA</span></div>';
+            html += '<h2 class="live-dj-name">' + esc(activeDj.name) + '</h2>';
+            html += '<div class="live-program">' + esc(activeDj.program_title || '') + '</div>';
+            html += '<div class="live-live-btn">CANLI YAYINDA</div>';
             cardContent.innerHTML = html;
             cardContent.classList.add('has-dj');
             cardContent.classList.remove('empty');
         } else {
-            cardContent.innerHTML = '<div class="home-dj-card home-dj-card--empty"><p class="dj-slogan" style="margin:0;color:var(--muted);">Şu an canlı yayın yok</p></div>';
+            cardContent.innerHTML = '<p class="live-empty">Şu an canlı yayın yok</p>';
             cardContent.classList.remove('has-dj');
             cardContent.classList.add('empty');
         }
