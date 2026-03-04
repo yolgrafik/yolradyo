@@ -24,7 +24,7 @@
                 @foreach($presets as $id => $preset)
                 <label class="theme-preset-card {{ $themeId === (int)$id ? 'is-selected' : '' }}">
                     <input type="radio" name="theme_id" value="{{ $id }}" {{ $themeId === (int)$id ? 'checked' : '' }} class="theme-preset-radio">
-                    <div class="theme-preset-preview" style="--preview-primary: {{ $preset['primary'] ?? '#c92a2a' }}; --preview-accent: {{ $preset['accent'] ?? '#c92a2a' }};">
+                    <div class="theme-preset-preview" style="--preview-header: {{ $preset['preview_header_bg'] ?? $preset['primary'] ?? '#c92a2a' }}; --preview-primary: {{ $preset['preview_btn_bg'] ?? $preset['primary'] ?? '#c92a2a' }}; --preview-accent: {{ $preset['preview_accent'] ?? $preset['accent'] ?? '#c92a2a' }};">
                         <div class="preview-header-strip"></div>
                         <div class="preview-btn"></div>
                         <div class="preview-link"></div>
@@ -148,7 +148,7 @@
 .theme-preset-card.is-selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 15%, transparent); box-shadow: 0 0 0 1px var(--accent); }
 .theme-preset-radio { position: absolute; opacity: 0; }
 .theme-preset-preview { width: 100%; height: 72px; border-radius: 8px; overflow: hidden; margin-bottom: 0.5rem; display: flex; flex-direction: column; }
-.preview-header-strip { height: 20px; background: var(--preview-primary); }
+.preview-header-strip { height: 20px; background: var(--preview-header); }
 .preview-btn { width: 60%; height: 18px; margin: 6px auto 4px; background: var(--preview-primary); border-radius: 6px; }
 .preview-link { width: 50%; height: 4px; margin: 0 auto; background: var(--preview-accent); border-radius: 2px; opacity: 0.8; }
 .theme-preset-name { font-size: 0.75rem; font-weight: 700; color: #9ca3af; }
