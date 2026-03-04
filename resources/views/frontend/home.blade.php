@@ -155,7 +155,7 @@
         right: 0;
         top: 0;
         height: 1px;
-        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
         pointer-events: none;
         z-index: 1;
     }
@@ -166,7 +166,7 @@
         right: 0;
         bottom: 0;
         height: 1px;
-        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
         pointer-events: none;
     }
     .schedule-top-bar {
@@ -185,7 +185,7 @@
         right: 0;
         bottom: 0;
         height: 1px;
-        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
         pointer-events: none;
     }
     .schedule-top-bar__title {
@@ -372,7 +372,7 @@
         right: 0;
         top: -0.7rem;
         height: 1px;
-        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
         pointer-events: none;
     }
     .home-icon-buttons button {
@@ -405,7 +405,7 @@
         right: 0;
         top: -0.7rem;
         height: 1px;
-        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
         pointer-events: none;
     }
     .badge-placeholder {
@@ -547,10 +547,10 @@
     }
     .live-meta {
         padding: 10px 14px;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid var(--ry-line-color);
         font-size: 11px;
         color: var(--muted);
-        background: color-mix(in srgb, var(--ry-theme) 8%, #0b0f16);
+        background: color-mix(in srgb, var(--ry-theme) 12%, #0b0f16);
     }
     .live-track {
         margin-bottom: 4px;
