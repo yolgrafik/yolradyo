@@ -173,43 +173,78 @@
         border: 1px solid var(--border);
         border-radius: 14px;
     }
-    .home-day-tabs {
+    .schedule-card {
+        background: rgba(20, 25, 35, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+    }
+    .schedule-card__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        flex-wrap: wrap;
+    }
+    .schedule-title {
+        font-weight: 700;
+        font-size: 1.0625rem;
+        color: var(--text);
+    }
+    .schedule-tabs {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: 0.4rem;
     }
-    .home-day-tabs button {
-        flex: 1;
-        min-width: 80px;
-        padding: 0.75rem 1rem;
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 10px;
+    .schedule-tabs button {
+        padding: 0.5rem 0.85rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
         color: var(--text);
         font-family: Arial, sans-serif;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         cursor: pointer;
         transition: all 0.2s ease;
     }
-    .home-day-tabs button:hover,
-    .home-day-tabs button.active {
-        background: rgba(201, 42, 42, 0.15);
-        border-color: rgba(201, 42, 42, 0.4);
+    .schedule-tabs button:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+    .schedule-tabs button.active {
+        background: rgba(201, 42, 42, 0.25);
+        border-color: rgba(201, 42, 42, 0.5);
         color: #fff;
     }
-    .home-schedule {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        padding: 1.25rem 1.5rem;
-        color: var(--text);
-        font-size: 1rem;
-        transition: box-shadow 0.2s ease;
+    .schedule-card__body {
+        padding: 1rem 1.25rem;
     }
-    .home-schedule:hover {
-        box-shadow: 0 6px 28px rgba(0, 0, 0, 0.3);
+    .schedule-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
+    .schedule-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 0.9rem;
+    }
+    .schedule-item:last-child { border-bottom: none; }
+    .schedule-time {
+        flex-shrink: 0;
+        color: var(--accent);
+        font-weight: 600;
+        min-width: 48px;
+    }
+    .schedule-program { color: var(--text); }
     .home-right {
         display: flex;
         flex-direction: column;
@@ -382,7 +417,7 @@
     }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
-        .home-day-tabs button { min-width: 60px; font-size: 0.8rem; }
+        .schedule-tabs button { padding: 0.4rem 0.65rem; font-size: 0.8rem; }
         .home-right {
             grid-template-columns: 1fr;
         }
@@ -419,16 +454,28 @@
             @else
             <div class="home-slider-placeholder">Slider</div>
             @endif
-            <div class="home-day-tabs">
-                <button type="button" class="active">Pazartesi</button>
-                <button type="button">Salı</button>
-                <button type="button">Çarşamba</button>
-                <button type="button">Perşembe</button>
-                <button type="button">Cuma</button>
-                <button type="button">Cumartesi</button>
-                <button type="button">Pazar</button>
+            <div class="schedule-card">
+                <div class="schedule-card__header">
+                    <div class="schedule-title">Yayın Akışı</div>
+                    <div class="schedule-tabs">
+                        <button type="button" class="active">Pazartesi</button>
+                        <button type="button">Salı</button>
+                        <button type="button">Çarşamba</button>
+                        <button type="button">Perşembe</button>
+                        <button type="button">Cuma</button>
+                        <button type="button">Cumartesi</button>
+                        <button type="button">Pazar</button>
+                    </div>
+                </div>
+                <div class="schedule-card__body">
+                    <div class="schedule-list">
+                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Program adı</span></div>
+                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Program adı</span></div>
+                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Program adı</span></div>
+                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Program adı</span></div>
+                    </div>
+                </div>
             </div>
-            <div class="home-schedule">Yayın Akışı</div>
             @include('partials.requests-ticker')
         </div>
         <div class="home-right">
@@ -461,7 +508,7 @@
 @push('scripts')
 <script>
 (function() {
-    var tabs = document.querySelectorAll('.home-day-tabs button');
+    var tabs = document.querySelectorAll('.schedule-tabs button');
     tabs.forEach(function(btn) {
         btn.addEventListener('click', function() {
             tabs.forEach(function(b) { b.classList.remove('active'); });
