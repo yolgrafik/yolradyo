@@ -105,6 +105,10 @@ class ThemeService
             'overlay_color' => '#000000',
             'overlay_opacity' => 55,
             'bg_blur' => 0,
+            'button_color' => '#c92a2a',
+            'button_hover_color' => '#dc2626',
+            'schedule_color' => '#1e2430',
+            'schedule_active_color' => '#c92a2a',
             'vars' => $this->deriveVars($preset),
         ];
     }

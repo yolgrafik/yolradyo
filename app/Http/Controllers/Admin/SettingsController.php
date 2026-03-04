@@ -266,6 +266,10 @@ class SettingsController extends Controller
             'overlay_color' => 'nullable|string|max:16',
             'overlay_opacity' => 'nullable|integer|min:0|max:80',
             'bg_blur' => 'nullable|integer|min:0|max:12',
+            'button_color' => 'nullable|string|max:16',
+            'button_hover_color' => 'nullable|string|max:16',
+            'schedule_color' => 'nullable|string|max:16',
+            'schedule_active_color' => 'nullable|string|max:16',
         ]);
 
         $data = [
@@ -275,6 +279,10 @@ class SettingsController extends Controller
             'overlay_color' => $validated['overlay_color'] ?? '#000000',
             'overlay_opacity' => (int) ($validated['overlay_opacity'] ?? 55),
             'bg_blur' => (int) ($validated['bg_blur'] ?? 0),
+            'button_color' => $validated['button_color'] ?? '#c92a2a',
+            'button_hover_color' => $validated['button_hover_color'] ?? '#dc2626',
+            'schedule_color' => $validated['schedule_color'] ?? '#1e2430',
+            'schedule_active_color' => $validated['schedule_active_color'] ?? '#c92a2a',
         ];
 
         if ($request->boolean('remove_bg_image')) {

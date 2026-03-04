@@ -362,7 +362,7 @@
         background: var(--ry-surface);
         border: 1px solid var(--ry-border);
         border-radius: 10px;
-        color: rgba(255,255,255,0.78);
+        color: #ffffff;
         font-size: 0.85rem;
         transition: all 0.2s ease;
     }
