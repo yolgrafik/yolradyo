@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\MenuItem;
 use App\Models\Setting;
 use App\Services\SettingsService;
 use Illuminate\Support\Facades\Schema;
@@ -54,6 +55,19 @@ class AppServiceProvider extends ServiceProvider
                 $themeSettings = ['vars' => [], 'bg_mode' => 'color', 'bg_color' => '#0b0f16'];
             }
             $view->with('themeSettings', $themeSettings);
+
+            $headerMenu = [];
+            $footerMenu = [];
+            if (Schema::hasTable('menu_items')) {
+                try {
+                    $headerMenu = MenuItem::getForLocation('header');
+                    $footerMenu = MenuItem::getForLocation('footer');
+                } catch (\Throwable $e) {
+                    // ignore
+                }
+            }
+            $view->with('headerMenu', $headerMenu);
+            $view->with('footerMenu', $footerMenu);
         });
 
         View::composer('admin.layouts.app', function ($view) {

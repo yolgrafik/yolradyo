@@ -761,21 +761,41 @@
             </a>
             <div class="nav-center" id="navCenter">
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Anasayfa</a></li>
-                    <li><a href="{{ url('/programlar') }}" class="{{ request()->is('programlar') ? 'active' : '' }}">Programlar</a></li>
-                    <li><a href="{{ url('/haberler') }}" class="{{ request()->is('haberler') ? 'active' : '' }}">Haberler</a></li>
-                    <li><a href="{{ url('/videolar') }}" class="{{ request()->is('videolar') ? 'active' : '' }}">Video Galeri</a></li>
-                    <li><a href="{{ url('/galeri') }}" class="{{ request()->is('galeri') ? 'active' : '' }}">Foto Galeri</a></li>
-                    <li><a href="{{ url('/reklam') }}" class="{{ request()->is('reklam') ? 'active' : '' }}">Reklam & İşbirliği</a></li>
-                    <li class="nav-dropdown">
-                        <a href="{{ url('/hakkimizda/biz-kimiz') }}" class="{{ request()->is('hakkimizda/*') ? 'active' : '' }}">Hakkimizda<span class="arrow">▾</span></a>
-                        <ul class="nav-dropdown-menu">
-                            <li><a href="{{ url('/hakkimizda/biz-kimiz') }}">Biz Kimiz</a></li>
-                            <li><a href="{{ url('/hakkimizda/misyon') }}">Misyon & Vizyon</a></li>
-                            <li><a href="{{ url('/hakkimizda/politika') }}">Yayin Politikamiz</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="{{ url('/iletisim') }}" class="{{ request()->is('iletisim') ? 'active' : '' }}">İletişim</a></li>
+                    @php $headerMenu = $headerMenu ?? collect(); @endphp
+                    @if($headerMenu->isNotEmpty())
+                        @foreach($headerMenu as $m)
+                            @php $path = ltrim($m->url ?? '', '/'); $isActive = ($path === '' || $path === '/') ? request()->is('/') : request()->is($path, $path.'/*'); @endphp
+                            @if($m->children->isNotEmpty())
+                                <li class="nav-dropdown">
+                                    <a href="{{ $m->href }}" class="{{ $isActive ? 'active' : '' }}" @if($m->target_blank) target="_blank" rel="noopener noreferrer" @endif>{{ $m->title }}<span class="arrow">▾</span></a>
+                                    <ul class="nav-dropdown-menu">
+                                        @foreach($m->children as $c)
+                                            <li><a href="{{ $c->href }}" @if($c->target_blank) target="_blank" rel="noopener noreferrer" @endif>{{ $c->title }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @else
+                                <li><a href="{{ $m->href }}" class="{{ $isActive ? 'active' : '' }}" @if($m->target_blank) target="_blank" rel="noopener noreferrer" @endif>{{ $m->title }}</a></li>
+                            @endif
+                        @endforeach
+                    @else
+                        {{-- Fallback: hardcoded menu --}}
+                        <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Anasayfa</a></li>
+                        <li><a href="{{ url('/programlar') }}" class="{{ request()->is('programlar') ? 'active' : '' }}">Programlar</a></li>
+                        <li><a href="{{ url('/haberler') }}" class="{{ request()->is('haberler') ? 'active' : '' }}">Haberler</a></li>
+                        <li><a href="{{ url('/videolar') }}" class="{{ request()->is('videolar') ? 'active' : '' }}">Video Galeri</a></li>
+                        <li><a href="{{ url('/galeri') }}" class="{{ request()->is('galeri') ? 'active' : '' }}">Foto Galeri</a></li>
+                        <li><a href="{{ url('/reklam') }}" class="{{ request()->is('reklam') ? 'active' : '' }}">Reklam & İşbirliği</a></li>
+                        <li class="nav-dropdown">
+                            <a href="{{ url('/hakkimizda/biz-kimiz') }}" class="{{ request()->is('hakkimizda/*') ? 'active' : '' }}">Hakkimizda<span class="arrow">▾</span></a>
+                            <ul class="nav-dropdown-menu">
+                                <li><a href="{{ url('/hakkimizda/biz-kimiz') }}">Biz Kimiz</a></li>
+                                <li><a href="{{ url('/hakkimizda/misyon') }}">Misyon & Vizyon</a></li>
+                                <li><a href="{{ url('/hakkimizda/politika') }}">Yayin Politikamiz</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{{ url('/iletisim') }}" class="{{ request()->is('iletisim') ? 'active' : '' }}">İletişim</a></li>
+                    @endif
                 </ul>
                 <div class="nav-right">
                 <div class="header-social nav-social">
@@ -850,15 +870,19 @@
         <div class="site-footer-bar">
             @php
                 $footerText = $siteSettings['footer_legal_text'] ?? 'Radyoyol Tum Haklari Saklidir';
-                $footerLinks = $siteSettings['footer_legal_links_json'] ?? [];
-                if (!is_array($footerLinks)) $footerLinks = [];
-                if (empty($footerLinks)) {
-                    $footerLinks = [
-                        ['label' => 'Gizlilik Politikasi', 'url' => '/gizlilik'],
-                        ['label' => 'Cerez Politikasi', 'url' => '/cerez'],
-                        ['label' => 'Kullanim Sartlari', 'url' => '/kullanim'],
-                        ['label' => 'KVKK Aydinlatma Metni', 'url' => '/kvkk'],
-                    ];
+                $footerMenu = $footerMenu ?? collect();
+                $footerLinks = [];
+                if ($footerMenu->isEmpty()) {
+                    $footerLinks = $siteSettings['footer_legal_links_json'] ?? [];
+                    if (!is_array($footerLinks)) $footerLinks = [];
+                    if (empty($footerLinks)) {
+                        $footerLinks = [
+                            ['label' => 'Gizlilik Politikasi', 'url' => '/gizlilik'],
+                            ['label' => 'Cerez Politikasi', 'url' => '/cerez'],
+                            ['label' => 'Kullanim Sartlari', 'url' => '/kullanim'],
+                            ['label' => 'KVKK Aydinlatma Metni', 'url' => '/kvkk'],
+                        ];
+                    }
                 }
             @endphp
             <div class="footer-social">
@@ -866,11 +890,17 @@
             </div>
             <div class="footer-legal">
                 | {{ $footerText }} |
-                @foreach($footerLinks as $link)
-                    @if(!empty($link['label']) && !empty($link['url']))
-                        <a href="{{ url($link['url']) }}">{{ $link['label'] }}</a> |
-                    @endif
-                @endforeach
+                @if($footerMenu->isNotEmpty())
+                    @foreach($footerMenu as $m)
+                        <a href="{{ $m->href }}" @if($m->target_blank) target="_blank" rel="noopener noreferrer" @endif>{{ $m->title }}</a> |
+                    @endforeach
+                @else
+                    @foreach($footerLinks as $link)
+                        @if(!empty($link['label']) && !empty($link['url']))
+                            <a href="{{ url($link['url']) }}">{{ $link['label'] }}</a> |
+                        @endif
+                    @endforeach
+                @endif
             </div>
         </div>
     </footer>
