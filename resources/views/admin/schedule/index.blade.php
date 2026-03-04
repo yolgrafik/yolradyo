@@ -22,13 +22,13 @@
             </div>
         </div>
 
-        <div class="schedule-actions-row" style="margin-top:1rem;display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
-            <span class="muted" style="font-size:0.9rem;">{{ $dayLabels[$currentDay] }} programları</span>
+        <div class="schedule-day-header">
+            <span>{{ $dayLabels[$currentDay] }} programları</span>
             @if($schedules->isNotEmpty())
                 <div class="copy-form" style="margin-left:auto;">
                     <form action="{{ route('admin.schedule.copy', $currentDay) }}" method="POST" class="d-inline" onsubmit="return confirm('Bu günü seçilen güne kopyalamak istiyor musunuz?');">
                         @csrf
-                        <select name="to_day" class="copy-select" style="padding:0.4rem 0.6rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.85rem;">
+                        <select name="to_day" class="copy-select">
                             @foreach($dayLabels as $d => $label)
                                 @if($d != $currentDay)
                                     <option value="{{ $d }}">→ {{ $label }}</option>
@@ -136,6 +136,10 @@
 .day-tab{padding:10px 18px;border-radius:10px;background:#1b2230;color:#ffffff;border:1px solid rgba(255,255,255,0.15);font-weight:600;text-decoration:none;font-size:0.9rem;flex:0 0 auto;transition:all 0.2s ease;}
 .day-tab:hover{background:#273043;}
 .day-tab.active{background:linear-gradient(135deg,#ff3b3b,#b30000);color:white;border:none;}
+.schedule-day-header{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;background:linear-gradient(180deg,#131a26,#0c1018);color:#ffffff;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);font-weight:600;margin-bottom:1rem;}
+.schedule-day-header small,.schedule-day-header span{color:#cbd5e1;}
+.schedule-day-header .copy-select{padding:0.4rem 0.6rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#e6e6e6;font-size:0.85rem;}
+.schedule-container,.schedule-wrapper{background:transparent !important;}
 .badge{padding:0.25rem 0.5rem;border-radius:6px;font-size:0.75rem;font-weight:600;}
 .badge-success{background:rgba(34,197,94,0.25);color:#86efac;}
 .badge-muted{background:rgba(148,163,184,0.25);color:#94a3b8;}
