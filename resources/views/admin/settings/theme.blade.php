@@ -130,7 +130,7 @@
                     <label for="line_color">Çizgi Rengi</label>
                     <p class="theme-section__desc" style="margin: 0 0 0.4rem; font-size: 0.85rem;">Navbar, program blokları, player bar ve ayırıcı çizgilerin rengi. Boş bırakılırsa tema rengi kullanılır.</p>
                     <div class="color-input-wrap">
-                        <input type="color" id="line_color_picker" value="{{ $settings['line_color'] ?? 'rgba(255,255,255,0.9)' }}">
+                        <input type="color" id="line_color_picker" value="{{ preg_match('/^#[0-9A-Fa-f]{6}$/', $settings['line_color'] ?? '') ? ($settings['line_color']) : '#e5e7eb' }}">
                         <input type="text" name="line_color" id="line_color" value="{{ old('line_color', $settings['line_color'] ?? '') }}" maxlength="32" placeholder="Örn: #ffffff veya rgba(255,255,255,0.9)">
                     </div>
                 </div>
