@@ -503,6 +503,21 @@
         padding: 1rem 0;
         text-align: center;
     }
+    .live-meta {
+        padding: 10px 14px;
+        border-top: 1px solid var(--border);
+        font-size: 11px;
+        color: var(--muted);
+        background: rgba(0, 0, 0, 0.15);
+    }
+    .live-track {
+        margin-bottom: 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .live-listeners { margin-bottom: 0; }
+    .live-meta .cc_streaminfo { color: var(--text); opacity: 0.9; }
     @media (max-width: 992px) {
         .home-main {
             grid-template-columns: 1fr;
@@ -616,6 +631,10 @@
                 <div class="live-banner">CANLI YAYINDA</div>
                 <div class="live-content" id="liveDjCardContent">
                     <p style="margin:0;color:#fff;opacity:.8;">Yükleniyor...</p>
+                </div>
+                <div class="live-meta">
+                    <div class="live-track">🎵 <span class="cc_streaminfo" data-type="tracktitle" data-username="radyoyol"></span></div>
+                    <div class="live-listeners">👥 <span class="cc_streaminfo" data-type="listeners" data-username="radyoyol"></span> dinleyici</div>
                 </div>
             </div>
         </div>

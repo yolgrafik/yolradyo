@@ -820,5 +820,6 @@
     </script>
     @include('partials.song-request-modal')
     @stack('scripts')
+    <script src="https://r1.comcities.com/system/streaminfo.js"></script>
 </body>
 </html>
