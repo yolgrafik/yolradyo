@@ -12,7 +12,7 @@
 
         <form method="GET" class="filter-form" style="margin-bottom:1.25rem;display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
             <input type="text" name="q" value="{{ request('q') }}" placeholder="Ara (isim, sanatçı, türkü, mesaj...)" class="filter-input" style="flex:1;min-width:200px;padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);">
-            <select name="days" class="filter-select" style="padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);">
+            <select name="days" class="filter-select">
                 <option value="">Tümü</option>
                 <option value="7" {{ request('days') === '7' ? 'selected' : '' }}>Son 7 gün</option>
                 <option value="30" {{ request('days') === '30' ? 'selected' : '' }}>Son 30 gün</option>

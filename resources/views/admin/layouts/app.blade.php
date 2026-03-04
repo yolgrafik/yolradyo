@@ -501,21 +501,22 @@
             color: var(--text);
             font-weight: 600;
         }
-        .role-select {
-            background: rgba(10,12,20,0.75) !important;
-            color: #ffffff !important;
-            border: 1px solid rgba(255,255,255,0.18) !important;
+        select, select.form-input, select[class*="select"], .filter-select {
+            background: #1a2029 !important;
+            color: #f0f2f5 !important;
+            border: 1px solid rgba(255,255,255,0.15) !important;
             border-radius: 10px;
             padding: 10px 12px;
+            font-weight: 500;
         }
-        .role-select:focus {
+        select:focus, select.form-input:focus, select[class*="select"]:focus, .filter-select:focus {
             outline: none;
-            border-color: rgba(255,0,0,0.45) !important;
-            box-shadow: 0 0 0 3px rgba(255,0,0,0.15) !important;
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 2px rgba(201,42,42,0.2) !important;
         }
-        .role-select option {
-            background: #0b0f1a !important;
-            color: #ffffff !important;
+        select option, select.form-input option, select[class*="select"] option, .filter-select option {
+            background: #1a2029 !important;
+            color: #f0f2f5 !important;
         }
         @media (max-width: 1024px) {
             .card-grid {
