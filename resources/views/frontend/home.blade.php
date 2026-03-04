@@ -243,68 +243,29 @@
         box-shadow: 0 0 10px rgba(255, 60, 60, 0.5);
     }
     .schedule-list-wrap {
-        max-height: 360px;
-        overflow-y: auto;
         padding: 0 1rem 1rem;
     }
-    .schedule-list, .schedule-list-inner {
+    .schedule-row {
         display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 14px;
-    }
-    .schedule-item {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 14px 16px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 14px;
-        transition: all 0.2s ease;
-    }
-    .schedule-item:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 60, 60, 0.35);
-    }
-    .schedule-item.is-live {
-        background: linear-gradient(90deg, rgba(255, 60, 60, 0.12), rgba(0, 0, 0, 0));
-        border-color: rgba(255, 60, 60, 0.35);
-    }
-    .schedule-item.is-live:hover {
-        background: linear-gradient(90deg, rgba(255, 60, 60, 0.18), rgba(0, 0, 0, 0));
-    }
-    .schedule-time {
-        width: 80px;
-        flex-shrink: 0;
-        font-weight: 800;
-        color: #ff3b3b;
-        letter-spacing: 0.5px;
-        font-size: 1rem;
-    }
-    .schedule-title {
-        flex: 1;
-        font-weight: 700;
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 16px;
+        font-weight: 600;
         color: #fff;
-        min-width: 0;
+        margin-top: 10px;
     }
-    .schedule-host {
-        width: 160px;
-        flex-shrink: 0;
-        text-align: right;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.9rem;
+    .schedule-row span {
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
     }
-    .schedule-live {
-        flex-shrink: 0;
-        margin-left: 10px;
-        padding: 4px 10px;
-        border-radius: 999px;
-        background: rgba(0, 200, 100, 0.15);
-        border: 1px solid rgba(0, 200, 100, 0.45);
-        color: #7CFFB0;
-        font-weight: 800;
-        font-size: 12px;
+    .schedule-row span::after {
+        content: " | ";
+        margin-left: 14px;
+        opacity: 0.5;
+    }
+    .schedule-row span:last-child::after {
+        display: none;
     }
     .home-right {
         display: flex;
@@ -478,17 +439,13 @@
     }
     @media (max-width: 768px) {
         .schedule-day { padding: 8px 12px; font-size: 0.75rem; min-height: 34px; }
-        .schedule-host { width: 120px; }
-    }
-    @media (max-width: 640px) {
-        .schedule-item { align-items: flex-start; flex-wrap: wrap; }
-        .schedule-host { width: 100%; flex-basis: 100%; text-align: left; color: rgba(255, 255, 255, 0.75); padding-left: 96px; }
+        .schedule-row { font-size: 14px; gap: 10px; }
     }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
         .schedule-top-bar { flex-direction: column; align-items: stretch; }
         .schedule-days-bar { justify-content: flex-start; }
-        .schedule-host { width: auto; }
+        .schedule-row { font-size: 13px; gap: 8px; }
         .home-right {
             grid-template-columns: 1fr;
         }
@@ -590,20 +547,16 @@
         if (!container) return;
         if (loadingEl) loadingEl.style.display='none';
         if (emptyEl) emptyEl.style.display=items.length===0?'block':'none';
-        container.querySelectorAll('.schedule-list-inner').forEach(function(el){ el.remove(); });
+        container.querySelectorAll('.schedule-row').forEach(function(el){ el.remove(); });
         if (items.length===0) return;
-        var wrap = document.createElement('div');
-        wrap.className = 'schedule-list-inner';
+        var row = document.createElement('div');
+        row.className = 'schedule-row';
         items.forEach(function(it){
-            var row = document.createElement('div');
-            row.className = 'schedule-item' + (it.is_live ? ' is-live' : '');
-            row.innerHTML = '<span class="schedule-time">' + (it.start_time||'') + '</span>' +
-                '<span class="schedule-title">' + (it.title||'') + '</span>' +
-                '<span class="schedule-host">' + (it.host||'') + '</span>' +
-                (it.is_live ? '<span class="schedule-live">CANLI</span>' : '');
-            wrap.appendChild(row);
+            var span = document.createElement('span');
+            span.textContent = it.title || '';
+            row.appendChild(span);
         });
-        container.appendChild(wrap);
+        container.appendChild(row);
     }
 
     function loadSchedule(day) {
