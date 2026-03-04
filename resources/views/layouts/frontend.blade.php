@@ -700,6 +700,12 @@
                     @if(isset($socialMob['tiktok']) && ($socialMob['tiktok']['is_active'] ?? false) && !empty($socialMob['tiktok']['url'] ?? ''))
                     <a href="{{ $socialMob['tiktok']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
                     @endif
+                    @if(isset($socialMob['youtube']) && ($socialMob['youtube']['is_active'] ?? false) && !empty($socialMob['youtube']['url'] ?? ''))
+                    <a href="{{ $socialMob['youtube']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                    @endif
+                    @if(isset($socialMob['x']) && ($socialMob['x']['is_active'] ?? false) && !empty($socialMob['x']['url'] ?? ''))
+                    <a href="{{ $socialMob['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter"></i></a>
+                    @endif
                 </div>
             </div>
             <div class="nav-right">
@@ -719,6 +725,12 @@
                     @endif
                     @if(isset($social['tiktok']) && ($social['tiktok']['is_active'] ?? false) && !empty($social['tiktok']['url'] ?? ''))
                     <a href="{{ $social['tiktok']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                    @endif
+                    @if(isset($social['youtube']) && ($social['youtube']['is_active'] ?? false) && !empty($social['youtube']['url'] ?? ''))
+                    <a href="{{ $social['youtube']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                    @endif
+                    @if(isset($social['x']) && ($social['x']['is_active'] ?? false) && !empty($social['x']['url'] ?? ''))
+                    <a href="{{ $social['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter"></i></a>
                     @endif
                 </div>
             </div>
