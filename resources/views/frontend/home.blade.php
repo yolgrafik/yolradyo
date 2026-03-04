@@ -378,7 +378,7 @@
         border: 1px solid var(--border);
         border-radius: 10px;
         color: var(--muted);
-        font-size: clamp(1.44rem, 4.6vw, 2.875rem);
+        font-size: clamp(1.66rem, 5.3vw, 3.31rem);
         cursor: pointer;
         transition: all 0.2s ease;
         display: flex;
@@ -421,7 +421,7 @@
         width: 100%;
         max-width: 100%;
         height: auto;
-        max-height: 51px;
+        max-height: 59px;
         object-fit: contain;
         display: block;
     }
