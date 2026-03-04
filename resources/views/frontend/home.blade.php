@@ -138,6 +138,7 @@
         border-radius: 14px;
     }
     .schedule-card {
+        position: relative;
         background: var(--ry-bar-bg);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
@@ -147,14 +148,34 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
         min-width: 0;
     }
+    .schedule-card::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        pointer-events: none;
+    }
     .schedule-top-bar {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 0.75rem;
         padding: 0.6rem 1rem 0.5rem;
         background: rgba(255, 255, 255, 0.02);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .schedule-top-bar::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        pointer-events: none;
     }
     .schedule-top-bar__title {
         display: flex;

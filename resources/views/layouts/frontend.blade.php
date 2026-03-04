@@ -49,10 +49,19 @@
             background: var(--ry-header-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--ry-border);
             box-shadow: 0 2px 20px rgba(0,0,0,0.2);
             padding: 0 1.5rem;
             transition: height 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+        .navbar::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+            pointer-events: none;
         }
         .navbar.is-scrolled {
             height: 68px;
@@ -351,14 +360,23 @@
             background: var(--ry-bar-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(255,255,255,0.15);
-            border-bottom: 1px solid #ffffff;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0 1.5rem;
             gap: 0;
+        }
+        .bottom-bar-player::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+            pointer-events: none;
         }
         .bottom-bar-player > * { pointer-events: auto; }
         .player-logo-wrap {
