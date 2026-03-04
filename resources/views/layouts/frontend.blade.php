@@ -13,11 +13,6 @@
             ? asset('storage/' . $siteSettings['seo_og_image_path']) : '';
         $faviconPath = isset($siteSettings['brand_favicon_path']) && $siteSettings['brand_favicon_path']
             ? asset('storage/' . $siteSettings['brand_favicon_path']) : asset('favicon.ico');
-        $themePrimary = $siteSettings['theme_primary'] ?? '#0f1319';
-        $themeAccent = $siteSettings['theme_accent'] ?? '#c92a2a';
-        $themeBg = $siteSettings['theme_bg'] ?? '#0f1319';
-        $themeText = $siteSettings['theme_text'] ?? '#f0f2f5';
-        $themeGlow = $siteSettings['theme_glow'] ?? '#c92a2a';
     @endphp
     <link rel="icon" href="{{ $faviconPath }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -323,8 +318,8 @@
             transition: all 0.2s ease;
         }
         .footer-social a:hover {
-            background: color-mix(in srgb, var(--ry-accent) 25%, transparent);
-            border-color: color-mix(in srgb, var(--ry-accent) 45%, transparent);
+            background: var(--ry-accent);
+            border-color: var(--ry-accent);
             color: var(--ry-footer-link-hover);
         }
         .footer-social svg { width: 16px; height: 16px; }
@@ -357,7 +352,7 @@
             background: var(--ry-surface);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-top: 1px solid color-mix(in srgb, var(--ry-accent) 40%, transparent);
+            border-top: 1px solid var(--ry-accent);
             box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
@@ -437,9 +432,9 @@
             transition: all 0.2s ease;
         }
         .player-mute-btn:hover {
-            background: color-mix(in srgb, var(--ry-accent) 30%, transparent);
-            border-color: color-mix(in srgb, var(--ry-accent) 55%, transparent);
-            box-shadow: 0 0 12px color-mix(in srgb, var(--ry-glow) 35%, transparent);
+            background: var(--ry-accent);
+            border-color: var(--ry-accent);
+            box-shadow: 0 0 12px var(--ry-glow);
         }
         .player-mute-btn.muted { color: #94a3b8; }
         .player-mute-btn svg { width: 18px; height: 18px; }
@@ -463,7 +458,7 @@
             border-radius: 50%;
             background: var(--ry-accent);
             cursor: pointer;
-            box-shadow: 0 0 8px color-mix(in srgb, var(--ry-glow) 50%, transparent);
+            box-shadow: 0 0 8px var(--ry-glow);
             transition: transform 0.2s;
         }
         .player-volume-wrap input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
@@ -699,7 +694,7 @@
         a.glass-btn:hover,
         button.glass-btn:hover {
             transform: translateY(-3px) scale(1.05) !important;
-            box-shadow: 0 0 20px color-mix(in srgb, var(--ry-glow) 60%, transparent), 0 8px 25px rgba(0,0,0,0.45) !important;
+            box-shadow: 0 0 20px var(--ry-glow), 0 8px 25px rgba(0,0,0,0.45) !important;
             background: rgba(255,255,255,0.15) !important;
         }
         .glass-btn:active,
