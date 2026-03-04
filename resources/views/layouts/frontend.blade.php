@@ -326,9 +326,19 @@
         .player-status .dot.pulse { animation: statusPulse 1.5s ease-in-out infinite; }
         @keyframes statusPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         .player-now-playing { display: none; }
+        .player-live-meta { margin-top: 6px; line-height: 1.2; }
+        .player-track {
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+            max-width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .player-listeners {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+            color: rgba(255,255,255,0.65);
         }
         .logo-player {
             position: relative;
@@ -652,7 +662,14 @@
                 <span class="dot pulse"></span>
                 <span id="playerStatusText">Duraklatildi</span>
             </div>
-            <div class="player-listeners" id="playerListeners">Dinleyici: 0</div>
+            <div class="player-live-meta">
+                <div class="player-track">
+                    <span class="cc_streaminfo" data-type="tracktitle" data-username="radyoyol"></span>
+                </div>
+                <div class="player-listeners">
+                    <span class="cc_streaminfo" data-type="listeners" data-username="radyoyol"></span> dinleyici
+                </div>
+            </div>
         </div>
     </div>
 
@@ -706,7 +723,6 @@
             var statusEl = document.getElementById('playerStatus');
             var statusText = document.getElementById('playerStatusText');
             var nowPlayingEl = document.getElementById('playerNowPlaying');
-            var listenersEl = document.getElementById('playerListeners');
             var muteBtn = document.getElementById('playerMuteBtn');
             var volumeSlider = document.getElementById('playerVolume');
             if (!audio || !btn) return;
@@ -736,7 +752,6 @@
             function fetchRadioStatus() {
                 fetch('/api/radio/status').then(function(r) { return r.json(); }).then(function(d) {
                     if (nowPlayingEl) nowPlayingEl.textContent = d.song || '-';
-                    if (listenersEl) listenersEl.textContent = 'Dinleyici: ' + (d.listeners || 0);
                 }).catch(function() {});
             }
             fetchRadioStatus();
