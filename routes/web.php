@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 
 Route::get('/', [FrontendController::class, 'home']);
+Route::get('/canli-dinle', [FrontendController::class, 'player'])->name('player.popup');
 Route::get('/programlar', [FrontendController::class, 'programlar']);
 Route::get('/haberler', [FrontendController::class, 'haberler']);
 Route::get('/videolar', [FrontendController::class, 'videolar']);
