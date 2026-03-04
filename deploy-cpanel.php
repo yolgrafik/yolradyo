@@ -1,85 +1,82 @@
 <?php
 /**
  * cPanel FTP Deployment Script
- * 
- * Bu script, projeyi public_html'e yüklenecek "düz" (flat) yapıda hazırlar.
- * cPanel'de document root public_html ise bu yapıyı kullanın.
- * 
+ *
+ * Document root public_html olan cPanel hostlar için.
+ * Backend (app, vendor, vb.) yolcu/ altında, public içerik kökte.
+ *
  * Kullanım: php deploy-cpanel.php
- * Çıktı: deploy-cpanel/ klasörü (bunu FTP ile public_html'e yükleyin)
+ * Çıktı: deploy-cpanel/ → FTP ile public_html'e yükleyin
  */
 
 $root = __DIR__;
 $out = $root . '/deploy-cpanel';
+$backend = 'yolcu'; // Backend klasör adı
 
-// Temizle ve oluştur
 if (is_dir($out)) {
     echo "Mevcut deploy-cpanel siliniyor...\n";
     rmdirRecursive($out);
 }
 mkdir($out, 0755, true);
+mkdir($out . '/' . $backend, 0755, true);
 
-$dirs = [
-    'app', 'bootstrap', 'config', 'database', 'public', 'resources', 'routes', 'storage', 'vendor'
-];
-
-foreach ($dirs as $dir) {
-    $src = $root . '/' . $dir;
-    if (!is_dir($src) && $dir !== 'storage') {
-        echo "UYARI: $dir bulunamadı, atlanıyor.\n";
-        continue;
-    }
-    if ($dir === 'public') {
-        // public/ içeriğini deploy köküne kopyala (index.php ve .htaccess hariç - sonra özel yazılacak)
-        $pubFiles = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($src, RecursiveDirectoryIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-        foreach ($pubFiles as $item) {
-            $subPath = str_replace($src . DIRECTORY_SEPARATOR, '', $item->getPathname());
-            $subPath = str_replace('\\', '/', $subPath);
-            if (in_array($subPath, ['index.php', '.htaccess']) || $subPath === '.gitignore') continue;
-            $target = $out . '/' . $subPath;
-            if ($item->isDir()) {
+// 1. public/ içeriğini deploy köküne (index.php, .htaccess hariç)
+$pubSrc = $root . '/public';
+$pubIter = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator($pubSrc, RecursiveDirectoryIterator::SKIP_DOTS),
+    RecursiveIteratorIterator::SELF_FIRST
+);
+foreach ($pubIter as $item) {
+    $subPath = str_replace($pubSrc . DIRECTORY_SEPARATOR, '', $item->getPathname());
+    $subPath = str_replace('\\', '/', $subPath);
+    if (in_array($subPath, ['index.php', '.htaccess']) || $subPath === '.gitignore') continue;
+    $target = $out . '/' . $subPath;
+if ($item->isDir()) {
                 if (!is_dir($target)) mkdir($target, 0755, true);
-            } else {
+            } elseif ($item->isFile()) {
                 $targetDir = dirname($target);
                 if (!is_dir($targetDir)) mkdir($targetDir, 0755, true);
                 copy($item->getPathname(), $target);
             }
+}
+
+// 2. Backend klasörlerini yolcu/ altına kopyala
+$backendDirs = ['app', 'bootstrap', 'config', 'database', 'resources', 'routes', 'storage', 'vendor'];
+foreach ($backendDirs as $dir) {
+    $src = $root . '/' . $dir;
+    if (!is_dir($src) && $dir !== 'storage') {
+        echo "UYARI: $dir bulunamadı.\n";
+        continue;
+    }
+    if ($dir === 'storage') {
+        mkdir($out . '/' . $backend . '/storage', 0755, true);
+        foreach (['app', 'app/public', 'framework', 'framework/cache', 'framework/cache/data', 'framework/sessions', 'framework/views', 'logs'] as $s) {
+            $p = $out . '/' . $backend . '/storage/' . $s;
+            if (!is_dir($p)) mkdir($p, 0755, true);
         }
-    } elseif ($dir === 'storage') {
-        mkdir($out . '/storage', 0755, true);
-        $storageSub = ['app', 'framework', 'logs'];
-        foreach ($storageSub as $s) {
-            $p = $out . '/storage/' . $s;
-            mkdir($p, 0755, true);
-            if ($s === 'framework') {
-                mkdir($p . '/cache', 0755, true);
-                mkdir($p . '/cache/data', 0755, true);
-                mkdir($p . '/sessions', 0755, true);
-                mkdir($p . '/views', 0755, true);
-                file_put_contents($p . '/cache/.gitignore', "*\n!.gitignore\n");
-                file_put_contents($p . '/cache/data/.gitignore', "*\n!.gitignore\n");
-                file_put_contents($p . '/sessions/.gitignore', "*\n!.gitignore\n");
-                file_put_contents($p . '/views/.gitignore', "*\n!.gitignore\n");
-            }
-            if ($s === 'app') {
-                mkdir($p . '/public', 0755, true);
-                file_put_contents($p . '/.gitignore', "*\n!.gitignore\n");
-            }
+        foreach (['storage/framework/cache', 'storage/framework/cache/data', 'storage/framework/sessions', 'storage/framework/views', 'storage/app'] as $g) {
+            $gitignorePath = $out . '/' . $backend . '/' . $g . '/.gitignore';
+            $gitignoreDir = dirname($gitignorePath);
+            if (!is_dir($gitignoreDir)) mkdir($gitignoreDir, 0755, true);
+            file_put_contents($gitignorePath, "*\n!.gitignore\n");
         }
     } elseif ($dir === 'bootstrap') {
-        copyDirExclude($src, $out . '/' . $dir, ['.git', 'node_modules', '.env']);
-        if (!is_dir($out . '/bootstrap/cache')) mkdir($out . '/bootstrap/cache', 0755, true);
-        file_put_contents($out . '/bootstrap/cache/.gitignore', "*\n!.gitignore\n");
+        copyDirExclude($src, $out . '/' . $backend . '/' . $dir, ['.git', 'node_modules', '.env']);
+        $cacheDir = $out . '/' . $backend . '/bootstrap/cache';
+        if (!is_dir($cacheDir)) mkdir($cacheDir, 0755, true);
+        file_put_contents($cacheDir . '/.gitignore', "*\n!.gitignore\n");
+        // cPanel: public path = parent of backend (document root)
+        $bootstrapApp = file_get_contents($out . '/' . $backend . '/bootstrap/app.php');
+        $bootstrapApp = str_replace('return Application::configure', '$app = Application::configure', $bootstrapApp);
+        $bootstrapApp = str_replace(')->create();', ')->create();' . "\n" . '$app->usePublicPath(dirname($app->basePath()));' . "\n" . 'return $app;', $bootstrapApp);
+        file_put_contents($out . '/' . $backend . '/bootstrap/app.php', $bootstrapApp);
     } else {
-        copyDirExclude($src, $out . '/' . $dir, ['.git', 'node_modules', '.env']);
+        copyDirExclude($src, $out . '/' . $backend . '/' . $dir, ['.git', 'node_modules', '.env']);
     }
 }
 
-// index.php - FLAT yapı için (public_html kökünde her şey)
-$indexContent = <<<'PHP'
+// 3. index.php - public_html kökünde, backend yolcu/ altında
+$indexContent = <<<PHP
 <?php
 
 use Illuminate\Foundation\Application;
@@ -87,39 +84,44 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-// cPanel flat yapı: vendor, bootstrap, storage aynı dizinde (public_html)
-$basePath = __DIR__;
+\$backendDir = __DIR__ . '/{$backend}';
+\$maintenance = \$backendDir . '/storage/framework/maintenance.php';
 
-if (file_exists($maintenance = $basePath . '/storage/framework/maintenance.php')) {
-    require $maintenance;
+if (file_exists(\$maintenance)) {
+    require \$maintenance;
 }
 
-require $basePath . '/vendor/autoload.php';
+require \$backendDir . '/vendor/autoload.php';
 
-/** @var Application $app */
-$app = require_once $basePath . '/bootstrap/app.php';
+/** @var Application \$app */
+\$app = require_once \$backendDir . '/bootstrap/app.php';
 
-$app->handleRequest(Request::capture());
+\$app->handleRequest(Request::capture());
 PHP;
 
 file_put_contents($out . '/index.php', $indexContent);
 
-// .htaccess - public'ten kopyala
+// 4. .htaccess
 copy($root . '/public/.htaccess', $out . '/.htaccess');
 
-// .env.example
-copy($root . '/.env.example', $out . '/.env.example');
-
-// artisan, composer.json, composer.lock
+// 5. artisan, composer, .env.example
+copy($root . '/.env.example', $out . '/' . $backend . '/.env.example');
 foreach (['artisan', 'composer.json', 'composer.lock'] as $f) {
     if (file_exists($root . '/' . $f)) {
-        copy($root . '/' . $f, $out . '/' . $f);
+        copy($root . '/' . $f, $out . '/' . $backend . '/' . $f);
     }
 }
 
 echo "\n✓ deploy-cpanel/ hazır!\n";
-echo "FTP ile deploy-cpanel/ içeriğini public_html/ klasörüne yükleyin.\n";
-echo "Sonra sunucuda: cp .env.example .env && php artisan key:generate\n";
+echo "FTP ile deploy-cpanel/ İÇERİĞİNİ public_html/ klasörüne yükleyin.\n";
+echo "(deploy-cpanel içindeki tüm dosyalar public_html'e gelsin)\n\n";
+echo "Sunucuda (SSH veya cPanel Terminal):\n";
+echo "  cd ~/public_html/{$backend}\n";
+echo "  cp .env.example .env\n";
+echo "  php artisan key:generate\n";
+echo "  php artisan storage:link\n";
+echo "  php artisan migrate --force\n";
+echo "  chmod -R 775 storage bootstrap/cache\n";
 
 function copyDirExclude($src, $dest, $exclude = []) {
     if (!is_dir($dest)) mkdir($dest, 0755, true);

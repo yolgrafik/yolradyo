@@ -1,6 +1,45 @@
 # FTP ile Yayına Alma Rehberi
 
-Bu rehber, RADYOYOL projesini FTP ile sunucuya yüklemek için adımları içerir.
+Bu rehber, RADYOYOL projesini FTP ile sunucuya (özellikle cPanel host) yüklemek için adımları içerir.
+
+---
+
+## cPanel için Hızlı Kurulum (Önerilen)
+
+Document root'u değiştiremediğiniz cPanel hostlar için:
+
+### 1. Yerelde
+```bash
+npm run build
+composer install --no-dev --optimize-autoloader
+php deploy-cpanel.php
+```
+
+### 2. FTP
+`deploy-cpanel/` klasörünün **içeriğini** (tüm dosya ve klasörleri) `public_html/` klasörüne yükleyin.
+
+### 3. Sunucuda (cPanel Terminal veya SSH)
+```bash
+cd ~/public_html/yolcu
+cp .env.example .env
+php artisan key:generate
+```
+
+`.env` dosyasını düzenleyin (veritabanı, APP_URL vb.):
+```bash
+nano .env
+# veya cPanel File Manager ile düzenleyin
+```
+
+```bash
+php artisan storage:link
+php artisan migrate --force
+chmod -R 775 storage bootstrap/cache
+```
+
+### Yapı
+- `public_html/` = document root (index.php, assets, build, uploads)
+- `public_html/yolcu/` = Laravel backend (app, vendor, config, storage)
 
 ---
 
