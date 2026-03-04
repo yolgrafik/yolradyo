@@ -374,7 +374,7 @@
         border: 1px solid var(--border);
         border-radius: 10px;
         color: var(--muted);
-        font-size: 1.25rem;
+        font-size: 2.5rem;
         cursor: pointer;
         transition: all 0.2s ease;
         display: flex;
@@ -411,9 +411,9 @@
         opacity: 0.85;
     }
     .home-badges .store-badge {
-        height: 32px;
+        height: 64px;
         width: auto;
-        max-width: 110px;
+        max-width: 220px;
         object-fit: contain;
         display: block;
     }
