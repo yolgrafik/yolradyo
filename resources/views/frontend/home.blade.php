@@ -141,7 +141,7 @@
         background: var(--ry-bar-bg);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -244,7 +244,7 @@
     .schedule-chip .sep { opacity: 0.6; font-weight: 900; flex-shrink: 0; }
     .schedule-strip .dot { opacity: 0.35; flex-shrink: 0; }
     .schedule-chip.is-live {
-        background: var(--ry-theme);
+        background: var(--ry-schedule-active);
         border: none;
         color: #ffffff;
     }
@@ -253,7 +253,7 @@
         padding: 1px 5px;
         border-radius: 999px;
         background: rgba(0, 0, 0, 0.25);
-        border: 1px solid var(--ry-accent);
+        border: 1px solid rgba(255, 255, 255, 0.25);
         font-size: 0.65rem;
         font-weight: 900;
     }
@@ -453,7 +453,7 @@
     }
     .live-live-btn {
         position: relative;
-        background: var(--ry-theme);
+        background: var(--ry-schedule-active);
         color: #ffffff;
         padding: 8px 16px;
         border-radius: 8px;
