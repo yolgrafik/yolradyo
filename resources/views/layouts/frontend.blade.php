@@ -704,7 +704,7 @@
                     <a href="{{ $socialMob['youtube']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
                     @endif
                     @if(isset($socialMob['x']) && ($socialMob['x']['is_active'] ?? false) && !empty($socialMob['x']['url'] ?? ''))
-                    <a href="{{ $socialMob['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter"></i></a>
+                    <a href="{{ $socialMob['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter-x"></i></a>
                     @endif
                 </div>
             </div>
@@ -730,7 +730,7 @@
                     <a href="{{ $social['youtube']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
                     @endif
                     @if(isset($social['x']) && ($social['x']['is_active'] ?? false) && !empty($social['x']['url'] ?? ''))
-                    <a href="{{ $social['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter"></i></a>
+                    <a href="{{ $social['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter-x"></i></a>
                     @endif
                 </div>
             </div>
