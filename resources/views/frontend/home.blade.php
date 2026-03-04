@@ -367,11 +367,11 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 0.35rem;
-        padding: 0.25rem 0.75rem;
+        gap: 0.25rem;
+        padding: 0.15rem 0.5rem;
         background: color-mix(in srgb, var(--ry-bar-bg) 65%, #0b0f16);
         border: 1px solid var(--border);
-        border-radius: 10px;
+        border-radius: 8px;
         width: 100%;
         box-sizing: border-box;
         flex-wrap: wrap;
@@ -380,7 +380,7 @@
         flex: 1 1 0;
         min-width: 0;
         aspect-ratio: 1;
-        padding: 0.15rem;
+        padding: 0.2rem;
         display: flex;
         align-items: center;
         justify-content: center;
