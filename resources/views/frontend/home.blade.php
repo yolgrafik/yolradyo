@@ -392,6 +392,13 @@
         border-color: rgba(255,255,255,0.2);
         color: #ffffff;
     }
+    .home-icon-buttons .player-icon-img {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
     .home-badges {
         position: relative;
         display: flex;
@@ -675,15 +682,18 @@
             <div class="home-icon-buttons">
                 @php
                     $playerLinks = [
-                        'winamp' => ['label' => 'Winamp İle Dinle', 'icon' => 'bi-music-note-beamed'],
-                        'media_player' => ['label' => 'Medya Player', 'icon' => 'bi-play-circle'],
-                        'quicktime' => ['label' => 'QuickTime Player', 'icon' => 'bi-film'],
-                        'real_player' => ['label' => 'Real Player', 'icon' => 'bi-broadcast'],
+                        'winamp' => ['label' => 'Winamp İle Dinle', 'img' => asset('assets/images/winamp.png')],
+                        'media_player' => ['label' => 'Medya Player', 'img' => asset('assets/images/media-player.png')],
+                        'quicktime' => ['label' => 'QuickTime Player', 'img' => asset('assets/images/quicktime.png')],
+                        'real_player' => ['label' => 'Real Player', 'img' => asset('assets/images/real-player.png')],
                     ];
                 @endphp
                 @foreach($playerLinks as $key => $info)
                     @if(isset($socialLinks[$key]) && ($socialLinks[$key]['is_active'] ?? false) && !empty(trim($socialLinks[$key]['url'] ?? '')))
-                    <a href="{{ $socialLinks[$key]['url'] }}" class="icon-placeholder icon-link" target="_blank" rel="noopener noreferrer" title="{{ $info['label'] }}" aria-label="{{ $info['label'] }}"><i class="bi {{ $info['icon'] }}"></i></a>
+                    <a href="{{ $socialLinks[$key]['url'] }}" class="icon-placeholder icon-link" target="_blank" rel="noopener noreferrer" title="{{ $info['label'] }}" aria-label="{{ $info['label'] }}">
+                        <img src="{{ $info['img'] }}" alt="{{ $info['label'] }}" class="player-icon-img" onerror="this.style.display='none';this.nextElementSibling?.classList.remove('player-icon-fallback');">
+                        <i class="bi bi-music-note-beamed player-icon-fallback" style="display:none"></i>
+                    </a>
                     @endif
                 @endforeach
             </div>
