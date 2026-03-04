@@ -896,7 +896,18 @@
             if (mpPlay) mpPlay.classList.toggle('hidden', playing);
             if (mpPause) mpPause.classList.toggle('hidden', !playing);
         }
+        function openOverlay() {
+            overlay.classList.remove('hidden');
+            overlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            updatePlayPauseUI();
+            if (mpVol) mpVol.value = audio.volume;
+        }
+        window.openMobilePlayerOverlay = openOverlay;
         if (mpClose) mpClose.addEventListener('click', closeOverlay);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay && !overlay.classList.contains('hidden')) closeOverlay();
+        });
         if (mpPlay) {
             mpPlay.addEventListener('click', function() {
                 var url = streamUrl || backupUrl;
@@ -912,8 +923,6 @@
             });
         }
         if (mpVol) {
-            var defVol = parseFloat(audio.getAttribute('data-default-volume')) || 0.8;
-            mpVol.value = defVol;
             mpVol.addEventListener('input', function() { audio.volume = parseFloat(this.value); });
         }
         audio.addEventListener('play', updatePlayPauseUI);
@@ -930,7 +939,7 @@
     @endphp
     <div id="mobilePlayerOverlay" class="mp-overlay hidden" role="dialog" aria-modal="true" aria-label="Canlı dinle">
         <div class="mp-top">
-            <div class="mp-title">RadyoYol</div>
+            <div class="mp-title">{{ $siteName ?? 'RadyoYol' }}</div>
             <button type="button" id="mpClose" class="mp-close" aria-label="Kapat">✕</button>
         </div>
         <div class="mp-center">
