@@ -405,6 +405,12 @@
         margin-bottom: 10px;
         color: #ffffff;
     }
+    .live-card-content {
+        transition: opacity 0.3s ease;
+    }
+    .live-card-content.updating {
+        opacity: 0.6;
+    }
     .home-dj-card {
         background: var(--panel);
         border: 1px solid var(--border);
@@ -577,7 +583,12 @@
                 <a href="#" class="badge-placeholder">GET IT ON Google Play</a>
                 <a href="#" class="badge-placeholder">Download on the App Store</a>
             </div>
-            @include('partials.live-dj-card', ['dj' => $liveDj ?? null])
+            <div class="live-card" id="liveDjCard">
+                <div class="live-card-title">YAYINDA</div>
+                <div class="live-card-content" id="liveDjCardContent">
+                    <p class="dj-slogan" style="margin:0;color:var(--muted);">Yükleniyor...</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -630,6 +641,36 @@
         container.appendChild(strip);
     }
 
+    function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function renderLiveCard(activeDj) {
+        var cardContent = document.getElementById('liveDjCardContent');
+        if (!cardContent) return;
+        cardContent.classList.add('updating');
+        setTimeout(function() {
+        if (activeDj) {
+            var html = '<div class="home-dj-card">';
+            if (activeDj.avatar_url) {
+                html += '<div class="dj-avatar"><img src="' + esc(activeDj.avatar_url) + '" alt="' + esc(activeDj.name) + '"></div>';
+            } else {
+                html += '<div class="dj-avatar"><span class="dj-initials">' + esc(activeDj.initials || '?') + '</span></div>';
+            }
+            html += '<h3>' + esc(activeDj.name) + '</h3>';
+            if (activeDj.tagline) {
+                html += '<p class="dj-slogan">' + esc(activeDj.tagline) + '</p>';
+            }
+            html += '<span class="live-badge">CANLI YAYINDA</span></div>';
+            cardContent.innerHTML = html;
+            cardContent.classList.add('has-dj');
+            cardContent.classList.remove('empty');
+        } else {
+            cardContent.innerHTML = '<div class="home-dj-card home-dj-card--empty"><p class="dj-slogan" style="margin:0;color:var(--muted);">Şu an canlı yayın yok</p></div>';
+            cardContent.classList.remove('has-dj');
+            cardContent.classList.add('empty');
+        }
+        cardContent.classList.remove('updating');
+        }, 50);
+    }
+
     function loadSchedule(day) {
         if (loadingEl) loadingEl.style.display='block';
         if (emptyEl) emptyEl.style.display='none';
@@ -637,9 +678,11 @@
             .then(function(r){ return r.json(); })
             .then(function(data){
                 renderSchedule(data.items || []);
+                renderLiveCard(data.activeDj || null);
             })
             .catch(function(){
                 renderSchedule([]);
+                renderLiveCard(null);
             });
     }
 

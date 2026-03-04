@@ -18,105 +18,116 @@ class ScheduleController extends Controller
         $schedules = Schedule::forDay($day)->active()->with('dj')->ordered()->get();
         $schedulesArray = $schedules->values()->all();
 
-        $liveDj = DjProfile::where('is_live', true)->first();
+        $nowTime = now()->format('H:i:s');
+        $todayDay = now()->dayOfWeekIso - 1; // 1=Mon->0, 7=Sun->6
 
-        if ($liveDj) {
-            // Öncelik 1: Canlı DJ varsa dj_id eşleşmesine göre is_live
-            // Birden fazla eşleşmede: saat aralığına göre şu anki olanı seç, yoksa ilkini
-            $liveDjId = (int) $liveDj->id;
-            $matchingIndices = [];
+        $liveOverride = DjProfile::where('is_live', true)->first();
+
+        $activeIdx = null;
+        if ($liveOverride) {
             foreach ($schedulesArray as $idx => $s) {
-                if ($s->dj_id === $liveDjId) {
-                    $matchingIndices[] = $idx;
+                $dj = $this->resolveDj($s);
+                if ($dj && $dj->id === $liveOverride->id) {
+                    $activeIdx = $idx;
+                    break;
                 }
             }
-
-            $liveIdx = null;
-            if (count($matchingIndices) === 1) {
-                $liveIdx = $matchingIndices[0];
-            } elseif (count($matchingIndices) > 1) {
-                $nowTime = now()->format('H:i:s');
-                $todayDay = now()->dayOfWeekIso - 1;
-                foreach ($matchingIndices as $idx) {
-                    $s = $schedulesArray[$idx];
-                    $startRaw = is_string($s->start_time) ? $s->start_time : $s->start_time->format('H:i:s');
-                    $startCompare = substr(preg_replace('/\.\d+$/', '', $startRaw), 0, 8);
-                    $endRaw = $s->end_time ? (is_string($s->end_time) ? $s->end_time : $s->end_time->format('H:i:s')) : null;
-                    $next = $schedulesArray[$idx + 1] ?? null;
-                    $nextStart = $next ? (is_string($next->start_time) ? $next->start_time : $next->start_time->format('H:i:s')) : null;
-                    $endCompare = $endRaw ? substr(preg_replace('/\.\d+$/', '', $endRaw), 0, 8) : ($nextStart ? substr(preg_replace('/\.\d+$/', '', $nextStart), 0, 8) : '23:59:59');
-                    if ($day === $todayDay && $nowTime >= $startCompare && $nowTime < $endCompare) {
-                        $liveIdx = $idx;
+            if ($activeIdx === null && count($schedulesArray) > 0) {
+                foreach ($schedulesArray as $idx => $s) {
+                    if ($s->dj_id === (int) $liveOverride->id) {
+                        $activeIdx = $idx;
                         break;
                     }
                 }
-                $liveIdx = $liveIdx ?? $matchingIndices[0];
             }
-
-            $items = collect($schedulesArray)->map(function ($s, $idx) use ($liveDjId, $liveIdx) {
+        }
+        if ($activeIdx === null && $day === $todayDay && count($schedulesArray) > 0) {
+            foreach ($schedulesArray as $idx => $s) {
                 $startRaw = is_string($s->start_time) ? $s->start_time : $s->start_time->format('H:i:s');
-                $start = substr($startRaw, 0, 5);
-                $endRaw = $s->end_time ? (is_string($s->end_time) ? $s->end_time : $s->end_time->format('H:i:s')) : null;
-                $end = $endRaw ? substr($endRaw, 0, 5) : null;
-
-                $isLive = ($s->dj_id === $liveDjId && $liveIdx !== null && $idx === $liveIdx);
-
-                $dj = $s->dj;
-                $djData = $dj ? [
-                    'id' => $dj->id,
-                    'name' => $dj->name,
-                    'avatar_url' => $dj->avatar_url,
-                    'initials' => $dj->display_initials,
-                ] : null;
-
-                return [
-                    'start_time' => $start,
-                    'end_time' => $end,
-                    'title' => $s->title,
-                    'host' => $dj?->name ?? $s->host ?? '',
-                    'dj' => $djData,
-                    'is_live' => $isLive,
-                ];
-            });
-        } else {
-            // Öncelik 2: Canlı DJ yoksa saat aralığına göre is_live (fallback)
-            $nowTime = now()->format('H:i:s');
-            $todayDay = now()->dayOfWeekIso - 1;
-            $items = collect($schedulesArray)->map(function ($s, $idx) use ($nowTime, $day, $todayDay, $schedulesArray) {
-                $startRaw = is_string($s->start_time) ? $s->start_time : $s->start_time->format('H:i:s');
-                $start = substr($startRaw, 0, 5);
-                $endRaw = $s->end_time ? (is_string($s->end_time) ? $s->end_time : $s->end_time->format('H:i:s')) : null;
-                $end = $endRaw ? substr($endRaw, 0, 5) : null;
-
                 $startCompare = substr(preg_replace('/\.\d+$/', '', $startRaw), 0, 8);
+
+                $endRaw = $s->end_time ? (is_string($s->end_time) ? $s->end_time : $s->end_time->format('H:i:s')) : null;
                 $next = $schedulesArray[$idx + 1] ?? null;
                 $nextStart = $next ? (is_string($next->start_time) ? $next->start_time : $next->start_time->format('H:i:s')) : null;
-                $endCompare = $endRaw ? substr(preg_replace('/\.\d+$/', '', $endRaw), 0, 8) : ($nextStart ? substr(preg_replace('/\.\d+$/', '', $nextStart), 0, 8) : '23:59:59');
+                $endCompare = $endRaw
+                    ? substr(preg_replace('/\.\d+$/', '', $endRaw), 0, 8)
+                    : ($nextStart ? substr(preg_replace('/\.\d+$/', '', $nextStart), 0, 8) : '23:59:59');
 
-                $isLive = ($day === $todayDay) && ($nowTime >= $startCompare && $nowTime < $endCompare);
+                if ($nowTime >= $startCompare && $nowTime < $endCompare) {
+                    $activeIdx = $idx;
+                    break;
+                }
+            }
+        }
 
-                $dj = $s->dj;
-                $djData = $dj ? [
+        $activeDj = null;
+        if ($activeIdx !== null) {
+            $activeItem = $schedulesArray[$activeIdx];
+            $dj = $this->resolveDj($activeItem);
+            if ($dj) {
+                $activeDj = [
                     'id' => $dj->id,
                     'name' => $dj->name,
                     'avatar_url' => $dj->avatar_url,
                     'initials' => $dj->display_initials,
-                ] : null;
-
-                return [
-                    'start_time' => $start,
-                    'end_time' => $end,
-                    'title' => $s->title,
-                    'host' => $dj?->name ?? $s->host ?? '',
-                    'dj' => $djData,
-                    'is_live' => $isLive,
+                    'tagline' => $dj->bio ?? '',
+                    'program_title' => $activeItem->title,
                 ];
-            });
+            } elseif ($activeItem->host) {
+                $activeDj = [
+                    'id' => null,
+                    'name' => $activeItem->host,
+                    'avatar_url' => null,
+                    'initials' => strtoupper(substr(trim($activeItem->host), 0, 2)),
+                    'tagline' => '',
+                    'program_title' => $activeItem->title,
+                ];
+            }
         }
+
+        $items = collect($schedulesArray)->map(function ($s, $idx) use ($activeIdx) {
+            $startRaw = is_string($s->start_time) ? $s->start_time : $s->start_time->format('H:i:s');
+            $start = substr($startRaw, 0, 5);
+            $endRaw = $s->end_time ? (is_string($s->end_time) ? $s->end_time : $s->end_time->format('H:i:s')) : null;
+            $end = $endRaw ? substr($endRaw, 0, 5) : null;
+
+            $isLive = ($idx === $activeIdx);
+
+            $dj = $this->resolveDj($s);
+            $djData = $dj ? [
+                'id' => $dj->id,
+                'name' => $dj->name,
+                'avatar_url' => $dj->avatar_url,
+                'initials' => $dj->display_initials,
+                'tagline' => $dj->bio ?? '',
+            ] : null;
+
+            return [
+                'start_time' => $start,
+                'end_time' => $end,
+                'title' => $s->title,
+                'host' => $dj?->name ?? $s->host ?? '',
+                'dj' => $djData,
+                'is_live' => $isLive,
+            ];
+        });
 
         return response()->json([
             'day' => $day,
             'items' => $items,
+            'activeDj' => $activeDj,
         ]);
+    }
+
+    public function resolveDj(Schedule $s): ?DjProfile
+    {
+        if ($s->dj_id) {
+            return $s->dj;
+        }
+        if ($s->host) {
+            return DjProfile::whereRaw('LOWER(TRIM(name)) = ?', [strtolower(trim($s->host))])->first();
+        }
+
+        return null;
     }
 }

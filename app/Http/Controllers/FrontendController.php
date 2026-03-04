@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Slider;
-use App\Services\LiveDjService;
 
 class FrontendController extends Controller
 {
-    public function home(LiveDjService $liveDjService)
+    public function home()
     {
         $sliders = Slider::active()->ordered()->get();
-        $liveDj = $liveDjService->getLiveDj();
 
-        return view('frontend.home', compact('sliders', 'liveDj'));
+        return view('frontend.home', compact('sliders'));
     }
 
     public function programlar()
