@@ -2,9 +2,10 @@
     $settings = $themeSettings ?? [];
     $vars = $settings['vars'] ?? [];
     $themeAccent = $vars['theme'] ?? ($settings['button_color'] ?? '#c92a2a');
-    $headerBg = $vars['header_bg'] ?? 'rgba(70,9,10,0.97)';
+    $themeDark = $vars['theme_dark'] ?? '#a61e1e';
+    $headerBg = "linear-gradient(180deg, {$themeDark}, {$themeAccent})";
+    $barBg = "linear-gradient(180deg, {$themeDark}, {$themeAccent})";
     $footerBg = $vars['footer_bg'] ?? 'rgba(70,9,10,0.97)';
-    $barBg = $vars['bar_bg'] ?? 'rgba(70,9,10,0.97)';
     $btnBg = $settings['button_color'] ?? '#c92a2a';
     $btnHover = $settings['button_hover_color'] ?? '#dc2626';
     $scheduleBg = $settings['schedule_color'] ?? '#1e2430';
@@ -14,7 +15,9 @@
 <style id="theme-vars">
 :root {
     --ry-theme: {{ $themeAccent }};
+    --ry-theme-dark: {{ $themeDark }};
     --ry-header-bg: {{ $headerBg }};
+    --ry-strip-bg: color-mix(in srgb, var(--ry-theme) 25%, #0f172a);
     --ry-footer-bg: {{ $footerBg }};
     --ry-bar-bg: {{ $barBg }};
     --ry-istekler-bg: {{ $barBg }};

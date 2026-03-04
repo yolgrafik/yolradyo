@@ -26,7 +26,7 @@
     height: 48px;
     border-radius: 12px;
     overflow: hidden;
-    background: var(--ry-bar-bg);
+    background: var(--ry-strip-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.08);
