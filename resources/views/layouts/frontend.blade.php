@@ -297,6 +297,16 @@
             -webkit-backdrop-filter: blur(8px);
             padding: 0 1rem;
         }
+        .legal-footer::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+            pointer-events: none;
+        }
         .site-footer-bar {
             display: flex;
             align-items: center;

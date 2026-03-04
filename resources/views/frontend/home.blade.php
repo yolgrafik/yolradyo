@@ -350,8 +350,19 @@
         pointer-events: none;
     }
     .home-icon-buttons {
+        position: relative;
         display: flex;
         gap: 0.5rem;
+    }
+    .home-icon-buttons::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -0.7rem;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        pointer-events: none;
     }
     .home-icon-buttons button {
         flex: 1;
@@ -371,9 +382,20 @@
         color: #ffffff;
     }
     .home-badges {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+    }
+    .home-badges::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -0.7rem;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        pointer-events: none;
     }
     .badge-placeholder {
         display: flex;
@@ -393,12 +415,24 @@
         color: #ffffff;
     }
     .live-dj-card {
+        position: relative;
         background: color-mix(in srgb, var(--ry-theme) 15%, #0f172a);
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 0;
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+    .live-dj-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        pointer-events: none;
+        z-index: 1;
     }
     .live-banner {
         background: var(--ry-bar-bg);
