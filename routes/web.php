@@ -19,6 +19,7 @@ Route::get('/kvkk', [FrontendController::class, 'kvkk']);
 
 Route::get('/api/radio/status', App\Http\Controllers\Api\RadioStatusController::class);
 Route::get('/api/requests/approved', App\Http\Controllers\Api\ApprovedRequestsController::class);
+Route::get('/api/schedule', App\Http\Controllers\Api\ScheduleController::class)->name('api.schedule');
 
 Route::post('/istek-gonder', [App\Http\Controllers\RequestController::class, 'store'])->name('song.request');
 
@@ -103,6 +104,15 @@ Route::prefix('admin')->group(function () {
             Route::post('{songRequest}/reject', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'reject'])->name('reject');
             Route::post('{songRequest}/blacklist', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'blacklist'])->name('blacklist');
             Route::delete('{songRequest}', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('schedule')->name('admin.schedule.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\ScheduleController::class, 'index'])->name('index');
+            Route::post('/', [App\Http\Controllers\Admin\ScheduleController::class, 'store'])->name('store');
+            Route::post('copy/{fromDay}', [App\Http\Controllers\Admin\ScheduleController::class, 'copy'])->name('copy');
+            Route::put('{schedule}', [App\Http\Controllers\Admin\ScheduleController::class, 'update'])->name('update');
+            Route::delete('{schedule}', [App\Http\Controllers\Admin\ScheduleController::class, 'destroy'])->name('destroy');
+            Route::post('{schedule}/toggle', [App\Http\Controllers\Admin\ScheduleController::class, 'toggle'])->name('toggle');
         });
 
         Route::prefix('sliders')->name('admin.sliders.')->group(function () {

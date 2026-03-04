@@ -850,19 +850,16 @@
                             <li><a href="#" class="nav-item">Foto Sil</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section" data-section="program">
-                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                    <div class="nav-section {{ request()->routeIs('admin.schedule.*') ? 'is-open' : '' }}" data-section="program">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.schedule.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
                             <span>Program & DJ</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
+                            <li><a href="{{ route('admin.schedule.index') }}" class="nav-item {{ request()->routeIs('admin.schedule.*') ? 'is-active' : '' }}">Yayın Takvimi</a></li>
                             <li><a href="#" class="nav-item">Program Listesi</a></li>
-                            <li><a href="#" class="nav-item">Program Ekle</a></li>
-                            <li><a href="#" class="nav-item">Program Duzenle</a></li>
-                            <li><a href="#" class="nav-item">Program Sil</a></li>
                             <li><a href="#" class="nav-item">DJ Profilleri</a></li>
-                            <li><a href="#" class="nav-item">Yayin Takvimi</a></li>
                         </ul>
                     </div>
                     <div class="nav-section" data-section="reklam">

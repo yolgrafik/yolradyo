@@ -250,7 +250,7 @@
         overflow-y: auto;
         padding: 0 0.5rem 0.5rem;
     }
-    .schedule-list {
+    .schedule-list, .schedule-list-inner {
         display: flex;
         flex-direction: column;
         gap: 0;
@@ -543,47 +543,9 @@
                     </div>
                 </div>
                 <div class="schedule-list-wrap">
-                    <div class="schedule-list" data-day="0">
-                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Sabah Kuşağı</span><span class="schedule-dj">DJ Ali</span></div>
-                        <div class="schedule-item is-live"><span class="schedule-time">12:00</span><span class="schedule-program">Öğle Yayını</span><span class="schedule-dj">Desmal</span><span class="schedule-badge">CANLI</span></div>
-                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
-                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Akşam Kuşağı</span><span class="schedule-dj">Desmal</span></div>
-                    </div>
-                    <div class="schedule-list" data-day="1" style="display:none">
-                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Salı Sabah</span><span class="schedule-dj">DJ Ali</span></div>
-                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Salı Öğle</span><span class="schedule-dj">Desmal</span></div>
-                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Salı Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
-                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Salı Akşam</span><span class="schedule-dj">Desmal</span></div>
-                    </div>
-                    <div class="schedule-list" data-day="2" style="display:none">
-                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Çarşamba Sabah</span><span class="schedule-dj">DJ Ali</span></div>
-                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Çarşamba Öğle</span><span class="schedule-dj">Desmal</span></div>
-                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Çarşamba Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
-                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Çarşamba Akşam</span><span class="schedule-dj">Desmal</span></div>
-                    </div>
-                    <div class="schedule-list" data-day="3" style="display:none">
-                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Perşembe Sabah</span><span class="schedule-dj">DJ Ali</span></div>
-                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Perşembe Öğle</span><span class="schedule-dj">Desmal</span></div>
-                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Perşembe Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
-                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Perşembe Akşam</span><span class="schedule-dj">Desmal</span></div>
-                    </div>
-                    <div class="schedule-list" data-day="4" style="display:none">
-                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Cuma Sabah</span><span class="schedule-dj">DJ Ali</span></div>
-                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Cuma Öğle</span><span class="schedule-dj">Desmal</span></div>
-                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Cuma Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
-                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Cuma Akşam</span><span class="schedule-dj">Desmal</span></div>
-                    </div>
-                    <div class="schedule-list" data-day="5" style="display:none">
-                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Cumartesi Sabah</span><span class="schedule-dj">DJ Ali</span></div>
-                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Cumartesi Öğle</span><span class="schedule-dj">Desmal</span></div>
-                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Cumartesi Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
-                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Cumartesi Akşam</span><span class="schedule-dj">Desmal</span></div>
-                    </div>
-                    <div class="schedule-list" data-day="6" style="display:none">
-                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Pazar Sabah</span><span class="schedule-dj">DJ Ali</span></div>
-                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Pazar Öğle</span><span class="schedule-dj">Desmal</span></div>
-                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Pazar Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
-                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Pazar Akşam</span><span class="schedule-dj">Desmal</span></div>
+                    <div class="schedule-list" id="scheduleListContainer">
+                        <div class="schedule-loading" id="scheduleLoading">Yükleniyor...</div>
+                        <div class="schedule-empty" id="scheduleEmpty" style="display:none;padding:2rem;text-align:center;color:var(--muted);">Bu gün için program yok.</div>
                     </div>
                 </div>
             </div>
@@ -620,17 +582,55 @@
 <script>
 (function() {
     var dayBtns = document.querySelectorAll('.schedule-day');
-    var scheduleLists = document.querySelectorAll('.schedule-list[data-day]');
+    var container = document.getElementById('scheduleListContainer');
+    var loadingEl = document.getElementById('scheduleLoading');
+    var emptyEl = document.getElementById('scheduleEmpty');
+    var currentDay = (function(){ var d=new Date().getDay(); return d===0?6:d-1; })();
+
+    function renderSchedule(items) {
+        if (!container) return;
+        if (loadingEl) loadingEl.style.display='none';
+        if (emptyEl) emptyEl.style.display=items.length===0?'block':'none';
+        container.querySelectorAll('.schedule-list-inner').forEach(function(el){ el.remove(); });
+        if (items.length===0) return;
+        var wrap = document.createElement('div');
+        wrap.className = 'schedule-list-inner';
+        items.forEach(function(it){
+            var row = document.createElement('div');
+            row.className = 'schedule-item' + (it.is_live ? ' is-live' : '');
+            row.innerHTML = '<span class="schedule-time">' + (it.start_time||'') + '</span>' +
+                '<span class="schedule-program">' + (it.title||'') + '</span>' +
+                '<span class="schedule-dj">' + (it.host||'') + '</span>' +
+                (it.is_live ? '<span class="schedule-badge">CANLI</span>' : '');
+            wrap.appendChild(row);
+        });
+        container.appendChild(wrap);
+    }
+
+    function loadSchedule(day) {
+        if (loadingEl) loadingEl.style.display='block';
+        if (emptyEl) emptyEl.style.display='none';
+        fetch('{{ url("/api/schedule") }}?day=' + day)
+            .then(function(r){ return r.json(); })
+            .then(function(data){
+                renderSchedule(data.items || []);
+            })
+            .catch(function(){
+                renderSchedule([]);
+            });
+    }
+
     dayBtns.forEach(function(btn) {
+        if (parseInt(btn.getAttribute('data-day'),10) === currentDay) btn.classList.add('active');
         btn.addEventListener('click', function() {
-            var day = btn.getAttribute('data-day');
+            var day = parseInt(btn.getAttribute('data-day'), 10);
             dayBtns.forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
-            scheduleLists.forEach(function(list) {
-                list.style.display = list.getAttribute('data-day') === day ? '' : 'none';
-            });
+            loadSchedule(day);
         });
     });
+
+    loadSchedule(currentDay);
 
     var slider = document.getElementById('homeSlider');
     var nav = document.getElementById('sliderNav');
