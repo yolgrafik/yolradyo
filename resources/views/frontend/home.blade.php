@@ -213,11 +213,12 @@
         flex-wrap: nowrap;
         flex: 1;
         min-width: 0;
-        justify-content: flex-end;
+        width: 100%;
     }
     .schedule-day {
-        flex: 0 0 auto;
-        padding: 5px 10px;
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 6px 8px;
         border-radius: 8px;
         background: #1e2430;
         color: #e6e6e6;
@@ -231,6 +232,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .schedule-day:hover {
         background: #2a3342;
@@ -510,13 +514,13 @@
                         Yayın Akışı
                     </span>
                     <div class="schedule-days-bar">
-                        <button type="button" class="schedule-day" data-day="0">Pzt</button>
-                        <button type="button" class="schedule-day" data-day="1">Sal</button>
-                        <button type="button" class="schedule-day" data-day="2">Çar</button>
-                        <button type="button" class="schedule-day" data-day="3">Per</button>
-                        <button type="button" class="schedule-day" data-day="4">Cum</button>
-                        <button type="button" class="schedule-day" data-day="5">Cmt</button>
-                        <button type="button" class="schedule-day" data-day="6">Paz</button>
+                        <button type="button" class="schedule-day" data-day="0">Pazartesi</button>
+                        <button type="button" class="schedule-day" data-day="1">Salı</button>
+                        <button type="button" class="schedule-day" data-day="2">Çarşamba</button>
+                        <button type="button" class="schedule-day" data-day="3">Perşembe</button>
+                        <button type="button" class="schedule-day" data-day="4">Cuma</button>
+                        <button type="button" class="schedule-day" data-day="5">Cumartesi</button>
+                        <button type="button" class="schedule-day" data-day="6">Pazar</button>
                     </div>
                 </div>
                 <div class="schedule-list-wrap">
