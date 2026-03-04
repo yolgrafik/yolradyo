@@ -691,8 +691,7 @@
                 @foreach($playerLinks as $key => $info)
                     @if(isset($socialLinks[$key]) && ($socialLinks[$key]['is_active'] ?? false) && !empty(trim($socialLinks[$key]['url'] ?? '')))
                     <a href="{{ $socialLinks[$key]['url'] }}" class="icon-placeholder icon-link" target="_blank" rel="noopener noreferrer" title="{{ $info['label'] }}" aria-label="{{ $info['label'] }}">
-                        <img src="{{ $info['img'] }}" alt="{{ $info['label'] }}" class="player-icon-img" onerror="this.style.display='none';this.nextElementSibling?.classList.remove('player-icon-fallback');">
-                        <i class="bi bi-music-note-beamed player-icon-fallback" style="display:none"></i>
+                        <img src="{{ $info['img'] }}" alt="{{ $info['label'] }}" class="player-icon-img">
                     </a>
                     @endif
                 @endforeach
