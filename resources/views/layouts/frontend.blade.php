@@ -572,58 +572,6 @@
         .request-form__actions { margin-top: 1rem; }
         .request-form__btn { padding: .75rem 1.5rem; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
         .request-form__btn:hover { opacity: .9; }
-        /* Mini player modal */
-        .mini-player-overlay.hidden { display: none !important; }
-        .mini-player-modal.hidden { display: none !important; }
-        .mini-player-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.25); z-index: 9998; cursor: pointer; }
-        .mini-player-modal { cursor: default; }
-        .mini-player-modal {
-            position: fixed; z-index: 9999;
-            width: min(420px, 92vw);
-            right: 18px; bottom: 120px;
-            background: rgba(18,22,30,.96);
-            border: 1px solid rgba(255,255,255,.10);
-            border-radius: 16px;
-            box-shadow: 0 18px 60px rgba(0,0,0,.55);
-            overflow: hidden;
-        }
-        .mini-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,.06); }
-        .mini-head-left { display: flex; gap: 10px; align-items: center; }
-        .mini-head-play-icon {
-            width: 32px; height: 32px; max-width: 32px; max-height: 32px;
-            border-radius: 50%;
-            background: #ff2a2a;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-        .mini-head-play-icon .icon { flex-shrink: 0; display: block; }
-        .mini-head-play-icon .icon.play {
-            width: 0; height: 0;
-            border-top: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-            border-left: 9px solid #fff;
-            margin-left: 2px;
-        }
-        .mini-title { font-weight: 900; font-size: 0.95rem; color: #fff; }
-        .mini-close { background: transparent; border: 0; color: #fff; font-size: 18px; cursor: pointer; padding: 4px; line-height: 1; }
-        .mini-close:hover { opacity: .85; }
-        .mini-body { padding: 14px; }
-        .mini-track { font-weight: 800; font-size: 0.95rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .mini-listeners { margin-top: 6px; font-size: 12px; color: rgba(255,255,255,.65); }
-        .mini-controls { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
-        .mini-play, .mini-pause { width: 44px; height: 44px; border-radius: 12px; border: 0; background: #ff2d2d; color: #fff; font-weight: 900; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; flex-shrink: 0; }
-        .mini-play:hover, .mini-pause:hover { opacity: .9; }
-        .mini-play.hidden, .mini-pause.hidden { display: none !important; }
-        .mini-vol { flex: 1; accent-color: var(--accent); }
-        .mini-actions { display: flex; gap: 10px; margin-top: 12px; }
-        .mini-btn { flex: 1; padding: 10px 12px; border-radius: 12px; border: 0; font-weight: 900; font-size: 0.85rem; text-align: center; text-decoration: none; cursor: pointer; }
-        .mini-wa { background: #25D366; color: #fff; }
-        .mini-wa:hover { opacity: .9; }
-        .mini-req { background: #ff2d2d; color: #fff; }
-        .mini-req:hover { opacity: .9; }
-        @media (max-width: 768px) {
-            .mini-player-modal { right: 12px; bottom: 100px; }
-        }
     </style>
     @stack('styles')
 </head>
@@ -813,7 +761,10 @@
             if (openLiveBtn) {
                 openLiveBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (typeof window.openMobilePlayerOverlay === 'function') window.openMobilePlayerOverlay();
+                    var w = 420, h = 560;
+                    var left = (screen.width - w) / 2;
+                    var top = (screen.height - h) / 2;
+                    window.open('{{ url("/canli-dinle") }}', 'RadyoYolPlayer', 'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',scrollbars=no,resizable=yes');
                     return false;
                 });
             }
@@ -888,94 +839,6 @@
     });
     </script>
     @include('partials.song-request-modal')
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var overlay = document.getElementById('miniPlayerOverlay');
-        var modal = document.getElementById('miniPlayerModal');
-        var miniClose = document.getElementById('miniClose');
-        var miniPlay = document.getElementById('miniPlay');
-        var miniPause = document.getElementById('miniPause');
-        var miniRequest = document.getElementById('miniRequest');
-        var miniVol = document.getElementById('miniVol');
-        var audio = document.getElementById('radioAudio');
-        if (!overlay || !modal || !audio) return;
-        var streamUrl = audio.getAttribute('data-stream-url') || '';
-        var backupUrl = audio.getAttribute('data-backup-url') || '';
-        function closeMiniPlayer() {
-            overlay.classList.add('hidden');
-            modal.classList.add('hidden');
-            overlay.setAttribute('aria-hidden', 'true');
-        }
-        function updatePlayPauseUI() {
-            var playing = !audio.paused && !audio.ended;
-            if (miniPlay) miniPlay.classList.toggle('hidden', playing);
-            if (miniPause) miniPause.classList.toggle('hidden', !playing);
-        }
-        function openMiniPlayer() {
-            overlay.classList.remove('hidden');
-            modal.classList.remove('hidden');
-            overlay.setAttribute('aria-hidden', 'false');
-            updatePlayPauseUI();
-            if (miniVol) miniVol.value = audio.volume;
-        }
-        window.openMobilePlayerOverlay = openMiniPlayer;
-        if (miniClose) miniClose.addEventListener('click', closeMiniPlayer);
-        overlay.addEventListener('click', function(e) { if (e.target === overlay) closeMiniPlayer(); });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && overlay && !overlay.classList.contains('hidden')) closeMiniPlayer();
-        });
-        if (miniPlay) {
-            miniPlay.addEventListener('click', function() {
-                var url = streamUrl || backupUrl;
-                if (url && !audio.src) { audio.src = url; audio.load(); }
-                audio.play().catch(function(){});
-            });
-        }
-        if (miniPause) miniPause.addEventListener('click', function() { audio.pause(); });
-        if (miniRequest) {
-            miniRequest.addEventListener('click', function() {
-                closeMiniPlayer();
-                if (typeof window.openSongRequestModal === 'function') window.openSongRequestModal();
-            });
-        }
-        if (miniVol) miniVol.addEventListener('input', function() { audio.volume = parseFloat(this.value); });
-        audio.addEventListener('play', updatePlayPauseUI);
-        audio.addEventListener('pause', updatePlayPauseUI);
-        audio.addEventListener('ended', updatePlayPauseUI);
-    });
-    </script>
-
-    @php
-        $miniWhatsapp = !empty($siteSettings['whatsapp_url']) ? $siteSettings['whatsapp_url'] : 'javascript:void(0)';
-    @endphp
-    <div id="miniPlayerOverlay" class="mini-player-overlay hidden" role="dialog" aria-modal="true" aria-label="Canlı dinle"></div>
-    <div id="miniPlayerModal" class="mini-player-modal hidden" role="dialog" aria-label="Canlı yayın">
-        <div class="mini-head">
-            <div class="mini-head-left">
-                <div class="mini-head-play-icon" aria-hidden="true"><span class="icon play"></span></div>
-                <span class="mini-title">Canlı Yayın</span>
-            </div>
-            <button type="button" id="miniClose" class="mini-close" aria-label="Kapat">✕</button>
-        </div>
-        <div class="mini-body">
-            <div class="mini-track">
-                <span class="cc_streaminfo" data-type="tracktitle" data-username="radyoyol"></span>
-            </div>
-            <div class="mini-listeners">
-                <span class="cc_streaminfo" data-type="listeners" data-username="radyoyol"></span> dinleyici
-            </div>
-            <div class="mini-controls">
-                <button type="button" id="miniPlay" class="mini-play" aria-label="Oynat">▶</button>
-                <button type="button" id="miniPause" class="mini-pause hidden" aria-label="Duraklat">⏸</button>
-                <input id="miniVol" class="mini-vol" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Ses seviyesi">
-            </div>
-            <div class="mini-actions">
-                <a id="miniWhatsapp" class="mini-btn mini-wa" href="{{ $miniWhatsapp }}" target="_blank" rel="noopener">WhatsApp</a>
-                <button type="button" id="miniRequest" class="mini-btn mini-req">İSTEK HATTI</button>
-            </div>
-        </div>
-    </div>
-
     @stack('scripts')
     <script src="https://r1.comcities.com/system/streaminfo.js"></script>
 </body>
