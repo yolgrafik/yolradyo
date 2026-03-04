@@ -134,6 +134,10 @@
         .nav-menu > li > a.active::after {
             transform: scaleX(1);
         }
+        body.apply-theme-everywhere .nav-menu > li > a:hover,
+        body.apply-theme-everywhere .nav-menu > li > a.active { color: var(--ry-accent); }
+        body.apply-theme-everywhere .nav-menu > li > a:hover::after,
+        body.apply-theme-everywhere .nav-menu > li > a.active::after { background: var(--ry-accent); }
         .nav-right {
             display: flex;
             align-items: center;
@@ -351,8 +355,8 @@
             background: var(--ry-bar-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(255,255,255,0.15);
-            border-bottom: 1px solid #ffffff;
+            border-top: 1px solid var(--ry-border);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
             box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
@@ -650,13 +654,15 @@
         .request-form__error { display: block; font-size: .8rem; color: rgba(255,255,255,0.9); margin-top: .25rem; }
         .request-form__success { padding: .5rem; border-radius: 6px; margin-bottom: 1rem; }
         .request-form__actions { margin-top: 1rem; }
-        .request-form__btn { padding: .75rem 1.5rem; background: var(--ry-btn-bg); color: #fff; border: none; border-radius: calc(var(--ry-radius) - 2px); font-weight: 600; cursor: pointer; }
-        .request-form__btn:hover { opacity: .9; }
+        .request-form__btn { padding: .75rem 1.5rem; background: var(--ry-btn-bg); color: var(--ry-text); border: 1px solid var(--ry-btn-border, var(--ry-btn-bg)); border-radius: calc(var(--ry-radius) - 2px); font-weight: 600; cursor: pointer; }
+        .request-form__btn:hover { background: var(--ry-btn-hover); opacity: 1; box-shadow: 0 0 12px color-mix(in srgb, var(--ry-accent) 40%, transparent); }
+        .main-content a:not([class*="btn"]):not([class*="nav-"]):not([class*="header-social"]):not([class*="footer-"]):not([class*="badge-"]) { color: var(--ry-text); }
+        .main-content a:not([class*="btn"]):not([class*="nav-"]):not([class*="header-social"]):not([class*="footer-"]):not([class*="badge-"]):hover { color: var(--ry-accent); }
     </style>
     @stack('styles')
     <style id="fixed-button-styles">
-        .btn-primary, .btn-live, .btn-request, .btn-whatsapp-istek, .home-slider__btn, .glass-btn, .btn-istek, .share-btn, .ry-btn-primary { background: var(--ry-btn-bg) !important; border-color: var(--ry-btn-bg) !important; color: #fff !important; }
-        .btn-primary:hover, .btn-live:hover, .btn-request:hover, .btn-whatsapp-istek:hover:not(.btn-whatsapp-disabled), .home-slider__btn:hover, .glass-btn:hover, .btn-istek:hover, .share-btn:hover, .ry-btn-primary:hover { background: var(--ry-btn-hover) !important; border-color: var(--ry-btn-hover) !important; box-shadow: 0 0 18px color-mix(in srgb, var(--ry-btn-hover) 50%, transparent) !important; }
+        .btn-primary, .btn-live, .btn-request, .btn-whatsapp-istek, .home-slider__btn, .glass-btn, .btn-istek, .share-btn, .ry-btn-primary { background: var(--ry-btn-bg) !important; border: 1px solid var(--ry-btn-border, var(--ry-btn-bg)) !important; color: var(--ry-text) !important; }
+        .btn-primary:hover, .btn-live:hover, .btn-request:hover, .btn-whatsapp-istek:hover:not(.btn-whatsapp-disabled), .home-slider__btn:hover, .glass-btn:hover, .btn-istek:hover, .share-btn:hover, .ry-btn-primary:hover { background: var(--ry-btn-hover) !important; border-color: var(--ry-accent) !important; box-shadow: 0 0 18px color-mix(in srgb, var(--ry-accent) 50%, transparent) !important; }
         .btn-request-group { box-shadow: 0 4px 20px color-mix(in srgb, var(--ry-btn-bg) 35%, transparent) !important; }
         .btn-request-group:hover { box-shadow: 0 6px 24px color-mix(in srgb, var(--ry-btn-hover) 40%, transparent) !important; }
     </style>
@@ -671,7 +677,7 @@
             background: var(--ry-btn-bg) !important;
             backdrop-filter: blur(12px) !important;
             -webkit-backdrop-filter: blur(12px) !important;
-            border: 1px solid var(--ry-btn-bg) !important;
+            border: 1px solid var(--ry-btn-border, var(--ry-btn-bg)) !important;
             border-radius: var(--ry-radius) !important;
             padding: 10px 22px !important;
             color: #fff !important;
@@ -713,7 +719,7 @@
         }
     </style>
 </head>
-<body class="{{ request()->is('/') ? 'page-home' : '' }}">
+<body class="{{ request()->is('/') ? 'page-home' : '' }} {{ ($themeSettings['apply_all'] ?? false) ? 'apply-theme-everywhere' : '' }}">
     <nav class="navbar" id="mainNavbar">
         <div class="navbar-inner">
             <a href="{{ url('/') }}" class="nav-logo">

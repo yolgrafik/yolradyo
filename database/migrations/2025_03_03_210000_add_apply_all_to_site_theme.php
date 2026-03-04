@@ -21,8 +21,10 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('site_theme', function (Blueprint $table) {
-            $table->dropColumn('apply_all');
-        });
+        if (Schema::hasTable('site_theme') && Schema::hasColumn('site_theme', 'apply_all')) {
+            Schema::table('site_theme', function (Blueprint $table) {
+                $table->dropColumn('apply_all');
+            });
+        }
     }
 };

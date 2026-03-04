@@ -141,7 +141,7 @@
         background: var(--ry-bar-bg);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--ry-border);
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -181,7 +181,7 @@
         border-radius: 8px;
         background: var(--ry-schedule-bg);
         color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid var(--ry-border);
         font-family: Arial, sans-serif;
         font-size: 0.75rem;
         font-weight: 600;
@@ -197,7 +197,7 @@
     }
     .schedule-day:hover {
         background: var(--ry-surface-2);
-        border-color: rgba(255,255,255,0.25);
+        border-color: var(--ry-accent);
     }
     .schedule-day.active {
         background: var(--ry-schedule-active);
@@ -235,7 +235,7 @@
         padding: 6px 10px;
         border-radius: 999px;
         background: var(--ry-schedule-bg);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid var(--ry-border);
         font-size: 0.8rem;
         font-weight: 700;
         color: #ffffff;
@@ -244,7 +244,7 @@
     .schedule-chip .sep { opacity: 0.6; font-weight: 900; flex-shrink: 0; }
     .schedule-strip .dot { opacity: 0.35; flex-shrink: 0; }
     .schedule-chip.is-live {
-        background: var(--ry-schedule-active);
+        background: var(--ry-theme);
         border: none;
         color: #ffffff;
     }
@@ -253,7 +253,7 @@
         padding: 1px 5px;
         border-radius: 999px;
         background: rgba(0, 0, 0, 0.25);
-        border: 1px solid rgba(255, 255, 255, 0.25);
+        border: 1px solid var(--ry-accent);
         font-size: 0.65rem;
         font-weight: 900;
     }
@@ -380,7 +380,7 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     }
     .live-banner {
-        background: var(--ry-bar-bg);
+        background: var(--ry-theme);
         color: #ffffff;
         font-weight: 900;
         font-size: 14px;
@@ -453,7 +453,7 @@
     }
     .live-live-btn {
         position: relative;
-        background: var(--ry-schedule-active);
+        background: var(--ry-theme);
         color: #ffffff;
         padding: 8px 16px;
         border-radius: 8px;

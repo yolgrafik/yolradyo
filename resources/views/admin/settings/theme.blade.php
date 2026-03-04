@@ -103,10 +103,10 @@
             </div>
         </section>
 
-        {{-- Button & Schedule Colors (theme independent) --}}
-        <section class="theme-section">
+        {{-- Button & Schedule Colors (theme independent when apply_all OFF) --}}
+        <section class="theme-section" id="buttonScheduleSection">
             <h2 class="theme-section__title">Buton ve Program Renkleri</h2>
-            <p class="theme-section__desc">Temadan bağımsız. Tüm butonlar ve program blokları bu renkleri kullanır.</p>
+            <p class="theme-section__desc">"Sadece Temaya Uygula" kapalıyken geçerli. Açıkken tema rengi kullanılır.</p>
             <div class="form-row color-fields">
                 <div class="form-group">
                     <label for="button_color">Buton Rengi</label>
