@@ -195,11 +195,14 @@ class MenuController extends Controller
             'items.*.sort_order' => 'required|integer|min:0',
         ]);
 
+        $location = $request->location;
         foreach ($request->items as $item) {
-            MenuItem::where('id', $item['id'])->update(['sort_order' => $item['sort_order']]);
+            MenuItem::where('id', $item['id'])
+                ->where('location', $location)
+                ->update(['sort_order' => $item['sort_order']]);
         }
 
-        ActivityLogger::log('menu.reordered', ['location' => $request->location]);
+        ActivityLogger::log('menu.reordered', ['location' => $location]);
 
         return response()->json(['success' => true]);
     }
