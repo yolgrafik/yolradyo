@@ -20,6 +20,7 @@ class SiteTheme extends Model
         'button_hover_color',
         'schedule_color',
         'schedule_active_color',
+        'line_color',
     ];
 
     protected $casts = [

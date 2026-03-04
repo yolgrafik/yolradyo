@@ -365,16 +365,6 @@
         display: flex;
         gap: 0.5rem;
     }
-    .home-icon-buttons::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: -0.7rem;
-        height: 1px;
-        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-        pointer-events: none;
-    }
     .home-icon-buttons button,
     .home-icon-buttons a.icon-link {
         flex: 1;
@@ -403,16 +393,6 @@
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-    }
-    .home-badges::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: -0.7rem;
-        height: 1px;
-        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-        pointer-events: none;
     }
     .badge-placeholder {
         display: flex;

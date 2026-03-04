@@ -50,6 +50,7 @@ class ThemeService
             'button_hover_color' => $row->button_hover_color ?? '#dc2626',
             'schedule_color' => $row->schedule_color ?? '#1e2430',
             'schedule_active_color' => $row->schedule_active_color ?? '#c92a2a',
+            'line_color' => $row->line_color ?? null,
             'vars' => $vars,
         ];
     }
@@ -158,6 +159,7 @@ class ThemeService
             'button_hover_color' => $data['button_hover_color'] ?? '#dc2626',
             'schedule_color' => $data['schedule_color'] ?? '#1e2430',
             'schedule_active_color' => $data['schedule_active_color'] ?? '#c92a2a',
+            'line_color' => !empty(trim($data['line_color'] ?? '')) ? trim($data['line_color']) : null,
         ];
 
         if (isset($data['bg_image'])) {
