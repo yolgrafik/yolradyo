@@ -12,51 +12,35 @@
             @csrf
 
             <div class="form-group">
-                <label for="social_facebook">Facebook URL</label>
-                <input type="url" name="social_facebook" id="social_facebook"
-                    value="{{ old('social_facebook', $social_facebook ?? '') }}"
-                    placeholder="https://facebook.com/radyoyol">
-                @error('social_facebook')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-
-            <div class="form-group">
-                <label for="social_x">X (Twitter) URL</label>
-                <input type="url" name="social_x" id="social_x"
-                    value="{{ old('social_x', $social_x ?? '') }}"
-                    placeholder="https://x.com/radyoyol">
-                @error('social_x')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-
-            <div class="form-group">
-                <label for="social_youtube">YouTube URL</label>
-                <input type="url" name="social_youtube" id="social_youtube"
-                    value="{{ old('social_youtube', $social_youtube ?? '') }}"
-                    placeholder="https://youtube.com/@radyoyol">
-                @error('social_youtube')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-
-            <div class="form-group">
-                <label for="social_instagram">Instagram URL</label>
-                <input type="url" name="social_instagram" id="social_instagram"
-                    value="{{ old('social_instagram', $social_instagram ?? '') }}"
-                    placeholder="https://instagram.com/radyoyol">
-                @error('social_instagram')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-
-            <div class="form-group">
-                <label for="social_tiktok">TikTok URL</label>
-                <input type="url" name="social_tiktok" id="social_tiktok"
-                    value="{{ old('social_tiktok', $social_tiktok ?? '') }}"
-                    placeholder="https://tiktok.com/@radyoyol">
-                @error('social_tiktok')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-
-            <div class="form-group">
-                <label for="social_whatsapp">WhatsApp URL</label>
-                <input type="url" name="social_whatsapp" id="social_whatsapp"
-                    value="{{ old('social_whatsapp', $social_whatsapp ?? '') }}"
+                <label for="whatsapp_url">WhatsApp URL</label>
+                <input type="url" name="whatsapp_url" id="whatsapp_url"
+                    value="{{ old('whatsapp_url', $whatsapp_url ?? '') }}"
                     placeholder="https://wa.me/905551234567">
-                @error('social_whatsapp')<span class="form-error">{{ $message }}</span>@enderror
+                @error('whatsapp_url')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="facebook_url">Facebook URL</label>
+                <input type="url" name="facebook_url" id="facebook_url"
+                    value="{{ old('facebook_url', $facebook_url ?? '') }}"
+                    placeholder="https://facebook.com/radyoyol">
+                @error('facebook_url')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="instagram_url">Instagram URL</label>
+                <input type="url" name="instagram_url" id="instagram_url"
+                    value="{{ old('instagram_url', $instagram_url ?? '') }}"
+                    placeholder="https://instagram.com/radyoyol">
+                @error('instagram_url')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="youtube_url">YouTube URL</label>
+                <input type="url" name="youtube_url" id="youtube_url"
+                    value="{{ old('youtube_url', $youtube_url ?? '') }}"
+                    placeholder="https://youtube.com/@radyoyol">
+                @error('youtube_url')<span class="form-error">{{ $message }}</span>@enderror
             </div>
 
             <div class="form-actions">

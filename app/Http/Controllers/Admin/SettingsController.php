@@ -149,12 +149,10 @@ class SettingsController extends Controller
     {
         if ($r = $this->ensureAdmin()) return $r;
         return view('admin.settings.social', [
-            'social_facebook' => $this->settings->get('social_facebook'),
-            'social_x' => $this->settings->get('social_x'),
-            'social_youtube' => $this->settings->get('social_youtube'),
-            'social_instagram' => $this->settings->get('social_instagram'),
-            'social_tiktok' => $this->settings->get('social_tiktok'),
-            'social_whatsapp' => $this->settings->get('social_whatsapp'),
+            'whatsapp_url' => $this->settings->get('whatsapp_url'),
+            'facebook_url' => $this->settings->get('facebook_url'),
+            'instagram_url' => $this->settings->get('instagram_url'),
+            'youtube_url' => $this->settings->get('youtube_url'),
         ]);
     }
 
@@ -162,21 +160,17 @@ class SettingsController extends Controller
     {
         if ($r = $this->ensureAdmin()) return $r;
         $validated = $request->validate([
-            'social_facebook' => 'nullable|url|max:500',
-            'social_x' => 'nullable|url|max:500',
-            'social_youtube' => 'nullable|url|max:500',
-            'social_instagram' => 'nullable|url|max:500',
-            'social_tiktok' => 'nullable|url|max:500',
-            'social_whatsapp' => 'nullable|url|max:500',
+            'whatsapp_url' => 'nullable|url|max:500',
+            'facebook_url' => 'nullable|url|max:500',
+            'instagram_url' => 'nullable|url|max:500',
+            'youtube_url' => 'nullable|url|max:500',
         ]);
 
         $this->settings->setMany([
-            'social_facebook' => ['value' => $validated['social_facebook'] ?? '', 'type' => 'url'],
-            'social_x' => ['value' => $validated['social_x'] ?? '', 'type' => 'url'],
-            'social_youtube' => ['value' => $validated['social_youtube'] ?? '', 'type' => 'url'],
-            'social_instagram' => ['value' => $validated['social_instagram'] ?? '', 'type' => 'url'],
-            'social_tiktok' => ['value' => $validated['social_tiktok'] ?? '', 'type' => 'url'],
-            'social_whatsapp' => ['value' => $validated['social_whatsapp'] ?? '', 'type' => 'url'],
+            'whatsapp_url' => ['value' => $validated['whatsapp_url'] ?? '', 'type' => 'text'],
+            'facebook_url' => ['value' => $validated['facebook_url'] ?? '', 'type' => 'text'],
+            'instagram_url' => ['value' => $validated['instagram_url'] ?? '', 'type' => 'text'],
+            'youtube_url' => ['value' => $validated['youtube_url'] ?? '', 'type' => 'text'],
         ]);
         ActivityLogger::log('settings.updated', ['section' => 'social']);
 

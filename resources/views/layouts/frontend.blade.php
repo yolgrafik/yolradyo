@@ -576,12 +576,22 @@
         .mp-overlay.hidden { display: none !important; }
         .mp-overlay {
             position: fixed; inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,.88), rgba(0,0,0,.95));
             z-index: 99999;
             display: flex; flex-direction: column;
             padding: 14px;
             min-height: 100vh;
             min-height: 100dvh;
+        }
+        .mp-overlay__backdrop {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,.88), rgba(0,0,0,.95));
+            cursor: pointer;
+        }
+        .mp-overlay__content {
+            position: relative; z-index: 1;
+            flex: 1;
+            display: flex; flex-direction: column;
+            min-height: 0;
         }
         .mp-top { display: flex; justify-content: space-between; align-items: center; color: #fff; flex-shrink: 0; }
         .mp-title { font-weight: 900; letter-spacing: 1px; font-size: 1.1rem; }
@@ -652,11 +662,11 @@
             </ul>
             <div class="nav-social nav-social-mobile" aria-hidden="true">
                 @php
-                    $socialInstagram = $siteSettings['social_instagram'] ?? '';
-                    $socialFacebook = $siteSettings['social_facebook'] ?? '';
-                    $socialYoutube = $siteSettings['social_youtube'] ?? '';
-                    $socialTiktok = $siteSettings['social_tiktok'] ?? '';
-                    $socialX = $siteSettings['social_x'] ?? '';
+                    $socialInstagram = $siteSettings['instagram_url'] ?? '';
+                    $socialFacebook = $siteSettings['facebook_url'] ?? '';
+                    $socialYoutube = $siteSettings['youtube_url'] ?? '';
+                    $socialTiktok = $siteSettings['tiktok_url'] ?? '';
+                    $socialX = $siteSettings['x_url'] ?? '';
                 @endphp
                 @if($socialInstagram)<a href="{{ $socialInstagram }}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>@endif
                 @if($socialFacebook)<a href="{{ $socialFacebook }}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>@endif
@@ -746,6 +756,7 @@
     <audio id="radioAudio" src="{{ $streamUrl }}" data-stream-url="{{ $streamUrl }}" data-backup-url="{{ $backupUrl }}" data-auto-play="{{ $autoPlay ? '1' : '0' }}" data-default-volume="{{ $defaultVolume }}" preload="none"></audio>
 
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
         (function() {
             var toggle = document.getElementById('navToggle');
             var center = document.querySelector('.nav-center');
@@ -797,8 +808,9 @@
             }
             fetchRadioStatus();
             setInterval(fetchRadioStatus, 7000);
-            if (quickLive) {
-                quickLive.addEventListener('click', function(e) {
+            var openLiveBtn = document.getElementById('openLivePlayer');
+            if (openLiveBtn) {
+                openLiveBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (typeof window.openMobilePlayerOverlay === 'function') window.openMobilePlayerOverlay();
                     return false;
@@ -872,10 +884,11 @@
                 });
             }
         })();
+    });
     </script>
     @include('partials.song-request-modal')
     <script>
-    (function() {
+    document.addEventListener('DOMContentLoaded', function() {
         var overlay = document.getElementById('mobilePlayerOverlay');
         var mpClose = document.getElementById('mpClose');
         var mpPlay = document.getElementById('mpPlay');
@@ -928,16 +941,20 @@
         audio.addEventListener('play', updatePlayPauseUI);
         audio.addEventListener('pause', updatePlayPauseUI);
         audio.addEventListener('ended', updatePlayPauseUI);
-    })();
+        var backdrop = overlay ? overlay.querySelector('[data-close-overlay]') : null;
+        if (backdrop) backdrop.addEventListener('click', closeOverlay);
+    });
     </script>
 
     @php
         $mpCover = isset($siteSettings['brand_logo_path']) && $siteSettings['brand_logo_path']
             ? asset('storage/' . $siteSettings['brand_logo_path'])
             : asset('assets/images/play.png');
-        $mpWhatsapp = !empty($siteSettings['social_whatsapp']) ? $siteSettings['social_whatsapp'] : 'javascript:void(0)';
+        $mpWhatsapp = !empty($siteSettings['whatsapp_url']) ? $siteSettings['whatsapp_url'] : 'javascript:void(0)';
     @endphp
     <div id="mobilePlayerOverlay" class="mp-overlay hidden" role="dialog" aria-modal="true" aria-label="Canlı dinle">
+        <div class="mp-overlay__backdrop" data-close-overlay aria-hidden="true"></div>
+        <div class="mp-overlay__content">
         <div class="mp-top">
             <div class="mp-title">{{ $siteName ?? 'RadyoYol' }}</div>
             <button type="button" id="mpClose" class="mp-close" aria-label="Kapat">✕</button>
@@ -959,6 +976,7 @@
         <div class="mp-actions">
             <a id="mpWhatsapp" class="mp-btn mp-wa" href="{{ $mpWhatsapp }}" target="_blank" rel="noopener">WhatsApp</a>
             <button type="button" id="mpRequest" class="mp-btn mp-req">İSTEK HATTI</button>
+        </div>
         </div>
     </div>
 
