@@ -148,30 +148,41 @@ class SettingsController extends Controller
     public function socialForm()
     {
         if ($r = $this->ensureAdmin()) return $r;
-        return view('admin.settings.social', [
-            'whatsapp_url' => $this->settings->get('whatsapp_url'),
-            'facebook_url' => $this->settings->get('facebook_url'),
-            'instagram_url' => $this->settings->get('instagram_url'),
-            'youtube_url' => $this->settings->get('youtube_url'),
-        ]);
+        $platforms = ['whatsapp', 'telegram', 'instagram', 'facebook', 'tiktok', 'youtube', 'x'];
+        $data = [];
+        foreach ($platforms as $p) {
+            $data[$p . '_url'] = $this->settings->get($p . '_url', '');
+            $data[$p . '_active'] = (bool) $this->settings->get($p . '_active', false);
+        }
+        return view('admin.settings.social', $data);
     }
 
     public function saveSocial(Request $request)
     {
         if ($r = $this->ensureAdmin()) return $r;
-        $validated = $request->validate([
-            'whatsapp_url' => 'nullable|url|max:500',
-            'facebook_url' => 'nullable|url|max:500',
-            'instagram_url' => 'nullable|url|max:500',
-            'youtube_url' => 'nullable|url|max:500',
-        ]);
+        $rules = [];
+        $platforms = ['whatsapp', 'telegram', 'instagram', 'facebook', 'tiktok', 'youtube', 'x'];
+        foreach ($platforms as $p) {
+            $rules[$p . '_url'] = 'nullable|string|max:500';
+            $rules[$p . '_active'] = 'nullable|boolean';
+        }
+        $validated = $request->validate($rules);
 
-        $this->settings->setMany([
-            'whatsapp_url' => ['value' => $validated['whatsapp_url'] ?? '', 'type' => 'text'],
-            'facebook_url' => ['value' => $validated['facebook_url'] ?? '', 'type' => 'text'],
-            'instagram_url' => ['value' => $validated['instagram_url'] ?? '', 'type' => 'text'],
-            'youtube_url' => ['value' => $validated['youtube_url'] ?? '', 'type' => 'text'],
-        ]);
+        foreach ($platforms as $p) {
+            $url = trim($validated[$p . '_url'] ?? '');
+            if ($url !== '' && !filter_var($url, FILTER_VALIDATE_URL)) {
+                return redirect()->route('admin.settings.social')
+                    ->withInput()
+                    ->with('error', $p . '_url geçersiz URL formatında.');
+            }
+        }
+
+        $items = [];
+        foreach ($platforms as $p) {
+            $items[$p . '_url'] = ['value' => trim($validated[$p . '_url'] ?? ''), 'type' => 'text'];
+            $items[$p . '_active'] = ['value' => (bool) ($request->boolean($p . '_active')), 'type' => 'boolean'];
+        }
+        $this->settings->setMany($items);
         ActivityLogger::log('settings.updated', ['section' => 'social']);
 
         return redirect()->route('admin.settings.social')->with('success', 'Kaydedildi');

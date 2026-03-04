@@ -46,6 +46,7 @@ class SettingsService
 
         Cache::forget('site_settings_' . $key);
         Cache::forget('site_settings_all');
+        Cache::forget('site_settings_social_links');
     }
 
     public function setMany(array $items): void
@@ -77,6 +78,7 @@ class SettingsService
         DB::table($this->table)->where('key', $key)->delete();
         Cache::forget('site_settings_' . $key);
         Cache::forget('site_settings_all');
+        Cache::forget('site_settings_social_links');
     }
 
     public function clearCache(): void
@@ -86,6 +88,24 @@ class SettingsService
             Cache::forget('site_settings_' . $key);
         }
         Cache::forget('site_settings_all');
+        Cache::forget('site_settings_social_links');
+    }
+
+    public function getSocialLinks(): array
+    {
+        return Cache::remember('site_settings_social_links', $this->cacheTtl, function () {
+            $platforms = ['whatsapp', 'telegram', 'instagram', 'facebook', 'tiktok', 'youtube', 'x'];
+            $out = [];
+            foreach ($platforms as $platform) {
+                $url = $this->get($platform . '_url', '');
+                $active = (bool) $this->get($platform . '_active', false);
+                $out[$platform] = [
+                    'url' => $url ?: '',
+                    'is_active' => $active,
+                ];
+            }
+            return $out;
+        });
     }
 
     protected function castValue(?string $value, string $type): mixed

@@ -7,41 +7,42 @@
         @if(session('success'))
             <div class="settings-success">{{ session('success') }}</div>
         @endif
+        @if(session('error'))
+            <div class="settings-error">{{ session('error') }}</div>
+        @endif
 
         <form method="POST" action="{{ route('admin.settings.social') }}">
             @csrf
 
-            <div class="form-group">
-                <label for="whatsapp_url">WhatsApp URL</label>
-                <input type="url" name="whatsapp_url" id="whatsapp_url"
-                    value="{{ old('whatsapp_url', $whatsapp_url ?? '') }}"
-                    placeholder="https://wa.me/905551234567">
-                @error('whatsapp_url')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
+            @php
+                $platforms = [
+                    'whatsapp' => ['label' => 'WhatsApp', 'placeholder' => 'https://wa.me/905551234567'],
+                    'telegram' => ['label' => 'Telegram', 'placeholder' => 'https://t.me/radyoyol'],
+                    'instagram' => ['label' => 'Instagram', 'placeholder' => 'https://instagram.com/radyoyol'],
+                    'facebook' => ['label' => 'Facebook', 'placeholder' => 'https://facebook.com/radyoyol'],
+                    'tiktok' => ['label' => 'TikTok', 'placeholder' => 'https://tiktok.com/@radyoyol'],
+                    'youtube' => ['label' => 'YouTube', 'placeholder' => 'https://youtube.com/@radyoyol'],
+                    'x' => ['label' => 'X (Twitter)', 'placeholder' => 'https://x.com/radyoyol'],
+                ];
+            @endphp
 
-            <div class="form-group">
-                <label for="facebook_url">Facebook URL</label>
-                <input type="url" name="facebook_url" id="facebook_url"
-                    value="{{ old('facebook_url', $facebook_url ?? '') }}"
-                    placeholder="https://facebook.com/radyoyol">
-                @error('facebook_url')<span class="form-error">{{ $message }}</span>@enderror
+            @foreach($platforms as $key => $info)
+            <div class="form-group social-row">
+                <div class="social-row-header">
+                    <label for="{{ $key }}_url">{{ $info['label'] }}</label>
+                    <label class="toggle-label">
+                        <input type="hidden" name="{{ $key }}_active" value="0">
+                        <input type="checkbox" name="{{ $key }}_active" id="{{ $key }}_active" value="1"
+                            {{ old($key . '_active', ${$key . '_active'} ?? false) ? 'checked' : '' }}>
+                        <span class="toggle-text">Aktif</span>
+                    </label>
+                </div>
+                <input type="url" name="{{ $key }}_url" id="{{ $key }}_url"
+                    value="{{ old($key . '_url', ${$key . '_url'} ?? '') }}"
+                    placeholder="{{ $info['placeholder'] }}">
+                @error($key . '_url')<span class="form-error">{{ $message }}</span>@enderror
             </div>
-
-            <div class="form-group">
-                <label for="instagram_url">Instagram URL</label>
-                <input type="url" name="instagram_url" id="instagram_url"
-                    value="{{ old('instagram_url', $instagram_url ?? '') }}"
-                    placeholder="https://instagram.com/radyoyol">
-                @error('instagram_url')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-
-            <div class="form-group">
-                <label for="youtube_url">YouTube URL</label>
-                <input type="url" name="youtube_url" id="youtube_url"
-                    value="{{ old('youtube_url', $youtube_url ?? '') }}"
-                    placeholder="https://youtube.com/@radyoyol">
-                @error('youtube_url')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
+            @endforeach
 
             <div class="form-actions">
                 <button type="submit" class="btn-save">Kaydet</button>
@@ -53,9 +54,14 @@
 @push('styles')
 <style>
 .settings-success { padding: 0.75rem 1rem; background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); border-radius: 10px; color: #86efac; font-size: 0.9rem; margin-bottom: 1.25rem; }
+.settings-error { padding: 0.75rem 1rem; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); border-radius: 10px; color: #fca5a5; font-size: 0.9rem; margin-bottom: 1.25rem; }
 .form-group { margin-bottom: 1.25rem; }
 .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
-.form-group input { width: 100%; padding: 0.75rem 1rem; font-size: 0.9rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 10px; color: var(--text); }
+.social-row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.social-row-header label:first-child { margin-bottom: 0; }
+.toggle-label { display: flex; align-items: center; gap: 0.5rem; font-weight: 500; font-size: 0.85rem; cursor: pointer; }
+.toggle-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+.form-group input[type="url"] { width: 100%; padding: 0.75rem 1rem; font-size: 0.9rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 10px; color: var(--text); }
 .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.35rem; display: block; }
 .form-actions { margin-top: 1.5rem; }
 .btn-save { padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; border: none; border-radius: 10px; cursor: pointer; }
