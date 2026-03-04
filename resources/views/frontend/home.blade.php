@@ -711,7 +711,7 @@
                 @endif
                 @if(isset($socialLinks['ios_app']) && ($socialLinks['ios_app']['is_active'] ?? false) && !empty(trim($socialLinks['ios_app']['url'] ?? '')))
                 <a href="{{ $socialLinks['ios_app']['url'] }}" class="badge-placeholder badge-link" target="_blank" rel="noopener noreferrer" title="iOS Uygulaması">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" class="store-badge" height="40">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Download_on_the_App_Store_Badge_US-UK_RGB_blk.svg" alt="Download on the App Store" class="store-badge" height="40">
                 </a>
                 @endif
             </div>
