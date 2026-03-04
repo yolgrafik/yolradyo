@@ -49,54 +49,18 @@
         justify-content: center;
         background-size: cover;
         background-position: center;
-        transform: translateX(100%) translateY(0) scale(1.02);
-        transition: none;
+        transform: scale(1.03);
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .home-slider__slide.is-active {
         opacity: 1;
         z-index: 1;
-        transform: translateX(0) translateY(0) scale(1);
+        transform: scale(1);
     }
-    .home-slider__slide.is-exiting { opacity: 0; }
-    .home-slider__slide.effect-1.is-active { transition: transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.7s ease; }
-    .home-slider__slide.effect-1 { transform: translateX(100%) translateY(0) scale(1.02); }
-    .home-slider__slide.effect-1.is-active { transform: translateX(0) translateY(0) scale(1); }
-    .home-slider__slide.effect-1.is-exiting { transform: translateX(-80%) translateY(3%) scale(0.97); transition: transform 1.1s cubic-bezier(0.55, 0.06, 0.68, 0.19), opacity 0.6s ease; }
-    .home-slider__slide.effect-2 { transform: translateY(100%) scale(0.95); }
-    .home-slider__slide.effect-2.is-active { transform: translateY(0) scale(1); transition: transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease; }
-    .home-slider__slide.effect-2.is-exiting { transform: translateY(-50%) scale(0.9); transition: transform 1s ease, opacity 0.5s ease; }
-    .home-slider__slide.effect-3 { transform: translateX(-100%) scale(1.05); }
-    .home-slider__slide.effect-3.is-active { transform: translateX(0) scale(1); transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease; }
-    .home-slider__slide.effect-3.is-exiting { transform: translateX(80%) scale(0.95); transition: transform 1s ease, opacity 0.5s ease; }
-    .home-slider__slide.effect-4 { transform: scale(0.8); opacity: 0; }
-    .home-slider__slide.effect-4.is-active { transform: scale(1); transition: transform 1.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease; }
-    .home-slider__slide.effect-4.is-exiting { transform: scale(1.2); transition: transform 0.9s ease, opacity 0.4s ease; }
-    .home-slider__slide.effect-5 { transform: translate(100%, 100%) scale(0.9); }
-    .home-slider__slide.effect-5.is-active { transform: translate(0, 0) scale(1); transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.7s ease; }
-    .home-slider__slide.effect-5.is-exiting { transform: translate(-60%, -40%) scale(0.92); transition: transform 1s ease, opacity 0.5s ease; }
-    .home-slider__slide::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 120px;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C150,0 300,120 450,60 S600,0 750,60 S900,120 1050,60 1200,60 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.35)'/%3E%3Cpath d='M0,85 C200,45 400,125 600,85 S800,45 1000,85 1200,85 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.2)'/%3E%3Cpath d='M0,100 C250,60 500,140 750,100 S1000,60 1200,100 L1200,120 L0,120 Z' fill='rgba(0,0,0,0.1)'/%3E%3C/svg%3E") no-repeat bottom center;
-        background-size: 200% 100%;
-        pointer-events: none;
-        z-index: 1;
+    .home-slider__slide.is-exiting {
         opacity: 0;
-    }
-    .home-slider__slide.is-active::after {
-        opacity: 1;
-        animation: waveRoll 5s ease-in-out infinite;
-    }
-    @keyframes waveRoll {
-        0%, 100% { background-position-x: 0%; }
-        25% { background-position-x: 25%; }
-        50% { background-position-x: 50%; }
-        75% { background-position-x: 75%; }
-        100% { background-position-x: 100%; }
+        transform: scale(0.98);
+        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .home-slider__slide::before {
         content: '';
@@ -567,7 +531,7 @@
             <div class="home-slider-wrap">
                 <div class="home-slider" id="homeSlider">
                     @foreach($sliders as $i => $s)
-                    <div class="home-slider__slide effect-{{ ($i % 5) + 1 }} {{ $i === 0 ? 'is-active' : '' }}" data-index="{{ $i }}" data-effect="{{ ($i % 5) + 1 }}" style="background-image: url('{{ asset($s->image_path) }}');">
+                    <div class="home-slider__slide {{ $i === 0 ? 'is-active' : '' }}" data-index="{{ $i }}" style="background-image: url('{{ asset($s->image_path) }}');">
                         <div class="home-slider__content">
                             <h2 class="home-slider__title">{{ $s->title }}</h2>
                             @if($s->subtitle)<p class="home-slider__subtitle">{{ $s->subtitle }}</p>@endif
@@ -762,7 +726,6 @@
         var current = 0;
         var total = slides.length;
         var isTransitioning = false;
-        var effectIndex = 0;
 
         function goTo(i) {
             if (isTransitioning || i === current) return;
@@ -771,19 +734,16 @@
             var next = (i + total) % total;
             slides[prev].classList.remove('is-active');
             slides[prev].classList.add('is-exiting');
-            var eff = (effectIndex % 5) + 1;
-            slides[next].className = 'home-slider__slide effect-' + eff + ' is-active';
+            slides[next].classList.add('is-active');
             slides[next].classList.remove('is-exiting');
             current = next;
-            effectIndex++;
             dots.forEach(function(d, idx) {
                 d.classList.toggle('is-active', idx === current);
             });
             setTimeout(function() {
-                slides[prev].classList.remove('is-active', 'is-exiting');
-                slides[prev].className = 'home-slider__slide effect-' + ((effectIndex - 1) % 5 + 1);
+                slides[prev].classList.remove('is-exiting');
                 isTransitioning = false;
-            }, 1200);
+            }, 800);
         }
 
         dots.forEach(function(dot, i) {
