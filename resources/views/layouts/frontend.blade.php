@@ -121,7 +121,7 @@
             border-radius: 1px;
         }
         .nav-menu > li > a:hover {
-            color: #fff;
+            color: var(--ry-text);
             background: rgba(255,255,255,0.04);
         }
         .nav-menu > li > a.active {
@@ -150,8 +150,8 @@
             height: 36px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--text);
+            border: 1px solid var(--ry-border);
+            color: var(--ry-text);
             transition: all 0.2s ease;
         }
         .nav-social a:hover {
@@ -171,27 +171,27 @@
             background: rgba(15,19,25,0.6);
             border: 1px solid rgba(255,255,255,0.1);
             box-shadow: inset 0 1px 2px rgba(0,0,0,0.2), 0 1px 3px rgba(0,0,0,0.15);
-            color: var(--text); text-decoration: none;
+            color: var(--ry-text); text-decoration: none;
             transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
         }
         .navbar .header-social-icon::before {
             content: ''; position: absolute; inset: -2px;
             border-radius: 999px;
-            background: linear-gradient(135deg, var(--accent), transparent 50%, var(--accent));
+            background: linear-gradient(135deg, var(--ry-accent), transparent 50%, var(--ry-accent));
             opacity: 0;
             z-index: -1;
             transition: opacity 0.25s ease;
         }
         .navbar .header-social-icon:hover {
             transform: translateY(-1px) scale(1.06);
-            background: rgba(201,42,42,0.2);
-            border-color: rgba(201,42,42,0.5);
-            box-shadow: 0 0 20px rgba(201,42,42,0.35), 0 4px 12px rgba(0,0,0,0.2);
-            color: #fff;
+            background: color-mix(in srgb, var(--ry-accent) 25%, transparent);
+            border-color: var(--ry-accent);
+            box-shadow: 0 0 20px color-mix(in srgb, var(--ry-glow) 40%, transparent), 0 4px 12px rgba(0,0,0,0.2);
+            color: var(--ry-text);
         }
         .navbar .header-social-icon:hover::before { opacity: 0.15; }
         .navbar .header-social-icon:focus-visible {
-            outline: 2px solid var(--accent);
+            outline: 2px solid var(--ry-accent);
             outline-offset: 3px;
         }
         .navbar .header-social-icon i { font-size: 1.15rem; }
@@ -208,8 +208,8 @@
             top: 100%;
             left: 0;
             min-width: 220px;
-            background: #111827;
-            border: 1px solid var(--border);
+            background: var(--ry-surface);
+            border: 1px solid var(--ry-border);
             border-radius: 12px;
             padding: 0.5rem;
             margin-top: 0.25rem;
@@ -226,7 +226,7 @@
         }
         .nav-dropdown-menu a {
             display: block;
-            color: #ffffff;
+            color: var(--ry-text);
             text-decoration: none;
             padding: 12px 16px;
             border-radius: 8px;
@@ -248,10 +248,10 @@
             transition: opacity 0.2s ease;
         }
         .nav-dropdown-menu a:hover {
-            background: rgba(201, 42, 42, 0.12);
-            color: #fff;
+            background: color-mix(in srgb, var(--ry-accent) 15%, transparent);
+            color: var(--ry-text);
             padding-left: 22px;
-            box-shadow: inset 0 0 20px rgba(201, 42, 42, 0.08);
+            box-shadow: inset 0 0 20px color-mix(in srgb, var(--ry-glow) 10%, transparent);
         }
         .nav-dropdown-menu a:hover::before {
             opacity: 1;
@@ -511,7 +511,7 @@
                 right: -300px;
                 width: 300px;
                 height: 100vh;
-                background: linear-gradient(180deg, rgba(11,15,26,0.98) 0%, rgba(17,24,39,0.97) 100%);
+                background: var(--ry-header-bg);
                 backdrop-filter: blur(16px);
                 -webkit-backdrop-filter: blur(16px);
                 flex: none;
@@ -572,7 +572,7 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: #ff2a2a;
+            background: var(--ry-primary);
             border: none;
             display: flex;
             justify-content: center;
@@ -591,7 +591,7 @@
             height: 0;
             border-top: 8px solid transparent;
             border-bottom: 8px solid transparent;
-            border-left: 14px solid #fff;
+            border-left: 14px solid var(--ry-text);
             margin-left: 4px;
         }
         .disc-overlay .icon.pause {
@@ -607,7 +607,7 @@
             top: 0;
             width: 5px;
             height: 16px;
-            background: #fff;
+            background: var(--ry-text);
         }
         .disc-overlay .icon.pause::before { left: 0; }
         .disc-overlay .icon.pause::after { right: 0; }
@@ -662,7 +662,6 @@
         .btn-request-group:hover { box-shadow: 0 6px 24px color-mix(in srgb, var(--ry-glow) 50%, transparent) !important; }
     </style>
     <style id="glass-btn-styles">
-        /* Glassmorphism button - loaded after stack so it overrides page styles */
         .glass-btn,
         a.glass-btn,
         button.glass-btn {
@@ -670,13 +669,13 @@
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            background: rgba(255,255,255,0.08) !important;
+            background: var(--ry-primary) !important;
             backdrop-filter: blur(12px) !important;
             -webkit-backdrop-filter: blur(12px) !important;
-            border: 1px solid rgba(255,255,255,0.15) !important;
+            border: 1px solid var(--ry-btn-border) !important;
             border-radius: var(--ry-radius) !important;
             padding: 10px 22px !important;
-            color: #fff !important;
+            color: var(--ry-btn-text) !important;
             font-weight: 600 !important;
             letter-spacing: .4px !important;
             text-decoration: none !important;
@@ -691,7 +690,7 @@
             position: absolute !important;
             inset: 0 !important;
             border-radius: var(--ry-radius) !important;
-            background: linear-gradient(120deg, rgba(255,255,255,0.25), rgba(255,255,255,0)) !important;
+            background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0)) !important;
             opacity: .4 !important;
             pointer-events: none !important;
         }
@@ -700,7 +699,7 @@
         button.glass-btn:hover {
             transform: translateY(-3px) scale(1.05) !important;
             box-shadow: 0 0 20px var(--ry-glow), 0 8px 25px rgba(0,0,0,0.45) !important;
-            background: rgba(255,255,255,0.15) !important;
+            background: var(--ry-primary-hover) !important;
         }
         .glass-btn:active,
         a.glass-btn:active,

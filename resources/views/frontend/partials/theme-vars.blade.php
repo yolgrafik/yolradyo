@@ -25,6 +25,7 @@
     --ry-radius: 14px;
     --ry-btn-text: #ffffff;
     --ry-btn-border: var(--ry-accent);
+    --ry-focus: var(--ry-accent);
     --ry-footer-text: var(--ry-text);
     --ry-footer-link: var(--ry-text);
     --ry-footer-link-hover: var(--ry-primary-hover);
@@ -54,9 +55,9 @@ body::before {
     pointer-events: none;
     z-index: 1;
 }
-body > nav.navbar { z-index: 2000; position: sticky; top: 0; }
-body > .bottom-bar-player { z-index: 1999; }
-body > .legal-footer { z-index: 1998; }
+body > nav.navbar { z-index: 2000 !important; position: sticky !important; top: 0 !important; background: var(--ry-header-bg) !important; }
+body > .bottom-bar-player { z-index: 1999 !important; background: var(--ry-surface) !important; }
+body > .legal-footer { z-index: 1998 !important; background: var(--ry-footer-bg) !important; }
 body > main { position: relative; z-index: 2; }
 @else
 body { background: var(--ry-bg); }

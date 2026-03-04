@@ -546,7 +546,7 @@
                         <div class="home-slider__content">
                             <h2 class="home-slider__title">{{ $s->title }}</h2>
                             @if($s->subtitle)<p class="home-slider__subtitle">{{ $s->subtitle }}</p>@endif
-                            @if($s->button_text && $s->button_link)<a href="{{ url($s->button_link) }}" class="home-slider__btn glass-btn">{{ $s->button_text }}</a>@endif
+                            @if($s->button_text && $s->button_link)<a href="{{ url($s->button_link) }}" class="home-slider__btn ry-btn ry-btn-primary">{{ $s->button_text }}</a>@endif
                         </div>
                     </div>
                     @endforeach
@@ -589,18 +589,18 @@
         </div>
         <div class="home-right">
             <div class="home-actions">
-                <button type="button" class="btn-live glass-btn" id="openLivePlayer">CANLI DİNLE</button>
+                <button type="button" class="btn-live glass-btn ry-btn ry-btn-primary" id="openLivePlayer">CANLI DİNLE</button>
                 <div class="btn-request-group">
-                    <button type="button" class="btn-request" data-open-song-request>İstek Gönder</button>
+                    <button type="button" class="btn-request ry-btn ry-btn-primary" data-open-song-request>İstek Gönder</button>
                     @php
                         $wa = $socialLinks['whatsapp'] ?? ['url' => '', 'is_active' => false];
                         $waActive = ($wa['is_active'] ?? false) && !empty(trim($wa['url'] ?? ''));
                         $waUrl = $waActive ? (rtrim($wa['url']) . (str_contains($wa['url'], '?') ? '&' : '?') . 'text=' . urlencode('Merhaba, şarkı isteği göndermek istiyorum.')) : '#';
                     @endphp
                     @if($waActive)
-                    <a href="{{ $waUrl }}" class="btn-whatsapp-istek" target="_blank" rel="noopener noreferrer" title="WhatsApp ile İstek Gönder">WhatsApp İstek</a>
+                    <a href="{{ $waUrl }}" class="btn-whatsapp-istek ry-btn ry-btn-primary" target="_blank" rel="noopener noreferrer" title="WhatsApp ile İstek Gönder">WhatsApp İstek</a>
                     @else
-                    <span class="btn-whatsapp-istek btn-whatsapp-disabled" title="WhatsApp adresi ayarlardan eklenebilir">WhatsApp İstek</span>
+                    <span class="btn-whatsapp-istek btn-whatsapp-disabled ry-btn" title="WhatsApp adresi ayarlardan eklenebilir">WhatsApp İstek</span>
                     @endif
                 </div>
             </div>

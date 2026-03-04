@@ -18,7 +18,7 @@
         {{-- Theme Presets --}}
         <section class="theme-section">
             <h2 class="theme-section__title">Tema Presetleri</h2>
-            <p class="theme-section__desc">15 hazır temadan birini seçin.</p>
+            <p class="theme-section__desc">20 hazır temadan birini seçin.</p>
             <div class="theme-presets-grid">
                 @foreach($presets as $id => $preset)
                 <label class="theme-preset-card {{ $themeId === (int)$id ? 'is-selected' : '' }}">
