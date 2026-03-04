@@ -293,6 +293,7 @@
         display: flex;
         flex-direction: column;
         gap: 1.25rem;
+        min-width: 0;
         max-width: 360px;
     }
     .home-actions {
@@ -364,17 +365,20 @@
         position: relative;
         display: flex;
         gap: 0.5rem;
+        width: 100%;
+        flex-wrap: wrap;
     }
     .home-icon-buttons button,
     .home-icon-buttons a.icon-link {
-        flex: 1;
+        flex: 1 1 0;
+        min-width: 0;
         aspect-ratio: 1;
-        padding: 0.75rem;
+        padding: 0.5rem;
         background: var(--panel);
         border: 1px solid var(--border);
         border-radius: 10px;
         color: var(--muted);
-        font-size: 2.5rem;
+        font-size: clamp(1.25rem, 4vw, 2.5rem);
         cursor: pointer;
         transition: all 0.2s ease;
         display: flex;
@@ -395,25 +399,29 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        flex-wrap: wrap;
-        padding: 0.6rem 1rem;
+        padding: 0.5rem 0.75rem;
         background: color-mix(in srgb, var(--ry-bar-bg) 65%, #0b0f16);
         border: 1px solid var(--border);
         border-radius: 10px;
+        width: 100%;
+        box-sizing: border-box;
     }
     .home-badges .badge-link-item {
         display: flex;
         align-items: center;
         justify-content: center;
+        flex: 1 1 0;
+        min-width: 0;
         transition: opacity 0.2s ease;
     }
     .home-badges .badge-link-item:hover {
         opacity: 0.85;
     }
     .home-badges .store-badge {
-        height: 64px;
-        width: auto;
-        max-width: 220px;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: 44px;
         object-fit: contain;
         display: block;
     }
