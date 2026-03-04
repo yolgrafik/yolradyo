@@ -254,29 +254,35 @@
     .schedule-strip {
         display: flex;
         flex-wrap: wrap;
-        align-items: center;
+        align-items: stretch;
+        align-content: stretch;
         gap: 6px;
+        width: 100%;
         max-width: 100%;
         overflow: hidden;
-        padding: 6px 10px;
+        padding: 8px 10px;
         border-radius: 10px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.06);
         margin-top: 8px;
+        min-height: 44px;
     }
     .schedule-chip {
         display: inline-flex;
+        flex: 1 1 auto;
+        min-width: 80px;
         align-items: center;
+        justify-content: center;
         gap: 5px;
-        padding: 5px 9px;
+        padding: 6px 10px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.08);
         font-size: 0.8rem;
         font-weight: 700;
-        flex-shrink: 0;
     }
     .schedule-chip .sep { opacity: 0.6; font-weight: 900; flex-shrink: 0; }
+    .schedule-chip { overflow: hidden; min-width: 0; }
     .schedule-strip .dot { opacity: 0.35; flex-shrink: 0; }
     .schedule-chip.is-live {
         background: linear-gradient(135deg, #ff3b3b, #b30000);
