@@ -28,6 +28,7 @@
         position: relative;
         border-radius: 14px;
         overflow: hidden;
+        min-width: 0;
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
         min-height: 386px;
         background: var(--panel);
@@ -223,6 +224,7 @@
         display: grid;
         grid-template-columns: 240px 1fr;
         gap: 14px;
+        min-width: 0;
         background: rgba(20, 25, 35, 0.6);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
