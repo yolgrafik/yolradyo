@@ -372,7 +372,7 @@
         color: #ffffff;
     }
     .live-dj-card {
-        background: var(--ry-schedule-bg);
+        background: color-mix(in srgb, var(--ry-theme) 18%, #0f172a);
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 0;
@@ -386,10 +386,12 @@
         font-size: 14px;
         padding: 10px 14px;
         letter-spacing: 2px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.35);
     }
     .live-content {
         padding: 14px;
         transition: opacity 0.3s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
     .live-content.updating {
         opacity: 0.6;
@@ -480,10 +482,10 @@
     }
     .live-meta {
         padding: 10px 14px;
-        border-top: 1px solid var(--border);
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
         font-size: 11px;
         color: var(--muted);
-        background: rgba(0, 0, 0, 0.15);
+        background: color-mix(in srgb, var(--ry-theme) 10%, #0b0f16);
     }
     .live-track {
         margin-bottom: 4px;
