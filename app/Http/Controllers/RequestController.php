@@ -20,11 +20,11 @@ class RequestController extends Controller
             ]);
 
             SongRequest::create([
-                'full_name' => $validated['full_name'],
-                'email' => !empty($validated['email']) ? $validated['email'] : null,
-                'artist_name' => $validated['artist_name'],
-                'song_name' => $validated['song_name'],
-                'message' => $validated['message'] ?? null,
+                'full_name' => request('full_name'),
+                'email' => request('email') ?: null,
+                'artist_name' => request('artist_name'),
+                'song_name' => request('song_name'),
+                'message' => request('message'),
                 'status' => 'pending',
             ]);
 
