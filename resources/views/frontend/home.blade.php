@@ -454,25 +454,62 @@
             @else
             <div class="home-slider-placeholder">Slider</div>
             @endif
-            <div class="schedule-card">
-                <div class="schedule-card__header">
-                    <div class="schedule-title">Yayın Akışı</div>
-                    <div class="schedule-tabs">
-                        <button type="button" class="active">Pazartesi</button>
-                        <button type="button">Salı</button>
-                        <button type="button">Çarşamba</button>
-                        <button type="button">Perşembe</button>
-                        <button type="button">Cuma</button>
-                        <button type="button">Cumartesi</button>
-                        <button type="button">Pazar</button>
-                    </div>
+            <div class="schedule-days-bar">
+                <button type="button" class="schedule-day active" data-day="0">Pazartesi</button>
+                <button type="button" class="schedule-day" data-day="1">Salı</button>
+                <button type="button" class="schedule-day" data-day="2">Çarşamba</button>
+                <button type="button" class="schedule-day" data-day="3">Perşembe</button>
+                <button type="button" class="schedule-day" data-day="4">Cuma</button>
+                <button type="button" class="schedule-day" data-day="5">Cumartesi</button>
+                <button type="button" class="schedule-day" data-day="6">Pazar</button>
+            </div>
+            <div class="schedule-panel">
+                <div class="schedule-panel__left">
+                    <span class="schedule-panel__icon">📻</span>
+                    <span class="schedule-panel__title">Yayın Akışı</span>
                 </div>
-                <div class="schedule-card__body">
-                    <div class="schedule-list">
-                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Program adı</span></div>
-                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Program adı</span></div>
-                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Program adı</span></div>
-                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Program adı</span></div>
+                <div class="schedule-panel__right">
+                    <div class="schedule-list" data-day="0">
+                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Sabah Kuşağı</span><span class="schedule-dj">DJ Ali</span></div>
+                        <div class="schedule-item is-live"><span class="schedule-time">12:00</span><span class="schedule-program">Öğle Yayını</span><span class="schedule-dj">Desmal</span><span class="schedule-badge">CANLI</span></div>
+                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
+                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Akşam Kuşağı</span><span class="schedule-dj">Desmal</span></div>
+                    </div>
+                    <div class="schedule-list" data-day="1" style="display:none">
+                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Salı Sabah</span><span class="schedule-dj">DJ Ali</span></div>
+                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Salı Öğle</span><span class="schedule-dj">Desmal</span></div>
+                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Salı Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
+                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Salı Akşam</span><span class="schedule-dj">Desmal</span></div>
+                    </div>
+                    <div class="schedule-list" data-day="2" style="display:none">
+                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Çarşamba Sabah</span><span class="schedule-dj">DJ Ali</span></div>
+                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Çarşamba Öğle</span><span class="schedule-dj">Desmal</span></div>
+                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Çarşamba Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
+                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Çarşamba Akşam</span><span class="schedule-dj">Desmal</span></div>
+                    </div>
+                    <div class="schedule-list" data-day="3" style="display:none">
+                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Perşembe Sabah</span><span class="schedule-dj">DJ Ali</span></div>
+                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Perşembe Öğle</span><span class="schedule-dj">Desmal</span></div>
+                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Perşembe Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
+                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Perşembe Akşam</span><span class="schedule-dj">Desmal</span></div>
+                    </div>
+                    <div class="schedule-list" data-day="4" style="display:none">
+                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Cuma Sabah</span><span class="schedule-dj">DJ Ali</span></div>
+                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Cuma Öğle</span><span class="schedule-dj">Desmal</span></div>
+                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Cuma Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
+                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Cuma Akşam</span><span class="schedule-dj">Desmal</span></div>
+                    </div>
+                    <div class="schedule-list" data-day="5" style="display:none">
+                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Cumartesi Sabah</span><span class="schedule-dj">DJ Ali</span></div>
+                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Cumartesi Öğle</span><span class="schedule-dj">Desmal</span></div>
+                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Cumartesi Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
+                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Cumartesi Akşam</span><span class="schedule-dj">Desmal</span></div>
+                    </div>
+                    <div class="schedule-list" data-day="6" style="display:none">
+                        <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Pazar Sabah</span><span class="schedule-dj">DJ Ali</span></div>
+                        <div class="schedule-item"><span class="schedule-time">12:00</span><span class="schedule-program">Pazar Öğle</span><span class="schedule-dj">Desmal</span></div>
+                        <div class="schedule-item"><span class="schedule-time">15:00</span><span class="schedule-program">Pazar Öğleden Sonra</span><span class="schedule-dj">DJ Ayşe</span></div>
+                        <div class="schedule-item"><span class="schedule-time">18:00</span><span class="schedule-program">Pazar Akşam</span><span class="schedule-dj">Desmal</span></div>
                     </div>
                 </div>
             </div>
