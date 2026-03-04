@@ -148,6 +148,17 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
         min-width: 0;
     }
+    .schedule-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        pointer-events: none;
+        z-index: 1;
+    }
     .schedule-card::after {
         content: '';
         position: absolute;
