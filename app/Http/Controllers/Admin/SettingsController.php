@@ -154,6 +154,7 @@ class SettingsController extends Controller
             'social_youtube' => $this->settings->get('social_youtube'),
             'social_instagram' => $this->settings->get('social_instagram'),
             'social_tiktok' => $this->settings->get('social_tiktok'),
+            'social_whatsapp' => $this->settings->get('social_whatsapp'),
         ]);
     }
 
@@ -166,6 +167,7 @@ class SettingsController extends Controller
             'social_youtube' => 'nullable|url|max:500',
             'social_instagram' => 'nullable|url|max:500',
             'social_tiktok' => 'nullable|url|max:500',
+            'social_whatsapp' => 'nullable|url|max:500',
         ]);
 
         $this->settings->setMany([
@@ -174,6 +176,7 @@ class SettingsController extends Controller
             'social_youtube' => ['value' => $validated['social_youtube'] ?? '', 'type' => 'url'],
             'social_instagram' => ['value' => $validated['social_instagram'] ?? '', 'type' => 'url'],
             'social_tiktok' => ['value' => $validated['social_tiktok'] ?? '', 'type' => 'url'],
+            'social_whatsapp' => ['value' => $validated['social_whatsapp'] ?? '', 'type' => 'url'],
         ]);
         ActivityLogger::log('settings.updated', ['section' => 'social']);
 

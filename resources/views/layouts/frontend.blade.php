@@ -801,10 +801,7 @@
                 quickLive.addEventListener('click', function(e) {
                     e.preventDefault();
                     var overlay = document.getElementById('mobilePlayerOverlay');
-                    if (overlay && !overlay.classList.contains('hidden')) {
-                        if (audio.paused) tryPlay();
-                        else audio.pause();
-                    } else if (overlay) {
+                    if (overlay) {
                         overlay.classList.remove('hidden');
                         overlay.setAttribute('aria-hidden', 'false');
                         document.body.style.overflow = 'hidden';
@@ -888,6 +885,52 @@
         })();
     </script>
     @include('partials.song-request-modal')
+    <script>
+    (function() {
+        var overlay = document.getElementById('mobilePlayerOverlay');
+        var mpClose = document.getElementById('mpClose');
+        var mpPlay = document.getElementById('mpPlay');
+        var mpPause = document.getElementById('mpPause');
+        var mpRequest = document.getElementById('mpRequest');
+        var mpVol = document.getElementById('mpVol');
+        var audio = document.getElementById('radioAudio');
+        if (!overlay || !audio) return;
+        var streamUrl = audio.getAttribute('data-stream-url') || '';
+        var backupUrl = audio.getAttribute('data-backup-url') || '';
+        function closeOverlay() {
+            overlay.classList.add('hidden');
+            overlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+        function updatePlayPauseUI() {
+            var playing = !audio.paused && !audio.ended;
+            if (mpPlay) mpPlay.classList.toggle('hidden', playing);
+            if (mpPause) mpPause.classList.toggle('hidden', !playing);
+        }
+        if (mpClose) mpClose.addEventListener('click', closeOverlay);
+        if (mpPlay) {
+            mpPlay.addEventListener('click', function() {
+                var url = streamUrl || backupUrl;
+                if (url && !audio.src) { audio.src = url; audio.load(); }
+                audio.play().catch(function(){});
+            });
+        }
+        if (mpPause) mpPause.addEventListener('click', function() { audio.pause(); });
+        if (mpRequest) {
+            mpRequest.addEventListener('click', function() {
+                if (typeof window.openSongRequestModal === 'function') window.openSongRequestModal();
+            });
+        }
+        if (mpVol) {
+            var defVol = parseFloat(audio.getAttribute('data-default-volume')) || 0.8;
+            mpVol.value = defVol;
+            mpVol.addEventListener('input', function() { audio.volume = parseFloat(this.value); });
+        }
+        audio.addEventListener('play', updatePlayPauseUI);
+        audio.addEventListener('pause', updatePlayPauseUI);
+        audio.addEventListener('ended', updatePlayPauseUI);
+    })();
+    </script>
 
     @php
         $mpCover = isset($siteSettings['brand_logo_path']) && $siteSettings['brand_logo_path']

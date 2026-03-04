@@ -51,6 +51,14 @@
                 @error('social_tiktok')<span class="form-error">{{ $message }}</span>@enderror
             </div>
 
+            <div class="form-group">
+                <label for="social_whatsapp">WhatsApp URL</label>
+                <input type="url" name="social_whatsapp" id="social_whatsapp"
+                    value="{{ old('social_whatsapp', $social_whatsapp ?? '') }}"
+                    placeholder="https://wa.me/905551234567">
+                @error('social_whatsapp')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+
             <div class="form-actions">
                 <button type="submit" class="btn-save">Kaydet</button>
             </div>
