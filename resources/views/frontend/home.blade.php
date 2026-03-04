@@ -396,15 +396,39 @@
     .live-card {
         display: flex;
         flex-direction: column;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        overflow: hidden;
     }
-    .live-card-title {
-        font-weight: 800;
+    .live-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 14px;
+        background: linear-gradient(180deg, rgba(255, 60, 60, 0.18), rgba(0, 0, 0, 0));
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        font-weight: 900;
         letter-spacing: 2px;
         font-size: 12px;
-        opacity: 0.85;
-        margin-bottom: 10px;
-        color: #ffffff;
+        text-transform: uppercase;
     }
+    .live-dot {
+        width: 10px;
+        height: 10px;
+        background: #ff2d2d;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(255, 45, 45, 0.6);
+        animation: livePulse 1.4s infinite;
+    }
+    @keyframes livePulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(0.75); opacity: 0.5; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .live-icon { font-size: 14px; opacity: 0.95; }
+    .live-title { color: #fff; opacity: 0.95; }
     .live-card-content {
         transition: opacity 0.3s ease;
     }
@@ -584,7 +608,11 @@
                 <a href="#" class="badge-placeholder">Download on the App Store</a>
             </div>
             <div class="live-card" id="liveDjCard">
-                <div class="live-card-title">YAYINDA</div>
+                <div class="live-card-header">
+                    <span class="live-dot"></span>
+                    <span class="live-icon">🎙</span>
+                    <span class="live-title">YAYINDA</span>
+                </div>
                 <div class="live-card-content" id="liveDjCardContent">
                     <p class="dj-slogan" style="margin:0;color:var(--muted);">Yükleniyor...</p>
                 </div>
