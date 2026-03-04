@@ -101,11 +101,14 @@
         .nav-center {
             flex: 1;
             display: flex;
-            justify-content: center;
+            align-items: center;
+            gap: 1rem;
         }
         .nav-menu {
+            flex: 1;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.15rem;
             list-style: none;
         }
@@ -207,7 +210,6 @@
             outline-offset: 3px;
         }
         .navbar .header-social-icon i { font-size: 1.15rem; }
-        .nav-social-mobile { display: none; }
         .nav-dropdown {
             position: relative;
         }
@@ -518,7 +520,6 @@
             .navbar.is-scrolled { height: 68px; min-height: 68px; }
             .nav-logo img { height: 56px; }
             .navbar.is-scrolled .nav-logo img { height: 52px; }
-            .nav-right { display: none; }
             .nav-center {
                 position: fixed;
                 top: 0;
@@ -555,7 +556,7 @@
                 border: none;
                 padding-left: 0;
             }
-            .nav-social-mobile {
+            .nav-center .nav-right {
                 display: flex;
                 justify-content: center;
                 flex-wrap: wrap;
@@ -564,9 +565,9 @@
                 padding-top: 1.5rem;
                 border-top: 1px solid var(--border);
             }
-            .navbar .nav-social-mobile .header-social-icon { width: 44px; height: 44px; }
-            .navbar .nav-social-mobile .header-social-icon i { font-size: 1.25rem; }
-            .nav-social-mobile .header-social { gap: 12px; }
+            .navbar .nav-center .nav-right .header-social-icon { width: 44px; height: 44px; }
+            .navbar .nav-center .nav-right .header-social-icon i { font-size: 1.25rem; }
+            .nav-center .nav-right .header-social { gap: 12px; }
             .nav-toggle { display: flex; align-items: center; justify-content: center; }
         }
         @media (max-width: 768px) {
@@ -704,32 +705,7 @@
                     </li>
                     <li><a href="{{ url('/iletisim') }}" class="{{ request()->is('iletisim') ? 'active' : '' }}">İletişim</a></li>
                 </ul>
-                <div class="header-social nav-social nav-social-mobile" aria-hidden="true">
-                    @php $socialMob = $socialLinks ?? []; @endphp
-                    @if(isset($socialMob['whatsapp']) && ($socialMob['whatsapp']['is_active'] ?? false) && !empty($socialMob['whatsapp']['url'] ?? ''))
-                    <a href="{{ $socialMob['whatsapp']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
-                    @endif
-                    @if(isset($socialMob['telegram']) && ($socialMob['telegram']['is_active'] ?? false) && !empty($socialMob['telegram']['url'] ?? ''))
-                    <a href="{{ $socialMob['telegram']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Telegram" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
-                    @endif
-                    @if(isset($socialMob['instagram']) && ($socialMob['instagram']['is_active'] ?? false) && !empty($socialMob['instagram']['url'] ?? ''))
-                    <a href="{{ $socialMob['instagram']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                    @endif
-                    @if(isset($socialMob['facebook']) && ($socialMob['facebook']['is_active'] ?? false) && !empty($socialMob['facebook']['url'] ?? ''))
-                    <a href="{{ $socialMob['facebook']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                    @endif
-                    @if(isset($socialMob['tiktok']) && ($socialMob['tiktok']['is_active'] ?? false) && !empty($socialMob['tiktok']['url'] ?? ''))
-                    <a href="{{ $socialMob['tiktok']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
-                    @endif
-                    @if(isset($socialMob['youtube']) && ($socialMob['youtube']['is_active'] ?? false) && !empty($socialMob['youtube']['url'] ?? ''))
-                    <a href="{{ $socialMob['youtube']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
-                    @endif
-                    @if(isset($socialMob['x']) && ($socialMob['x']['is_active'] ?? false) && !empty($socialMob['x']['url'] ?? ''))
-                    <a href="{{ $socialMob['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter-x"></i></a>
-                    @endif
-                </div>
-            </div>
-            <div class="nav-right">
+                <div class="nav-right">
                 <div class="header-social nav-social">
                     @php $social = $socialLinks ?? []; @endphp
                     @if(isset($social['whatsapp']) && ($social['whatsapp']['is_active'] ?? false) && !empty($social['whatsapp']['url'] ?? ''))
@@ -754,6 +730,7 @@
                     <a href="{{ $social['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter-x"></i></a>
                     @endif
                 </div>
+            </div>
             </div>
             <button class="nav-toggle" id="navToggle" type="button" aria-label="Menüyü aç">☰</button>
         </div>
