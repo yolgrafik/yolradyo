@@ -61,8 +61,11 @@ class ThemeService
         $footerBg = $preset['footer_bg'] ?? 'rgba(5,7,12,0.95)';
         $barBg = $preset['bar_bg'] ?? "linear-gradient(135deg, {$accent}, " . $this->darken($accent, 0.2) . ")";
 
+        $btnHover = $preset['primary_hover'] ?? $accent;
+
         return [
             'accent' => $accent,
+            'btn_hover' => $btnHover,
             'header_bg' => $headerBg,
             'footer_bg' => $footerBg,
             'bar_bg' => $barBg,

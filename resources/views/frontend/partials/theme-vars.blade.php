@@ -5,13 +5,18 @@
     $headerBg = $vars['header_bg'] ?? 'linear-gradient(180deg, rgba(11,15,26,0.95) 0%, rgba(17,24,39,0.93) 100%)';
     $footerBg = $vars['footer_bg'] ?? 'rgba(5,7,12,0.95)';
     $barBg = $vars['bar_bg'] ?? 'linear-gradient(135deg, #c92a2a, #991b1b)';
+    $btnBg = $accent;
+    $btnHover = $vars['btn_hover'] ?? '#dc2626';
 @endphp
+{{-- radyoyol.de referans: koyu zemin + kırmızı vurgu --}}
 <style id="theme-vars">
 :root {
     --ry-accent: {{ $accent }};
     --ry-header-bg: {{ $headerBg }};
     --ry-footer-bg: {{ $footerBg }};
     --ry-bar-bg: {{ $barBg }};
+    --ry-btn-bg: {{ $btnBg }};
+    --ry-btn-hover: {{ $btnHover }};
     --ry-text: #ffffff;
     --ry-text-muted: rgba(255,255,255,.78);
     --ry-bg: {{ $settings['bg_color'] ?? '#0b0f16' }};
