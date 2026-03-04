@@ -291,6 +291,32 @@
         .main-content button {
             text-transform: none;
         }
+        /* Glassmorphism button */
+        .glass-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 14px;
+            padding: 10px 22px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all .3s ease;
+        }
+        .glass-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 15px rgba(201,42,42,0.6);
+        }
+        .glass-btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
         /* Legal footer - fixed at very bottom */
         .legal-footer {
             position: fixed;
