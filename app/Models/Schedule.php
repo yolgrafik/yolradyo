@@ -12,9 +12,15 @@ class Schedule extends Model
         'end_time',
         'title',
         'host',
+        'dj_id',
         'is_active',
         'sort_order',
     ];
+
+    public function dj()
+    {
+        return $this->belongsTo(DjProfile::class, 'dj_id');
+    }
 
     protected $casts = [
         'is_active' => 'boolean',

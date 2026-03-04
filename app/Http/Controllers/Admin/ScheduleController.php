@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DjProfile;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 
@@ -15,10 +16,12 @@ class ScheduleController extends Controller
         $day = (int) $request->get('day', 0);
         $day = max(0, min(6, $day));
 
-        $schedules = Schedule::forDay($day)->ordered()->get();
+        $schedules = Schedule::forDay($day)->with('dj')->ordered()->get();
+        $djProfiles = DjProfile::orderBy('name')->get();
 
         return view('admin.schedule.index', [
             'schedules' => $schedules,
+            'djProfiles' => $djProfiles,
             'currentDay' => $day,
             'dayLabels' => self::DAY_LABELS,
         ]);
@@ -32,11 +35,13 @@ class ScheduleController extends Controller
             'end_time' => 'nullable|date_format:H:i',
             'title' => 'required|string|max:255',
             'host' => 'nullable|string|max:255',
+            'dj_id' => 'nullable|integer|exists:dj_profiles,id',
             'is_active' => 'boolean',
         ]);
 
         $validated['is_active'] = $request->boolean('is_active', true);
         $validated['sort_order'] = Schedule::forDay($validated['day_of_week'])->max('sort_order') + 1;
+        $validated['dj_id'] = $request->input('dj_id') ?: null;
 
         Schedule::create($validated);
 
@@ -52,10 +57,12 @@ class ScheduleController extends Controller
             'end_time' => 'nullable|date_format:H:i',
             'title' => 'required|string|max:255',
             'host' => 'nullable|string|max:255',
+            'dj_id' => 'nullable|integer|exists:dj_profiles,id',
             'is_active' => 'boolean',
         ]);
 
         $validated['is_active'] = $request->boolean('is_active', true);
+        $validated['dj_id'] = $request->input('dj_id') ?: null;
 
         $schedule->update($validated);
 
@@ -97,6 +104,7 @@ class ScheduleController extends Controller
                 'end_time' => $s->end_time,
                 'title' => $s->title,
                 'host' => $s->host,
+                'dj_id' => $s->dj_id,
                 'is_active' => $s->is_active,
                 'sort_order' => ++$maxOrder,
             ]);

@@ -603,13 +603,14 @@
             var chip = document.createElement('span');
             chip.className = 'schedule-chip' + (it.is_live ? ' is-live' : '');
             chip.appendChild(document.createTextNode(it.title || ''));
-            if (it.host) {
+            var hostName = (it.dj && it.dj.name) ? it.dj.name : (it.host || '');
+            if (hostName) {
                 var sep = document.createElement('span');
                 sep.className = 'sep';
                 sep.textContent = '|';
                 chip.appendChild(document.createTextNode(' '));
                 chip.appendChild(sep);
-                chip.appendChild(document.createTextNode(' ' + it.host));
+                chip.appendChild(document.createTextNode(' ' + hostName));
             }
             if (it.is_live) {
                 var badge = document.createElement('span');

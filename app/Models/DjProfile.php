@@ -24,6 +24,11 @@ class DjProfile extends Model
         return $query->where('is_live', true);
     }
 
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'dj_id');
+    }
+
     public function getAvatarUrlAttribute(): ?string
     {
         if (! $this->avatar_path) {
