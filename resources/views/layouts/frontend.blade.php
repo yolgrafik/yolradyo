@@ -33,11 +33,14 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-top: 80px;
             padding-bottom: 175px;
         }
         .navbar {
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 2000;
             height: 80px;
             min-height: 80px;

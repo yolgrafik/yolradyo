@@ -63,7 +63,7 @@ body::before {
     pointer-events: none;
     z-index: 1;
 }
-body > nav.navbar { z-index: 2000 !important; position: sticky !important; top: 0 !important; background: var(--ry-header-bg) !important; }
+body > nav.navbar { z-index: 2000 !important; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; background: var(--ry-header-bg) !important; }
 body > .bottom-bar-player { z-index: 1999 !important; background: var(--ry-bar-bg) !important; }
 body > .legal-footer { z-index: 1998 !important; background: var(--ry-footer-bg) !important; }
 body > main { position: relative; z-index: 2; }
