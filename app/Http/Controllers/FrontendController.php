@@ -22,15 +22,12 @@ class FrontendController extends Controller
         $streamUrl = $radioSettings?->radio_stream_url ?? '';
         $backupUrl = $radioSettings?->radio_backup_stream_url ?? '';
         $defaultVolume = $radioSettings?->radio_default_volume ?? 0.8;
-        $playerLogo = isset($siteSettings['brand_logo_path']) && $siteSettings['brand_logo_path']
-            ? asset('storage/' . $siteSettings['brand_logo_path'])
-            : asset('assets/images/play.png');
         $siteName = $siteSettings['site_name'] ?? 'RadyoYol';
         $shareUrl = $request->url();
         $shareText = ($siteName ?? 'RadyoYol') . ' - Canlı Dinle';
 
         return view('frontend.player', compact(
-            'streamUrl', 'backupUrl', 'defaultVolume', 'playerLogo', 'siteName', 'shareUrl', 'shareText'
+            'streamUrl', 'backupUrl', 'defaultVolume', 'siteName', 'shareUrl', 'shareText'
         ));
     }
 
