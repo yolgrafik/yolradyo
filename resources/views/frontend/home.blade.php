@@ -393,6 +393,18 @@
         background: #374151;
         color: var(--text);
     }
+    .live-card {
+        display: flex;
+        flex-direction: column;
+    }
+    .live-card-title {
+        font-weight: 800;
+        letter-spacing: 2px;
+        font-size: 12px;
+        opacity: 0.85;
+        margin-bottom: 10px;
+        color: #ffffff;
+    }
     .home-dj-card {
         background: var(--panel);
         border: 1px solid var(--border);

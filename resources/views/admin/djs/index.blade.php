@@ -32,7 +32,7 @@
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:0.75rem;">
                             @if($dj->avatar_path)
-                                <img src="{{ asset($dj->avatar_path) }}" alt="{{ $dj->name }}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
+                                <img src="{{ $dj->avatar_url }}" alt="{{ $dj->name }}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
                             @else
                                 <span style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(201,42,42,0.3);color:#fff;font-weight:700;font-size:0.85rem;">{{ $dj->display_initials }}</span>
                             @endif

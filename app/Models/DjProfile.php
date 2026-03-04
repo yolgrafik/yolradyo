@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class DjProfile extends Model
 {
@@ -21,6 +22,15 @@ class DjProfile extends Model
     public function scopeLive($query)
     {
         return $query->where('is_live', true);
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        if (! $this->avatar_path) {
+            return null;
+        }
+
+        return Storage::url($this->avatar_path);
     }
 
     public function getDisplayInitialsAttribute(): string

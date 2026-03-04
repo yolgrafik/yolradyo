@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DjProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DjProfileController extends Controller
 {
@@ -26,8 +27,13 @@ class DjProfileController extends Controller
             'name' => 'required|string|max:255',
             'bio' => 'nullable|string|max:500',
             'initials' => 'nullable|string|max:10',
-            'avatar_path' => 'nullable|string|max:500',
+            'avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        $validated['avatar_path'] = null;
+        if ($request->hasFile('avatar')) {
+            $validated['avatar_path'] = $request->file('avatar')->store('djs', 'public');
+        }
 
         DjProfile::create($validated);
 
@@ -45,16 +51,26 @@ class DjProfileController extends Controller
             'name' => 'required|string|max:255',
             'bio' => 'nullable|string|max:500',
             'initials' => 'nullable|string|max:10',
-            'avatar_path' => 'nullable|string|max:500',
+            'avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $dj->update($validated);
+        $data = $request->only(['name', 'bio', 'initials']);
+        if ($request->hasFile('avatar')) {
+            if ($dj->avatar_path && Storage::disk('public')->exists($dj->avatar_path)) {
+                Storage::disk('public')->delete($dj->avatar_path);
+            }
+            $data['avatar_path'] = $request->file('avatar')->store('djs', 'public');
+        }
+        $dj->update($data);
 
         return redirect()->route('admin.djs.index')->with('success', 'DJ profili güncellendi.');
     }
 
     public function destroy(DjProfile $dj)
     {
+        if ($dj->avatar_path && Storage::disk('public')->exists($dj->avatar_path)) {
+            Storage::disk('public')->delete($dj->avatar_path);
+        }
         $dj->delete();
 
         return redirect()->route('admin.djs.index')->with('success', 'DJ profili silindi.');
