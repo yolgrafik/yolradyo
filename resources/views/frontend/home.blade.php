@@ -682,9 +682,9 @@
                 @php
                     $playerLinks = [
                         'winamp' => ['label' => 'Winamp İle Dinle', 'img' => 'winamp.png'],
-                        'media_player' => ['label' => 'Medya Player', 'img' => 'media-player.svg'],
-                        'quicktime' => ['label' => 'QuickTime Player', 'img' => 'quicktime.svg'],
-                        'real_player' => ['label' => 'Real Player', 'img' => 'real-player.svg'],
+                        'media_player' => ['label' => 'Medya Player', 'img' => 'medya-player.png'],
+                        'quicktime' => ['label' => 'QuickTime Player', 'img' => 'quicktime.png'],
+                        'real_player' => ['label' => 'Real Player', 'img' => 'real-player.png'],
                     ];
                 @endphp
                 @foreach($playerLinks as $key => $info)
