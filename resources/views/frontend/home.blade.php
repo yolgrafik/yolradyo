@@ -533,7 +533,7 @@
                         Yayın Akışı
                     </span>
                     <div class="schedule-days-bar">
-                        <button type="button" class="schedule-day active" data-day="0">Pzt</button>
+                        <button type="button" class="schedule-day" data-day="0">Pzt</button>
                         <button type="button" class="schedule-day" data-day="1">Sal</button>
                         <button type="button" class="schedule-day" data-day="2">Çar</button>
                         <button type="button" class="schedule-day" data-day="3">Per</button>
@@ -621,7 +621,6 @@
     }
 
     dayBtns.forEach(function(btn) {
-        if (parseInt(btn.getAttribute('data-day'),10) === currentDay) btn.classList.add('active');
         btn.addEventListener('click', function() {
             var day = parseInt(btn.getAttribute('data-day'), 10);
             dayBtns.forEach(function(b) { b.classList.remove('active'); });
@@ -630,6 +629,9 @@
         });
     });
 
+    dayBtns.forEach(function(b){ b.classList.remove('active'); });
+    var activeBtn = Array.from(dayBtns).find(function(b){ return parseInt(b.getAttribute('data-day'),10)===currentDay; });
+    if (activeBtn) activeBtn.classList.add('active');
     loadSchedule(currentDay);
 
     var slider = document.getElementById('homeSlider');

@@ -65,7 +65,7 @@
                             </form>
                         </td>
                         <td style="padding:0.75rem;text-align:right;">
-                            <button type="button" class="btn-sm btn-edit" data-edit="{{ $s->id }}" data-title="{{ $s->title }}" data-host="{{ $s->host ?? '' }}" data-start="{{ $s->start_time_formatted }}" data-end="{{ $s->end_time ? substr($s->end_time, 0, 5) : '' }}">Düzenle</button>
+                            <button type="button" class="btn-sm btn-edit" data-edit="{{ $s->id }}" data-title="{{ $s->title }}" data-host="{{ $s->host ?? '' }}" data-start="{{ $s->start_time_formatted }}" data-end="{{ $s->end_time ? substr($s->end_time, 0, 5) : '' }}" data-active="{{ $s->is_active ? '1' : '0' }}">Düzenle</button>
                             <form action="{{ route('admin.schedule.destroy', $s) }}" method="POST" class="d-inline" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                                 @csrf
                                 @method('DELETE')
@@ -185,14 +185,15 @@
             var host=btn.dataset.host||'';
             var start=btn.dataset.start||'';
             var end=btn.dataset.end||'';
+            var active=btn.dataset.active==='1';
             form.action='{{ url("admin/schedule") }}/'+id;
             form.querySelector('#formMethod').value='PUT';
-            form.querySelector('#formMethod').name='_method';
             document.getElementById('modalTitle').textContent='Program Düzenle';
             document.getElementById('title').value=title;
             document.getElementById('host').value=host;
             document.getElementById('start_time').value=start;
             document.getElementById('end_time').value=end;
+            form.querySelector('input[name="is_active"]').checked=active;
             openModal();
         });
     });
