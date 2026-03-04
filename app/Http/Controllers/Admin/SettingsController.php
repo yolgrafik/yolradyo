@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 use App\Services\SettingsService;
-use App\Services\ThemeSettingsService;
+use App\Services\ThemeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +13,7 @@ class SettingsController extends Controller
 {
     public function __construct(
         protected SettingsService $settings,
-        protected ThemeSettingsService $themeSettings
+        protected ThemeService $themeService
     ) {}
 
     protected function ensureAdmin()
@@ -246,44 +246,57 @@ class SettingsController extends Controller
     public function themeForm()
     {
         if ($r = $this->ensureAdmin()) return $r;
-        $theme = $this->themeSettings->get();
-        return view('admin.settings.theme', ['theme' => $theme]);
+        $presets = $this->themeService->getPresets();
+        $settings = $this->themeService->getSettings();
+        return view('admin.settings.theme', [
+            'presets' => $presets,
+            'settings' => $settings,
+        ]);
     }
 
     public function saveTheme(Request $request)
     {
         if ($r = $this->ensureAdmin()) return $r;
 
-        $colorRule = 'nullable|string|max:50';
         $validated = $request->validate([
-            'primary' => $colorRule,
-            'primary_hover' => $colorRule,
-            'secondary' => $colorRule,
-            'secondary_hover' => $colorRule,
-            'accent' => $colorRule,
-            'glow' => $colorRule,
-            'background' => $colorRule,
-            'surface' => $colorRule,
-            'surface_2' => $colorRule,
-            'border' => $colorRule,
-            'text' => $colorRule,
-            'text_muted' => $colorRule,
-            'link' => $colorRule,
-            'link_hover' => $colorRule,
-            'header_bg' => $colorRule,
-            'header_text' => $colorRule,
-            'header_active' => $colorRule,
-            'footer_bg' => $colorRule,
-            'footer_text' => $colorRule,
-            'footer_link' => $colorRule,
-            'footer_link_hover' => $colorRule,
-            'input_bg' => $colorRule,
-            'input_text' => $colorRule,
-            'focus_ring' => $colorRule,
-            'radius' => 'nullable|integer|min:0|max:32',
+            'theme_id' => 'required|integer|min:1|max:15',
+            'bg_mode' => 'required|in:color,image',
+            'bg_color' => 'nullable|string|max:16',
+            'bg_image' => 'nullable|file|mimes:jpeg,jpg,png,gif,webp|max:4096',
+            'overlay_color' => 'nullable|string|max:16',
+            'overlay_opacity' => 'nullable|integer|min:0|max:80',
+            'bg_blur' => 'nullable|integer|min:0|max:12',
         ]);
 
-        $this->themeSettings->save($validated);
+        $data = [
+            'theme_id' => (int) $validated['theme_id'],
+            'bg_mode' => $validated['bg_mode'],
+            'bg_color' => $validated['bg_color'] ?? '#0b0f16',
+            'overlay_color' => $validated['overlay_color'] ?? '#000000',
+            'overlay_opacity' => (int) ($validated['overlay_opacity'] ?? 55),
+            'bg_blur' => (int) ($validated['bg_blur'] ?? 0),
+        ];
+
+        if ($request->boolean('remove_bg_image')) {
+            $row = \App\Models\SiteTheme::first();
+            if ($row && $row->bg_image) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($row->bg_image);
+            }
+            $data['bg_image'] = null;
+        } elseif ($request->hasFile('bg_image')) {
+            $dir = 'uploads/theme';
+            if (!Storage::disk('public')->exists($dir)) {
+                Storage::disk('public')->makeDirectory($dir);
+            }
+            $row = \App\Models\SiteTheme::first();
+            if ($row && $row->bg_image) {
+                Storage::disk('public')->delete($row->bg_image);
+            }
+            $path = $request->file('bg_image')->store($dir, 'public');
+            $data['bg_image'] = $path;
+        }
+
+        $this->themeService->save($data);
         ActivityLogger::log('settings.updated', ['section' => 'theme']);
 
         return redirect()->route('admin.settings.theme')->with('success', 'Tema ayarları kaydedildi.');

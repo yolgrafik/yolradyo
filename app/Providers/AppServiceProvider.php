@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(SettingsService::class, fn () => new SettingsService());
-        $this->app->singleton(\App\Services\ThemeSettingsService::class, fn () => new \App\Services\ThemeSettingsService());
+        $this->app->singleton(\App\Services\ThemeService::class, fn () => new \App\Services\ThemeService());
     }
 
     /**
@@ -49,13 +49,9 @@ class AppServiceProvider extends ServiceProvider
 
             $themeSettings = [];
             try {
-                if (Schema::hasTable('site_theme_settings') || Schema::hasTable('site_settings')) {
-                    $themeSettings = app(\App\Services\ThemeSettingsService::class)->get();
-                } else {
-                    $themeSettings = \App\Models\SiteThemeSetting::defaults();
-                }
+                $themeSettings = app(\App\Services\ThemeService::class)->getSettings();
             } catch (\Throwable $e) {
-                $themeSettings = \App\Models\SiteThemeSetting::defaults();
+                $themeSettings = ['vars' => [], 'bg_mode' => 'color', 'bg_color' => '#0b0f16'];
             }
             $view->with('themeSettings', $themeSettings);
         });

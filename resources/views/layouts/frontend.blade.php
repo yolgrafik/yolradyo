@@ -29,7 +29,6 @@
         html { font-family: Arial, sans-serif; }
         body {
             font-family: Arial, sans-serif;
-            background: var(--ry-bg);
             color: var(--ry-text);
             min-height: 100vh;
             display: flex;
