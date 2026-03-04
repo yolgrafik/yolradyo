@@ -35,6 +35,16 @@ class AppServiceProvider extends ServiceProvider
                 $siteSettings = app(SettingsService::class)->getAll();
             }
             $view->with('siteSettings', $siteSettings);
+
+            $socialLinks = [];
+            if (Schema::hasTable('site_settings')) {
+                try {
+                    $socialLinks = app(SettingsService::class)->getSocialLinks();
+                } catch (\Throwable $e) {
+                    $socialLinks = [];
+                }
+            }
+            $view->with('socialLinks', $socialLinks);
         });
 
         View::composer('admin.layouts.app', function ($view) {

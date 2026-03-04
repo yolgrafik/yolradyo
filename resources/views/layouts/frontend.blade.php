@@ -20,6 +20,7 @@
         $themeGlow = $siteSettings['theme_glow'] ?? '#c92a2a';
     @endphp
     <link rel="icon" href="{{ $faviconPath }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>@yield('title', $metaTitle) - Radyo</title>
     @if($metaDesc)<meta name="description" content="{{ $metaDesc }}">@endif
     @if($metaKeywords)<meta name="keywords" content="{{ $metaKeywords }}">@endif
