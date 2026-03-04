@@ -99,18 +99,13 @@
     .home-slider__btn {
         display: inline-block;
         padding: 0.6rem 1.25rem;
-        background: var(--accent);
-        color: #fff;
         font-weight: 600;
         text-decoration: none;
-        border-radius: 10px;
+        border-radius: var(--ry-radius);
         transition: all 0.2s ease;
-        box-shadow: 0 4px 16px rgba(201, 42, 42, 0.4);
+        border: 1px solid var(--ry-btn-border);
     }
-    .home-slider__btn:hover {
-        box-shadow: 0 0 24px rgba(201, 42, 42, 0.5);
-        transform: translateY(-1px);
-    }
+    .home-slider__btn:hover { transform: translateY(-1px); }
     .home-slider__nav {
         position: absolute;
         bottom: 1rem;
@@ -130,7 +125,7 @@
         padding: 0;
         transition: background 0.2s;
     }
-    .home-slider__dot.is-active { background: var(--accent); }
+    .home-slider__dot.is-active { background: var(--ry-accent); }
     .home-slider-placeholder {
         min-height: 386px;
         display: flex;
@@ -201,14 +196,14 @@
         white-space: nowrap;
     }
     .schedule-day:hover {
-        background: #2a3342;
-        border-color: #ff3b3b;
+        background: var(--ry-surface-2);
+        border-color: var(--ry-accent);
     }
     .schedule-day.active {
-        background: linear-gradient(135deg, #ff3b3b, #b30000);
+        background: linear-gradient(135deg, var(--ry-primary), var(--ry-accent));
         border: none;
-        color: #fff;
-        box-shadow: 0 0 10px rgba(255, 60, 60, 0.5);
+        color: var(--ry-text);
+        box-shadow: 0 0 10px color-mix(in srgb, var(--ry-glow) 50%, transparent);
     }
     .schedule-list-wrap {
         padding: 0 1rem 1rem;
@@ -249,9 +244,9 @@
     .schedule-chip .sep { opacity: 0.6; font-weight: 900; flex-shrink: 0; }
     .schedule-strip .dot { opacity: 0.35; flex-shrink: 0; }
     .schedule-chip.is-live {
-        background: linear-gradient(135deg, #ff3b3b, #b30000);
+        background: linear-gradient(135deg, var(--ry-primary), var(--ry-accent));
         border: none;
-        box-shadow: 0 0 10px rgba(255, 60, 60, 0.35);
+        box-shadow: 0 0 10px color-mix(in srgb, var(--ry-glow) 40%, transparent);
     }
     .schedule-chip .live-badge {
         margin-left: 4px;
@@ -277,30 +272,22 @@
         display: grid;
         place-items: center;
         padding: 1rem 1.5rem;
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        border: 1px solid rgba(255, 255, 255, 0.2);
         cursor: pointer;
         font-family: inherit;
-        border-radius: 12px;
-        color: #fff;
+        border-radius: var(--ry-radius);
         font-family: Arial, sans-serif;
         font-size: 1rem;
         font-weight: 700;
         text-decoration: none;
         text-transform: none;
-        box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
         transition: all 0.2s ease;
     }
-    .btn-live:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 28px rgba(37, 99, 235, 0.5);
-    }
+    .btn-live:hover { transform: translateY(-2px); }
     .btn-request-group {
         display: flex;
         flex: 1;
-        border-radius: 12px;
+        border-radius: var(--ry-radius);
         overflow: hidden;
-        box-shadow: 0 4px 20px rgba(22, 163, 74, 0.35);
     }
     .btn-request {
         flex: 1;
@@ -309,42 +296,28 @@
         cursor: pointer;
         font-family: inherit;
         padding: 1rem 1rem;
-        background: linear-gradient(135deg, #16a34a, var(--accent));
-        border: 1px solid rgba(255, 255, 255, 0.2);
         border-right: none;
         border-radius: 0;
-        color: #fff;
         font-size: 0.85rem;
         font-weight: 700;
         text-transform: none;
         white-space: nowrap;
         transition: all 0.25s ease;
     }
-    .btn-request-group > *:last-child { border-right: 1px solid rgba(255, 255, 255, 0.2); }
-    .btn-request:hover {
-        background: linear-gradient(135deg, #22c55e, #dc2626);
-    }
-    .btn-request-group:hover { box-shadow: 0 6px 24px rgba(22, 163, 74, 0.4); }
+    .btn-request-group > *:last-child { border-right: 1px solid var(--ry-btn-border); }
     .btn-whatsapp-istek {
         flex: 1;
         display: grid;
         place-items: center;
         padding: 1rem 1rem;
-        background: linear-gradient(135deg, #25D366, #128C7E);
-        border: 1px solid rgba(255, 255, 255, 0.2);
         border-left: none;
         border-radius: 0;
-        color: #fff;
         font-size: 0.85rem;
         font-weight: 700;
         text-decoration: none;
         text-transform: none;
         white-space: nowrap;
         transition: all 0.25s ease;
-    }
-    .btn-whatsapp-istek:hover {
-        background: linear-gradient(135deg, #2ee66d, #1a9f8f);
-        color: #fff;
     }
     .btn-whatsapp-disabled {
         cursor: default;
@@ -368,9 +341,9 @@
         transition: all 0.2s ease;
     }
     .home-icon-buttons button:hover {
-        background: rgba(201, 42, 42, 0.15);
-        border-color: rgba(201, 42, 42, 0.3);
-        color: #fff;
+        background: color-mix(in srgb, var(--ry-accent) 20%, transparent);
+        border-color: var(--ry-accent);
+        color: var(--ry-text);
     }
     .home-badges {
         display: flex;
@@ -383,16 +356,16 @@
         justify-content: center;
         gap: 0.5rem;
         padding: 0.75rem 1rem;
-        background: #1f2937;
-        border: 1px solid var(--border);
+        background: var(--ry-surface);
+        border: 1px solid var(--ry-border);
         border-radius: 10px;
-        color: var(--muted);
+        color: var(--ry-text-muted);
         font-size: 0.85rem;
         transition: all 0.2s ease;
     }
     .badge-placeholder:hover {
-        background: #374151;
-        color: var(--text);
+        background: var(--ry-surface-2);
+        color: var(--ry-text);
     }
     .live-dj-card {
         background: var(--panel);
@@ -403,8 +376,8 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     }
     .live-banner {
-        background: linear-gradient(135deg, var(--accent), #a61f1f);
-        color: white;
+        background: linear-gradient(135deg, var(--ry-primary), var(--ry-accent));
+        color: var(--ry-text);
         font-weight: 900;
         font-size: 14px;
         padding: 10px 14px;
@@ -476,16 +449,16 @@
     }
     .live-live-btn {
         position: relative;
-        background: linear-gradient(135deg, var(--accent), #a61f1f);
-        color: white;
+        background: linear-gradient(135deg, var(--ry-primary), var(--ry-accent));
+        color: var(--ry-text);
         padding: 8px 16px;
         border-radius: 8px;
         font-size: 12px;
         font-weight: 800;
         display: inline-block;
         letter-spacing: 1px;
-        text-shadow: 0 0 12px rgba(201, 42, 42, 0.6);
-        box-shadow: 0 2px 12px rgba(201, 42, 42, 0.35);
+        text-shadow: 0 0 12px color-mix(in srgb, var(--ry-glow) 60%, transparent);
+        box-shadow: 0 2px 12px color-mix(in srgb, var(--ry-glow) 40%, transparent);
     }
     .live-live-btn::after {
         content: '';
@@ -494,10 +467,10 @@
         right: 0;
         bottom: -4px;
         height: 2px;
-        background: linear-gradient(90deg, transparent, var(--accent), var(--glow), var(--accent), transparent);
+        background: linear-gradient(90deg, transparent, var(--ry-accent), var(--ry-glow), var(--ry-accent), transparent);
         opacity: 0.7;
         border-radius: 2px;
-        box-shadow: 0 0 8px var(--glow);
+        box-shadow: 0 0 8px var(--ry-glow);
     }
     .live-dj-card .live-empty {
         color: var(--muted);

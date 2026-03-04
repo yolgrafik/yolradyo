@@ -57,13 +57,18 @@ class ThemeService
         $accent = $preset['accent'] ?? $primary;
         $glow = $preset['glow'] ?? $primary;
 
+        $headerBg = $preset['header_bg'] ?? 'linear-gradient(180deg, rgba(11,15,26,0.95) 0%, rgba(17,24,39,0.93) 100%)';
+        $footerBg = $preset['footer_bg'] ?? 'rgba(5,7,12,0.95)';
+
         return [
             'primary' => $primary,
             'primary_hover' => $primaryHover,
             'accent' => $accent,
             'glow' => $glow,
-            'header_bg' => 'linear-gradient(180deg, rgba(11,15,26,0.92) 0%, rgba(17,24,39,0.9) 100%)',
-            'footer_bg' => 'rgba(5,7,12,0.92)',
+            'header_bg' => $headerBg,
+            'footer_bg' => $footerBg,
+            'button_bg' => $primary,
+            'button_border' => $accent,
             'link' => $this->lighten($accent, 0.3),
             'link_hover' => $this->lighten($accent, 0.5),
             'badge' => $accent,

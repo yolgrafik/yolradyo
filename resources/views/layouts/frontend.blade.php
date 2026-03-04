@@ -38,7 +38,7 @@
         .navbar {
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 2000;
             height: 80px;
             min-height: 80px;
             display: flex;
@@ -54,7 +54,7 @@
         .navbar.is-scrolled {
             height: 68px;
             min-height: 68px;
-            background: rgba(11,15,26,0.95);
+            background: var(--ry-header-bg);
             box-shadow: 0 4px 24px rgba(0,0,0,0.4);
         }
         .navbar-inner {
@@ -98,7 +98,7 @@
             list-style: none;
         }
         .nav-menu > li > a {
-            color: var(--ry-header-text);
+            color: var(--ry-text);
             text-decoration: none;
             font-size: 0.8rem;
             font-weight: 600;
@@ -115,7 +115,7 @@
             left: 0.75rem;
             right: 0.75rem;
             height: 2px;
-            background: var(--ry-header-active);
+            background: var(--ry-accent);
             transform: scaleX(0);
             transition: transform 0.2s ease;
             border-radius: 1px;
@@ -125,7 +125,7 @@
             background: rgba(255,255,255,0.04);
         }
         .nav-menu > li > a.active {
-            color: var(--accent);
+            color: var(--ry-accent);
         }
         .nav-menu > li > a:hover::after,
         .nav-menu > li > a.active::after {
@@ -155,10 +155,10 @@
             transition: all 0.2s ease;
         }
         .nav-social a:hover {
-            background: rgba(201, 42, 42, 0.25);
-            border-color: rgba(201, 42, 42, 0.4);
-            box-shadow: 0 0 14px rgba(201, 42, 42, 0.25);
-            color: #fff;
+            background: color-mix(in srgb, var(--ry-accent) 30%, transparent);
+            border-color: var(--ry-accent);
+            box-shadow: 0 0 14px color-mix(in srgb, var(--ry-glow) 35%, transparent);
+            color: var(--ry-text);
         }
         .nav-social svg { width: 16px; height: 16px; }
         .navbar .header-social {
@@ -242,7 +242,7 @@
             transform: translateY(-50%);
             height: 60%;
             width: 3px;
-            background: var(--ry-header-active);
+            background: var(--ry-accent);
             border-radius: 0 2px 2px 0;
             opacity: 0;
             transition: opacity 0.2s ease;
@@ -310,16 +310,16 @@
             align-items: center;
             justify-content: center;
             border-radius: 999px;
-            background: var(--ry-input-bg);
+            background: rgba(255,255,255,0.06);
             border: 1px solid var(--ry-border);
-            color: var(--ry-footer-link);
+            color: var(--ry-text);
             text-decoration: none;
             transition: all 0.2s ease;
         }
         .footer-social a:hover {
-            background: var(--ry-accent);
+            background: color-mix(in srgb, var(--ry-accent) 35%, transparent);
             border-color: var(--ry-accent);
-            color: var(--ry-footer-link-hover);
+            color: var(--ry-text);
         }
         .footer-social svg { width: 16px; height: 16px; }
         .footer-legal {
@@ -330,14 +330,14 @@
             line-height: 1.2;
             font-family: Arial, sans-serif;
             font-size: 13px;
-            color: var(--ry-footer-text);
+            color: var(--ry-text);
         }
         .footer-legal a {
-            color: var(--ry-footer-link);
+            color: var(--ry-text);
             text-decoration: none;
         }
         .footer-legal a:hover {
-            color: var(--ry-footer-link-hover);
+            color: var(--ry-primary-hover);
         }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
@@ -655,6 +655,12 @@
         .request-form__btn:hover { opacity: .9; }
     </style>
     @stack('styles')
+    <style id="theme-button-overrides">
+        .btn-primary, .btn-live, .btn-request, .btn-whatsapp-istek, .home-slider__btn, .glass-btn, .btn-istek, .share-btn { background: var(--ry-primary) !important; border-color: var(--ry-btn-border) !important; color: var(--ry-btn-text) !important; }
+        .btn-primary:hover, .btn-live:hover, .btn-request:hover, .btn-whatsapp-istek:hover:not(.btn-whatsapp-disabled), .home-slider__btn:hover, .glass-btn:hover, .btn-istek:hover, .share-btn:hover { background: var(--ry-primary-hover) !important; box-shadow: 0 0 18px color-mix(in srgb, var(--ry-glow) 55%, transparent) !important; }
+        .btn-request-group { box-shadow: 0 4px 20px color-mix(in srgb, var(--ry-glow) 40%, transparent) !important; }
+        .btn-request-group:hover { box-shadow: 0 6px 24px color-mix(in srgb, var(--ry-glow) 50%, transparent) !important; }
+    </style>
     <style id="glass-btn-styles">
         /* Glassmorphism button - loaded after stack so it overrides page styles */
         .glass-btn,
