@@ -4,6 +4,7 @@
     $presets = $presets ?? [];
     $settings = $settings ?? [];
     $themeId = (int) ($settings['theme_id'] ?? 1);
+    if (!isset($presets[$themeId])) { $themeId = 1; }
 @endphp
 
 @section('content')
@@ -18,12 +19,12 @@
         {{-- Theme Presets --}}
         <section class="theme-section">
             <h2 class="theme-section__title">Tema Presetleri</h2>
-            <p class="theme-section__desc">20 hazır temadan birini seçin.</p>
+            <p class="theme-section__desc">Hazır temalardan birini seçin (radyoyol.de referans).</p>
             <div class="theme-presets-grid">
                 @foreach($presets as $id => $preset)
                 <label class="theme-preset-card {{ $themeId === (int)$id ? 'is-selected' : '' }}">
                     <input type="radio" name="theme_id" value="{{ $id }}" {{ $themeId === (int)$id ? 'checked' : '' }} class="theme-preset-radio">
-                    <div class="theme-preset-preview" style="--preview-primary: {{ $preset['primary'] ?? '#ff0033' }}; --preview-accent: {{ $preset['accent'] ?? '#ff0033' }};">
+                    <div class="theme-preset-preview" style="--preview-primary: {{ $preset['primary'] ?? '#c92a2a' }}; --preview-accent: {{ $preset['accent'] ?? '#c92a2a' }};">
                         <div class="preview-header-strip"></div>
                         <div class="preview-btn"></div>
                         <div class="preview-link"></div>
@@ -108,7 +109,7 @@
 .theme-presets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
 .theme-preset-card { display: flex; flex-direction: column; align-items: center; padding: 1rem; background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: all 0.2s; }
 .theme-preset-card:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); }
-.theme-preset-card.is-selected { border-color: #3b82f6; background: rgba(59,130,246,0.15); box-shadow: 0 0 0 1px #3b82f6; }
+.theme-preset-card.is-selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 15%, transparent); box-shadow: 0 0 0 1px var(--accent); }
 .theme-preset-radio { position: absolute; opacity: 0; }
 .theme-preset-preview { width: 100%; height: 72px; border-radius: 8px; overflow: hidden; margin-bottom: 0.5rem; display: flex; flex-direction: column; }
 .preview-header-strip { height: 20px; background: var(--preview-primary); }

@@ -85,7 +85,7 @@ class ThemeService
 
     protected function defaults(): array
     {
-        $preset = $this->getPreset(1) ?? ['primary' => '#ff0033', 'primary_hover' => '#ff3355', 'accent' => '#ff0033', 'glow' => '#ff0033'];
+        $preset = $this->getPreset(1) ?? ['primary' => '#c92a2a', 'primary_hover' => '#dc2626', 'accent' => '#c92a2a'];
         return [
             'theme_id' => 1,
             'bg_mode' => 'color',

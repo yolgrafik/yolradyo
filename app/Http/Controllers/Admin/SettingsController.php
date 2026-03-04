@@ -259,7 +259,7 @@ class SettingsController extends Controller
         if ($r = $this->ensureAdmin()) return $r;
 
         $validated = $request->validate([
-            'theme_id' => 'required|integer|min:1|max:20',
+            'theme_id' => 'required|integer|min:1|max:' . max(array_keys($this->themeService->getPresets())),
             'bg_mode' => 'required|in:color,image',
             'bg_color' => 'nullable|string|max:16',
             'bg_image' => 'nullable|file|mimes:jpeg,jpg,png,gif,webp|max:4096',
