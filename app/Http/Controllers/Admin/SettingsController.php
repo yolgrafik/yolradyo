@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 use App\Services\SettingsService;
+use App\Services\ThemeSettingsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
     public function __construct(
-        protected SettingsService $settings
+        protected SettingsService $settings,
+        protected ThemeSettingsService $themeSettings
     ) {}
 
     protected function ensureAdmin()
@@ -244,35 +246,46 @@ class SettingsController extends Controller
     public function themeForm()
     {
         if ($r = $this->ensureAdmin()) return $r;
-        return view('admin.settings.theme', [
-            'theme_primary' => $this->settings->get('theme_primary', '#0f1319'),
-            'theme_accent' => $this->settings->get('theme_accent', '#c92a2a'),
-            'theme_bg' => $this->settings->get('theme_bg', '#0f1319'),
-            'theme_text' => $this->settings->get('theme_text', '#f0f2f5'),
-            'theme_glow' => $this->settings->get('theme_glow', '#c92a2a'),
-        ]);
+        $theme = $this->themeSettings->get();
+        return view('admin.settings.theme', ['theme' => $theme]);
     }
 
     public function saveTheme(Request $request)
     {
         if ($r = $this->ensureAdmin()) return $r;
+
+        $colorRule = 'nullable|string|max:50';
         $validated = $request->validate([
-            'theme_primary' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
-            'theme_accent' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
-            'theme_bg' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
-            'theme_text' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
-            'theme_glow' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/|max:20',
+            'primary' => $colorRule,
+            'primary_hover' => $colorRule,
+            'secondary' => $colorRule,
+            'secondary_hover' => $colorRule,
+            'accent' => $colorRule,
+            'glow' => $colorRule,
+            'background' => $colorRule,
+            'surface' => $colorRule,
+            'surface_2' => $colorRule,
+            'border' => $colorRule,
+            'text' => $colorRule,
+            'text_muted' => $colorRule,
+            'link' => $colorRule,
+            'link_hover' => $colorRule,
+            'header_bg' => $colorRule,
+            'header_text' => $colorRule,
+            'header_active' => $colorRule,
+            'footer_bg' => $colorRule,
+            'footer_text' => $colorRule,
+            'footer_link' => $colorRule,
+            'footer_link_hover' => $colorRule,
+            'input_bg' => $colorRule,
+            'input_text' => $colorRule,
+            'focus_ring' => $colorRule,
+            'radius' => 'nullable|integer|min:0|max:32',
         ]);
 
-        $this->settings->setMany([
-            'theme_primary' => ['value' => $validated['theme_primary'] ?? '#0f1319', 'type' => 'color'],
-            'theme_accent' => ['value' => $validated['theme_accent'] ?? '#c92a2a', 'type' => 'color'],
-            'theme_bg' => ['value' => $validated['theme_bg'] ?? '#0f1319', 'type' => 'color'],
-            'theme_text' => ['value' => $validated['theme_text'] ?? '#f0f2f5', 'type' => 'color'],
-            'theme_glow' => ['value' => $validated['theme_glow'] ?? '#c92a2a', 'type' => 'color'],
-        ]);
+        $this->themeSettings->save($validated);
         ActivityLogger::log('settings.updated', ['section' => 'theme']);
 
-        return redirect()->route('admin.settings.theme')->with('success', 'Kaydedildi');
+        return redirect()->route('admin.settings.theme')->with('success', 'Tema ayarları kaydedildi.');
     }
 }

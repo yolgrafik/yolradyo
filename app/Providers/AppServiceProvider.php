@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(SettingsService::class, fn () => new SettingsService());
+        $this->app->singleton(\App\Services\ThemeSettingsService::class, fn () => new \App\Services\ThemeSettingsService());
     }
 
     /**
@@ -45,6 +46,18 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
             $view->with('socialLinks', $socialLinks);
+
+            $themeSettings = [];
+            try {
+                if (Schema::hasTable('site_theme_settings') || Schema::hasTable('site_settings')) {
+                    $themeSettings = app(\App\Services\ThemeSettingsService::class)->get();
+                } else {
+                    $themeSettings = \App\Models\SiteThemeSetting::defaults();
+                }
+            } catch (\Throwable $e) {
+                $themeSettings = \App\Models\SiteThemeSetting::defaults();
+            }
+            $view->with('themeSettings', $themeSettings);
         });
 
         View::composer('admin.layouts.app', function ($view) {

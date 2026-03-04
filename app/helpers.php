@@ -13,3 +13,10 @@ if (!function_exists('get_social_links')) {
         return app(\App\Services\SettingsService::class)->getSocialLinks();
     }
 }
+
+if (!function_exists('get_theme_settings')) {
+    function get_theme_settings(): array
+    {
+        return app(\App\Services\ThemeSettingsService::class)->get();
+    }
+}

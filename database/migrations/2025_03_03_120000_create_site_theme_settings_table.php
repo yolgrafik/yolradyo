@@ -29,8 +29,8 @@ return new class extends Migration
             $table->string('header_text', 20)->default('#ffffff');
             $table->string('header_active', 20)->default('#c92a2a');
             $table->string('footer_bg', 50)->nullable();
-            $table->string('footer_text', 20)->default('rgba(255,255,255,0.65)');
-            $table->string('footer_link', 20)->default('rgba(255,255,255,0.65)');
+            $table->string('footer_text', 30)->default('#a9b1c3');
+            $table->string('footer_link', 30)->default('#a9b1c3');
             $table->string('footer_link_hover', 20)->default('#ffffff');
             $table->string('input_bg', 30)->default('rgba(255,255,255,0.06)');
             $table->string('input_text', 20)->default('#f0f2f5');
@@ -38,6 +38,34 @@ return new class extends Migration
             $table->unsignedSmallInteger('radius')->default(14);
             $table->timestamps();
         });
+
+        DB::table('site_theme_settings')->insert([
+            'primary' => '#ff0033',
+            'primary_hover' => '#ff3355',
+            'secondary' => '#374151',
+            'secondary_hover' => '#4b5563',
+            'accent' => '#c92a2a',
+            'glow' => '#c92a2a',
+            'background' => '#0b0f16',
+            'surface' => '#111827',
+            'surface_2' => '#0f172a',
+            'border' => 'rgba(255,255,255,0.12)',
+            'text' => '#ffffff',
+            'text_muted' => '#a9b1c3',
+            'link' => '#60a5fa',
+            'link_hover' => '#93c5fd',
+            'header_text' => '#ffffff',
+            'header_active' => '#c92a2a',
+            'footer_text' => '#a9b1c3',
+            'footer_link' => '#a9b1c3',
+            'footer_link_hover' => '#ffffff',
+            'input_bg' => 'rgba(255,255,255,0.06)',
+            'input_text' => '#f0f2f5',
+            'focus_ring' => '#c92a2a',
+            'radius' => 14,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     public function down(): void
