@@ -23,7 +23,7 @@ class RequestController extends Controller
             if (Blacklist::isBlocked($request->full_name, $request->email)) {
                 return response()->json([
                     'ok' => false,
-                    'message' => 'Bu kayıt engellendi.',
+                    'message' => 'Bu kullanıcı engellendi.',
                 ], 403);
             }
 

@@ -101,6 +101,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'index'])->name('index');
             Route::post('{songRequest}/approve', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'approve'])->name('approve');
             Route::post('{songRequest}/reject', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'reject'])->name('reject');
+            Route::post('{songRequest}/blacklist', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'blacklist'])->name('blacklist');
             Route::delete('{songRequest}', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'destroy'])->name('destroy');
         });
 

@@ -37,7 +37,7 @@
                         <td style="padding:0.75rem;font-size:0.9rem;">{{ $r->song_name }}</td>
                         <td style="padding:0.75rem;font-size:0.85rem;color:var(--muted);max-width:200px;">{{ Str::limit($r->message, 50) ?: '—' }}</td>
                         <td style="padding:0.75rem;"><span class="badge badge-warning">Bekleyen</span></td>
-                        <td style="padding:0.75rem;text-align:right;">
+                        <td style="padding:0.75rem;text-align:right;white-space:nowrap;">
                             @if($r->status === 'pending')
                                 <form action="{{ route('admin.song-requests.approve', $r) }}" method="POST" class="d-inline">
                                     @csrf
@@ -46,6 +46,14 @@
                                 <form action="{{ route('admin.song-requests.reject', $r) }}" method="POST" class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn-sm btn-warning">Reddet</button>
+                                </form>
+                                <form action="{{ route('admin.song-requests.blacklist', $r) }}" method="POST" class="d-inline" onsubmit="return confirm('Bu kişiyi kara listeye almak istiyor musunuz?');">
+                                    @csrf
+                                    <input type="hidden" name="reason" value="Spam/Uygunsuz">
+                                    <button type="submit" class="btn-sm btn-blacklist" title="Kara Listeye Al">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                                        Kara Listeye Al
+                                    </button>
                                 </form>
                             @endif
                             <form action="{{ route('admin.song-requests.destroy', $r) }}" method="POST" class="d-inline" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
@@ -77,9 +85,11 @@
 .badge-warning{background:rgba(234,179,8,0.25);color:#fde047;}
 .badge-success{background:rgba(34,197,94,0.25);color:#86efac;}
 .badge-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
-.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;margin-left:0.25rem;}
+.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;margin-left:0.25rem;display:inline-flex;align-items:center;gap:0.35rem;}
 .btn-success{background:rgba(34,197,94,0.3);color:#86efac;}
 .btn-warning{background:rgba(234,179,8,0.3);color:#fde047;}
+.btn-blacklist{background:rgba(127,29,29,0.5);color:#fca5a5;border:1px solid rgba(185,28,28,0.5);}
+.btn-blacklist:hover{background:rgba(185,28,28,0.4);border-color:rgba(220,38,38,0.6);}
 .btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
 .d-inline{display:inline;}
 nav[aria-label="Pagination"] ul{display:flex;gap:0.5rem;list-style:none;margin:0;padding:0;flex-wrap:wrap;}
