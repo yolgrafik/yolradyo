@@ -53,12 +53,23 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            min-height: 120px;
+            height: 80px;
+            min-height: 80px;
             display: flex;
             align-items: center;
-            background: linear-gradient(180deg, #0b0f1a 0%, #111827 100%);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
-            padding: 0 2rem;
+            background: linear-gradient(180deg, rgba(11,15,26,0.92) 0%, rgba(17,24,39,0.9) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            padding: 0 1.5rem;
+            transition: height 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+        .navbar.is-scrolled {
+            height: 68px;
+            min-height: 68px;
+            background: rgba(11,15,26,0.95);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
         }
         .navbar-inner {
             max-width: 1280px;
@@ -67,18 +78,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 2rem;
+            gap: 1.5rem;
         }
         .nav-logo {
             flex-shrink: 0;
         }
         .nav-logo img {
-            height: 120px;
+            height: 56px;
             width: auto;
             object-fit: contain;
+            transition: height 0.25s ease;
         }
+        .navbar.is-scrolled .nav-logo img { height: 48px; }
         .nav-logo-text {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--accent);
             letter-spacing: 0.05em;
@@ -92,35 +105,35 @@
         .nav-menu {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.15rem;
             list-style: none;
         }
         .nav-menu > li > a {
             color: var(--text);
             text-decoration: none;
-            text-transform: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 0.5rem 0.75rem;
             border-radius: 8px;
             position: relative;
-            transition: color 0.2s ease;
+            transition: color 0.2s ease, background 0.2s ease;
         }
         .nav-menu > li > a::after {
             content: '';
             position: absolute;
-            bottom: 0.25rem;
-            left: 1rem;
-            right: 1rem;
+            bottom: 0.2rem;
+            left: 0.75rem;
+            right: 0.75rem;
             height: 2px;
             background: var(--accent);
             transform: scaleX(0);
             transition: transform 0.2s ease;
             border-radius: 1px;
         }
-        .nav-menu > li > a:hover,
-        .nav-menu > li > a.active {
+        .nav-menu > li > a:hover {
             color: #fff;
+            background: rgba(255,255,255,0.04);
         }
         .nav-menu > li > a.active {
             color: var(--accent);
@@ -129,37 +142,59 @@
         .nav-menu > li > a.active::after {
             transform: scaleX(1);
         }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
         .nav-social {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            flex-shrink: 0;
+            gap: 0.4rem;
         }
         .nav-social a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text);
             transition: all 0.2s ease;
         }
         .nav-social a:hover {
-            background: rgba(201, 42, 42, 0.2);
+            background: rgba(201, 42, 42, 0.25);
             border-color: rgba(201, 42, 42, 0.4);
-            box-shadow: 0 0 16px rgba(201, 42, 42, 0.3);
+            box-shadow: 0 0 14px rgba(201, 42, 42, 0.25);
             color: #fff;
         }
-        .nav-social svg {
-            width: 18px;
-            height: 18px;
+        .nav-social svg { width: 16px; height: 16px; }
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, var(--accent), #b91c1c);
+            border: none;
+            box-shadow: 0 2px 12px rgba(201,42,42,0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .nav-social-mobile {
-            display: none;
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(201,42,42,0.5);
+            color: #fff;
         }
+        .nav-cta svg { width: 14px; height: 14px; flex-shrink: 0; }
+        .nav-social-mobile { display: none; }
         .nav-dropdown {
             position: relative;
         }
@@ -230,6 +265,7 @@
             cursor: pointer;
             padding: 0.25rem;
         }
+        body.nav-open { overflow: hidden; }
         .main-content {
             flex: 1;
             padding-bottom: 120px;
@@ -447,27 +483,37 @@
             display: block;
         }
         @media (max-width: 992px) {
-            .navbar { min-height: 100px; padding: 0 1rem; }
-            .nav-logo img { height: 70px; }
+            .navbar { height: 72px; min-height: 72px; padding: 0 1rem; }
+            .navbar.is-scrolled { height: 68px; min-height: 68px; }
+            .nav-logo img { height: 48px; }
+            .navbar.is-scrolled .nav-logo img { height: 44px; }
+            .nav-right { display: none; }
             .nav-center {
                 position: fixed;
                 top: 0;
-                right: -280px;
-                width: 280px;
+                right: -300px;
+                width: 300px;
                 height: 100vh;
-                background: linear-gradient(180deg, #0b0f1a 0%, #111827 100%);
+                background: linear-gradient(180deg, rgba(11,15,26,0.98) 0%, rgba(17,24,39,0.97) 100%);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
                 flex: none;
-                padding: 5rem 1rem 1rem;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 5rem 1.25rem 2rem;
                 border-left: 1px solid var(--border);
                 transition: right 0.3s ease;
                 overflow-y: auto;
                 z-index: 999;
+                box-shadow: -10px 0 40px rgba(0,0,0,0.4);
             }
             .nav-center.is-open { right: 0; }
             .nav-menu {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 0.25rem;
             }
+            .nav-menu > li > a { padding: 0.75rem 1rem; font-size: 0.9rem; }
             .nav-dropdown-menu {
                 position: static;
                 opacity: 1;
@@ -478,21 +524,27 @@
                 border: none;
                 padding-left: 0;
             }
-            .nav-social { display: none; }
             .nav-social-mobile {
                 display: flex;
                 justify-content: center;
+                flex-wrap: wrap;
                 gap: 0.75rem;
-                margin-top: 2rem;
+                margin-top: 1.5rem;
                 padding-top: 1.5rem;
                 border-top: 1px solid var(--border);
             }
-            .nav-social-mobile a {
-                width: 44px;
-                height: 44px;
+            .nav-social-mobile a { width: 44px; height: 44px; }
+            .nav-social-mobile svg { width: 20px; height: 20px; }
+            .nav-cta-mobile {
+                display: flex !important;
+                justify-content: center;
+                margin-top: 1rem;
             }
-            .nav-social-mobile svg { width: 22px; height: 22px; }
-            .nav-toggle { display: block; }
+            .nav-cta-mobile .nav-cta { width: 100%; justify-content: center; padding: 0.75rem 1.5rem; font-size: 0.85rem; }
+            .nav-toggle { display: flex; align-items: center; justify-content: center; }
+        }
+        @media (min-width: 993px) {
+            .nav-cta-mobile { display: none !important; }
         }
         @media (max-width: 768px) {
             .nav-logo img { height: 70px; }
@@ -593,7 +645,7 @@
     @stack('styles')
 </head>
 <body class="{{ request()->is('/') ? 'page-home' : '' }}">
-    <nav class="navbar">
+    <nav class="navbar" id="mainNavbar">
         <div class="navbar-inner">
             <a href="{{ url('/') }}" class="nav-logo">
                 @php
@@ -608,32 +660,44 @@
                     <span class="nav-logo-text">{{ $siteName }}</span>
                 @endif
             </a>
-            <div class="nav-center">
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="{{ url('/') }}">Anasayfa</a></li>
-                <li><a href="{{ url('/programlar') }}">Programlar</a></li>
-                <li><a href="{{ url('/haberler') }}">Haberler</a></li>
-                <li><a href="{{ url('/videolar') }}">Video Galeri</a></li>
-                <li><a href="{{ url('/galeri') }}">Foto Galeri</a></li>
-                <li><a href="{{ url('/reklam') }}">Reklam & İşbirliği</a></li>
-                <li class="nav-dropdown">
-                    <a href="{{ url('/hakkimizda/biz-kimiz') }}">Hakkimizda<span class="arrow">▾</span></a>
-                    <ul class="nav-dropdown-menu">
-                        <li><a href="{{ url('/hakkimizda/biz-kimiz') }}">Biz Kimiz</a></li>
-                        <li><a href="{{ url('/hakkimizda/misyon') }}">Misyon & Vizyon</a></li>
-                        <li><a href="{{ url('/hakkimizda/politika') }}">Yayin Politikamiz</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ url('/iletisim') }}">İletişim</a></li>
-            </ul>
-            <div class="nav-social nav-social-mobile" aria-hidden="true">
-                @include('partials.social-icons')
+            <div class="nav-center" id="navCenter">
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Anasayfa</a></li>
+                    <li><a href="{{ url('/programlar') }}" class="{{ request()->is('programlar') ? 'active' : '' }}">Programlar</a></li>
+                    <li><a href="{{ url('/haberler') }}" class="{{ request()->is('haberler') ? 'active' : '' }}">Haberler</a></li>
+                    <li><a href="{{ url('/videolar') }}" class="{{ request()->is('videolar') ? 'active' : '' }}">Video Galeri</a></li>
+                    <li><a href="{{ url('/galeri') }}" class="{{ request()->is('galeri') ? 'active' : '' }}">Foto Galeri</a></li>
+                    <li><a href="{{ url('/reklam') }}" class="{{ request()->is('reklam') ? 'active' : '' }}">Reklam & İşbirliği</a></li>
+                    <li class="nav-dropdown">
+                        <a href="{{ url('/hakkimizda/biz-kimiz') }}" class="{{ request()->is('hakkimizda/*') ? 'active' : '' }}">Hakkimizda<span class="arrow">▾</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="{{ url('/hakkimizda/biz-kimiz') }}">Biz Kimiz</a></li>
+                            <li><a href="{{ url('/hakkimizda/misyon') }}">Misyon & Vizyon</a></li>
+                            <li><a href="{{ url('/hakkimizda/politika') }}">Yayin Politikamiz</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ url('/iletisim') }}" class="{{ request()->is('iletisim') ? 'active' : '' }}">İletişim</a></li>
+                </ul>
+                <div class="nav-social nav-social-mobile" aria-hidden="true">
+                    @include('partials.social-icons')
+                </div>
+                <div class="nav-cta-mobile">
+                    <a href="{{ url('/canli-dinle') }}" class="nav-cta open-live-player" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        CANLI DİNLE
+                    </a>
+                </div>
             </div>
+            <div class="nav-right">
+                <div class="nav-social">
+                    @include('partials.social-icons')
+                </div>
+                <a href="{{ url('/canli-dinle') }}" class="nav-cta open-live-player" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    CANLI DİNLE
+                </a>
             </div>
-            <div class="nav-social">
-                @include('partials.social-icons')
-            </div>
-            <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">☰</button>
+            <button class="nav-toggle" id="navToggle" type="button" aria-label="Menüyü aç">☰</button>
         </div>
     </nav>
 
@@ -712,11 +776,28 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         (function() {
+            var navbar = document.getElementById('mainNavbar');
+            if (navbar) {
+                function onScroll() {
+                    navbar.classList.toggle('is-scrolled', window.scrollY > 20);
+                }
+                window.addEventListener('scroll', onScroll, { passive: true });
+                onScroll();
+            }
+        })();
+        (function() {
             var toggle = document.getElementById('navToggle');
-            var center = document.querySelector('.nav-center');
+            var center = document.getElementById('navCenter');
             if (toggle && center) {
                 toggle.addEventListener('click', function() {
                     center.classList.toggle('is-open');
+                    document.body.classList.toggle('nav-open', center.classList.contains('is-open'));
+                });
+                document.addEventListener('click', function(e) {
+                    if (center.classList.contains('is-open') && !center.contains(e.target) && !toggle.contains(e.target)) {
+                        center.classList.remove('is-open');
+                        document.body.classList.remove('nav-open');
+                    }
                 });
             }
         })();
@@ -762,9 +843,9 @@
             }
             fetchRadioStatus();
             setInterval(fetchRadioStatus, 7000);
-            var openLiveBtn = document.getElementById('openLivePlayer');
-            if (openLiveBtn) {
-                openLiveBtn.addEventListener('click', function(e) {
+            var openLiveBtns = document.querySelectorAll('.open-live-player');
+            openLiveBtns.forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     var w = 420, h = 560;
                     var left = (screen.width - w) / 2;
@@ -772,7 +853,7 @@
                     window.open('{{ url("/canli-dinle") }}', 'RadyoYolPlayer', 'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',scrollbars=no,resizable=yes');
                     return false;
                 });
-            }
+            });
             btn.addEventListener('click', function() {
                 if (audio.paused) tryPlay();
                 else audio.pause();
