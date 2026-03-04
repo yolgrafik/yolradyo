@@ -7,18 +7,22 @@
     .home-layout {
         max-width: 1280px;
         margin: 0 auto;
-        padding: 2rem 1.5rem;
+        padding: 2rem 1rem;
+        overflow-x: hidden;
+        min-width: 0;
     }
     .home-main {
         display: grid;
         grid-template-columns: 3fr 1fr;
         gap: 2rem;
         align-items: start;
+        min-width: 0;
     }
     .home-left {
         display: flex;
         flex-direction: column;
         gap: 1.25rem;
+        min-width: 0;
     }
     .home-slider-wrap {
         position: relative;
@@ -174,9 +178,11 @@
         border-radius: 14px;
     }
     .schedule-days-bar {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
+        display: flex;
         gap: 10px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
         background: rgba(20, 25, 35, 0.6);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
@@ -185,7 +191,10 @@
         padding: 10px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
     }
+    .schedule-days-bar::-webkit-scrollbar { display: none; }
     .schedule-day {
+        flex: 0 0 auto;
+        min-width: 140px;
         padding: 0.65rem 0.5rem;
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -453,9 +462,12 @@
             grid-column: 1 / -1;
         }
     }
+    @media (max-width: 768px) {
+        .schedule-day { min-width: 110px; padding: 0.5rem 0.75rem; font-size: 0.8125rem; min-height: 38px; }
+    }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
-        .schedule-day { padding: 0.45rem 0.25rem; font-size: 0.7rem; min-height: 36px; }
+        .schedule-day { padding: 0.45rem 0.5rem; font-size: 0.75rem; min-height: 36px; min-width: 100px; }
         .schedule-panel { grid-template-columns: 1fr; padding: 0.85rem 1rem; }
         .schedule-panel__left { flex-direction: row; gap: 0.5rem; }
         .schedule-panel__icon { font-size: 1.5rem; }

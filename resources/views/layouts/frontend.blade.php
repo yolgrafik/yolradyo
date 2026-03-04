@@ -38,6 +38,7 @@
             --glow: {{ $themeGlow }};
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { overflow-x: hidden; }
         html { font-family: Arial, sans-serif; }
         body {
             font-family: Arial, sans-serif;
@@ -231,6 +232,8 @@
         }
         .main-content {
             flex: 1;
+            padding-bottom: 120px;
+            min-width: 0;
         }
         .main-content h1, .main-content h2, .main-content h3,
         .main-content .hero-btn, .main-content a.btn,
@@ -272,7 +275,7 @@
             left: 0;
             right: 0;
             height: 120px;
-            z-index: 1000;
+            z-index: 9999;
             font-family: Arial, sans-serif;
             background: rgba(10,12,20,0.85);
             backdrop-filter: blur(12px);
