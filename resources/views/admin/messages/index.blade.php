@@ -50,7 +50,16 @@
                             <td style="padding:0.75rem;font-size:0.9rem;">{{ $m->song_name }}</td>
                             <td style="padding:0.75rem;font-size:0.85rem;color:var(--muted);max-width:200px;">{{ Str::limit($m->message, 50) ?: '—' }}</td>
                             <td style="padding:0.75rem;font-size:0.85rem;">{{ $m->approved_at ? $m->approved_at->format('d.m.Y H:i') : '—' }}</td>
-                            <td style="padding:0.75rem;text-align:right;">
+                            <td style="padding:0.75rem;text-align:right;white-space:nowrap;">
+                                <form action="{{ route('admin.messages.approve', $m) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn-sm btn-success" disabled title="Zaten onaylı">Onaylı</button>
+                                </form>
+                                <form action="{{ route('admin.messages.blacklist', $m) }}" method="POST" class="d-inline" onsubmit="return confirm('Bu kayıt kara listeye alınacak. Devam edilsin mi?');">
+                                    @csrf
+                                    <input type="hidden" name="reason" value="Spam/uygunsuz">
+                                    <button type="submit" class="btn-sm btn-warning">Kara Listeye Al</button>
+                                </form>
                                 <form action="{{ route('admin.song-requests.destroy', $m) }}" method="POST" class="d-inline" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                                     @csrf
                                     @method('DELETE')
@@ -78,6 +87,9 @@
 <style>
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;font-size:0.9rem;margin-bottom:1rem;}
 .btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;margin-left:0.25rem;}
+.btn-sm:disabled{opacity:0.6;cursor:not-allowed;}
+.btn-success{background:rgba(34,197,94,0.3);color:#86efac;}
+.btn-warning{background:rgba(234,179,8,0.3);color:#fde047;}
 .btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
 .d-inline{display:inline;}
 nav[aria-label="Pagination"] ul{display:flex;gap:0.5rem;list-style:none;margin:0;padding:0;flex-wrap:wrap;}

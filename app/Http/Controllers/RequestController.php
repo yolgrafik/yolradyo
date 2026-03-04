@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blacklist;
 use App\Models\SongRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -18,6 +19,13 @@ class RequestController extends Controller
                 'song_name' => 'required|string|min:2|max:255',
                 'message' => 'nullable|string|max:500',
             ]);
+
+            if (Blacklist::isBlocked($request->full_name, $request->email)) {
+                return response()->json([
+                    'ok' => false,
+                    'message' => 'Bu kayıt engellendi.',
+                ], 403);
+            }
 
             SongRequest::create([
                 'full_name' => request('full_name'),

@@ -88,8 +88,11 @@ Route::prefix('admin')->group(function () {
             Route::post('2fa/disable', [App\Http\Controllers\Admin\TwoFactorController::class, 'disable'])->name('2fa.disable');
         });
 
+        Route::get('notifications/pending-count', [App\Http\Controllers\Admin\NotificationController::class, 'pendingCount'])->name('admin.notifications.pending-count');
         Route::get('messages', [App\Http\Controllers\Admin\MessagesController::class, 'index'])->name('admin.messages.index');
         Route::post('messages/bulk-destroy', [App\Http\Controllers\Admin\MessagesController::class, 'bulkDestroy'])->name('admin.messages.bulk-destroy');
+        Route::post('messages/{songRequest}/approve', [App\Http\Controllers\Admin\MessagesController::class, 'approve'])->name('admin.messages.approve');
+        Route::post('messages/{songRequest}/blacklist', [App\Http\Controllers\Admin\MessagesController::class, 'blacklist'])->name('admin.messages.blacklist');
         Route::get('moderation', [App\Http\Controllers\Admin\ModerationController::class, 'index'])->name('admin.moderation.index');
         Route::get('blacklist', fn () => view('admin.placeholder', ['title' => 'Kara Liste']))->name('admin.blacklist.index');
 
