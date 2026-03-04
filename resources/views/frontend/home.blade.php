@@ -31,9 +31,8 @@
         min-width: 0;
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
         min-height: 386px;
-        background: #0f172a;
+        background: var(--panel);
         border: 1px solid var(--border);
-        border-top: 4px solid var(--ry-theme);
     }
     .home-slider {
         position: relative;
@@ -134,13 +133,12 @@
         justify-content: center;
         color: var(--muted);
         font-size: 1.25rem;
-        background: #0f172a;
+        background: var(--panel);
         border: 1px solid var(--border);
-        border-top: 4px solid var(--ry-theme);
         border-radius: 14px;
     }
     .schedule-card {
-        background: var(--ry-strip-bg);
+        background: var(--ry-bar-bg);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.08);
@@ -271,7 +269,7 @@
         gap: 0.75rem;
         padding: 1rem;
         border-radius: var(--ry-radius);
-        background: var(--ry-strip-bg);
+        background: var(--ry-istekler-bg);
         border: 1px solid rgba(255,255,255,0.1);
     }
     .btn-live {
@@ -362,29 +360,27 @@
         justify-content: center;
         gap: 0.5rem;
         padding: 0.75rem 1rem;
-        background: #0f172a;
-        border: 1px solid var(--ry-border);
-        border-top: 4px solid var(--ry-theme);
+        background: var(--ry-surface);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 10px;
         color: #ffffff;
         font-size: 0.85rem;
         transition: all 0.2s ease;
     }
     .badge-placeholder:hover {
-        background: #111827;
+        background: var(--ry-surface-2);
         color: #ffffff;
     }
     .live-dj-card {
-        background: #0f172a;
+        background: var(--ry-schedule-bg);
         border: 1px solid var(--border);
-        border-top: 4px solid var(--ry-theme);
         border-radius: 14px;
         padding: 0;
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     }
     .live-banner {
-        background: var(--ry-strip-bg);
+        background: var(--ry-bar-bg);
         color: #ffffff;
         font-weight: 900;
         font-size: 14px;
