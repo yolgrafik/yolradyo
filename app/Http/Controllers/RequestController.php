@@ -12,18 +12,19 @@ class RequestController extends Controller
     {
         try {
             $validated = $request->validate([
-                'isim_soyad' => 'required|string|min:3|max:255',
-                'sanatci_ismi' => 'required|string|min:2|max:255',
-                'turku_ismi' => 'required|string|min:2|max:255',
-                'mesaj' => 'nullable|string|max:500',
+                'full_name' => 'required|string|min:3|max:255',
+                'email' => 'nullable|email|max:255',
+                'artist_name' => 'required|string|min:2|max:255',
+                'song_name' => 'required|string|min:2|max:255',
+                'message' => 'nullable|string|max:500',
             ]);
 
             SongRequest::create([
-                'full_name' => $validated['isim_soyad'],
-                'email' => null,
-                'artist_name' => $validated['sanatci_ismi'],
-                'song_name' => $validated['turku_ismi'],
-                'message' => $validated['mesaj'] ?? null,
+                'full_name' => $validated['full_name'],
+                'email' => !empty($validated['email']) ? $validated['email'] : null,
+                'artist_name' => $validated['artist_name'],
+                'song_name' => $validated['song_name'],
+                'message' => $validated['message'] ?? null,
                 'status' => 'pending',
             ]);
 

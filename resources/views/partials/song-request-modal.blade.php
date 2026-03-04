@@ -6,24 +6,29 @@
         <form id="songRequestForm" class="request-form">
             @csrf
             <div class="request-form__group">
-                <label for="isim_soyad">İsim Soyad *</label>
-                <input type="text" name="isim_soyad" id="isim_soyad" required class="request-form__input">
-                <span class="request-form__error" id="err_isim_soyad"></span>
+                <label for="full_name">İsim Soyad *</label>
+                <input type="text" name="full_name" id="full_name" required class="request-form__input">
+                <span class="request-form__error" id="err_full_name"></span>
             </div>
             <div class="request-form__group">
-                <label for="sanatci_ismi">Sanatçı İsmi *</label>
-                <input type="text" name="sanatci_ismi" id="sanatci_ismi" required class="request-form__input">
-                <span class="request-form__error" id="err_sanatci_ismi"></span>
+                <label for="email">E-posta (opsiyonel)</label>
+                <input type="email" name="email" id="email" class="request-form__input">
+                <span class="request-form__error" id="err_email"></span>
             </div>
             <div class="request-form__group">
-                <label for="turku_ismi">Türkü İsmi *</label>
-                <input type="text" name="turku_ismi" id="turku_ismi" required class="request-form__input">
-                <span class="request-form__error" id="err_turku_ismi"></span>
+                <label for="artist_name">Sanatçı İsmi *</label>
+                <input type="text" name="artist_name" id="artist_name" required class="request-form__input">
+                <span class="request-form__error" id="err_artist_name"></span>
             </div>
             <div class="request-form__group">
-                <label for="mesaj">Mesaj (opsiyonel)</label>
-                <textarea name="mesaj" id="mesaj" rows="3" class="request-form__input"></textarea>
-                <span class="request-form__error" id="err_mesaj"></span>
+                <label for="song_name">Türkü İsmi *</label>
+                <input type="text" name="song_name" id="song_name" required class="request-form__input">
+                <span class="request-form__error" id="err_song_name"></span>
+            </div>
+            <div class="request-form__group">
+                <label for="message">Mesaj (opsiyonel)</label>
+                <textarea name="message" id="message" rows="3" class="request-form__input"></textarea>
+                <span class="request-form__error" id="err_message"></span>
             </div>
             <div class="request-form__success" id="formSuccess" style="display:none">İsteğiniz alındı.</div>
             <div class="request-form__actions">
@@ -52,7 +57,7 @@
     closeBtns.forEach(function(btn){btn.addEventListener('click',closeModal);});
     if(modal){modal.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('request-modal__backdrop')){closeModal();}});}
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal&&modal.classList.contains('is-open')){closeModal();}});
-    function clearErrors(){['isim_soyad','sanatci_ismi','turku_ismi','mesaj'].forEach(function(id){var el=document.getElementById('err_'+id);if(el){el.textContent='';}});}
+    function clearErrors(){['full_name','email','artist_name','song_name','message'].forEach(function(id){var el=document.getElementById('err_'+id);if(el){el.textContent='';}});}
     if(form){
         form.addEventListener('submit',function(e){
             e.preventDefault();
