@@ -453,7 +453,7 @@
     }
     .live-live-btn {
         position: relative;
-        background: var(--ry-btn-bg);
+        background: var(--ry-schedule-active);
         color: #ffffff;
         padding: 8px 16px;
         border-radius: 8px;
