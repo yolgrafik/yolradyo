@@ -589,7 +589,21 @@
         }
         .mini-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,.06); }
         .mini-head-left { display: flex; gap: 10px; align-items: center; }
-        .mini-logo { width: 32px; height: 32px; border-radius: 10px; object-fit: contain; background: rgba(255,255,255,.06); }
+        .mini-head-play-icon {
+            width: 32px; height: 32px; max-width: 32px; max-height: 32px;
+            border-radius: 50%;
+            background: #ff2a2a;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .mini-head-play-icon .icon { flex-shrink: 0; display: block; }
+        .mini-head-play-icon .icon.play {
+            width: 0; height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 9px solid #fff;
+            margin-left: 2px;
+        }
         .mini-title { font-weight: 900; font-size: 0.95rem; color: #fff; }
         .mini-close { background: transparent; border: 0; color: #fff; font-size: 18px; cursor: pointer; padding: 4px; line-height: 1; }
         .mini-close:hover { opacity: .85; }
@@ -932,16 +946,13 @@
     </script>
 
     @php
-        $miniPlayerLogo = file_exists(public_path('assets/images/player-logo.png'))
-            ? asset('assets/images/player-logo.png')
-            : (file_exists(public_path('assets/images/play-logo.png')) ? asset('assets/images/play-logo.png') : asset('assets/images/play.svg'));
         $miniWhatsapp = !empty($siteSettings['whatsapp_url']) ? $siteSettings['whatsapp_url'] : 'javascript:void(0)';
     @endphp
     <div id="miniPlayerOverlay" class="mini-player-overlay hidden" role="dialog" aria-modal="true" aria-label="Canlı dinle"></div>
     <div id="miniPlayerModal" class="mini-player-modal hidden" role="dialog" aria-label="Canlı yayın">
         <div class="mini-head">
             <div class="mini-head-left">
-                <img class="mini-logo" src="{{ $miniPlayerLogo }}" alt="">
+                <div class="mini-head-play-icon" aria-hidden="true"><span class="icon play"></span></div>
                 <span class="mini-title">Canlı Yayın</span>
             </div>
             <button type="button" id="miniClose" class="mini-close" aria-label="Kapat">✕</button>
