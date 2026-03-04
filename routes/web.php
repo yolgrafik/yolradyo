@@ -94,7 +94,8 @@ Route::prefix('admin')->group(function () {
         Route::post('messages/{songRequest}/approve', [App\Http\Controllers\Admin\MessagesController::class, 'approve'])->name('admin.messages.approve');
         Route::post('messages/{songRequest}/blacklist', [App\Http\Controllers\Admin\MessagesController::class, 'blacklist'])->name('admin.messages.blacklist');
         Route::get('moderation', [App\Http\Controllers\Admin\ModerationController::class, 'index'])->name('admin.moderation.index');
-        Route::get('blacklist', fn () => view('admin.placeholder', ['title' => 'Kara Liste']))->name('admin.blacklist.index');
+        Route::get('blacklist', [App\Http\Controllers\Admin\BlacklistController::class, 'index'])->name('admin.blacklist.index');
+        Route::delete('blacklist/{blacklist}', [App\Http\Controllers\Admin\BlacklistController::class, 'destroy'])->name('admin.blacklist.destroy');
 
         Route::prefix('song-requests')->name('admin.song-requests.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'index'])->name('index');
