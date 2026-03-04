@@ -9,12 +9,13 @@
     $btnHover = $settings['button_hover_color'] ?? '#dc2626';
     $scheduleBg = $settings['schedule_color'] ?? '#1e2430';
     $scheduleActive = $settings['schedule_active_color'] ?? '#c92a2a';
+    $lineColor = !empty(trim($settings['line_color'] ?? '')) ? trim($settings['line_color']) : null;
 @endphp
 {{-- STRICT COLOR SYSTEM: Theme=header/footer/player/istekler. Text=#fff. Buttons=config. --}}
 <style id="theme-vars">
 :root {
     --ry-theme: {{ $themeAccent }};
-    --ry-line-color: color-mix(in srgb, var(--ry-theme) 40%, rgba(255,255,255,0.9));
+    --ry-line-color: {{ $lineColor ?: 'color-mix(in srgb, var(--ry-theme) 40%, rgba(255,255,255,0.9))' }};
     --ry-header-bg: {{ $headerBg }};
     --ry-footer-bg: {{ $footerBg }};
     --ry-bar-bg: {{ $barBg }};
