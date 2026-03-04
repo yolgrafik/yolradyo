@@ -186,6 +186,7 @@
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        min-width: 0;
     }
     .schedule-top-bar {
         display: flex;
@@ -244,24 +245,27 @@
     }
     .schedule-list-wrap {
         padding: 0 1rem 1rem;
+        min-width: 0;
+        overflow: hidden;
     }
     .schedule-strip {
         display: flex;
         align-items: center;
         gap: 10px;
         white-space: nowrap;
+        max-width: 100%;
         overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
         padding: 10px 12px;
         border-radius: 12px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.06);
         margin-top: 10px;
     }
-    .schedule-strip::-webkit-scrollbar { display: none; }
-    .schedule-strip {
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
+    .schedule-strip::-webkit-scrollbar { height: 6px; }
+    .schedule-strip::-webkit-scrollbar-track { background: transparent; }
+    .schedule-strip::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 999px; }
     .schedule-chip {
         display: inline-flex;
         align-items: center;

@@ -17,16 +17,23 @@ class ScheduleController extends Controller
         $schedules = Schedule::forDay($day)->active()->ordered()->get();
         $schedulesArray = $schedules->values()->all();
 
-        $now = now();
-        $todayDay = $now->dayOfWeekIso - 1; // 1=Mon -> 0, 7=Sun -> 6
-        $items = collect($schedulesArray)->map(function ($s, $idx) use ($now, $day, $todayDay, $schedulesArray) {
-            $start = is_string($s->start_time) ? substr($s->start_time, 0, 5) : $s->start_time->format('H:i');
-            $end = $s->end_time ? (is_string($s->end_time) ? substr($s->end_time, 0, 5) : $s->end_time->format('H:i')) : null;
-            $startDt = \Carbon\Carbon::parse($s->start_time);
-            $endDt = $end ? \Carbon\Carbon::parse($s->end_time) : (
-                isset($schedulesArray[$idx + 1]) ? \Carbon\Carbon::parse($schedulesArray[$idx + 1]->start_time) : $startDt->copy()->addHours(3)
+        $nowTime = now()->format('H:i:s');
+        $todayDay = now()->dayOfWeekIso - 1; // 1=Mon -> 0, 7=Sun -> 6
+        $items = collect($schedulesArray)->map(function ($s, $idx) use ($nowTime, $day, $todayDay, $schedulesArray) {
+            $startRaw = is_string($s->start_time) ? $s->start_time : $s->start_time->format('H:i:s');
+            $start = substr($startRaw, 0, 5);
+            $endRaw = $s->end_time ? (is_string($s->end_time) ? $s->end_time : $s->end_time->format('H:i:s')) : null;
+            $end = $endRaw ? substr($endRaw, 0, 5) : null;
+
+            $startCompare = substr($startRaw, 0, 8);
+            $endCompare = $endRaw ? substr($endRaw, 0, 8) : (
+                isset($schedulesArray[$idx + 1])
+                    ? substr(is_string($schedulesArray[$idx + 1]->start_time) ? $schedulesArray[$idx + 1]->start_time : $schedulesArray[$idx + 1]->start_time->format('H:i:s'), 0, 8)
+                    : '23:59:59'
             );
-            $isLive = ($day === $todayDay) && $now->between($startDt, $endDt);
+
+            $isLive = ($day === $todayDay) && ($nowTime >= $startCompare && $nowTime < $endCompare);
+
             return [
                 'start_time' => $start,
                 'end_time' => $end,
