@@ -1,5 +1,5 @@
 <?php
-// Tema presetleri - isimlere uygun ana renkler
+// Tema presetleri - 20 adet, isimlere uygun ana renkler
 return [
     1 => [
         'name' => 'Radyo Yol (Kırmızı)',
@@ -78,5 +78,53 @@ return [
         'primary' => '#0d9488',
         'primary_hover' => '#14b8a6',
         'accent' => '#2dd4bf',
+    ],
+    13 => [
+        'name' => 'Gri Klasik',
+        'primary' => '#6b7280',
+        'primary_hover' => '#9ca3af',
+        'accent' => '#9ca3af',
+    ],
+    14 => [
+        'name' => 'İndigo Derin',
+        'primary' => '#4f46e5',
+        'primary_hover' => '#6366f1',
+        'accent' => '#818cf8',
+    ],
+    15 => [
+        'name' => 'Kehribar Sıcak',
+        'primary' => '#d97706',
+        'primary_hover' => '#f59e0b',
+        'accent' => '#fbbf24',
+    ],
+    16 => [
+        'name' => 'Gül Kırmızısı',
+        'primary' => '#e11d48',
+        'primary_hover' => '#f43f5e',
+        'accent' => '#fb7185',
+    ],
+    17 => [
+        'name' => 'Zümrüt Yeşil',
+        'primary' => '#059669',
+        'primary_hover' => '#10b981',
+        'accent' => '#34d399',
+    ],
+    18 => [
+        'name' => 'Menekşe Mor',
+        'primary' => '#6d28d9',
+        'primary_hover' => '#7c3aed',
+        'accent' => '#a78bfa',
+    ],
+    19 => [
+        'name' => 'Gök Mavisi',
+        'primary' => '#0284c7',
+        'primary_hover' => '#0ea5e9',
+        'accent' => '#38bdf8',
+    ],
+    20 => [
+        'name' => 'Koyu Gri',
+        'primary' => '#4b5563',
+        'primary_hover' => '#6b7280',
+        'accent' => '#9ca3af',
     ],
 ];
