@@ -178,35 +178,59 @@
         border: 1px solid var(--border);
         border-radius: 14px;
     }
-    .schedule-days-bar {
-        display: flex;
-        gap: 10px;
-        overflow-x: auto;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+    .schedule-card {
         background: rgba(20, 25, 35, 0.6);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
-        padding: 10px;
+        overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .schedule-top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.85rem 1rem 0.5rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .schedule-top-bar__title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text);
+        flex-shrink: 0;
+    }
+    .schedule-top-bar__icon { font-size: 1.1rem; }
+    .schedule-days-bar {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        flex: 1;
+        min-width: 0;
+        justify-content: flex-end;
     }
     .schedule-days-bar::-webkit-scrollbar { display: none; }
     .schedule-day {
         flex: 0 0 auto;
-        min-width: 140px;
-        padding: 0.65rem 0.5rem;
+        padding: 10px 16px;
+        border-radius: 12px;
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
         color: var(--text);
         font-family: Arial, sans-serif;
-        font-size: 0.9rem;
-        font-weight: 500;
+        font-size: 0.8rem;
+        font-weight: 600;
         cursor: pointer;
         transition: all 0.2s ease;
-        min-height: 44px;
+        min-height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -216,42 +240,16 @@
         border-color: rgba(255, 255, 255, 0.15);
     }
     .schedule-day.active {
-        background: rgba(201, 42, 42, 0.3);
-        border-color: rgba(201, 42, 42, 0.6);
+        background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), rgba(185, 28, 28, 0.95));
+        border: 1px solid rgba(255, 255, 255, 0.25);
         color: #fff;
+        box-shadow: 0 2px 8px rgba(201, 42, 42, 0.4);
     }
-    .schedule-panel {
-        display: grid;
-        grid-template-columns: 240px 1fr;
-        gap: 14px;
-        min-width: 0;
-        background: rgba(20, 25, 35, 0.6);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 1rem 1.25rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    .schedule-list-wrap {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 0 0.5rem 0.5rem;
     }
-    .schedule-panel__left {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        padding: 1rem;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .schedule-panel__icon { font-size: 2rem; }
-    .schedule-panel__title {
-        font-weight: 700;
-        font-size: 1rem;
-        color: var(--text);
-        text-align: center;
-    }
-    .schedule-panel__right { min-width: 0; }
     .schedule-list {
         display: flex;
         flex-direction: column;
@@ -260,35 +258,54 @@
     .schedule-item {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        padding: 0.65rem 0;
+        gap: 16px;
+        padding: 12px 14px;
+        min-height: 44px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         font-size: 0.9rem;
+        transition: background 0.2s ease;
+    }
+    .schedule-item:hover {
+        background: rgba(255, 255, 255, 0.04);
     }
     .schedule-item:last-child { border-bottom: none; }
     .schedule-item.is-live {
-        background: rgba(201, 42, 42, 0.12);
-        border-radius: 8px;
-        padding: 0.65rem 0.75rem;
-        margin: 0 -0.75rem;
-        border-bottom: none;
+        background: linear-gradient(90deg, rgba(201, 42, 42, 0.2), rgba(185, 28, 28, 0.15));
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        margin: 6px 0;
+        padding: 12px 14px;
+        box-shadow: 0 0 20px rgba(201, 42, 42, 0.15);
+    }
+    .schedule-item.is-live:hover {
+        background: linear-gradient(90deg, rgba(201, 42, 42, 0.25), rgba(185, 28, 28, 0.2));
     }
     .schedule-time {
+        width: 70px;
         flex-shrink: 0;
-        color: var(--accent);
-        font-weight: 600;
-        min-width: 48px;
+        color: #ff3b3b;
+        font-weight: 700;
+        font-size: 0.9rem;
     }
-    .schedule-program { flex: 1; color: var(--text); }
+    .schedule-program {
+        flex: 1;
+        color: var(--text);
+        font-weight: 600;
+        min-width: 0;
+    }
     .schedule-dj {
+        width: 160px;
         flex-shrink: 0;
+        text-align: right;
         color: var(--muted);
         font-size: 0.85rem;
+        opacity: 0.85;
     }
     .schedule-badge {
         flex-shrink: 0;
-        padding: 0.2rem 0.5rem;
-        background: rgba(34, 197, 94, 0.3);
+        margin-left: 10px;
+        padding: 0.25rem 0.6rem;
+        background: rgba(34, 197, 94, 0.35);
         color: #86efac;
         font-size: 0.7rem;
         font-weight: 700;
@@ -465,14 +482,14 @@
         }
     }
     @media (max-width: 768px) {
-        .schedule-day { min-width: 110px; padding: 0.5rem 0.75rem; font-size: 0.8125rem; min-height: 38px; }
+        .schedule-day { padding: 8px 12px; font-size: 0.75rem; min-height: 34px; }
+        .schedule-dj { width: 120px; }
     }
     @media (max-width: 600px) {
         .home-layout { padding: 1rem; }
-        .schedule-day { padding: 0.45rem 0.5rem; font-size: 0.75rem; min-height: 36px; min-width: 100px; }
-        .schedule-panel { grid-template-columns: 1fr; padding: 0.85rem 1rem; }
-        .schedule-panel__left { flex-direction: row; gap: 0.5rem; }
-        .schedule-panel__icon { font-size: 1.5rem; }
+        .schedule-top-bar { flex-direction: column; align-items: stretch; }
+        .schedule-days-bar { justify-content: flex-start; }
+        .schedule-dj { width: 100px; }
         .home-right {
             grid-template-columns: 1fr;
         }
@@ -509,21 +526,23 @@
             @else
             <div class="home-slider-placeholder">Slider</div>
             @endif
-            <div class="schedule-days-bar">
-                <button type="button" class="schedule-day active" data-day="0">Pazartesi</button>
-                <button type="button" class="schedule-day" data-day="1">Salı</button>
-                <button type="button" class="schedule-day" data-day="2">Çarşamba</button>
-                <button type="button" class="schedule-day" data-day="3">Perşembe</button>
-                <button type="button" class="schedule-day" data-day="4">Cuma</button>
-                <button type="button" class="schedule-day" data-day="5">Cumartesi</button>
-                <button type="button" class="schedule-day" data-day="6">Pazar</button>
-            </div>
-            <div class="schedule-panel">
-                <div class="schedule-panel__left">
-                    <span class="schedule-panel__icon">📻</span>
-                    <span class="schedule-panel__title">Yayın Akışı</span>
+            <div class="schedule-card">
+                <div class="schedule-top-bar">
+                    <span class="schedule-top-bar__title">
+                        <span class="schedule-top-bar__icon">📻</span>
+                        Yayın Akışı
+                    </span>
+                    <div class="schedule-days-bar">
+                        <button type="button" class="schedule-day active" data-day="0">Pzt</button>
+                        <button type="button" class="schedule-day" data-day="1">Sal</button>
+                        <button type="button" class="schedule-day" data-day="2">Çar</button>
+                        <button type="button" class="schedule-day" data-day="3">Per</button>
+                        <button type="button" class="schedule-day" data-day="4">Cum</button>
+                        <button type="button" class="schedule-day" data-day="5">Cmt</button>
+                        <button type="button" class="schedule-day" data-day="6">Paz</button>
+                    </div>
                 </div>
-                <div class="schedule-panel__right">
+                <div class="schedule-list-wrap">
                     <div class="schedule-list" data-day="0">
                         <div class="schedule-item"><span class="schedule-time">09:00</span><span class="schedule-program">Sabah Kuşağı</span><span class="schedule-dj">DJ Ali</span></div>
                         <div class="schedule-item is-live"><span class="schedule-time">12:00</span><span class="schedule-program">Öğle Yayını</span><span class="schedule-dj">Desmal</span><span class="schedule-badge">CANLI</span></div>
