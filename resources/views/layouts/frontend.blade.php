@@ -291,8 +291,9 @@
         .main-content button {
             text-transform: none;
         }
-        /* Glassmorphism button */
+        /* Glassmorphism button - premium radio UI */
         .glass-btn {
+            position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -302,16 +303,32 @@
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 14px;
             padding: 10px 22px;
-            color: white;
+            color: #fff;
             font-weight: 600;
+            letter-spacing: .4px;
             text-decoration: none;
             cursor: pointer;
-            transition: all .3s ease;
+            transition: all .35s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+        }
+        .glass-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            background: linear-gradient(120deg, rgba(255,255,255,0.25), rgba(255,255,255,0));
+            opacity: .4;
+            pointer-events: none;
         }
         .glass-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow:
+                0 0 20px rgba(255,0,60,0.6),
+                0 8px 25px rgba(0,0,0,0.45);
             background: rgba(255,255,255,0.15);
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 0 15px rgba(201,42,42,0.6);
+        }
+        .glass-btn:active {
+            transform: scale(.97);
         }
         .glass-btn:focus-visible {
             outline: 2px solid var(--accent);
