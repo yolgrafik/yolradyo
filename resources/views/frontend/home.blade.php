@@ -427,7 +427,7 @@
     }
     .live-dj-card {
         position: relative;
-        background: color-mix(in srgb, var(--ry-theme) 22%, #0f172a);
+        background: color-mix(in srgb, var(--ry-bar-bg) 75%, #0b0f16);
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 0;
@@ -550,7 +550,7 @@
         border-top: 1px solid var(--ry-line-color);
         font-size: 11px;
         color: var(--muted);
-        background: color-mix(in srgb, var(--ry-theme) 12%, #0b0f16);
+        background: color-mix(in srgb, var(--ry-bar-bg) 55%, #0b0f16);
     }
     .live-track {
         margin-bottom: 4px;
