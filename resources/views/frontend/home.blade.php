@@ -308,18 +308,19 @@
         place-items: center;
         cursor: pointer;
         font-family: inherit;
-        padding: 1rem 0.75rem;
+        padding: 1rem 1rem;
         background: linear-gradient(135deg, #16a34a, var(--accent));
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-right: none;
         border-radius: 0;
         color: #fff;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: 700;
         text-transform: none;
+        white-space: nowrap;
         transition: all 0.25s ease;
     }
-    .btn-request-group .btn-request:last-of-type { border-right: 1px solid rgba(255, 255, 255, 0.2); }
+    .btn-request-group > *:last-child { border-right: 1px solid rgba(255, 255, 255, 0.2); }
     .btn-request:hover {
         background: linear-gradient(135deg, #22c55e, #dc2626);
     }
@@ -328,16 +329,17 @@
         flex: 1;
         display: grid;
         place-items: center;
-        padding: 1rem 0.75rem;
+        padding: 1rem 1rem;
         background: linear-gradient(135deg, #25D366, #128C7E);
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-left: none;
         border-radius: 0;
         color: #fff;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: 700;
         text-decoration: none;
         text-transform: none;
+        white-space: nowrap;
         transition: all 0.25s ease;
     }
     .btn-whatsapp-istek:hover {
@@ -554,6 +556,7 @@
             grid-template-columns: 1fr;
         }
         .home-actions { flex-direction: column; }
+        .btn-request, .btn-whatsapp-istek { font-size: 0.8rem; padding: 0.9rem 0.75rem; }
     }
 </style>
 @endpush
