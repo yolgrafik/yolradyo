@@ -59,30 +59,24 @@ class ThemeService
 
         $headerBg = $preset['header_bg'] ?? 'linear-gradient(180deg, rgba(11,15,26,0.95) 0%, rgba(17,24,39,0.93) 100%)';
         $footerBg = $preset['footer_bg'] ?? 'rgba(5,7,12,0.95)';
+        $barBg = $preset['bar_bg'] ?? "linear-gradient(135deg, {$accent}, " . $this->darken($accent, 0.2) . ")";
 
         return [
-            'primary' => $primary,
-            'primary_hover' => $primaryHover,
             'accent' => $accent,
-            'glow' => $glow,
             'header_bg' => $headerBg,
             'footer_bg' => $footerBg,
-            'button_bg' => $primary,
-            'button_border' => $accent,
-            'link' => $this->lighten($accent, 0.3),
-            'link_hover' => $this->lighten($accent, 0.5),
-            'badge' => $accent,
+            'bar_bg' => $barBg,
         ];
     }
 
-    protected function lighten(string $hex, float $amount): string
+    protected function darken(string $hex, float $amount): string
     {
         if (!preg_match('/^#([0-9A-Fa-f]{6})$/', $hex, $m)) {
-            return '#60a5fa';
+            return '#0a0a0a';
         }
-        $r = min(255, hexdec(substr($m[1], 0, 2)) + (int)(255 * $amount));
-        $g = min(255, hexdec(substr($m[1], 2, 2)) + (int)(255 * $amount));
-        $b = min(255, hexdec(substr($m[1], 4, 2)) + (int)(255 * $amount));
+        $r = max(0, hexdec(substr($m[1], 0, 2)) - (int)(255 * $amount));
+        $g = max(0, hexdec(substr($m[1], 2, 2)) - (int)(255 * $amount));
+        $b = max(0, hexdec(substr($m[1], 4, 2)) - (int)(255 * $amount));
         return sprintf('#%02x%02x%02x', $r, $g, $b);
     }
 

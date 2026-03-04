@@ -337,7 +337,7 @@
             text-decoration: none;
         }
         .footer-legal a:hover {
-            color: var(--ry-primary-hover);
+            color: #93c5fd;
         }
         /* Fixed bottom player bar - above legal footer */
         .bottom-bar-player {
@@ -348,10 +348,10 @@
             height: 120px;
             z-index: 9999;
             font-family: Arial, sans-serif;
-            background: var(--ry-surface);
+            background: var(--ry-bar-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-top: 1px solid var(--ry-accent);
+            border-top: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
@@ -572,7 +572,7 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: var(--ry-primary);
+            background: #1e3a8a;
             border: none;
             display: flex;
             justify-content: center;
@@ -647,19 +647,19 @@
         .request-form__group { margin-bottom: 1rem; }
         .request-form__group label { display: block; margin-bottom: .35rem; font-size: .9rem; }
         .request-form__input { width: 100%; padding: .5rem .75rem; background: var(--ry-input-bg); border: 1px solid var(--ry-border); border-radius: calc(var(--ry-radius) - 2px); color: var(--ry-input-text); font-size: 1rem; }
-        .request-form__input:focus { outline: none; border-color: var(--ry-focus); }
+        .request-form__input:focus { outline: none; border-color: #2563eb; }
         .request-form__error { display: block; font-size: .8rem; color: #f87171; margin-top: .25rem; }
         .request-form__success { padding: .5rem; border-radius: 6px; margin-bottom: 1rem; }
         .request-form__actions { margin-top: 1rem; }
-        .request-form__btn { padding: .75rem 1.5rem; background: var(--ry-primary); color: #fff; border: none; border-radius: calc(var(--ry-radius) - 2px); font-weight: 600; cursor: pointer; }
+        .request-form__btn { padding: .75rem 1.5rem; background: #1e3a8a; color: #fff; border: none; border-radius: calc(var(--ry-radius) - 2px); font-weight: 600; cursor: pointer; }
         .request-form__btn:hover { opacity: .9; }
     </style>
     @stack('styles')
-    <style id="theme-button-overrides">
-        .btn-primary, .btn-live, .btn-request, .btn-whatsapp-istek, .home-slider__btn, .glass-btn, .btn-istek, .share-btn { background: var(--ry-primary) !important; border-color: var(--ry-btn-border) !important; color: var(--ry-btn-text) !important; }
-        .btn-primary:hover, .btn-live:hover, .btn-request:hover, .btn-whatsapp-istek:hover:not(.btn-whatsapp-disabled), .home-slider__btn:hover, .glass-btn:hover, .btn-istek:hover, .share-btn:hover { background: var(--ry-primary-hover) !important; box-shadow: 0 0 18px color-mix(in srgb, var(--ry-glow) 55%, transparent) !important; }
-        .btn-request-group { box-shadow: 0 4px 20px color-mix(in srgb, var(--ry-glow) 40%, transparent) !important; }
-        .btn-request-group:hover { box-shadow: 0 6px 24px color-mix(in srgb, var(--ry-glow) 50%, transparent) !important; }
+    <style id="fixed-button-styles">
+        .btn-primary, .btn-live, .btn-request, .btn-whatsapp-istek, .home-slider__btn, .glass-btn, .btn-istek, .share-btn, .ry-btn-primary { background: #1e3a8a !important; border-color: #1e3a8a !important; color: #fff !important; }
+        .btn-primary:hover, .btn-live:hover, .btn-request:hover, .btn-whatsapp-istek:hover:not(.btn-whatsapp-disabled), .home-slider__btn:hover, .glass-btn:hover, .btn-istek:hover, .share-btn:hover, .ry-btn-primary:hover { background: #2563eb !important; border-color: #2563eb !important; box-shadow: 0 0 18px rgba(37,99,235,0.5) !important; }
+        .btn-request-group { box-shadow: 0 4px 20px rgba(30,58,138,0.35) !important; }
+        .btn-request-group:hover { box-shadow: 0 6px 24px rgba(37,99,235,0.4) !important; }
     </style>
     <style id="glass-btn-styles">
         .glass-btn,
@@ -669,13 +669,13 @@
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            background: var(--ry-primary) !important;
+            background: #1e3a8a !important;
             backdrop-filter: blur(12px) !important;
             -webkit-backdrop-filter: blur(12px) !important;
-            border: 1px solid var(--ry-btn-border) !important;
+            border: 1px solid #1e3a8a !important;
             border-radius: var(--ry-radius) !important;
             padding: 10px 22px !important;
-            color: var(--ry-btn-text) !important;
+            color: #fff !important;
             font-weight: 600 !important;
             letter-spacing: .4px !important;
             text-decoration: none !important;
@@ -698,8 +698,8 @@
         a.glass-btn:hover,
         button.glass-btn:hover {
             transform: translateY(-3px) scale(1.05) !important;
-            box-shadow: 0 0 20px var(--ry-glow), 0 8px 25px rgba(0,0,0,0.45) !important;
-            background: var(--ry-primary-hover) !important;
+            box-shadow: 0 0 20px rgba(37,99,235,0.5), 0 8px 25px rgba(0,0,0,0.45) !important;
+            background: #2563eb !important;
         }
         .glass-btn:active,
         a.glass-btn:active,
@@ -709,7 +709,7 @@
         .glass-btn:focus-visible,
         a.glass-btn:focus-visible,
         button.glass-btn:focus-visible {
-            outline: 2px solid var(--ry-focus) !important;
+            outline: 2px solid #2563eb !important;
             outline-offset: 3px !important;
         }
     </style>
