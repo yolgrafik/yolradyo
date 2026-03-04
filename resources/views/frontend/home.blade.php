@@ -295,26 +295,59 @@
         transform: translateY(-2px);
         box-shadow: 0 6px 28px rgba(37, 99, 235, 0.5);
     }
+    .btn-request-group {
+        display: flex;
+        flex: 1;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(22, 163, 74, 0.35);
+    }
     .btn-request {
+        flex: 1;
         display: grid;
         place-items: center;
         cursor: pointer;
         font-family: inherit;
-        padding: 1rem 1.5rem;
+        padding: 1rem 0.75rem;
         background: linear-gradient(135deg, #16a34a, var(--accent));
         border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 12px;
+        border-right: none;
+        border-radius: 0;
         color: #fff;
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 700;
         text-transform: none;
-        box-shadow: 0 4px 20px rgba(22, 163, 74, 0.35);
         transition: all 0.25s ease;
     }
+    .btn-request-group .btn-request:last-of-type { border-right: 1px solid rgba(255, 255, 255, 0.2); }
     .btn-request:hover {
-        transform: translateY(-2px);
         background: linear-gradient(135deg, #22c55e, #dc2626);
-        box-shadow: 0 0 24px rgba(34, 197, 94, 0.4), 0 0 40px rgba(220, 38, 38, 0.35);
+    }
+    .btn-request-group:hover { box-shadow: 0 6px 24px rgba(22, 163, 74, 0.4); }
+    .btn-whatsapp-istek {
+        flex: 1;
+        display: grid;
+        place-items: center;
+        padding: 1rem 0.75rem;
+        background: linear-gradient(135deg, #25D366, #128C7E);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-left: none;
+        border-radius: 0;
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none;
+        text-transform: none;
+        transition: all 0.25s ease;
+    }
+    .btn-whatsapp-istek:hover {
+        background: linear-gradient(135deg, #2ee66d, #1a9f8f);
+        color: #fff;
+    }
+    .btn-whatsapp-disabled {
+        cursor: default;
+        opacity: 0.7;
+        pointer-events: none;
     }
     .home-icon-buttons {
         display: flex;
@@ -499,7 +532,7 @@
             grid-column: 1 / -1;
             flex-direction: row;
         }
-        .btn-live, .btn-request { flex: 1; }
+        .btn-live, .btn-request-group { flex: 1; }
         .live-dj-card {
             grid-column: 1 / -1;
         }
@@ -581,7 +614,19 @@
         <div class="home-right">
             <div class="home-actions">
                 <button type="button" class="btn-live" id="openLivePlayer">CANLI DİNLE</button>
-                <button type="button" class="btn-request" data-open-song-request>İstek Gönder</button>
+                <div class="btn-request-group">
+                    <button type="button" class="btn-request" data-open-song-request>İstek Gönder</button>
+                    @php
+                        $wa = $socialLinks['whatsapp'] ?? ['url' => '', 'is_active' => false];
+                        $waActive = ($wa['is_active'] ?? false) && !empty(trim($wa['url'] ?? ''));
+                        $waUrl = $waActive ? (rtrim($wa['url']) . (str_contains($wa['url'], '?') ? '&' : '?') . 'text=' . urlencode('Merhaba, şarkı isteği göndermek istiyorum.')) : '#';
+                    @endphp
+                    @if($waActive)
+                    <a href="{{ $waUrl }}" class="btn-whatsapp-istek" target="_blank" rel="noopener noreferrer" title="WhatsApp ile İstek Gönder">WhatsApp İstek</a>
+                    @else
+                    <span class="btn-whatsapp-istek btn-whatsapp-disabled" title="WhatsApp adresi ayarlardan eklenebilir">WhatsApp İstek</span>
+                    @endif
+                </div>
             </div>
             <div class="home-icon-buttons">
                 <button type="button" class="icon-placeholder" aria-label="Play">▶</button>
