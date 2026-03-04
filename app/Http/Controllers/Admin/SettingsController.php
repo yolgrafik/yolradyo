@@ -150,7 +150,7 @@ class SettingsController extends Controller
     public function socialForm()
     {
         if ($r = $this->ensureAdmin()) return $r;
-        $platforms = ['whatsapp', 'telegram', 'instagram', 'facebook', 'tiktok', 'youtube', 'x'];
+        $platforms = ['whatsapp', 'telegram', 'instagram', 'facebook', 'tiktok', 'youtube', 'x', 'android_app', 'ios_app', 'winamp', 'media_player', 'quicktime', 'real_player'];
         $data = [];
         foreach ($platforms as $p) {
             $data[$p . '_url'] = $this->settings->get($p . '_url', '');
@@ -163,7 +163,7 @@ class SettingsController extends Controller
     {
         if ($r = $this->ensureAdmin()) return $r;
         $rules = [];
-        $platforms = ['whatsapp', 'telegram', 'instagram', 'facebook', 'tiktok', 'youtube', 'x'];
+        $platforms = ['whatsapp', 'telegram', 'instagram', 'facebook', 'tiktok', 'youtube', 'x', 'android_app', 'ios_app', 'winamp', 'media_player', 'quicktime', 'real_player'];
         foreach ($platforms as $p) {
             $rules[$p . '_url'] = 'nullable|string|max:500';
             $rules[$p . '_active'] = 'nullable|boolean';

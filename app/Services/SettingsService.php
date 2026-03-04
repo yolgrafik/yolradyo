@@ -94,7 +94,7 @@ class SettingsService
     public function getSocialLinks(): array
     {
         return Cache::remember('site_settings_social_links', $this->cacheTtl, function () {
-            $platforms = ['whatsapp', 'telegram', 'instagram', 'facebook', 'tiktok', 'youtube', 'x'];
+            $platforms = ['whatsapp', 'telegram', 'instagram', 'facebook', 'tiktok', 'youtube', 'x', 'android_app', 'ios_app', 'winamp', 'media_player', 'quicktime', 'real_player'];
             $out = [];
             foreach ($platforms as $platform) {
                 $url = $this->get($platform . '_url', '');

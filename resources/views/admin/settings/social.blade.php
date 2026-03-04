@@ -23,6 +23,12 @@
                     'tiktok' => ['label' => 'TikTok', 'placeholder' => 'https://tiktok.com/@radyoyol'],
                     'youtube' => ['label' => 'YouTube', 'placeholder' => 'https://youtube.com/@radyoyol'],
                     'x' => ['label' => 'X (Twitter)', 'placeholder' => 'https://x.com/radyoyol'],
+                    'android_app' => ['label' => 'Android Uygulaması', 'placeholder' => 'https://play.google.com/store/apps/details?id=...'],
+                    'ios_app' => ['label' => 'iOS Uygulaması', 'placeholder' => 'https://apps.apple.com/app/...'],
+                    'winamp' => ['label' => 'Winamp İle Dinle', 'placeholder' => 'https://stream.example.com/live.m3u'],
+                    'media_player' => ['label' => 'Medya Player', 'placeholder' => 'https://stream.example.com/live.m3u'],
+                    'quicktime' => ['label' => 'QuickTime Player', 'placeholder' => 'https://stream.example.com/live.m3u'],
+                    'real_player' => ['label' => 'Real Player', 'placeholder' => 'https://stream.example.com/live.ram'],
                 ];
             @endphp
 

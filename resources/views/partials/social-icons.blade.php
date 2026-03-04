@@ -23,3 +23,21 @@
 @if($socialLinks['x']['is_active'] && $socialLinks['x']['url'])
 <a href="{{ $socialLinks['x']['url'] }}" {{ $linkAttrs }} aria-label="X" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
 @endif
+@if(isset($socialLinks['android_app']) && $socialLinks['android_app']['is_active'] && $socialLinks['android_app']['url'])
+<a href="{{ $socialLinks['android_app']['url'] }}" {{ $linkAttrs }} aria-label="Android Uygulaması" title="Android Uygulaması"><i class="bi bi-android"></i></a>
+@endif
+@if(isset($socialLinks['ios_app']) && $socialLinks['ios_app']['is_active'] && $socialLinks['ios_app']['url'])
+<a href="{{ $socialLinks['ios_app']['url'] }}" {{ $linkAttrs }} aria-label="iOS Uygulaması" title="iOS Uygulaması"><i class="bi bi-apple"></i></a>
+@endif
+@if(isset($socialLinks['winamp']) && $socialLinks['winamp']['is_active'] && $socialLinks['winamp']['url'])
+<a href="{{ $socialLinks['winamp']['url'] }}" {{ $linkAttrs }} aria-label="Winamp İle Dinle" title="Winamp İle Dinle"><i class="bi bi-music-note-beamed"></i></a>
+@endif
+@if(isset($socialLinks['media_player']) && $socialLinks['media_player']['is_active'] && $socialLinks['media_player']['url'])
+<a href="{{ $socialLinks['media_player']['url'] }}" {{ $linkAttrs }} aria-label="Medya Player" title="Medya Player"><i class="bi bi-play-circle"></i></a>
+@endif
+@if(isset($socialLinks['quicktime']) && $socialLinks['quicktime']['is_active'] && $socialLinks['quicktime']['url'])
+<a href="{{ $socialLinks['quicktime']['url'] }}" {{ $linkAttrs }} aria-label="QuickTime Player" title="QuickTime Player"><i class="bi bi-film"></i></a>
+@endif
+@if(isset($socialLinks['real_player']) && $socialLinks['real_player']['is_active'] && $socialLinks['real_player']['url'])
+<a href="{{ $socialLinks['real_player']['url'] }}" {{ $linkAttrs }} aria-label="Real Player" title="Real Player"><i class="bi bi-broadcast"></i></a>
+@endif
