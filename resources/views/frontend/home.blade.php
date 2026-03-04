@@ -249,21 +249,17 @@
     }
     .schedule-strip {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         gap: 6px;
-        white-space: nowrap;
         max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
+        overflow: hidden;
         padding: 6px 10px;
         border-radius: 10px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.06);
         margin-top: 8px;
-        scrollbar-width: none;
     }
-    .schedule-strip::-webkit-scrollbar { display: none; }
     .schedule-chip {
         display: inline-flex;
         align-items: center;
@@ -276,7 +272,7 @@
         font-weight: 700;
         flex-shrink: 0;
     }
-    .schedule-chip .sep { opacity: 0.6; font-weight: 900; }
+    .schedule-chip .sep { opacity: 0.6; font-weight: 900; flex-shrink: 0; }
     .schedule-strip .dot { opacity: 0.35; flex-shrink: 0; }
     .schedule-chip.is-live {
         background: linear-gradient(135deg, #ff3b3b, #b30000);
