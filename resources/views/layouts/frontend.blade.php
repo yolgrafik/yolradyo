@@ -173,6 +173,22 @@
             color: #fff;
         }
         .nav-social svg { width: 16px; height: 16px; }
+        .header-social { display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; }
+        .header-social-icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+            color: var(--text); text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .header-social-icon:hover {
+            transform: scale(1.08);
+            background: rgba(201,42,42,0.25);
+            border-color: rgba(201,42,42,0.4);
+            box-shadow: 0 0 14px rgba(201,42,42,0.25);
+            color: #fff;
+        }
+        .header-social-icon i { font-size: 1.1rem; }
         .nav-social-mobile { display: none; }
         .nav-dropdown {
             position: relative;
@@ -512,8 +528,8 @@
                 padding-top: 1.5rem;
                 border-top: 1px solid var(--border);
             }
-            .nav-social-mobile a { width: 44px; height: 44px; }
-            .nav-social-mobile svg { width: 20px; height: 20px; }
+            .nav-social-mobile .header-social-icon { width: 44px; height: 44px; }
+            .nav-social-mobile .header-social-icon i { font-size: 1.25rem; }
             .nav-toggle { display: flex; align-items: center; justify-content: center; }
         }
         @media (max-width: 768px) {
@@ -648,13 +664,43 @@
                     </li>
                     <li><a href="{{ url('/iletisim') }}" class="{{ request()->is('iletisim') ? 'active' : '' }}">İletişim</a></li>
                 </ul>
-                <div class="nav-social nav-social-mobile" aria-hidden="true">
-                    @include('partials.social-icons')
+                <div class="header-social nav-social nav-social-mobile" aria-hidden="true">
+                    @php $socialMob = $socialLinks ?? []; @endphp
+                    @if(isset($socialMob['whatsapp']) && ($socialMob['whatsapp']['is_active'] ?? false) && !empty($socialMob['whatsapp']['url'] ?? ''))
+                    <a href="{{ $socialMob['whatsapp']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    @endif
+                    @if(isset($socialMob['telegram']) && ($socialMob['telegram']['is_active'] ?? false) && !empty($socialMob['telegram']['url'] ?? ''))
+                    <a href="{{ $socialMob['telegram']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Telegram"><i class="bi bi-telegram"></i></a>
+                    @endif
+                    @if(isset($socialMob['instagram']) && ($socialMob['instagram']['is_active'] ?? false) && !empty($socialMob['instagram']['url'] ?? ''))
+                    <a href="{{ $socialMob['instagram']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="bi bi-instagram"></i></a>
+                    @endif
+                    @if(isset($socialMob['facebook']) && ($socialMob['facebook']['is_active'] ?? false) && !empty($socialMob['facebook']['url'] ?? ''))
+                    <a href="{{ $socialMob['facebook']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Facebook"><i class="bi bi-facebook"></i></a>
+                    @endif
+                    @if(isset($socialMob['tiktok']) && ($socialMob['tiktok']['is_active'] ?? false) && !empty($socialMob['tiktok']['url'] ?? ''))
+                    <a href="{{ $socialMob['tiktok']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="TikTok"><i class="bi bi-tiktok"></i></a>
+                    @endif
                 </div>
             </div>
             <div class="nav-right">
-                <div class="nav-social">
-                    @include('partials.social-icons')
+                <div class="header-social nav-social">
+                    @php $social = $socialLinks ?? []; @endphp
+                    @if(isset($social['whatsapp']) && ($social['whatsapp']['is_active'] ?? false) && !empty($social['whatsapp']['url'] ?? ''))
+                    <a href="{{ $social['whatsapp']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    @endif
+                    @if(isset($social['telegram']) && ($social['telegram']['is_active'] ?? false) && !empty($social['telegram']['url'] ?? ''))
+                    <a href="{{ $social['telegram']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Telegram" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
+                    @endif
+                    @if(isset($social['instagram']) && ($social['instagram']['is_active'] ?? false) && !empty($social['instagram']['url'] ?? ''))
+                    <a href="{{ $social['instagram']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    @endif
+                    @if(isset($social['facebook']) && ($social['facebook']['is_active'] ?? false) && !empty($social['facebook']['url'] ?? ''))
+                    <a href="{{ $social['facebook']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    @endif
+                    @if(isset($social['tiktok']) && ($social['tiktok']['is_active'] ?? false) && !empty($social['tiktok']['url'] ?? ''))
+                    <a href="{{ $social['tiktok']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                    @endif
                 </div>
             </div>
             <button class="nav-toggle" id="navToggle" type="button" aria-label="Menüyü aç">☰</button>
