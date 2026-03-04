@@ -128,11 +128,11 @@
 <style>
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;font-size:0.9rem;margin-bottom:1rem;}
 .alert-error{padding:0.75rem 1rem;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.9rem;margin-bottom:1rem;}
-.schedule-days-bar{display:flex;gap:0.5rem;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:0.25rem;}
+.schedule-days-bar{display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:0.25rem;margin-bottom:0.5rem;}
 .schedule-days-bar::-webkit-scrollbar{display:none;}
-.schedule-day-btn{padding:0.5rem 1rem;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:600;flex:0 0 auto;transition:all 0.2s;}
-.schedule-day-btn:hover{background:rgba(255,255,255,0.08);}
-.schedule-day-btn.active{background:linear-gradient(135deg,rgba(201,42,42,0.9),rgba(185,28,28,0.95));border-color:rgba(255,255,255,0.25);color:#fff;}
+.schedule-day-btn{padding:10px 18px;border-radius:10px;background:#1e2430;color:#e6e6e6;border:1px solid rgba(255,255,255,0.15);text-decoration:none;font-size:0.9rem;font-weight:600;flex:0 0 auto;transition:all 0.2s ease;}
+.schedule-day-btn:hover{background:#2a3342;border-color:#ff3b3b;}
+.schedule-day-btn.active{background:linear-gradient(135deg,#ff3b3b,#b30000);border:none;color:#fff;box-shadow:0 0 10px rgba(255,60,60,0.5);}
 .badge{padding:0.25rem 0.5rem;border-radius:6px;font-size:0.75rem;font-weight:600;}
 .badge-success{background:rgba(34,197,94,0.25);color:#86efac;}
 .badge-muted{background:rgba(148,163,184,0.25);color:#94a3b8;}

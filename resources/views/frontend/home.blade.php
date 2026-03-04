@@ -220,13 +220,13 @@
     .schedule-days-bar::-webkit-scrollbar { display: none; }
     .schedule-day {
         flex: 0 0 auto;
-        padding: 10px 16px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--text);
+        padding: 10px 18px;
+        border-radius: 10px;
+        background: #1e2430;
+        color: #e6e6e6;
+        border: 1px solid rgba(255, 255, 255, 0.15);
         font-family: Arial, sans-serif;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s ease;
@@ -236,14 +236,14 @@
         justify-content: center;
     }
     .schedule-day:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(255, 255, 255, 0.15);
+        background: #2a3342;
+        border-color: #ff3b3b;
     }
     .schedule-day.active {
-        background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), rgba(185, 28, 28, 0.95));
-        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: linear-gradient(135deg, #ff3b3b, #b30000);
+        border: none;
         color: #fff;
-        box-shadow: 0 2px 8px rgba(201, 42, 42, 0.4);
+        box-shadow: 0 0 10px rgba(255, 60, 60, 0.5);
     }
     .schedule-list-wrap {
         max-height: 300px;
