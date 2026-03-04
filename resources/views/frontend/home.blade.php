@@ -364,33 +364,31 @@
     .home-icon-buttons {
         position: relative;
         display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        background: color-mix(in srgb, var(--ry-bar-bg) 65%, #0b0f16);
+        border: 1px solid var(--border);
+        border-radius: 10px;
         width: 100%;
+        box-sizing: border-box;
         flex-wrap: wrap;
     }
-    .home-icon-buttons button,
     .home-icon-buttons a.icon-link {
         flex: 1 1 0;
         min-width: 0;
         aspect-ratio: 1;
-        padding: 0.5rem;
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        color: var(--muted);
-        font-size: clamp(1.66rem, 5.3vw, 3.31rem);
-        cursor: pointer;
-        transition: all 0.2s ease;
+        padding: 0.25rem;
         display: flex;
         align-items: center;
         justify-content: center;
         text-decoration: none;
+        transition: opacity 0.2s ease;
     }
-    .home-icon-buttons button:hover,
     .home-icon-buttons a.icon-link:hover {
-        background: rgba(255,255,255,0.1);
-        border-color: rgba(255,255,255,0.2);
-        color: #ffffff;
+        opacity: 0.85;
     }
     .home-icon-buttons .player-icon-img {
         width: 100%;
