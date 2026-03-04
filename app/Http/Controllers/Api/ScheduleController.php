@@ -21,27 +21,8 @@ class ScheduleController extends Controller
         $nowTime = now()->format('H:i:s');
         $todayDay = now()->dayOfWeekIso - 1; // 1=Mon->0, 7=Sun->6
 
-        $liveOverride = DjProfile::where('is_live', true)->first();
-
         $activeIdx = null;
-        if ($liveOverride) {
-            foreach ($schedulesArray as $idx => $s) {
-                $dj = $this->resolveDj($s);
-                if ($dj && $dj->id === $liveOverride->id) {
-                    $activeIdx = $idx;
-                    break;
-                }
-            }
-            if ($activeIdx === null && count($schedulesArray) > 0) {
-                foreach ($schedulesArray as $idx => $s) {
-                    if ($s->dj_id === (int) $liveOverride->id) {
-                        $activeIdx = $idx;
-                        break;
-                    }
-                }
-            }
-        }
-        if ($activeIdx === null && $day === $todayDay && count($schedulesArray) > 0) {
+        if ($day === $todayDay && count($schedulesArray) > 0) {
             foreach ($schedulesArray as $idx => $s) {
                 $startRaw = is_string($s->start_time) ? $s->start_time : $s->start_time->format('H:i:s');
                 $startCompare = substr(preg_replace('/\.\d+$/', '', $startRaw), 0, 8);
