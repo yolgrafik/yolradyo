@@ -291,49 +291,6 @@
         .main-content button {
             text-transform: none;
         }
-        /* Glassmorphism button - premium radio UI */
-        .glass-btn {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 14px;
-            padding: 10px 22px;
-            color: #fff;
-            font-weight: 600;
-            letter-spacing: .4px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all .35s ease;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-        }
-        .glass-btn::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 14px;
-            background: linear-gradient(120deg, rgba(255,255,255,0.25), rgba(255,255,255,0));
-            opacity: .4;
-            pointer-events: none;
-        }
-        .glass-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow:
-                0 0 20px rgba(255,0,60,0.6),
-                0 8px 25px rgba(0,0,0,0.45);
-            background: rgba(255,255,255,0.15);
-        }
-        .glass-btn:active {
-            transform: scale(.97);
-        }
-        .glass-btn:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 3px;
-        }
         /* Legal footer - fixed at very bottom */
         .legal-footer {
             position: fixed;
@@ -713,6 +670,59 @@
         .request-form__btn:hover { opacity: .9; }
     </style>
     @stack('styles')
+    <style id="glass-btn-styles">
+        /* Glassmorphism button - loaded after @stack so it overrides page styles */
+        .glass-btn,
+        a.glass-btn,
+        button.glass-btn {
+            position: relative !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: rgba(255,255,255,0.08) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(255,255,255,0.15) !important;
+            border-radius: 14px !important;
+            padding: 10px 22px !important;
+            color: #fff !important;
+            font-weight: 600 !important;
+            letter-spacing: .4px !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            transition: all .35s ease !important;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35) !important;
+        }
+        .glass-btn::before,
+        a.glass-btn::before,
+        button.glass-btn::before {
+            content: "" !important;
+            position: absolute !important;
+            inset: 0 !important;
+            border-radius: 14px !important;
+            background: linear-gradient(120deg, rgba(255,255,255,0.25), rgba(255,255,255,0)) !important;
+            opacity: .4 !important;
+            pointer-events: none !important;
+        }
+        .glass-btn:hover,
+        a.glass-btn:hover,
+        button.glass-btn:hover {
+            transform: translateY(-3px) scale(1.05) !important;
+            box-shadow: 0 0 20px rgba(255,0,60,0.6), 0 8px 25px rgba(0,0,0,0.45) !important;
+            background: rgba(255,255,255,0.15) !important;
+        }
+        .glass-btn:active,
+        a.glass-btn:active,
+        button.glass-btn:active {
+            transform: scale(.97) !important;
+        }
+        .glass-btn:focus-visible,
+        a.glass-btn:focus-visible,
+        button.glass-btn:focus-visible {
+            outline: 2px solid var(--accent) !important;
+            outline-offset: 3px !important;
+        }
+    </style>
 </head>
 <body class="{{ request()->is('/') ? 'page-home' : '' }}">
     <nav class="navbar" id="mainNavbar">

@@ -573,7 +573,7 @@
                         <div class="home-slider__content">
                             <h2 class="home-slider__title">{{ $s->title }}</h2>
                             @if($s->subtitle)<p class="home-slider__subtitle">{{ $s->subtitle }}</p>@endif
-                            @if($s->button_text && $s->button_link)<a href="{{ url($s->button_link) }}" class="home-slider__btn">{{ $s->button_text }}</a>@endif
+                            @if($s->button_text && $s->button_link)<a href="{{ url($s->button_link) }}" class="home-slider__btn glass-btn">{{ $s->button_text }}</a>@endif
                         </div>
                     </div>
                     @endforeach
@@ -616,7 +616,7 @@
         </div>
         <div class="home-right">
             <div class="home-actions">
-                <button type="button" class="btn-live" id="openLivePlayer">CANLI DİNLE</button>
+                <button type="button" class="btn-live glass-btn" id="openLivePlayer">CANLI DİNLE</button>
                 <div class="btn-request-group">
                     <button type="button" class="btn-request" data-open-song-request>İstek Gönder</button>
                     @php
