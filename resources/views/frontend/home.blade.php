@@ -682,16 +682,16 @@
             <div class="home-icon-buttons">
                 @php
                     $playerLinks = [
-                        'winamp' => ['label' => 'Winamp İle Dinle', 'img' => asset('assets/images/winamp.png')],
-                        'media_player' => ['label' => 'Medya Player', 'img' => asset('assets/images/media-player.png')],
-                        'quicktime' => ['label' => 'QuickTime Player', 'img' => asset('assets/images/quicktime.png')],
-                        'real_player' => ['label' => 'Real Player', 'img' => asset('assets/images/real-player.png')],
+                        'winamp' => ['label' => 'Winamp İle Dinle', 'img' => 'winamp.png'],
+                        'media_player' => ['label' => 'Medya Player', 'img' => 'media-player.svg'],
+                        'quicktime' => ['label' => 'QuickTime Player', 'img' => 'quicktime.svg'],
+                        'real_player' => ['label' => 'Real Player', 'img' => 'real-player.svg'],
                     ];
                 @endphp
                 @foreach($playerLinks as $key => $info)
                     @if(isset($socialLinks[$key]) && ($socialLinks[$key]['is_active'] ?? false) && !empty(trim($socialLinks[$key]['url'] ?? '')))
                     <a href="{{ $socialLinks[$key]['url'] }}" class="icon-placeholder icon-link" target="_blank" rel="noopener noreferrer" title="{{ $info['label'] }}" aria-label="{{ $info['label'] }}">
-                        <img src="{{ $info['img'] }}" alt="{{ $info['label'] }}" class="player-icon-img">
+                        <img src="{{ asset('assets/images/' . $info['img']) }}" alt="{{ $info['label'] }}" class="player-icon-img">
                     </a>
                     @endif
                 @endforeach
