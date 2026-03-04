@@ -967,6 +967,61 @@
             });
         })();
     </script>
+    <div id="adminToast" class="admin-toast" role="alert" aria-live="polite" style="display:none;">Yeni şarkı isteği geldi</div>
+    <script>
+    (function(){
+        var STORAGE_KEY='admin_pending_last_count';
+        var SOUND_ACTIVE_KEY='admin_sound_active';
+        var POLL_INTERVAL=10000;
+        var toastEl=document.getElementById('adminToast');
+        function getLastCount(){try{var v=localStorage.getItem(STORAGE_KEY);return v!==null?parseInt(v,10):null;}catch(e){return null;}}
+        function setLastCount(n){try{localStorage.setItem(STORAGE_KEY,String(n));}catch(e){}}
+        function isSoundActive(){try{return localStorage.getItem(SOUND_ACTIVE_KEY)==='1';}catch(e){return false;}}
+        function setSoundActive(){try{localStorage.setItem(SOUND_ACTIVE_KEY,'1');}catch(e){}}
+        function playDing(){
+            if(!isSoundActive())return;
+            try{
+                var ctx=new(window.AudioContext||window.webkitAudioContext)();
+                var osc=ctx.createOscillator();
+                var gain=ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.value=880;
+                osc.type='sine';
+                gain.gain.setValueAtTime(0.15,ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.15);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime+0.15);
+            }catch(e){}
+        }
+        function showToast(){
+            if(!toastEl)return;
+            toastEl.style.display='block';
+            toastEl.classList.add('admin-toast--show');
+            setTimeout(function(){toastEl.classList.remove('admin-toast--show');setTimeout(function(){toastEl.style.display='none';},300);},3500);
+        }
+        function poll(){
+            fetch('{{ route("admin.notifications.pending-count") }}',{headers:{'Accept':'application/json','X-Requested-With':'XMLHttpRequest'}})
+                .then(function(r){return r.json();})
+                .then(function(data){
+                    var count=typeof data.count==='number'?data.count:0;
+                    var last=getLastCount();
+                    if(last!==null&&count>last){playDing();showToast();}
+                    setLastCount(count);
+                })
+                .catch(function(){});
+        }
+        document.addEventListener('click',function initSound(){
+            if(!isSoundActive()){setSoundActive();}
+            document.removeEventListener('click',initSound);
+        },{once:true});
+        if(toastEl){setInterval(poll,POLL_INTERVAL);poll();}
+    })();
+    </script>
+    <style>
+    .admin-toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-120%);background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;padding:12px 24px;border-radius:12px;font-size:0.9rem;font-weight:600;box-shadow:0 8px 24px rgba(201,42,42,0.4);z-index:9999;transition:transform 0.3s ease;}
+    .admin-toast.admin-toast--show{transform:translateX(-50%) translateY(0);}
+    </style>
     @stack('scripts')
 </body>
 </html>
