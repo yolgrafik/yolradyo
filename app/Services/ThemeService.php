@@ -60,7 +60,7 @@ class ThemeService
 
         $headerBg = $preset['header_bg'] ?? $this->themeHeaderBg($accent);
         $footerBg = $preset['footer_bg'] ?? $this->themeFooterBg($accent);
-        $barBg = $preset['bar_bg'] ?? "linear-gradient(135deg, {$accent}, " . $this->darken($accent, 0.2) . ")";
+        $barBg = $preset['bar_bg'] ?? $this->themeSolidBg($accent);
 
         return [
             'theme' => $accent,
