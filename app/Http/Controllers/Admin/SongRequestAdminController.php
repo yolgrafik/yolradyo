@@ -10,15 +10,7 @@ class SongRequestAdminController extends Controller
 {
     public function index(Request $request)
     {
-        $query = SongRequest::query()->orderBy('created_at', 'desc');
-
-        $status = $request->get('status', 'pending');
-        if ($status === 'all' || $status === '') {
-            $status = 'all';
-        }
-        if ($status !== 'all') {
-            $query->where('status', $status);
-        }
+        $query = SongRequest::query()->where('status', 'pending')->orderBy('created_at', 'desc');
 
         if ($request->filled('q')) {
             $q = $request->q;
@@ -32,7 +24,7 @@ class SongRequestAdminController extends Controller
 
         $requests = $query->paginate(20)->withQueryString();
 
-        return view('admin.song_requests.index', compact('requests', 'status'));
+        return view('admin.song_requests.index', compact('requests'));
     }
 
     public function approve(SongRequest $songRequest)
