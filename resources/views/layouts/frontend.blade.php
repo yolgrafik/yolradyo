@@ -647,7 +647,7 @@
         .request-form__group { margin-bottom: 1rem; }
         .request-form__group label { display: block; margin-bottom: .35rem; font-size: .9rem; }
         .request-form__input { width: 100%; padding: .5rem .75rem; background: rgba(15,23,42,0.8); border: 1px solid var(--ry-border); border-radius: calc(var(--ry-radius) - 2px); color: #fff; font-size: 1rem; }
-        .request-form__input:focus { outline: none; border-color: #2563eb; }
+        .request-form__input:focus { outline: none; border-color: var(--ry-btn-hover); }
         .request-form__error { display: block; font-size: .8rem; color: #f87171; margin-top: .25rem; }
         .request-form__success { padding: .5rem; border-radius: 6px; margin-bottom: 1rem; }
         .request-form__actions { margin-top: 1rem; }
