@@ -84,12 +84,12 @@
             flex-shrink: 0;
         }
         .nav-logo img {
-            height: 56px;
+            height: 72px;
             width: auto;
             object-fit: contain;
             transition: height 0.25s ease;
         }
-        .navbar.is-scrolled .nav-logo img { height: 48px; }
+        .navbar.is-scrolled .nav-logo img { height: 56px; }
         .nav-logo-text {
             font-size: 1.5rem;
             font-weight: 700;
@@ -172,28 +172,6 @@
             color: #fff;
         }
         .nav-social svg { width: 16px; height: 16px; }
-        .nav-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.5rem 1.1rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 9999px;
-            background: linear-gradient(135deg, var(--accent), #b91c1c);
-            border: none;
-            box-shadow: 0 2px 12px rgba(201,42,42,0.4);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .nav-cta:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(201,42,42,0.5);
-            color: #fff;
-        }
-        .nav-cta svg { width: 14px; height: 14px; flex-shrink: 0; }
         .nav-social-mobile { display: none; }
         .nav-dropdown {
             position: relative;
@@ -485,8 +463,8 @@
         @media (max-width: 992px) {
             .navbar { height: 72px; min-height: 72px; padding: 0 1rem; }
             .navbar.is-scrolled { height: 68px; min-height: 68px; }
-            .nav-logo img { height: 48px; }
-            .navbar.is-scrolled .nav-logo img { height: 44px; }
+            .nav-logo img { height: 56px; }
+            .navbar.is-scrolled .nav-logo img { height: 52px; }
             .nav-right { display: none; }
             .nav-center {
                 position: fixed;
@@ -535,16 +513,7 @@
             }
             .nav-social-mobile a { width: 44px; height: 44px; }
             .nav-social-mobile svg { width: 20px; height: 20px; }
-            .nav-cta-mobile {
-                display: flex !important;
-                justify-content: center;
-                margin-top: 1rem;
-            }
-            .nav-cta-mobile .nav-cta { width: 100%; justify-content: center; padding: 0.75rem 1.5rem; font-size: 0.85rem; }
             .nav-toggle { display: flex; align-items: center; justify-content: center; }
-        }
-        @media (min-width: 993px) {
-            .nav-cta-mobile { display: none !important; }
         }
         @media (max-width: 768px) {
             .nav-logo img { height: 70px; }
@@ -681,21 +650,11 @@
                 <div class="nav-social nav-social-mobile" aria-hidden="true">
                     @include('partials.social-icons')
                 </div>
-                <div class="nav-cta-mobile">
-                    <a href="{{ url('/canli-dinle') }}" class="nav-cta open-live-player" target="_blank" rel="noopener noreferrer">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                        CANLI DİNLE
-                    </a>
-                </div>
             </div>
             <div class="nav-right">
                 <div class="nav-social">
                     @include('partials.social-icons')
                 </div>
-                <a href="{{ url('/canli-dinle') }}" class="nav-cta open-live-player" target="_blank" rel="noopener noreferrer">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                    CANLI DİNLE
-                </a>
             </div>
             <button class="nav-toggle" id="navToggle" type="button" aria-label="Menüyü aç">☰</button>
         </div>
@@ -843,9 +802,9 @@
             }
             fetchRadioStatus();
             setInterval(fetchRadioStatus, 7000);
-            var openLiveBtns = document.querySelectorAll('.open-live-player');
-            openLiveBtns.forEach(function(btn) {
-                btn.addEventListener('click', function(e) {
+            var openLiveBtn = document.getElementById('openLivePlayer');
+            if (openLiveBtn) {
+                openLiveBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     var w = 420, h = 560;
                     var left = (screen.width - w) / 2;
@@ -853,7 +812,7 @@
                     window.open('{{ url("/canli-dinle") }}', 'RadyoYolPlayer', 'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',scrollbars=no,resizable=yes');
                     return false;
                 });
-            });
+            }
             btn.addEventListener('click', function() {
                 if (audio.paused) tryPlay();
                 else audio.pause();
