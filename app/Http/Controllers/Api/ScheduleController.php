@@ -25,12 +25,11 @@ class ScheduleController extends Controller
             $endRaw = $s->end_time ? (is_string($s->end_time) ? $s->end_time : $s->end_time->format('H:i:s')) : null;
             $end = $endRaw ? substr($endRaw, 0, 5) : null;
 
-            $startCompare = substr($startRaw, 0, 8);
-            $endCompare = $endRaw ? substr($endRaw, 0, 8) : (
-                isset($schedulesArray[$idx + 1])
-                    ? substr(is_string($schedulesArray[$idx + 1]->start_time) ? $schedulesArray[$idx + 1]->start_time : $schedulesArray[$idx + 1]->start_time->format('H:i:s'), 0, 8)
-                    : '23:59:59'
-            );
+            $startCompare = substr(preg_replace('/\.\d+$/', '', $startRaw), 0, 8);
+            $nextStart = isset($schedulesArray[$idx + 1])
+                ? (is_string($schedulesArray[$idx + 1]->start_time) ? $schedulesArray[$idx + 1]->start_time : $schedulesArray[$idx + 1]->start_time->format('H:i:s'))
+                : null;
+            $endCompare = $endRaw ? substr(preg_replace('/\.\d+$/', '', $endRaw), 0, 8) : ($nextStart ? substr(preg_replace('/\.\d+$/', '', $nextStart), 0, 8) : '23:59:59');
 
             $isLive = ($day === $todayDay) && ($nowTime >= $startCompare && $nowTime < $endCompare);
 
