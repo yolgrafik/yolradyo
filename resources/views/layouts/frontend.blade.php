@@ -800,18 +800,7 @@
             if (quickLive) {
                 quickLive.addEventListener('click', function(e) {
                     e.preventDefault();
-                    var overlay = document.getElementById('mobilePlayerOverlay');
-                    if (overlay) {
-                        overlay.classList.remove('hidden');
-                        overlay.setAttribute('aria-hidden', 'false');
-                        document.body.style.overflow = 'hidden';
-                        var mpPlay = document.getElementById('mpPlay');
-                        var mpPause = document.getElementById('mpPause');
-                        if (mpPlay && mpPause) {
-                            mpPlay.classList.toggle('hidden', !audio.paused);
-                            mpPause.classList.toggle('hidden', audio.paused);
-                        }
-                    }
+                    if (typeof window.openMobilePlayerOverlay === 'function') window.openMobilePlayerOverlay();
                     return false;
                 });
             }
@@ -918,6 +907,7 @@
         if (mpPause) mpPause.addEventListener('click', function() { audio.pause(); });
         if (mpRequest) {
             mpRequest.addEventListener('click', function() {
+                closeOverlay();
                 if (typeof window.openSongRequestModal === 'function') window.openSongRequestModal();
             });
         }
@@ -936,7 +926,7 @@
         $mpCover = isset($siteSettings['brand_logo_path']) && $siteSettings['brand_logo_path']
             ? asset('storage/' . $siteSettings['brand_logo_path'])
             : asset('assets/images/play.png');
-        $mpWhatsapp = $siteSettings['social_whatsapp'] ?? '#';
+        $mpWhatsapp = !empty($siteSettings['social_whatsapp']) ? $siteSettings['social_whatsapp'] : 'javascript:void(0)';
     @endphp
     <div id="mobilePlayerOverlay" class="mp-overlay hidden" role="dialog" aria-modal="true" aria-label="Canlı dinle">
         <div class="mp-top">
