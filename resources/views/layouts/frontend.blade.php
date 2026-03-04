@@ -351,7 +351,7 @@
             background: var(--ry-bar-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-top: 1px solid var(--ry-border);
+            border-top: 1px solid rgba(255,255,255,0.15);
             border-bottom: 1px solid #ffffff;
             box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
             display: flex;
