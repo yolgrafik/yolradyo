@@ -671,7 +671,7 @@
     </style>
     @stack('styles')
     <style id="glass-btn-styles">
-        /* Glassmorphism button - loaded after @stack so it overrides page styles */
+        /* Glassmorphism button - loaded after stack so it overrides page styles */
         .glass-btn,
         a.glass-btn,
         button.glass-btn {
