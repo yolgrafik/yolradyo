@@ -22,7 +22,7 @@
     --ry-header-bg: {{ $headerBg }};
     --ry-footer-bg: {{ $footerBg }};
     --ry-bar-bg: {{ $barBg }};
-    --ry-istekler-bg: linear-gradient(135deg, {{ $theme }}, {{ $themeDark }});
+    --ry-istekler-bg: {{ $barBg }};
 
     /* Button colors - theme independent, from admin */
     --ry-btn-bg: {{ $btnBg }};
