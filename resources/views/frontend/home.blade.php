@@ -260,17 +260,19 @@
         border-radius: 8px;
         font-size: 0.95rem;
     }
-    .schedule-item.is-live {
-        color: #ff3b3b;
+    .schedule-item.active-program {
+        background: #ff2d2d;
+        color: #fff;
         font-weight: 700;
-        background: rgba(255, 60, 60, 0.08);
-        border: 1px solid rgba(255, 60, 60, 0.25);
     }
-    .schedule-live {
-        color: #ff3b3b;
+    .schedule-item .live-badge {
+        margin-left: 10px;
+        background: #fff;
+        color: #ff2d2d;
+        font-size: 12px;
+        padding: 2px 8px;
+        border-radius: 20px;
         font-weight: 700;
-        font-size: 0.75rem;
-        margin-left: 8px;
     }
     .home-right {
         display: flex;
@@ -558,18 +560,14 @@
         list.className = 'schedule-list';
         items.forEach(function(it){
             var item = document.createElement('div');
-            item.className = 'schedule-item' + (it.is_live ? ' is-live' : '');
-            var text = (it.title || '') + ' | ' + (it.host || '');
-            if (it.is_live) text += ' | CANLI';
-            item.textContent = text;
+            item.className = 'schedule-item' + (it.is_live ? ' active-program' : '');
+            item.textContent = (it.title || '') + ' | ' + (it.host || '');
             if (it.is_live) {
                 var liveSpan = document.createElement('span');
-                liveSpan.className = 'schedule-live';
+                liveSpan.className = 'live-badge';
                 liveSpan.textContent = 'CANLI';
-                item.textContent = (it.title || '') + ' | ' + (it.host || '') + ' | ';
+                item.appendChild(document.createTextNode(' | '));
                 item.appendChild(liveSpan);
-            } else {
-                item.textContent = (it.title || '') + ' | ' + (it.host || '');
             }
             list.appendChild(item);
         });
@@ -601,7 +599,13 @@
     dayBtns.forEach(function(b){ b.classList.remove('active'); });
     var activeBtn = Array.from(dayBtns).find(function(b){ return parseInt(b.getAttribute('data-day'),10)===currentDay; });
     if (activeBtn) activeBtn.classList.add('active');
-    loadSchedule(currentDay);
+    var selectedDay = currentDay;
+    loadSchedule(selectedDay);
+    setInterval(function(){
+        var btn = Array.from(dayBtns).find(function(b){ return b.classList.contains('active'); });
+        selectedDay = btn ? parseInt(btn.getAttribute('data-day'),10) : currentDay;
+        loadSchedule(selectedDay);
+    }, 60000);
 
     var slider = document.getElementById('homeSlider');
     var nav = document.getElementById('sliderNav');
