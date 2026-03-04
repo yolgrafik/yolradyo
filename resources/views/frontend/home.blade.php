@@ -396,7 +396,7 @@
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
-        transform: scale(0.68);
+        transform: scale(0.58);
     }
     .home-badges {
         position: relative;
