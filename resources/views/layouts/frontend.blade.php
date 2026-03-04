@@ -173,10 +173,10 @@
             color: #fff;
         }
         .nav-social svg { width: 16px; height: 16px; }
-        .header-social {
+        .navbar .header-social {
             display: flex; align-items: center; gap: 10px; flex-shrink: 0;
         }
-        .header-social-icon {
+        .navbar .header-social-icon {
             position: relative;
             display: inline-flex; align-items: center; justify-content: center;
             width: 40px; height: 40px; border-radius: 999px;
@@ -186,7 +186,7 @@
             color: var(--text); text-decoration: none;
             transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
         }
-        .header-social-icon::before {
+        .navbar .header-social-icon::before {
             content: ''; position: absolute; inset: -2px;
             border-radius: 999px;
             background: linear-gradient(135deg, var(--accent), transparent 50%, var(--accent));
@@ -194,19 +194,19 @@
             z-index: -1;
             transition: opacity 0.25s ease;
         }
-        .header-social-icon:hover {
+        .navbar .header-social-icon:hover {
             transform: translateY(-1px) scale(1.06);
             background: rgba(201,42,42,0.2);
             border-color: rgba(201,42,42,0.5);
             box-shadow: 0 0 20px rgba(201,42,42,0.35), 0 4px 12px rgba(0,0,0,0.2);
             color: #fff;
         }
-        .header-social-icon:hover::before { opacity: 0.15; }
-        .header-social-icon:focus-visible {
+        .navbar .header-social-icon:hover::before { opacity: 0.15; }
+        .navbar .header-social-icon:focus-visible {
             outline: 2px solid var(--accent);
             outline-offset: 3px;
         }
-        .header-social-icon i { font-size: 1.15rem; }
+        .navbar .header-social-icon i { font-size: 1.15rem; }
         .nav-social-mobile { display: none; }
         .nav-dropdown {
             position: relative;
@@ -299,39 +299,57 @@
             background: rgba(5,7,12,0.85);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            padding: 14px 1rem;
+            padding: 0 1rem;
         }
-        .legal-line {
+        .site-footer-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            min-height: 56px;
             width: 100%;
-            text-align: center;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            color: rgba(255,255,255,0.65);
-            padding: 12px 0;
         }
-        .legal-social-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 1rem; }
-        .legal-social-icons { display: flex; align-items: center; gap: 0.5rem; }
-        .legal-social-icons a {
-            display: flex; align-items: center; justify-content: center;
-            width: 32px; height: 32px;
-            border-radius: 50%;
+        .footer-social {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-social-icon,
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1);
             color: rgba(255,255,255,0.7);
+            text-decoration: none;
             transition: all 0.2s ease;
         }
-        .legal-social-icons a:hover {
+        .footer-social a:hover {
             background: rgba(201,42,42,0.2);
             border-color: rgba(201,42,42,0.4);
             color: #fff;
         }
-        .legal-social-icons svg { width: 16px; height: 16px; }
-        .legal-line a {
+        .footer-social svg { width: 16px; height: 16px; }
+        .footer-legal {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            line-height: 1.2;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+        }
+        .footer-legal a {
             color: rgba(255,255,255,0.65);
             text-decoration: none;
-            margin: 0 6px;
         }
-        .legal-line a:hover {
+        .footer-legal a:hover {
             color: #fff;
         }
         /* Fixed bottom player bar - above legal footer */
@@ -546,8 +564,8 @@
                 padding-top: 1.5rem;
                 border-top: 1px solid var(--border);
             }
-            .nav-social-mobile .header-social-icon { width: 44px; height: 44px; }
-            .nav-social-mobile .header-social-icon i { font-size: 1.25rem; }
+            .navbar .nav-social-mobile .header-social-icon { width: 44px; height: 44px; }
+            .navbar .nav-social-mobile .header-social-icon i { font-size: 1.25rem; }
             .nav-social-mobile .header-social { gap: 12px; }
             .nav-toggle { display: flex; align-items: center; justify-content: center; }
         }
@@ -619,7 +637,10 @@
         }
         @media (max-width: 768px) {
             .bottom-bar-logo { height: 78px; }
-            .legal-footer { padding: 12px 0.75rem; }
+            .legal-footer { padding: 0 0.75rem; }
+            .site-footer-bar { min-height: 48px; gap: 10px; }
+            .footer-social a { width: 32px; height: 32px; }
+            .footer-social svg { width: 14px; height: 14px; }
             .legal-pretext { font-size: 12px !important; margin-bottom: 8px !important; }
             .legal-links { font-size: 12px !important; }
             body { padding-bottom: 165px; }
@@ -777,7 +798,7 @@
     </div>
 
     <footer class="legal-footer">
-        <div class="legal-line legal-social-wrap">
+        <div class="site-footer-bar">
             @php
                 $footerText = $siteSettings['footer_legal_text'] ?? 'Radyoyol Tum Haklari Saklidir';
                 $footerLinks = $siteSettings['footer_legal_links_json'] ?? [];
@@ -791,15 +812,17 @@
                     ];
                 }
             @endphp
-            <div class="legal-social-icons">
+            <div class="footer-social">
                 @include('partials.social-icons')
             </div>
-            | {{ $footerText }} |
-            @foreach($footerLinks as $link)
-                @if(!empty($link['label']) && !empty($link['url']))
-                    <a href="{{ url($link['url']) }}">{{ $link['label'] }}</a> |
-                @endif
-            @endforeach
+            <div class="footer-legal">
+                | {{ $footerText }} |
+                @foreach($footerLinks as $link)
+                    @if(!empty($link['label']) && !empty($link['url']))
+                        <a href="{{ url($link['url']) }}">{{ $link['label'] }}</a> |
+                    @endif
+                @endforeach
+            </div>
         </div>
     </footer>
     @php
