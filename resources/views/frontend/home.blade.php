@@ -280,9 +280,9 @@
         border: 1px solid rgba(255, 255, 255, 0.08);
         font-size: 0.8rem;
         font-weight: 700;
+        overflow: hidden;
     }
     .schedule-chip .sep { opacity: 0.6; font-weight: 900; flex-shrink: 0; }
-    .schedule-chip { overflow: hidden; min-width: 0; }
     .schedule-strip .dot { opacity: 0.35; flex-shrink: 0; }
     .schedule-chip.is-live {
         background: linear-gradient(135deg, #ff3b3b, #b30000);
