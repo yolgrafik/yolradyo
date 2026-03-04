@@ -36,6 +36,10 @@
                         <td style="padding:0.75rem;font-size:0.9rem;">{{ $r->song_name }}</td>
                         <td style="padding:0.75rem;font-size:0.85rem;color:var(--muted);max-width:200px;">{{ Str::limit($r->message, 50) ?: '—' }}</td>
                         <td style="padding:0.75rem;text-align:right;">
+                            <form action="{{ route('admin.song-requests.approve', $r) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn-sm btn-success">Onayla</button>
+                            </form>
                             <form action="{{ route('admin.song-requests.destroy', $r) }}" method="POST" class="d-inline" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                                 @csrf
                                 @method('DELETE')
@@ -61,7 +65,8 @@
 @push('styles')
 <style>
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;font-size:0.9rem;margin-bottom:1rem;}
-.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;}
+.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;margin-left:0.25rem;}
+.btn-success{background:rgba(34,197,94,0.3);color:#86efac;}
 .btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
 .d-inline{display:inline;}
 nav[aria-label="Pagination"] ul{display:flex;gap:0.5rem;list-style:none;margin:0;padding:0;flex-wrap:wrap;}
