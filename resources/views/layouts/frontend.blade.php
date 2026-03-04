@@ -572,6 +572,47 @@
         .request-form__actions { margin-top: 1rem; }
         .request-form__btn { padding: .75rem 1.5rem; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
         .request-form__btn:hover { opacity: .9; }
+        /* Mobile fullscreen player overlay */
+        .mp-overlay.hidden { display: none !important; }
+        .mp-overlay {
+            position: fixed; inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,.88), rgba(0,0,0,.95));
+            z-index: 99999;
+            display: flex; flex-direction: column;
+            padding: 14px;
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
+        .mp-top { display: flex; justify-content: space-between; align-items: center; color: #fff; flex-shrink: 0; }
+        .mp-title { font-weight: 900; letter-spacing: 1px; font-size: 1.1rem; }
+        .mp-close { background: transparent; border: 0; color: #fff; font-size: 22px; cursor: pointer; padding: 8px; line-height: 1; }
+        .mp-close:hover { opacity: .85; }
+        .mp-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; min-height: 0; }
+        .mp-cover { width: min(320px, 78vw); height: auto; border-radius: 18px; box-shadow: 0 18px 50px rgba(0,0,0,.55); object-fit: contain; }
+        .mp-track { color: #fff; font-weight: 800; text-align: center; max-width: 90vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1rem; }
+        .mp-listeners { color: rgba(255,255,255,.7); font-size: 12px; }
+        .mp-controls { margin-top: 8px; display: flex; gap: 8px; align-items: center; justify-content: center; }
+        .mp-play, .mp-pause {
+            width: 80px; height: 80px; border-radius: 22px;
+            border: 0; cursor: pointer;
+            background: #fff; color: #111; font-size: 28px; font-weight: 900;
+            box-shadow: 0 10px 30px rgba(0,0,0,.45);
+            display: flex; align-items: center; justify-content: center; padding: 0;
+        }
+        .mp-play:hover, .mp-pause:hover { opacity: .95; transform: scale(1.02); }
+        .mp-play.hidden, .mp-pause.hidden { display: none !important; }
+        .mp-vol { width: min(360px, 86vw); margin-top: 8px; accent-color: var(--accent); }
+        .mp-actions { display: flex; gap: 12px; padding: 12px 0; justify-content: center; flex-shrink: 0; flex-wrap: wrap; }
+        .mp-btn {
+            flex: 1; min-width: 140px; max-width: 220px;
+            padding: 12px 14px; border-radius: 14px;
+            border: 0; text-align: center; font-weight: 900; font-size: 0.95rem;
+            text-decoration: none; cursor: pointer;
+        }
+        .mp-wa { background: #25D366; color: #fff; }
+        .mp-wa:hover { opacity: .9; }
+        .mp-req { background: #ff2d2d; color: #fff; }
+        .mp-req:hover { opacity: .9; }
     </style>
     @stack('styles')
 </head>
@@ -759,8 +800,21 @@
             if (quickLive) {
                 quickLive.addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (audio.paused) tryPlay();
-                    else audio.pause();
+                    var overlay = document.getElementById('mobilePlayerOverlay');
+                    if (overlay && !overlay.classList.contains('hidden')) {
+                        if (audio.paused) tryPlay();
+                        else audio.pause();
+                    } else if (overlay) {
+                        overlay.classList.remove('hidden');
+                        overlay.setAttribute('aria-hidden', 'false');
+                        document.body.style.overflow = 'hidden';
+                        var mpPlay = document.getElementById('mpPlay');
+                        var mpPause = document.getElementById('mpPause');
+                        if (mpPlay && mpPause) {
+                            mpPlay.classList.toggle('hidden', !audio.paused);
+                            mpPause.classList.toggle('hidden', audio.paused);
+                        }
+                    }
                     return false;
                 });
             }
@@ -834,6 +888,38 @@
         })();
     </script>
     @include('partials.song-request-modal')
+
+    @php
+        $mpCover = isset($siteSettings['brand_logo_path']) && $siteSettings['brand_logo_path']
+            ? asset('storage/' . $siteSettings['brand_logo_path'])
+            : asset('assets/images/play.png');
+        $mpWhatsapp = $siteSettings['social_whatsapp'] ?? '#';
+    @endphp
+    <div id="mobilePlayerOverlay" class="mp-overlay hidden" role="dialog" aria-modal="true" aria-label="Canlı dinle">
+        <div class="mp-top">
+            <div class="mp-title">RadyoYol</div>
+            <button type="button" id="mpClose" class="mp-close" aria-label="Kapat">✕</button>
+        </div>
+        <div class="mp-center">
+            <img class="mp-cover" src="{{ $mpCover }}" alt="RadyoYol">
+            <div class="mp-track">
+                <span class="cc_streaminfo" data-type="tracktitle" data-username="radyoyol"></span>
+            </div>
+            <div class="mp-listeners">
+                <span class="cc_streaminfo" data-type="listeners" data-username="radyoyol"></span> dinleyici
+            </div>
+            <div class="mp-controls">
+                <button type="button" id="mpPlay" class="mp-play" aria-label="Oynat">▶</button>
+                <button type="button" id="mpPause" class="mp-pause hidden" aria-label="Duraklat">⏸</button>
+            </div>
+            <input id="mpVol" class="mp-vol" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Ses seviyesi">
+        </div>
+        <div class="mp-actions">
+            <a id="mpWhatsapp" class="mp-btn mp-wa" href="{{ $mpWhatsapp }}" target="_blank" rel="noopener">WhatsApp</a>
+            <button type="button" id="mpRequest" class="mp-btn mp-req">İSTEK HATTI</button>
+        </div>
+    </div>
+
     @stack('scripts')
     <script src="https://r1.comcities.com/system/streaminfo.js"></script>
 </body>

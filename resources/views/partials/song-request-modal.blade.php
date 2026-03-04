@@ -47,6 +47,7 @@
     var successEl=document.getElementById('formSuccess');
     function openModal(){if(modal){modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}}
     function closeModal(){if(modal){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}}
+    window.openSongRequestModal=openModal;
     document.addEventListener('click',function(e){
         var t=e.target;
         while(t){
