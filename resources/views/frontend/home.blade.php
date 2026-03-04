@@ -375,7 +375,8 @@
         background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
         pointer-events: none;
     }
-    .home-icon-buttons button {
+    .home-icon-buttons button,
+    .home-icon-buttons a.icon-link {
         flex: 1;
         aspect-ratio: 1;
         padding: 0.75rem;
@@ -386,8 +387,13 @@
         font-size: 1.25rem;
         cursor: pointer;
         transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
     }
-    .home-icon-buttons button:hover {
+    .home-icon-buttons button:hover,
+    .home-icon-buttons a.icon-link:hover {
         background: rgba(255,255,255,0.1);
         border-color: rgba(255,255,255,0.2);
         color: #ffffff;
@@ -424,6 +430,16 @@
     .badge-placeholder:hover {
         background: var(--ry-surface-2);
         color: #ffffff;
+    }
+    .badge-placeholder.store-badge-wrap {
+        padding: 0.5rem;
+        min-height: 44px;
+    }
+    .badge-placeholder .store-badge {
+        height: 40px;
+        width: auto;
+        object-fit: contain;
+        display: block;
     }
     .live-dj-card {
         position: relative;
@@ -673,14 +689,31 @@
                 </div>
             </div>
             <div class="home-icon-buttons">
-                <button type="button" class="icon-placeholder" aria-label="Play">▶</button>
-                <button type="button" class="icon-placeholder" aria-label="A">A</button>
-                <button type="button" class="icon-placeholder" aria-label="Lightning">⚡</button>
-                <button type="button" class="icon-placeholder" aria-label="Video">🎬</button>
+                @php
+                    $playerLinks = [
+                        'winamp' => ['label' => 'Winamp İle Dinle', 'icon' => 'bi-music-note-beamed'],
+                        'media_player' => ['label' => 'Medya Player', 'icon' => 'bi-play-circle'],
+                        'quicktime' => ['label' => 'QuickTime Player', 'icon' => 'bi-film'],
+                        'real_player' => ['label' => 'Real Player', 'icon' => 'bi-broadcast'],
+                    ];
+                @endphp
+                @foreach($playerLinks as $key => $info)
+                    @if(isset($socialLinks[$key]) && ($socialLinks[$key]['is_active'] ?? false) && !empty(trim($socialLinks[$key]['url'] ?? '')))
+                    <a href="{{ $socialLinks[$key]['url'] }}" class="icon-placeholder icon-link" target="_blank" rel="noopener noreferrer" title="{{ $info['label'] }}" aria-label="{{ $info['label'] }}"><i class="bi {{ $info['icon'] }}"></i></a>
+                    @endif
+                @endforeach
             </div>
             <div class="home-badges">
-                <a href="#" class="badge-placeholder">GET IT ON Google Play</a>
-                <a href="#" class="badge-placeholder">Download on the App Store</a>
+                @if(isset($socialLinks['android_app']) && ($socialLinks['android_app']['is_active'] ?? false) && !empty(trim($socialLinks['android_app']['url'] ?? '')))
+                <a href="{{ $socialLinks['android_app']['url'] }}" class="badge-placeholder badge-link" target="_blank" rel="noopener noreferrer" title="Android Uygulaması">
+                    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="GET IT ON Google Play" class="store-badge" height="40">
+                </a>
+                @endif
+                @if(isset($socialLinks['ios_app']) && ($socialLinks['ios_app']['is_active'] ?? false) && !empty(trim($socialLinks['ios_app']['url'] ?? '')))
+                <a href="{{ $socialLinks['ios_app']['url'] }}" class="badge-placeholder badge-link" target="_blank" rel="noopener noreferrer" title="iOS Uygulaması">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" class="store-badge" height="40">
+                </a>
+                @endif
             </div>
             <div class="live-dj-card" id="liveDjCard">
                 <div class="live-banner">CANLI YAYINDA</div>
