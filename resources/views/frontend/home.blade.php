@@ -371,7 +371,7 @@
         color: #ffffff;
     }
     .live-dj-card {
-        background: var(--panel);
+        background: var(--ry-schedule-bg);
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 0;
