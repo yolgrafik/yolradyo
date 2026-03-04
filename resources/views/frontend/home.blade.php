@@ -427,7 +427,7 @@
     }
     .live-dj-card {
         position: relative;
-        background: color-mix(in srgb, var(--ry-theme) 15%, #0f172a);
+        background: color-mix(in srgb, var(--ry-theme) 22%, #0f172a);
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 0;
@@ -441,7 +441,7 @@
         right: 0;
         top: 0;
         height: 1px;
-        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 4%, rgba(255,255,255,0.9) 12%, rgba(255,255,255,0.9) 88%, rgba(255,255,255,0.25) 96%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
         pointer-events: none;
         z-index: 1;
     }
@@ -452,7 +452,7 @@
         font-size: 14px;
         padding: 10px 14px;
         letter-spacing: 2px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+        border-bottom: 1px solid var(--ry-line-color);
     }
     .live-content {
         padding: 14px;
@@ -500,7 +500,7 @@
     .live-dj-details {
         margin-top: 10px;
         padding-top: 10px;
-        border-top: 1px solid var(--border);
+        border-top: 1px solid var(--ry-line-color);
     }
     .live-program {
         font-size: 13px;

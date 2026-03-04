@@ -14,6 +14,7 @@
 <style id="theme-vars">
 :root {
     --ry-theme: {{ $themeAccent }};
+    --ry-line-color: color-mix(in srgb, var(--ry-theme) 40%, rgba(255,255,255,0.9));
     --ry-header-bg: {{ $headerBg }};
     --ry-footer-bg: {{ $footerBg }};
     --ry-bar-bg: {{ $barBg }};
