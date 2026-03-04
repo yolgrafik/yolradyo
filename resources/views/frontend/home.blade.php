@@ -391,36 +391,25 @@
     .home-badges {
         position: relative;
         display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    .badge-single-wrap {
-        display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 0.75rem;
-        padding: 0.6rem 1rem;
-        background: var(--ry-surface);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 10px;
+        gap: 0.5rem;
         flex-wrap: wrap;
     }
-    .badge-single-wrap .badge-link-item {
+    .home-badges .badge-link-item {
         display: flex;
         align-items: center;
         justify-content: center;
-        flex: 1 1 0;
-        min-width: 0;
         transition: opacity 0.2s ease;
     }
-    .badge-single-wrap .badge-link-item:hover {
-        opacity: 0.9;
+    .home-badges .badge-link-item:hover {
+        opacity: 0.85;
     }
-    .badge-single-wrap .store-badge {
-        height: 36px;
+    .home-badges .store-badge {
+        height: 32px;
         width: auto;
-        max-width: 135px;
+        max-width: 110px;
         object-fit: contain;
         display: block;
     }
@@ -687,19 +676,15 @@
                 @endforeach
             </div>
             <div class="home-badges">
-                @if((isset($socialLinks['android_app']) && ($socialLinks['android_app']['is_active'] ?? false) && !empty(trim($socialLinks['android_app']['url'] ?? ''))) || (isset($socialLinks['ios_app']) && ($socialLinks['ios_app']['is_active'] ?? false) && !empty(trim($socialLinks['ios_app']['url'] ?? ''))))
-                <div class="badge-single-wrap">
-                    @if(isset($socialLinks['android_app']) && ($socialLinks['android_app']['is_active'] ?? false) && !empty(trim($socialLinks['android_app']['url'] ?? '')))
-                    <a href="{{ $socialLinks['android_app']['url'] }}" class="badge-link-item" target="_blank" rel="noopener noreferrer" title="Android Uygulaması">
-                        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="GET IT ON Google Play" class="store-badge">
-                    </a>
-                    @endif
-                    @if(isset($socialLinks['ios_app']) && ($socialLinks['ios_app']['is_active'] ?? false) && !empty(trim($socialLinks['ios_app']['url'] ?? '')))
-                    <a href="{{ $socialLinks['ios_app']['url'] }}" class="badge-link-item" target="_blank" rel="noopener noreferrer" title="iOS Uygulaması">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Download_on_the_App_Store_Badge_US-UK_RGB_blk.svg" alt="Download on the App Store" class="store-badge">
-                    </a>
-                    @endif
-                </div>
+                @if(isset($socialLinks['android_app']) && ($socialLinks['android_app']['is_active'] ?? false) && !empty(trim($socialLinks['android_app']['url'] ?? '')))
+                <a href="{{ $socialLinks['android_app']['url'] }}" class="badge-link-item" target="_blank" rel="noopener noreferrer" title="Android Uygulaması">
+                    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="GET IT ON Google Play" class="store-badge">
+                </a>
+                @endif
+                @if(isset($socialLinks['ios_app']) && ($socialLinks['ios_app']['is_active'] ?? false) && !empty(trim($socialLinks['ios_app']['url'] ?? '')))
+                <a href="{{ $socialLinks['ios_app']['url'] }}" class="badge-link-item" target="_blank" rel="noopener noreferrer" title="iOS Uygulaması">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Download_on_the_App_Store_Badge_US-UK_RGB_blk.svg" alt="Download on the App Store" class="store-badge">
+                </a>
                 @endif
             </div>
             <div class="live-dj-card" id="liveDjCard">
