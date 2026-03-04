@@ -279,6 +279,8 @@
         padding: 1rem 1.5rem;
         background: linear-gradient(135deg, #2563eb, #1d4ed8);
         border: 1px solid rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        font-family: inherit;
         border-radius: 12px;
         color: #fff;
         font-family: Arial, sans-serif;
