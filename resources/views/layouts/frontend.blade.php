@@ -267,7 +267,43 @@
         .header-auth-logout { background: none; color: var(--ry-schedule-active); }
         .header-auth-logout:hover { background: rgba(255,255,255,0.08); }
         .header-auth-logout-form { display: inline; margin: 0; }
-        /* Mobile: auth always visible */
+        /* Mobil header bar: logo ile hamburger arasındaki alanda auth butonları */
+        .header-bar-auth {
+            display: none;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 0;
+            padding: 0 0.5rem;
+        }
+        .header-bar-auth-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            padding: 0.35rem 0.65rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        .header-bar-auth-register { background: var(--ry-btn-bg); }
+        .header-bar-auth-register:hover { opacity: 0.95; color: #fff; }
+        .header-bar-auth-login { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35); }
+        .header-bar-auth-login:hover { background: rgba(255,255,255,0.25); color: #fff; }
+        .header-bar-auth-profile { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); }
+        .header-bar-auth-profile:hover { background: rgba(255,255,255,0.2); color: #fff; }
+        .header-bar-auth-logout { background: none; color: var(--ry-schedule-active); }
+        .header-bar-auth-logout:hover { background: rgba(255,255,255,0.1); }
+        .header-bar-auth-form { display: inline; margin: 0; }
+        /* Mobile: auth in slide-out (yedek) */
         .header-auth-mobile { display: none; gap: 0.75rem; align-items: stretch; flex: 1; min-width: 0; }
         .header-auth-mobile .header-auth-btn { flex: 1; min-width: 120px; justify-content: center; min-height: 48px; font-size: 0.95rem; padding: 0.6rem 1rem; }
         /* Mobile: social dropdown */
@@ -674,6 +710,7 @@
             .navbar .nav-center .nav-right .header-social-icon i { font-size: 1.25rem; }
             .nav-center .nav-right .header-social { gap: 12px; }
             .header-social-auth-inline { display: none !important; }
+            .header-bar-auth { display: flex !important; }
             .header-auth-mobile { display: flex !important; }
             .header-more-wrap { display: block !important; }
             .nav-center .nav-right { flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 1rem; }
@@ -700,6 +737,7 @@
             .nav-center { width: min(300px, 100vw - 2rem); }
             .header-more-dropdown { min-width: 180px; right: 0; left: auto; }
             .header-auth-btn { min-height: 44px; }
+            .header-bar-auth-btn { min-height: 40px; padding: 0.3rem 0.5rem; font-size: 0.75rem; }
         }
         @media (min-width: 993px) and (max-width: 1200px) {
             .nav-menu > li > a { font-size: 0.75rem; padding: 0.45rem 0.6rem; }
@@ -710,6 +748,7 @@
         @media (min-width: 993px) {
             .nav-toggle { display: none; }
             .header-social-auth-inline { display: flex !important; }
+            .header-bar-auth { display: none !important; }
             .header-auth-mobile { display: none !important; }
             .header-more-wrap { display: none !important; }
         }
@@ -1011,6 +1050,19 @@
                     </div>
                 </div>
             </div>
+            </div>
+            {{-- Mobil header bar: logo ile hamburger arasında Üye Ol / Giriş Yap --}}
+            <div class="header-bar-auth">
+                @guest
+                    <a href="{{ route('register') }}" class="header-bar-auth-btn header-bar-auth-register">Üye Ol</a>
+                    <a href="{{ route('login') }}" class="header-bar-auth-btn header-bar-auth-login">Giriş Yap</a>
+                @else
+                    <a href="{{ route('profile') }}" class="header-bar-auth-btn header-bar-auth-profile">Hesabım</a>
+                    <form method="POST" action="{{ route('logout') }}" class="header-bar-auth-form">
+                        @csrf
+                        <button type="submit" class="header-bar-auth-btn header-bar-auth-logout">Çıkış</button>
+                    </form>
+                @endguest
             </div>
             <button class="nav-toggle" id="navToggle" type="button" aria-label="Menüyü aç">☰</button>
         </div>
