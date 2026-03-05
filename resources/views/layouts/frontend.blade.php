@@ -80,15 +80,18 @@
             gap: 1.5rem;
         }
         .nav-logo {
-            flex-shrink: 0;
+            flex-shrink: 1;
+            min-width: 0;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
+            max-width: 220px;
         }
         .nav-logo img {
             height: 72px;
             width: auto;
+            flex-shrink: 0;
             object-fit: contain;
             transition: height 0.25s ease;
         }
@@ -101,22 +104,26 @@
             line-height: 1.2;
         }
         .nav-logo-slogan-wrap {
-            position: relative;
-            padding: 0.35rem 0.5rem;
-            max-width: 100px;
+            flex-shrink: 1;
+            min-width: 0;
+            padding: 0.25rem 0.4rem;
+            max-width: 120px;
         }
         .nav-logo-slogan {
-            font-size: 0.65rem;
+            font-size: clamp(0.5rem, 1.2vw, 0.65rem);
             font-weight: 600;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
             line-height: 1.2;
-            white-space: normal;
-            display: block;
-            max-width: 100%;
             color: #fff;
             text-shadow: 0 0 8px rgba(220,38,38,0.6), 0 0 16px rgba(220,38,38,0.3);
             animation: slogan-glow 2.5s ease-in-out infinite;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
         }
         @keyframes slogan-glow {
             0%, 100% { text-shadow: 0 0 8px rgba(220,38,38,0.6), 0 0 16px rgba(220,38,38,0.3); }
@@ -124,6 +131,8 @@
         }
         .nav-center {
             flex: 1;
+            flex-shrink: 0;
+            min-width: 0;
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -560,8 +569,9 @@
             .navbar.is-scrolled { height: 68px; min-height: 68px; }
             .nav-logo img { height: 56px; }
             .navbar.is-scrolled .nav-logo img { height: 48px; }
-            .nav-logo-slogan-wrap { padding: 0.25rem 0.4rem; max-width: 80px; }
-            .nav-logo-slogan { font-size: 0.55rem; letter-spacing: 0.04em; white-space: normal; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+            .nav-logo { max-width: 180px; }
+            .nav-logo-slogan-wrap { padding: 0.2rem 0.35rem; max-width: 75px; }
+            .nav-logo-slogan { font-size: 0.52rem; letter-spacing: 0.03em; }
             .nav-center {
                 position: fixed;
                 top: 0;
@@ -614,8 +624,9 @@
         }
         @media (max-width: 768px) {
             .nav-logo img { height: 64px; }
-            .nav-logo-slogan-wrap { max-width: 65px; }
-            .nav-logo-slogan { font-size: 0.5rem; }
+            .nav-logo { max-width: 160px; }
+            .nav-logo-slogan-wrap { max-width: 60px; }
+            .nav-logo-slogan { font-size: 0.48rem; }
             .bottom-bar-player { padding: 0 1rem; gap: 0.5rem; }
             .player-status-group { font-size: 0.7rem; }
             .player-volume-wrap { min-width: 60px; }
