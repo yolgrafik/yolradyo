@@ -100,6 +100,25 @@
     .auth-buttons a:hover { opacity: 0.9; }
     .btn-login { background: var(--ry-btn-bg); color: #fff; }
     .btn-register { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+    .contact-info {
+        background: var(--ry-bar-bg);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .contact-info-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+    .contact-info-item {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    .contact-info-icon { font-size: 1.5rem; }
+    .contact-info-item a:hover { text-decoration: underline; }
 </style>
 @endpush
 
@@ -108,7 +127,41 @@
     <h1>{{ $pageTitle ?? 'İletişim' }}</h1>
 </section>
 <div class="page-content">
-    <p>Bizimle iletişime geçmek için aşağıdaki formu doldurun. En kısa sürede size dönüş yapacağız.</p>
+    @if(!empty($contactEmail) || !empty($contactPhone) || !empty($addressText))
+    <div class="contact-info">
+        <h3 style="font-size:1.1rem;color:#fff;margin:0 0 1rem 0;">Radyo İletişim Bilgileri</h3>
+        <div class="contact-info-grid">
+            @if(!empty($addressText))
+            <div class="contact-info-item">
+                <span class="contact-info-icon">📍</span>
+                <div>
+                    <strong style="color:var(--muted);font-size:0.85rem;">Adres</strong>
+                    <p style="margin:0.25rem 0 0;color:var(--text);line-height:1.5;">{{ $addressText }}</p>
+                </div>
+            </div>
+            @endif
+            @if(!empty($contactPhone))
+            <div class="contact-info-item">
+                <span class="contact-info-icon">📞</span>
+                <div>
+                    <strong style="color:var(--muted);font-size:0.85rem;">Telefon</strong>
+                    <p style="margin:0.25rem 0 0;"><a href="tel:{{ preg_replace('/[^0-9+]/', '', $contactPhone) }}" style="color:var(--ry-schedule-active);text-decoration:none;">{{ $contactPhone }}</a></p>
+                </div>
+            </div>
+            @endif
+            @if(!empty($contactEmail))
+            <div class="contact-info-item">
+                <span class="contact-info-icon">✉️</span>
+                <div>
+                    <strong style="color:var(--muted);font-size:0.85rem;">E-posta</strong>
+                    <p style="margin:0.25rem 0 0;"><a href="mailto:{{ $contactEmail }}" style="color:var(--ry-schedule-active);text-decoration:none;">{{ $contactEmail }}</a></p>
+                </div>
+            </div>
+            @endif
+        </div>
+    </div>
+    @endif
+    <p style="margin-top:1.5rem;">Bizimle iletişime geçmek için aşağıdaki formu doldurun. En kısa sürede size dönüş yapacağız.</p>
 
     <div class="contact-form">
         <h3>Mesaj Gönderin</h3>

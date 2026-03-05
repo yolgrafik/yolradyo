@@ -16,10 +16,11 @@ class ContactController extends Controller
 {
     public function show(SettingsService $settings): View
     {
-        $contactEmail = $settings->get('contact_email');
         return view('frontend.iletisim', [
             'pageTitle' => 'İletişim',
-            'contactEmail' => $contactEmail,
+            'contactEmail' => $settings->get('contact_email'),
+            'contactPhone' => $settings->get('contact_phone'),
+            'addressText' => $settings->get('address_text'),
         ]);
     }
 
