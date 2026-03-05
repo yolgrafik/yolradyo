@@ -770,17 +770,17 @@
                     <span class="sidebar-brand-text">RADYOYOL</span>
                 </div>
                 <nav class="nav-accordion" id="navAccordion">
-                    <div class="nav-section is-open" data-section="dashboard">
-                        <button class="nav-section__toggle" type="button" aria-expanded="true">
+                    <div class="nav-section {{ request()->routeIs('admin.dashboard') || request()->routeIs('admin.shoutcast.player.*') ? 'is-open' : '' }}" data-section="dashboard">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.dashboard') || request()->routeIs('admin.shoutcast.player.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                            <span>Dashboard</span>
+                            <span>Kontrol Paneli</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">Genel Bakis</a></li>
-                            <li><a href="#" class="nav-item">Anlik Dinleyici</a></li>
-                            <li><a href="#" class="nav-item">Yayin Durumu</a></li>
-                            <li><a href="#" class="nav-item">Now Playing</a></li>
+                            <li><a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">Genel Bakış</a></li>
+                            <li><a href="{{ route('admin.shoutcast.player.index') }}" class="nav-item {{ request()->routeIs('admin.shoutcast.player.*') ? 'is-active' : '' }}">Anlık Dinleyici</a></li>
+                            <li><a href="{{ route('admin.shoutcast.player.index') }}#yayin" class="nav-item">Yayın Durumu</a></li>
+                            <li><a href="{{ route('admin.shoutcast.player.index') }}#nowplaying" class="nav-item">Şu An Çalıyor</a></li>
                         </ul>
                     </div>
                     <div class="nav-section {{ request()->routeIs('admin.shoutcast.player.*') ? 'is-open' : '' }}" data-section="yayin">

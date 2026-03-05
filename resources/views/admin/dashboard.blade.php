@@ -2,9 +2,15 @@
 
 @push('styles')
 <style>
+    .dashboard-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 1.5rem;
+        align-items: start;
+    }
     .module-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
     }
     .module-card {
@@ -66,6 +72,52 @@
     .module-card--blue .module-card__header { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
     .module-card--green .module-card__header { background: linear-gradient(135deg, #16a34a, #15803d); }
     .module-card--purple .module-card__header { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+    .dashboard-detail {
+        background: var(--card);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        border: 1px solid rgba(255,255,255,0.08);
+        position: sticky;
+        top: 1rem;
+    }
+    .dashboard-detail__header {
+        padding: 1rem 1.25rem;
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        font-weight: 700;
+        font-size: 1rem;
+        color: #fff;
+    }
+    .dashboard-detail__body { padding: 1rem 1.25rem; }
+    .dashboard-detail__section {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dashboard-detail__section:last-child { border-bottom: none; }
+    .dashboard-detail__label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.35rem;
+    }
+    .dashboard-detail__value {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #fff;
+    }
+    .dashboard-detail__value--online { color: #22c55e; }
+    .dashboard-detail__value--offline { color: #94a3b8; }
+    .dashboard-detail__track {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.9);
+        word-break: break-word;
+    }
+    @media (max-width: 1200px) {
+        .dashboard-layout { grid-template-columns: 1fr; }
+        .dashboard-detail { position: static; }
+    }
     @media (max-width: 1024px) {
         .module-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -76,8 +128,9 @@
 @endpush
 
 @section('content')
+<div class="dashboard-layout">
 <div class="module-grid">
-    <a href="#" class="module-card module-card--red">
+    <a href="{{ route('admin.schedule.index') }}" class="module-card module-card--red">
         <div class="module-card__header">
             <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
             <span class="module-card__title"><span class="menu-glow">Program & DJ</span></span>
@@ -108,7 +161,7 @@
         </div>
     </a>
 
-    <a href="#" class="module-card module-card--blue">
+    <a href="{{ route('admin.messages.index') }}" class="module-card module-card--blue">
         <div class="module-card__header">
             <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <span class="module-card__title"><span class="menu-glow">Mesaj & İstek</span></span>
@@ -122,7 +175,7 @@
         </div>
     </a>
 
-    <a href="#" class="module-card module-card--green">
+    <a href="{{ route('admin.settings.general') }}" class="module-card module-card--green">
         <div class="module-card__header">
             <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             <span class="module-card__title"><span class="menu-glow">Ayarlar</span></span>
@@ -139,7 +192,7 @@
         </div>
     </a>
 
-    <a href="#" class="module-card module-card--purple">
+    <a href="{{ route('admin.users.index') }}" class="module-card module-card--purple">
         <div class="module-card__header">
             <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span class="module-card__title"><span class="menu-glow">Kullanici Yonetimi</span></span>
@@ -154,4 +207,57 @@
         </div>
     </a>
 </div>
+
+<aside class="dashboard-detail">
+    <div class="dashboard-detail__header">Detaylı Görünüm</div>
+    <div class="dashboard-detail__body">
+        <div class="dashboard-detail__section">
+            <div class="dashboard-detail__label">Genel Bakış</div>
+            <div class="dashboard-detail__value">Kontrol Paneli özeti</div>
+        </div>
+        <div class="dashboard-detail__section">
+            <div class="dashboard-detail__label">Anlık Dinleyici</div>
+            <div class="dashboard-detail__value" id="dashboardListeners">—</div>
+        </div>
+        <div class="dashboard-detail__section" id="yayin">
+            <div class="dashboard-detail__label">Yayın Durumu</div>
+            <div class="dashboard-detail__value dashboard-detail__value--offline" id="dashboardStatus">—</div>
+        </div>
+        <div class="dashboard-detail__section" id="nowplaying">
+            <div class="dashboard-detail__label">Şu An Çalıyor</div>
+            <div class="dashboard-detail__track" id="dashboardTrack">—</div>
+        </div>
+    </div>
+</aside>
+</div>
 @endsection
+
+@push('scripts')
+<script>
+(function() {
+    var listenersEl = document.getElementById('dashboardListeners');
+    var statusEl = document.getElementById('dashboardStatus');
+    var trackEl = document.getElementById('dashboardTrack');
+    function updateRadioStatus() {
+        fetch('{{ url("/api/radio/status") }}')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (listenersEl) listenersEl.textContent = (data.listeners || 0) + ' dinleyici';
+                if (statusEl) {
+                    statusEl.textContent = data.status === 'online' ? 'Yayında' : 'Yayın Dışı';
+                    statusEl.classList.toggle('dashboard-detail__value--online', data.status === 'online');
+                    statusEl.classList.toggle('dashboard-detail__value--offline', data.status !== 'online');
+                }
+                if (trackEl) trackEl.textContent = data.song || '-';
+            })
+            .catch(function() {
+                if (listenersEl) listenersEl.textContent = '—';
+                if (statusEl) { statusEl.textContent = '—'; statusEl.classList.add('dashboard-detail__value--offline'); }
+                if (trackEl) trackEl.textContent = '—';
+            });
+    }
+    updateRadioStatus();
+    setInterval(updateRadioStatus, 10000);
+})();
+</script>
+@endpush
