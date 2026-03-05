@@ -514,9 +514,9 @@
         upd();
         inp.addEventListener('input', upd);
     }
-    setCount('titleCount', 'meta_title', 60);
-    setCount('descCount', 'meta_description', 160);
-    setCount('ogDescCount', 'og_description', 200);
+    setCount('titleCount', 'meta_title');
+    setCount('descCount', 'meta_description');
+    setCount('ogDescCount', 'og_description');
 
     var titleInp = document.getElementById('meta_title');
     var descInp = document.getElementById('meta_description');
@@ -561,15 +561,15 @@
             var url = (schemaUrl && schemaUrl.value) || {!! json_encode(url('/')) !!};
             var logo = schemaLogo && schemaLogo.value ? schemaLogo.value : '';
             var desc = schemaDesc && schemaDesc.value ? schemaDesc.value : '';
-            var org = { '@type': 'Organization', name: name, url: url };
+            var org = { '@@type': 'Organization', name: name, url: url };
             if (logo) org.logo = logo;
             if (desc) org.description = desc;
-            var website = { '@type': 'WebSite', name: name, url: url };
+            var website = { '@@type': 'WebSite', name: name, url: url };
             if (desc) website.description = desc;
-            var radio = { '@type': 'RadioStation', name: name, url: url };
+            var radio = { '@@type': 'RadioStation', name: name, url: url };
             if (desc) radio.description = desc;
             var graph = [org, website, radio];
-            var ld = { '@context': 'https://schema.org', '@graph': graph };
+            var ld = { '@@context': 'https://schema.org', '@@graph': graph };
             schemaJson.value = JSON.stringify(ld, null, 2);
             updateSaveState();
         });
