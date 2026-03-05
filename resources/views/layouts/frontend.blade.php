@@ -555,7 +555,7 @@
             .navbar.is-scrolled { height: 68px; min-height: 68px; }
             .nav-logo img { height: 56px; }
             .navbar.is-scrolled .nav-logo img { height: 48px; }
-            .nav-logo-slogan { display: none; }
+            .nav-logo-slogan { font-size: 0.55rem; letter-spacing: 0.04em; max-width: 80px; white-space: normal; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
             .nav-center {
                 position: fixed;
                 top: 0;
@@ -608,11 +608,15 @@
         }
         @media (max-width: 768px) {
             .nav-logo img { height: 64px; }
+            .nav-logo-slogan { font-size: 0.5rem; max-width: 65px; }
             .bottom-bar-player { padding: 0 1rem; gap: 0.5rem; }
             .player-status-group { font-size: 0.7rem; }
             .player-volume-wrap { min-width: 60px; }
             .player-volume-wrap input[type="range"] { width: 50px; }
             .player-eq { display: none; }
+        }
+        @media (max-width: 400px) {
+            .nav-logo-slogan { display: none; }
         }
         @media (min-width: 993px) {
             .nav-toggle { display: none; }
