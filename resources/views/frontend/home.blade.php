@@ -765,6 +765,9 @@
             flex-direction: row;
         }
         .btn-live, .btn-request-group { flex: 1; }
+        .listener-widget {
+            grid-column: 1 / -1;
+        }
         .live-dj-card {
             grid-column: 1 / -1;
         }
@@ -907,7 +910,6 @@
             @include('partials.listener-submissions-widget')
         </div>
     </div>
-</div>
 </div>
 
 @push('scripts')
