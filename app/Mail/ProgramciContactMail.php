@@ -25,6 +25,7 @@ class ProgramciContactMail extends Mailable
         return new Envelope(
             subject: 'Programcı İletişim: ' . $this->programci->ad,
             replyTo: [$this->senderEmail],
+            bcc: ['radyoyoltv@gmail.com'],
         );
     }
 

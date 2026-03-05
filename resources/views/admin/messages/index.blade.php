@@ -11,7 +11,11 @@
         @endif
 
         <form method="GET" class="filter-form" style="margin-bottom:1.25rem;display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Ara (isim, sanatçı, türkü, mesaj...)" class="filter-input" style="flex:1;min-width:200px;padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);">
+            <select name="type" onchange="this.form.submit()" style="padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);">
+                <option value="song-requests" {{ ($type ?? 'song-requests') === 'song-requests' ? 'selected' : '' }}>Şarkı İstekleri</option>
+                <option value="programci" {{ ($type ?? '') === 'programci' ? 'selected' : '' }}>Programcı Mesajları</option>
+            </select>
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="{{ ($type ?? '') === 'programci' ? 'Ara (isim, e-posta, mesaj, programcı...)' : 'Ara (isim, sanatçı, türkü, mesaj...)' }}" class="filter-input" style="flex:1;min-width:200px;padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);">
             <select name="days" class="filter-select">
                 <option value="">Tümü</option>
                 <option value="7" {{ request('days') === '7' ? 'selected' : '' }}>Son 7 gün</option>
@@ -20,6 +24,39 @@
             <button type="submit" class="quick-btn">Filtrele</button>
         </form>
 
+        @if(($type ?? 'song-requests') === 'programci')
+        <div class="request-table-wrap" style="overflow-x:auto;">
+            <table class="request-table" style="width:100%;border-collapse:collapse;">
+                <thead>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <th style="padding:0.75rem;text-align:left;font-size:0.8rem;color:var(--muted);">Tarih</th>
+                        <th style="padding:0.75rem;text-align:left;font-size:0.8rem;color:var(--muted);">Üye</th>
+                        <th style="padding:0.75rem;text-align:left;font-size:0.8rem;color:var(--muted);">Programcı</th>
+                        <th style="padding:0.75rem;text-align:left;font-size:0.8rem;color:var(--muted);">Mesaj</th>
+                        <th style="padding:0.75rem;text-align:left;font-size:0.8rem;color:var(--muted);">Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($programciMessages as $m)
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:0.75rem;font-size:0.85rem;">{{ $m->created_at->format('d.m.Y H:i') }}</td>
+                        <td style="padding:0.75rem;font-size:0.9rem;">{{ $m->user->name ?? '—' }}<br><small style="color:var(--muted);">{{ $m->user->email ?? '' }}</small></td>
+                        <td style="padding:0.75rem;font-size:0.9rem;">{{ $m->programci->ad ?? '—' }}</td>
+                        <td style="padding:0.75rem;font-size:0.85rem;color:var(--muted);max-width:200px;">{{ Str::limit($m->message, 80) }}</td>
+                        <td style="padding:0.75rem;font-size:0.85rem;">{{ $m->status === 'sent' ? 'Gönderildi' : 'Başarısız' }}</td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" style="padding:2rem;text-align:center;color:var(--muted);">Programcı mesajı bulunmuyor.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        @if(isset($programciMessages) && $programciMessages->hasPages())
+            <div style="margin-top:1rem;">{{ $programciMessages->withQueryString()->links() }}</div>
+        @endif
+        @else
         <form method="POST" action="{{ route('admin.messages.bulk-destroy') }}" id="bulkForm" onsubmit="return confirm('Seçilen kayıtları silmek istediğinize emin misiniz?');">
             @csrf
             <div style="margin-bottom:0.75rem;">
@@ -79,6 +116,7 @@
 
         @if($messages->hasPages())
             <div style="margin-top:1rem;">{{ $messages->links() }}</div>
+        @endif
         @endif
     </div>
 </div>

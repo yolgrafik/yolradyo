@@ -118,7 +118,6 @@
     </div>
     @endif
 
-    @if($programci->email)
     <div class="contact-form">
         <h3>İletişim</h3>
         @if(session('success'))
@@ -129,14 +128,16 @@
         @endif
 
         @guest
-            <p class="auth-required">Mesaj göndermek için üye girişi yapmalısınız.</p>
+            <p class="auth-required">Mesaj göndermek için giriş yapmalısınız.</p>
             <div class="auth-buttons">
                 <a href="{{ route('login') }}" class="btn-login">Giriş Yap</a>
                 <a href="{{ route('register') }}" class="btn-register">Üye Ol</a>
             </div>
         @else
             @if(!auth()->user()->isApproved())
-                <p class="auth-required">Mesaj gönderebilmek için hesabınızın onaylanması gerekiyor.</p>
+                <p class="auth-required">Hesabınız onay bekliyor.</p>
+            @elseif(!$programci->email || !filter_var($programci->email, FILTER_VALIDATE_EMAIL))
+                <p class="auth-required">Bu programcı için e-posta tanımlı değil.</p>
             @else
             <form method="POST" action="{{ route('public.programcilar.contact', $programci->slug) }}" id="programciContactForm">
                 @csrf
@@ -163,7 +164,6 @@
             @endif
         @endguest
     </div>
-    @endif
 </div>
 @push('scripts')
 <script>

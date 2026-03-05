@@ -19,7 +19,7 @@ class ProgramciContactController extends Controller
         $user = $request->user();
 
         if (!$user->isApproved()) {
-            return back()->with('error', 'Mesaj gönderebilmek için hesabınızın onaylanması gerekiyor.');
+            return back()->with('error', 'Hesabınız onay bekliyor.');
         }
 
         if (!empty($request->validated('website'))) {
@@ -27,7 +27,7 @@ class ProgramciContactController extends Controller
         }
 
         if (!$programci->email || !filter_var($programci->email, FILTER_VALIDATE_EMAIL)) {
-            return back()->with('error', 'Bu programcıya iletişim bilgisi eklenmemiş.');
+            return back()->with('error', 'Bu programcı için e-posta tanımlı değil.');
         }
 
         MailHelper::applyConfig();
