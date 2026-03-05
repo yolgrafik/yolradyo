@@ -41,6 +41,7 @@ class ScheduleController extends Controller
         }
 
         $activeDj = null;
+
         if ($activeIdx !== null) {
             $activeItem = $schedulesArray[$activeIdx];
             $dj = $activeItem->dj_id ? $activeItem->dj : null;
@@ -53,6 +54,43 @@ class ScheduleController extends Controller
                     'tagline' => $dj->bio ?? '',
                     'program_title' => $activeItem->title,
                 ];
+            }
+        }
+
+        // O an canlı slot yoksa, en son biten programın yayıncısını göster (boş kalmasın)
+        if ($activeDj === null && count($schedulesArray) > 0 && $day === $todayDay) {
+            $lastEndedItem = null;
+            foreach ($schedulesArray as $idx => $s) {
+                $endRaw = $s->end_time ? (is_string($s->end_time) ? $s->end_time : $s->end_time->format('H:i:s')) : null;
+                $next = $schedulesArray[$idx + 1] ?? null;
+                $nextStart = $next ? (is_string($next->start_time) ? $next->start_time : $next->start_time->format('H:i:s')) : null;
+                $endCompare = $endRaw
+                    ? substr(preg_replace('/\.\d+$/', '', $endRaw), 0, 8)
+                    : ($nextStart ? substr(preg_replace('/\.\d+$/', '', $nextStart), 0, 8) : '23:59:59');
+                if ($nowTime >= $endCompare && $s->dj_id) {
+                    $lastEndedItem = $s;
+                }
+            }
+            if ($lastEndedItem === null) {
+                foreach (array_reverse($schedulesArray) as $s) {
+                    if ($s->dj_id) {
+                        $lastEndedItem = $s;
+                        break;
+                    }
+                }
+            }
+            if ($lastEndedItem) {
+                $dj = $lastEndedItem->dj;
+                if ($dj) {
+                    $activeDj = [
+                        'id' => $dj->id,
+                        'name' => $dj->name,
+                        'avatar_url' => $dj->avatar_url,
+                        'initials' => $dj->display_initials,
+                        'tagline' => $dj->bio ?? '',
+                        'program_title' => $lastEndedItem->title,
+                    ];
+                }
             }
         }
 
