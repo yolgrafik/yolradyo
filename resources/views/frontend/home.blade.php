@@ -701,6 +701,7 @@
                 </div>
             </div>
             @include('partials.requests-ticker')
+            @include('partials.programcilar-cards')
         </div>
         <div class="home-right">
             <div class="home-actions">

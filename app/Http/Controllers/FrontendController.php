@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DjProfile;
+use App\Models\Programci;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Services\SettingsService;
@@ -12,8 +13,9 @@ class FrontendController extends Controller
     public function home()
     {
         $sliders = Slider::active()->ordered()->get();
+        $programcilar = Programci::active()->ordered()->get();
 
-        return view('frontend.home', compact('sliders'));
+        return view('frontend.home', compact('sliders', 'programcilar'));
     }
 
     public function player(SettingsService $settings, \Illuminate\Http\Request $request)
@@ -38,6 +40,19 @@ class FrontendController extends Controller
             ->orderBy('name')
             ->get();
         return view('frontend.programlar', compact('djs'));
+    }
+
+    public function programcilarIndex()
+    {
+        $programcilar = Programci::active()->ordered()->get();
+        return view('frontend.programcilar-index', compact('programcilar'));
+    }
+
+    public function programciShow(string $slug)
+    {
+        $programci = Programci::where('slug', $slug)->active()->firstOrFail();
+        $programci->load(['schedules' => fn ($q) => $q->active()->ordered()]);
+        return view('frontend.programci-show', compact('programci'));
     }
 
     public function haberler()
