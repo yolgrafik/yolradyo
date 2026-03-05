@@ -13,11 +13,10 @@ class MenuItemsSeeder extends Seeder
             ['title' => 'Anasayfa', 'type' => 'page', 'url' => '/', 'sort_order' => 0],
             ['title' => 'Programlar', 'type' => 'page', 'url' => '/programlar', 'sort_order' => 1],
             ['title' => 'Haberler', 'type' => 'page', 'url' => '/haberler', 'sort_order' => 2],
-            ['title' => 'Video Galeri', 'type' => 'page', 'url' => '/videolar', 'sort_order' => 3],
-            ['title' => 'Foto Galeri', 'type' => 'page', 'url' => '/galeri', 'sort_order' => 4],
-            ['title' => 'Reklam & Isbirligi', 'type' => 'page', 'url' => '/reklam', 'sort_order' => 5],
-            ['title' => 'Hakkimizda', 'type' => 'page', 'url' => '/hakkimizda/biz-kimiz', 'sort_order' => 6],
-            ['title' => 'Iletisim', 'type' => 'page', 'url' => '/iletisim', 'sort_order' => 8],
+            ['title' => 'Medya', 'type' => 'page', 'url' => '/videolar', 'sort_order' => 3],
+            ['title' => 'Reklam & Isbirligi', 'type' => 'page', 'url' => '/reklam', 'sort_order' => 4],
+            ['title' => 'Hakkimizda', 'type' => 'page', 'url' => '/hakkimizda/biz-kimiz', 'sort_order' => 5],
+            ['title' => 'Iletisim', 'type' => 'page', 'url' => '/iletisim', 'sort_order' => 6],
         ];
 
         foreach ($header as $item) {
@@ -25,6 +24,20 @@ class MenuItemsSeeder extends Seeder
                 ['location' => 'header', 'title' => $item['title'], 'parent_id' => null],
                 array_merge($item, ['location' => 'header', 'parent_id' => null, 'target_blank' => false, 'is_active' => true])
             );
+        }
+
+        $medya = MenuItem::where('location', 'header')->where('title', 'Medya')->whereNull('parent_id')->first();
+        if ($medya) {
+            $mediaSubs = [
+                ['title' => 'Video Galeri', 'url' => '/videolar', 'sort_order' => 0],
+                ['title' => 'Foto Galeri', 'url' => '/galeri', 'sort_order' => 1],
+            ];
+            foreach ($mediaSubs as $s) {
+                MenuItem::updateOrCreate(
+                    ['location' => 'header', 'title' => $s['title'], 'parent_id' => $medya->id],
+                    array_merge($s, ['location' => 'header', 'type' => 'page', 'parent_id' => $medya->id, 'target_blank' => false, 'is_active' => true])
+                );
+            }
         }
 
         $hakkimizda = MenuItem::where('location', 'header')->where('title', 'Hakkimizda')->first();
