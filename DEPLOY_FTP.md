@@ -170,26 +170,8 @@ php artisan view:cache
 
 ## 4. FTP İstemci Ayarları (FileZilla / WinSCP)
 
-### FileZilla – Dizin Filtreleme
-1. **Edit → Directory listing filters**
-2. Exclude filters ekle:
-   ```
-   .git
-   node_modules
-   .env
-   .env.backup
-   .env.production
-   tests
-   .phpunit.cache
-   .idea
-   .vscode
-   storage/logs
-   storage/framework/cache/data
-   storage/framework/sessions
-   storage/framework/views
-   Homestead.yaml
-   *.log
-   ```
+### FileZilla / WinSCP
+Release paketi kullanıyorsanız filtre gerekmez. Manuel yüklemede `.git`, `node_modules`, `tests` hariç tutun.
 
 ### WinSCP – Yükleme filtresi
 **Preferences → Transfer → Transfer resume/transfer to temporary file name**  
