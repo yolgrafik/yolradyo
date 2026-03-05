@@ -24,13 +24,13 @@ class User extends Authenticatable
         'status',
     ];
 
-    public const STATUS_PENDING = 'pending';
-    public const STATUS_APPROVED = 'approved';
-    public const STATUS_REJECTED = 'rejected';
+    public const STATUS_AKTIF = 'aktif';
+    public const STATUS_PASIF = 'pasif';
+    public const STATUS_BAN = 'ban';
 
     public function isApproved(): bool
     {
-        return $this->status === self::STATUS_APPROVED;
+        return $this->status === self::STATUS_AKTIF;
     }
 
     public function submissions(): \Illuminate\Database\Eloquent\Relations\HasMany

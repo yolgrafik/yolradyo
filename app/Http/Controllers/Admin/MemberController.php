@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\PasswordResetByAdmin;
+use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 class MemberController extends Controller
@@ -42,38 +43,49 @@ class MemberController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'status' => 'required|string|in:pending,approved,rejected',
-            'password' => ['nullable', 'confirmed', Password::min(8)],
+            'status' => 'required|string|in:aktif,pasif,ban',
+            'password' => 'nullable|min:8|confirmed',
         ]);
 
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->status = $validated['status'];
 
-        if (filled($validated['password'] ?? '')) {
+        if ($request->filled('password')) {
             $user->password = Hash::make($validated['password']);
+            $user->save();
+
+            try {
+                \App\Helpers\MailHelper::applyConfig();
+                if (\App\Helpers\MailHelper::isRealMailConfigured()) {
+                    $siteName = app(SettingsService::class)->get('site_name') ?: config('app.name');
+                    $user->notify(new PasswordResetByAdmin($siteName));
+                }
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Password reset notification failed: ' . $e->getMessage());
+            }
+        } else {
+            $user->save();
         }
 
-        $user->save();
-
-        return redirect()->route('admin.members.index')->with('success', 'Üye güncellendi.');
+        return redirect()->route('admin.members.index')->with('success', 'Üye bilgileri başarıyla güncellendi.');
     }
 
     public function approve(User $user): RedirectResponse
     {
-        $user->update(['status' => 'approved']);
+        $user->update(['status' => 'aktif']);
         return back()->with('success', 'Üye onaylandı.');
     }
 
     public function reject(User $user): RedirectResponse
     {
-        $user->update(['status' => 'rejected']);
+        $user->update(['status' => 'ban']);
         return back()->with('success', 'Üye reddedildi.');
     }
 
     public function deactivate(User $user): RedirectResponse
     {
-        $user->update(['status' => 'pending']);
+        $user->update(['status' => 'pasif']);
         return back()->with('success', 'Üye pasif yapıldı.');
     }
 

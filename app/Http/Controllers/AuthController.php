@@ -76,6 +76,11 @@ class AuthController extends Controller
         $credentials = $request->validated();
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            $user = Auth::user();
+            if ($user->status === 'ban') {
+                Auth::logout();
+                return back()->withErrors(['email' => 'Hesabınız engellenmiş. Lütfen yönetici ile iletişime geçin.'])->onlyInput('email');
+            }
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
@@ -95,7 +100,7 @@ class AuthController extends Controller
         $validated = $request->validated();
 
         $approvalRequired = app(\App\Services\SettingsService::class)->get('member_approval_required', true);
-        $status = $approvalRequired ? 'pending' : 'approved';
+        $status = $approvalRequired ? 'pasif' : 'aktif';
 
         $user = \App\Models\User::create([
             'name' => $validated['name'],
@@ -108,7 +113,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        $message = $status === 'approved'
+        $message = $status === 'aktif'
             ? 'Hesabınız oluşturuldu. Hoş geldiniz!'
             : 'Hesabınız oluşturuldu. Onaylandıktan sonra tüm özelliklere erişebilirsiniz.';
 

@@ -41,7 +41,7 @@
         <div class="profile-row">
             <span class="profile-label">Durum</span>
             <span class="profile-value">
-                @if(auth()->user()->status === 'approved')
+                @if(auth()->user()->status === 'aktif')
                     <span style="color:#86efac;">Onaylı</span>
                 @elseif(auth()->user()->status === 'pending')
                     <span style="color:#fde047;">Beklemede</span>

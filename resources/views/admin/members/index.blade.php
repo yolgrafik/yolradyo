@@ -17,9 +17,9 @@
             <input type="text" name="q" value="{{ request('q') }}" placeholder="Ad veya e-posta ara" class="form-input" style="max-width:200px;">
             <select name="status" class="form-input" style="max-width:150px;">
                 <option value="">Tüm durumlar</option>
-                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Beklemede</option>
-                <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Onaylı</option>
-                <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Reddedildi</option>
+                <option value="aktif" {{ request('status') === 'aktif' ? 'selected' : '' }}>Aktif</option>
+                <option value="pasif" {{ request('status') === 'pasif' ? 'selected' : '' }}>Pasif</option>
+                <option value="ban" {{ request('status') === 'ban' ? 'selected' : '' }}>Ban</option>
             </select>
             <button type="submit" class="btn-sm btn-edit">Filtrele</button>
         </form>
@@ -48,17 +48,17 @@
                         <td>{{ $m->email }}</td>
                         <td>{{ $m->created_at->format('d.m.Y H:i') }}</td>
                         <td>
-                            @if($m->status === 'pending')
-                                <span class="badge badge-warning">Beklemede</span>
-                            @elseif($m->status === 'approved')
-                                <span class="badge badge-success">Onaylı</span>
+                            @if($m->status === 'aktif')
+                                <span class="badge badge-success">Aktif</span>
+                            @elseif($m->status === 'pasif')
+                                <span class="badge badge-warning">Pasif</span>
                             @else
-                                <span class="badge badge-muted">Reddedildi</span>
+                                <span class="badge badge-muted">Ban</span>
                             @endif
                         </td>
                         <td>
                             <a href="{{ route('admin.members.edit', $m) }}" class="btn-sm btn-edit" style="text-decoration:none;">Düzenle</a>
-                            @if($m->status === 'pending')
+                            @if($m->status === 'pasif')
                                 <form action="{{ route('admin.members.approve', $m) }}" method="POST" class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn-sm btn-edit">Onayla</button>
@@ -67,7 +67,7 @@
                                     @csrf
                                     <button type="submit" class="btn-sm btn-danger">Reddet</button>
                                 </form>
-                            @elseif($m->status === 'approved')
+                            @elseif($m->status === 'aktif')
                                 <form action="{{ route('admin.members.deactivate', $m) }}" method="POST" class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn-sm btn-edit">Pasif</button>
