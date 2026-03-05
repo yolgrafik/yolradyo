@@ -16,6 +16,7 @@ class LegalTextsController extends Controller
         'gizlilik' => ['key' => 'legal_gizlilik', 'title' => 'Gizlilik Politikası', 'route' => 'gizlilik'],
         'cerez' => ['key' => 'legal_cerez', 'title' => 'Çerez Politikası', 'route' => 'cerez'],
         'kvkk' => ['key' => 'legal_kvkk', 'title' => 'KVKK Aydınlatma Metni', 'route' => 'kvkk'],
+        'dmca' => ['key' => 'legal_dmca', 'title' => 'DMCA / Telif Hakkı Bildirimi', 'route' => 'dmca'],
     ];
 
     public function __construct(

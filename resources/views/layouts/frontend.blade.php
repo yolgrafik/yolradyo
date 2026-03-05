@@ -1091,10 +1091,11 @@
                     if (!is_array($footerLinks)) $footerLinks = [];
                     if (empty($footerLinks)) {
                         $footerLinks = [
-                            ['label' => 'Gizlilik Politikasi', 'url' => '/gizlilik'],
-                            ['label' => 'Cerez Politikasi', 'url' => '/cerez'],
-                            ['label' => 'Kullanim Sartlari', 'url' => '/kullanim'],
-                            ['label' => 'KVKK Aydinlatma Metni', 'url' => '/kvkk'],
+                            ['label' => 'Gizlilik Politikası', 'url' => '/gizlilik'],
+                            ['label' => 'Çerez Politikası', 'url' => '/cerez'],
+                            ['label' => 'Kullanım Şartları', 'url' => '/kullanim'],
+                            ['label' => 'DMCA / Telif Hakkı Bildirimi', 'url' => '/dmca'],
+                            ['label' => 'KVKK Aydınlatma Metni', 'url' => '/kvkk'],
                         ];
                     }
                 }

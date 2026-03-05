@@ -842,6 +842,7 @@
                             <li><a href="{{ route('admin.legal-texts.edit', 'gizlilik') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.edit') && request()->route('slug') == 'gizlilik' ? 'is-active' : '' }}">Gizlilik Politikası</a></li>
                             <li><a href="{{ route('admin.legal-texts.edit', 'cerez') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.edit') && request()->route('slug') == 'cerez' ? 'is-active' : '' }}">Çerez Politikası</a></li>
                             <li><a href="{{ route('admin.legal-texts.edit', 'kvkk') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.edit') && request()->route('slug') == 'kvkk' ? 'is-active' : '' }}">KVKK Aydınlatma Metni</a></li>
+                            <li><a href="{{ route('admin.legal-texts.edit', 'dmca') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.edit') && request()->route('slug') == 'dmca' ? 'is-active' : '' }}">DMCA / Telif Hakkı Bildirimi</a></li>
                         </ul>
                     </div>
                     <div class="nav-section" data-section="haberler">

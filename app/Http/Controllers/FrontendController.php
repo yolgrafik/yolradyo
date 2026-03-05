@@ -127,4 +127,10 @@ class FrontendController extends Controller
         $content = $settings->get('legal_kvkk', '');
         return view('frontend.page', ['pageTitle' => 'KVKK Aydınlatma Metni', 'pageContent' => $content]);
     }
+
+    public function dmca(SettingsService $settings)
+    {
+        $content = $settings->get('legal_dmca', '');
+        return view('frontend.page', ['pageTitle' => 'DMCA / Telif Hakkı Bildirimi', 'pageContent' => $content]);
+    }
 }

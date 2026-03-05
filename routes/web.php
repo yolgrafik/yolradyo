@@ -44,6 +44,7 @@ Route::get('/gizlilik', [FrontendController::class, 'gizlilik']);
 Route::get('/cerez', [FrontendController::class, 'cerez']);
 Route::get('/kullanim', [FrontendController::class, 'kullanim']);
 Route::get('/kvkk', [FrontendController::class, 'kvkk']);
+Route::get('/dmca', [FrontendController::class, 'dmca']);
 
 Route::get('/api/radio/status', App\Http\Controllers\Api\RadioStatusController::class);
 Route::get('/api/requests/approved', App\Http\Controllers\Api\ApprovedRequestsController::class);
@@ -100,8 +101,8 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('legal-texts')->name('admin.legal-texts.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\LegalTextsController::class, 'index'])->name('index');
-            Route::get('{slug}/edit', [App\Http\Controllers\Admin\LegalTextsController::class, 'edit'])->name('edit')->where('slug', 'kullanim|gizlilik|cerez|kvkk');
-            Route::put('{slug}', [App\Http\Controllers\Admin\LegalTextsController::class, 'update'])->name('update')->where('slug', 'kullanim|gizlilik|cerez|kvkk');
+            Route::get('{slug}/edit', [App\Http\Controllers\Admin\LegalTextsController::class, 'edit'])->name('edit')->where('slug', 'kullanim|gizlilik|cerez|kvkk|dmca');
+            Route::put('{slug}', [App\Http\Controllers\Admin\LegalTextsController::class, 'update'])->name('update')->where('slug', 'kullanim|gizlilik|cerez|kvkk|dmca');
         });
 
         Route::prefix('menu')->name('admin.menu.')->group(function () {

@@ -294,10 +294,11 @@ class SettingsController extends Controller
     {
         if ($r = $this->ensureAdmin()) return $r;
         $defaultLinks = [
-            ['label' => 'Gizlilik Politikasi', 'url' => '/gizlilik'],
-            ['label' => 'Cerez Politikasi', 'url' => '/cerez'],
-            ['label' => 'Kullanim Sartlari', 'url' => '/kullanim'],
-            ['label' => 'KVKK Aydinlatma Metni', 'url' => '/kvkk'],
+            ['label' => 'Gizlilik Politikası', 'url' => '/gizlilik'],
+            ['label' => 'Çerez Politikası', 'url' => '/cerez'],
+            ['label' => 'Kullanım Şartları', 'url' => '/kullanim'],
+            ['label' => 'DMCA / Telif Hakkı Bildirimi', 'url' => '/dmca'],
+            ['label' => 'KVKK Aydınlatma Metni', 'url' => '/kvkk'],
         ];
         $linksJson = $this->settings->get('footer_legal_links_json');
         $links = is_array($linksJson) ? $linksJson : $defaultLinks;

@@ -87,10 +87,11 @@
     if (addBtn) addBtn.addEventListener('click', function() { addRow('', ''); });
 
     if (container.querySelectorAll('.link-row').length === 0) {
-        addRow('Gizlilik Politikasi', '/gizlilik');
-        addRow('Cerez Politikasi', '/cerez');
-        addRow('Kullanim Sartlari', '/kullanim');
-        addRow('KVKK Aydinlatma Metni', '/kvkk');
+        addRow('Gizlilik Politikası', '/gizlilik');
+        addRow('Çerez Politikası', '/cerez');
+        addRow('Kullanım Şartları', '/kullanim');
+        addRow('DMCA / Telif Hakkı Bildirimi', '/dmca');
+        addRow('KVKK Aydınlatma Metni', '/kvkk');
     }
 
     form.addEventListener('submit', function(e) {

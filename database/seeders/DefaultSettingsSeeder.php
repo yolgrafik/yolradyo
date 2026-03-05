@@ -22,7 +22,7 @@ class DefaultSettingsSeeder extends Seeder
                 'address_text' => ['value' => '', 'type' => 'text'],
                 'maintenance_mode' => ['value' => '0', 'type' => 'boolean'],
                 'footer_legal_text' => ['value' => 'Radyoyol Tüm Hakları Saklıdır', 'type' => 'text'],
-                'footer_legal_links_json' => ['value' => '[{"label":"Gizlilik Politikası","url":"/gizlilik"},{"label":"Çerez Politikası","url":"/cerez"},{"label":"Kullanım Şartları","url":"/kullanim"},{"label":"KVKK Aydınlatma Metni","url":"/kvkk"}]', 'type' => 'json'],
+                'footer_legal_links_json' => ['value' => '[{"label":"Gizlilik Politikası","url":"/gizlilik"},{"label":"Çerez Politikası","url":"/cerez"},{"label":"Kullanım Şartları","url":"/kullanim"},{"label":"DMCA / Telif Hakkı Bildirimi","url":"/dmca"},{"label":"KVKK Aydınlatma Metni","url":"/kvkk"}]', 'type' => 'json'],
             ];
 
             foreach ($defaults as $key => $data) {
