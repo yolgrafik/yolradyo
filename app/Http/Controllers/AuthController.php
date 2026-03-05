@@ -38,18 +38,26 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
 
+        $approvalRequired = app(\App\Services\SettingsService::class)->get('member_approval_required', true);
+        $status = $approvalRequired ? 'pending' : 'approved';
+
         $user = \App\Models\User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => $validated['password'],
+            'status' => $status,
         ]);
 
         Auth::login($user);
 
         $request->session()->regenerate();
 
+        $message = $status === 'approved'
+            ? 'Hesabınız oluşturuldu. Hoş geldiniz!'
+            : 'Hesabınız oluşturuldu. Onaylandıktan sonra tüm özelliklere erişebilirsiniz.';
+
         return redirect()->intended('/')
-            ->with('success', 'Hesabınız oluşturuldu. Hoş geldiniz!');
+            ->with('success', $message);
     }
 
     public function profile(): View

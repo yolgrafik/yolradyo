@@ -9,6 +9,8 @@ Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegist
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout')->middleware('auth');
 Route::get('/profil', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile')->middleware('auth');
+Route::get('/bize-gonder', [App\Http\Controllers\MemberSubmissionFrontendController::class, 'show'])->name('bize-gonder')->middleware('auth');
+Route::post('/bize-gonder', [App\Http\Controllers\MemberSubmissionFrontendController::class, 'store'])->name('bize-gonder.store')->middleware('auth');
 
 Route::get('/', [FrontendController::class, 'home']);
 Route::get('/canli-dinle', [FrontendController::class, 'player'])->name('player.popup');
@@ -178,6 +180,28 @@ Route::prefix('admin')->group(function () {
             Route::get('{slider}/edit', [App\Http\Controllers\Admin\SliderController::class, 'edit'])->name('edit');
             Route::put('{slider}', [App\Http\Controllers\Admin\SliderController::class, 'update'])->name('update');
             Route::delete('{slider}', [App\Http\Controllers\Admin\SliderController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('members')->name('admin.members.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\MemberController::class, 'index'])->name('index');
+            Route::post('{user}/approve', [App\Http\Controllers\Admin\MemberController::class, 'approve'])->name('approve');
+            Route::post('{user}/reject', [App\Http\Controllers\Admin\MemberController::class, 'reject'])->name('reject');
+            Route::post('{user}/deactivate', [App\Http\Controllers\Admin\MemberController::class, 'deactivate'])->name('deactivate');
+            Route::delete('{user}', [App\Http\Controllers\Admin\MemberController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('member-submissions')->name('admin.member-submissions.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\MemberSubmissionController::class, 'index'])->name('index');
+            Route::get('{submission}', [App\Http\Controllers\Admin\MemberSubmissionController::class, 'show'])->name('show');
+            Route::post('{submission}/approve', [App\Http\Controllers\Admin\MemberSubmissionController::class, 'approve'])->name('approve');
+            Route::post('{submission}/reject', [App\Http\Controllers\Admin\MemberSubmissionController::class, 'reject'])->name('reject');
+            Route::get('{submission}/download', [App\Http\Controllers\Admin\MemberSubmissionController::class, 'download'])->name('download');
+            Route::delete('{submission}', [App\Http\Controllers\Admin\MemberSubmissionController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('member-settings')->name('admin.member-settings.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\MemberSettingsController::class, 'index'])->name('index');
+            Route::post('/', [App\Http\Controllers\Admin\MemberSettingsController::class, 'store'])->name('store');
         });
     });
 });
