@@ -4,7 +4,7 @@
 
 @push('styles')
 <style>
-.page-hero { padding: 2rem 1.5rem; background: var(--ry-header-bg); border-bottom: 1px solid var(--ry-border); }
+.page-hero { padding: 2rem 1.5rem; background: var(--ry-header-bg); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); }
 .page-hero h1 { font-size: 1.75rem; font-weight: 700; color: #fff; margin: 0; }
 .forum-content { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
 .forum-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }

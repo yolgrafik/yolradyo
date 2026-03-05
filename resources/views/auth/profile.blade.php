@@ -18,7 +18,7 @@
 .profile-row:last-child { border-bottom: none; }
 .profile-label { font-weight: 600; color: var(--muted); }
 .profile-value { color: #fff; }
-.page-hero { padding: 2rem 1rem; background: var(--ry-header-bg); border-bottom: 1px solid var(--ry-border); }
+.page-hero { padding: 2rem 1rem; background: var(--ry-header-bg); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); }
 .page-hero h1 { font-size: 1.5rem; font-weight: 700; color: #fff; margin: 0; text-align: center; }
 </style>
 @endpush

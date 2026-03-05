@@ -47,7 +47,7 @@
 .auth-links a:hover { text-decoration: underline; }
 .alert-error { padding: 0.75rem 1rem; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); border-radius: 10px; color: #fca5a5; margin-bottom: 1rem; }
 .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.25rem; }
-.page-hero { padding: 2rem 1rem; background: var(--ry-header-bg); border-bottom: 1px solid var(--ry-border); }
+.page-hero { padding: 2rem 1rem; background: var(--ry-header-bg); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); }
 .page-hero h1 { font-size: 1.5rem; font-weight: 700; color: #fff; margin: 0; text-align: center; }
 </style>
 @endpush
