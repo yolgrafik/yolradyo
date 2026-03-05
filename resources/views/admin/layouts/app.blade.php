@@ -793,18 +793,17 @@
                             <li><a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Kullanıcı Yönetimi</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section {{ request()->routeIs('admin.members.*', 'admin.member-submissions.*', 'admin.member-settings.*', 'admin.forum.*') ? 'is-open' : '' }}" data-section="uye">
-                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.members.*', 'admin.member-submissions.*', 'admin.member-settings.*', 'admin.forum.*') ? 'true' : 'false' }}">
+                    <div class="nav-section {{ request()->routeIs('admin.members.*', 'admin.member-settings.*', 'admin.forum.*') ? 'is-open' : '' }}" data-section="forum-uye">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.members.*', 'admin.member-settings.*', 'admin.forum.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                            <span>Üye Yönetimi</span>
+                            <span>Forum & Üyeler</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="{{ route('admin.members.index') }}" class="nav-item {{ request()->routeIs('admin.members.*') ? 'is-active' : '' }}">Üyeler</a></li>
-                            <li><a href="{{ route('admin.member-submissions.index') }}" class="nav-item {{ request()->routeIs('admin.member-submissions.*') ? 'is-active' : '' }}">Üye Gönderileri</a></li>
-                            <li><a href="{{ route('admin.member-settings.index') }}" class="nav-item {{ request()->routeIs('admin.member-settings.*') ? 'is-active' : '' }}">Üye Ayarları</a></li>
                             <li><a href="{{ route('admin.forum.posts') }}" class="nav-item {{ request()->routeIs('admin.forum.posts') ? 'is-active' : '' }}">Forum Gönderileri</a></li>
                             <li><a href="{{ route('admin.forum.comments') }}" class="nav-item {{ request()->routeIs('admin.forum.comments') ? 'is-active' : '' }}">Forum Yorumları</a></li>
+                            <li><a href="{{ route('admin.members.index') }}" class="nav-item {{ request()->routeIs('admin.members.*') ? 'is-active' : '' }}">Üyeler</a></li>
+                            <li><a href="{{ route('admin.member-settings.index') }}" class="nav-item {{ request()->routeIs('admin.member-settings.*') ? 'is-active' : '' }}">Üye Ayarları</a></li>
                         </ul>
                     </div>
                     <div class="nav-section {{ request()->routeIs('admin.shoutcast.*') ? 'is-open' : '' }}" data-section="yayin">
