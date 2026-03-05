@@ -83,16 +83,16 @@
             flex-shrink: 0;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
             text-decoration: none;
         }
         .nav-logo img {
-            height: 96px;
+            height: 72px;
             width: auto;
             object-fit: contain;
             transition: height 0.25s ease;
         }
-        .navbar.is-scrolled .nav-logo img { height: 64px; }
+        .navbar.is-scrolled .nav-logo img { height: 56px; }
         .nav-logo-text {
             font-size: 1.5rem;
             font-weight: 700;
@@ -101,9 +101,9 @@
             line-height: 1.2;
         }
         .nav-logo-slogan {
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             font-weight: 600;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.08em;
             white-space: nowrap;
             text-transform: uppercase;
             background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.5) 50%, #fff 100%);
@@ -553,8 +553,8 @@
         @media (max-width: 992px) {
             .navbar { height: 72px; min-height: 72px; padding: 0 1rem; }
             .navbar.is-scrolled { height: 68px; min-height: 68px; }
-            .nav-logo img { height: 72px; }
-            .navbar.is-scrolled .nav-logo img { height: 60px; }
+            .nav-logo img { height: 56px; }
+            .navbar.is-scrolled .nav-logo img { height: 48px; }
             .nav-logo-slogan { display: none; }
             .nav-center {
                 position: fixed;
@@ -607,7 +607,7 @@
             .nav-toggle { display: flex; align-items: center; justify-content: center; }
         }
         @media (max-width: 768px) {
-            .nav-logo img { height: 88px; }
+            .nav-logo img { height: 64px; }
             .bottom-bar-player { padding: 0 1rem; gap: 0.5rem; }
             .player-status-group { font-size: 0.7rem; }
             .player-volume-wrap { min-width: 60px; }
