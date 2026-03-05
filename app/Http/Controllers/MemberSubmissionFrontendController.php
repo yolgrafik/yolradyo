@@ -52,20 +52,28 @@ class MemberSubmissionFrontendController extends Controller
         }
 
         $validated = $request->validate([
-            'type' => 'required|in:istek,sikayet,video,mp3',
+            'type' => 'required|in:istek,sikayet,image,video,mp3',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
-            'video_url' => 'required_if:type,video|nullable|url|max:500',
+            'video_url' => 'nullable|url|max:500',
+            'video_file' => 'nullable|file|mimes:mp4,mov,webm|max:' . (50 * 1024),
+            'image_file' => 'required_if:type,image|nullable|image|mimes:jpg,jpeg,png,webp,gif|max:10240',
             'mp3_file' => 'required_if:type,mp3|nullable|file|mimes:mp3,mpeg|max:' . ($maxMb * 1024),
         ], [
             'type.required' => 'Lütfen gönderi türünü seçin.',
             'title.required' => 'Başlık zorunludur.',
-            'video_url.required_if' => 'Video linki zorunludur.',
             'video_url.url' => 'Geçerli bir video URL girin.',
+            'image_file.required_if' => 'Fotoğraf dosyası zorunludur.',
+            'image_file.image' => 'Sadece görsel dosyası yükleyebilirsiniz.',
+            'image_file.max' => 'Görsel en fazla 10MB olabilir.',
             'mp3_file.required_if' => 'MP3 dosyası zorunludur.',
             'mp3_file.mimes' => 'Sadece MP3 dosyası yükleyebilirsiniz.',
             'mp3_file.max' => "MP3 dosyası en fazla {$maxMb}MB olabilir.",
         ]);
+
+        if ($validated['type'] === 'video' && empty($validated['video_url'] ?? '') && !$request->hasFile('video_file')) {
+            return back()->withErrors(['video_url' => 'Video linki veya video dosyası zorunludur.'])->withInput();
+        }
 
         $filePath = null;
         $fileName = null;
@@ -73,6 +81,16 @@ class MemberSubmissionFrontendController extends Controller
         if ($request->hasFile('mp3_file')) {
             $file = $request->file('mp3_file');
             $path = $file->store('uploads/mp3', 'public');
+            $filePath = $path;
+            $fileName = $file->getClientOriginalName();
+        } elseif ($request->hasFile('image_file')) {
+            $file = $request->file('image_file');
+            $path = $file->store('uploads/submissions', 'public');
+            $filePath = $path;
+            $fileName = $file->getClientOriginalName();
+        } elseif ($request->hasFile('video_file')) {
+            $file = $request->file('video_file');
+            $path = $file->store('uploads/submissions', 'public');
             $filePath = $path;
             $fileName = $file->getClientOriginalName();
         }

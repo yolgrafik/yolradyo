@@ -54,7 +54,8 @@
                     <option value="">Seçiniz</option>
                     <option value="istek" {{ old('type') === 'istek' ? 'selected' : '' }}>İstek</option>
                     <option value="sikayet" {{ old('type') === 'sikayet' ? 'selected' : '' }}>Şikayet</option>
-                    <option value="video" {{ old('type') === 'video' ? 'selected' : '' }}>Video Link</option>
+                    <option value="image" {{ old('type') === 'image' ? 'selected' : '' }}>Fotoğraf</option>
+                    <option value="video" {{ old('type') === 'video' ? 'selected' : '' }}>Video (Link veya Dosya)</option>
                     <option value="mp3" {{ old('type') === 'mp3' ? 'selected' : '' }}>MP3 Gönder</option>
                 </select>
             </div>
@@ -68,10 +69,18 @@
                 <textarea name="description" id="description" class="form-input" rows="4" maxlength="5000">{{ old('description') }}</textarea>
                 @error('description')<span class="form-error">{{ $message }}</span>@enderror
             </div>
+            <div class="form-group type-option" id="imageGroup">
+                <label for="image_file">Fotoğraf * (max 10MB)</label>
+                <input type="file" name="image_file" id="image_file" class="form-input" accept="image/*">
+                @error('image_file')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
             <div class="form-group type-option" id="videoGroup">
-                <label for="video_url">Video Link *</label>
+                <label for="video_url">Video Link (YouTube, TikTok, Instagram vb.)</label>
                 <input type="url" name="video_url" id="video_url" class="form-input" value="{{ old('video_url') }}" placeholder="https://...">
+                <p class="form-hint">veya video dosyası yükleyin:</p>
+                <input type="file" name="video_file" id="video_file" class="form-input" accept="video/mp4,video/webm,video/quicktime" style="margin-top:0.5rem;">
                 @error('video_url')<span class="form-error">{{ $message }}</span>@enderror
+                @error('video_file')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group type-option" id="mp3Group">
                 <label for="mp3_file">MP3 Dosyası * (max {{ $maxMp3Mb }}MB)</label>
@@ -87,17 +96,21 @@
 <script>
 (function() {
     var type = document.getElementById('type');
+    var imageGroup = document.getElementById('imageGroup');
     var videoGroup = document.getElementById('videoGroup');
     var mp3Group = document.getElementById('mp3Group');
+    var imageInput = document.getElementById('image_file');
     var videoInput = document.getElementById('video_url');
     var mp3Input = document.getElementById('mp3_file');
 
     function toggleFields() {
         var v = type.value;
+        imageGroup.style.display = v === 'image' ? 'block' : 'none';
         videoGroup.style.display = v === 'video' ? 'block' : 'none';
         mp3Group.style.display = v === 'mp3' ? 'block' : 'none';
-        if (v !== 'video') videoInput.removeAttribute('required');
-        else videoInput.setAttribute('required', 'required');
+        if (v !== 'image') imageInput.removeAttribute('required');
+        else imageInput.setAttribute('required', 'required');
+        if (v !== 'video') { videoInput.removeAttribute('required'); }
         if (v !== 'mp3') mp3Input.removeAttribute('required');
         else mp3Input.setAttribute('required', 'required');
     }

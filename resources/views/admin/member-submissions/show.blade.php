@@ -22,7 +22,18 @@
                 <div><dt style="color:var(--muted);font-size:0.85rem;">Video Link</dt><dd><a href="{{ $submission->video_url }}" target="_blank" rel="noopener">{{ $submission->video_url }}</a></dd></div>
             @endif
             @if($submission->file_path)
-                <div><dt style="color:var(--muted);font-size:0.85rem;">MP3 Dosyası</dt><dd><a href="{{ route('admin.member-submissions.download', $submission) }}">{{ $submission->file_name ?? 'İndir' }}</a></dd></div>
+                <div><dt style="color:var(--muted);font-size:0.85rem;">
+                    @if($submission->type === 'image') Görsel
+                    @elseif($submission->type === 'video') Video Dosyası
+                    @else MP3 Dosyası
+                    @endif
+                </dt><dd>
+                    @if(in_array($submission->type, ['image', 'video']))
+                        <a href="{{ $submission->media_url }}" target="_blank" rel="noopener">{{ $submission->file_name ?? 'Görüntüle' }}</a>
+                    @else
+                        <a href="{{ route('admin.member-submissions.download', $submission) }}">{{ $submission->file_name ?? 'İndir' }}</a>
+                    @endif
+                </dd></div>
             @endif
             <div><dt style="color:var(--muted);font-size:0.85rem;">Tarih</dt><dd>{{ $submission->created_at->format('d.m.Y H:i') }}</dd></div>
             <div><dt style="color:var(--muted);font-size:0.85rem;">Durum</dt><dd>{{ $submission->status_label }}</dd></div>
@@ -42,8 +53,15 @@
             @if($submission->type === 'mp3' && $submission->file_path)
                 <a href="{{ route('admin.member-submissions.download', $submission) }}" class="btn-sm btn-edit">MP3 İndir</a>
             @endif
-            @if($submission->video_url)
-                <a href="{{ $submission->video_url }}" target="_blank" rel="noopener" class="btn-sm btn-edit">Video Aç</a>
+            @if($submission->type === 'image' && $submission->file_path)
+                <a href="{{ $submission->media_url }}" target="_blank" rel="noopener" class="btn-sm btn-edit">Görsel Aç</a>
+            @endif
+            @if($submission->type === 'video')
+                @if($submission->video_url)
+                    <a href="{{ $submission->video_url }}" target="_blank" rel="noopener" class="btn-sm btn-edit">Video Aç</a>
+                @elseif($submission->file_path)
+                    <a href="{{ $submission->media_url }}" target="_blank" rel="noopener" class="btn-sm btn-edit">Video Aç</a>
+                @endif
             @endif
             <form action="{{ route('admin.member-submissions.destroy', $submission) }}" method="POST" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                 @csrf

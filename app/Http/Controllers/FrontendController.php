@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DjProfile;
+use App\Models\MemberSubmission;
 use App\Models\Programci;
 use App\Models\Setting;
 use App\Models\Slider;
@@ -14,8 +15,20 @@ class FrontendController extends Controller
     {
         $sliders = Slider::active()->ordered()->get();
         $programcilar = Programci::active()->ordered()->get();
+        $listenerSubmissions = MemberSubmission::with('user')
+            ->where('status', 'approved')
+            ->whereIn('type', ['image', 'video'])
+            ->where(function ($q) {
+                $q->whereNotNull('file_path')
+                    ->orWhere(function ($q2) {
+                        $q2->where('type', 'video')->whereNotNull('video_url');
+                    });
+            })
+            ->orderByDesc('created_at')
+            ->limit(20)
+            ->get();
 
-        return view('frontend.home', compact('sliders', 'programcilar'));
+        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions'));
     }
 
     public function player(SettingsService $settings, \Illuminate\Http\Request $request)

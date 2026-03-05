@@ -49,8 +49,16 @@
                         <td>{{ $s->type_label }}</td>
                         <td>{{ Str::limit($s->title, 30) }}</td>
                         <td>
-                            @if($s->type === 'video' && $s->video_url)
-                                <a href="{{ $s->video_url }}" target="_blank" rel="noopener" class="link">Video</a>
+                            @if($s->type === 'image' && $s->file_path)
+                                <a href="{{ $s->media_url }}" target="_blank" rel="noopener" class="link">Görsel</a>
+                            @elseif($s->type === 'video')
+                                @if($s->video_url)
+                                    <a href="{{ $s->video_url }}" target="_blank" rel="noopener" class="link">Video</a>
+                                @elseif($s->file_path)
+                                    <a href="{{ $s->media_url }}" target="_blank" rel="noopener" class="link">Video</a>
+                                @else
+                                    -
+                                @endif
                             @elseif($s->type === 'mp3' && $s->file_path)
                                 MP3
                             @else
@@ -72,8 +80,11 @@
                             @if($s->type === 'mp3' && $s->file_path)
                                 <a href="{{ route('admin.member-submissions.download', $s) }}" class="btn-sm btn-edit">MP3 İndir</a>
                             @endif
-                            @if($s->type === 'video' && $s->video_url)
-                                <a href="{{ $s->video_url }}" target="_blank" rel="noopener" class="btn-sm btn-edit">Video Aç</a>
+                            @if($s->type === 'image' && $s->file_path)
+                                <a href="{{ $s->media_url }}" target="_blank" rel="noopener" class="btn-sm btn-edit">Görsel</a>
+                            @endif
+                            @if($s->type === 'video' && ($s->video_url || $s->file_path))
+                                <a href="{{ $s->video_url ?: $s->media_url }}" target="_blank" rel="noopener" class="btn-sm btn-edit">Video</a>
                             @endif
                             @if($s->status === 'pending')
                                 <form action="{{ route('admin.member-submissions.approve', $s) }}" method="POST" class="d-inline">

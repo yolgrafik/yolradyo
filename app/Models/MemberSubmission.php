@@ -21,9 +21,32 @@ class MemberSubmission extends Model
     public const TYPES = [
         'istek' => 'İstek',
         'sikayet' => 'Şikayet',
-        'video' => 'Video Link',
+        'image' => 'Fotoğraf',
+        'video' => 'Video',
         'mp3' => 'MP3 Gönder',
     ];
+
+    public function getMediaUrlAttribute(): ?string
+    {
+        if ($this->file_path) {
+            return asset('storage/' . $this->file_path);
+        }
+        return null;
+    }
+
+    public function getVideoThumbnailUrlAttribute(): ?string
+    {
+        if (!$this->video_url) {
+            return null;
+        }
+        if (preg_match('#(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)([a-zA-Z0-9_-]{11})#', $this->video_url, $m)) {
+            return 'https://img.youtube.com/vi/' . $m[1] . '/mqdefault.jpg';
+        }
+        if (preg_match('#tiktok\.com.*/video/(\d+)#', $this->video_url, $m)) {
+            return null;
+        }
+        return null;
+    }
 
     public const STATUSES = [
         'pending' => 'Beklemede',

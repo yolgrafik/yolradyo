@@ -603,6 +603,146 @@
     }
     .live-listeners { margin-bottom: 0; }
     .live-meta .cc_streaminfo { color: var(--text); opacity: 0.9; }
+    .listener-widget {
+        position: relative;
+        background: color-mix(in srgb, var(--ry-bar-bg) 75%, #0b0f16);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+    .listener-widget::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
+        pointer-events: none;
+        z-index: 1;
+    }
+    .listener-widget__header {
+        background: var(--ry-bar-bg);
+        color: #ffffff;
+        font-weight: 900;
+        font-size: 13px;
+        padding: 10px 14px;
+        letter-spacing: 1px;
+        border-bottom: 1px solid var(--ry-line-color);
+    }
+    .listener-widget__body {
+        padding: 0;
+        min-height: 220px;
+    }
+    .listener-swiper-wrap {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+    }
+    .listener-swiper {
+        overflow: hidden;
+        padding: 12px;
+    }
+    .listener-swiper .swiper-wrapper { align-items: stretch; }
+    .listener-swiper .swiper-slide {
+        height: auto;
+        display: flex;
+    }
+    .listener-slide {
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.3);
+    }
+    .listener-slide__link {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
+    .listener-slide__img,
+    .listener-slide__thumb {
+        width: 100%;
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        display: block;
+    }
+    .listener-slide__thumb {
+        background-size: cover;
+        background-position: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .listener-slide__play {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(201, 42, 42, 0.9);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        padding-left: 4px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    .listener-slide__caption {
+        padding: 8px 10px;
+        background: rgba(0, 0, 0, 0.4);
+        font-size: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .listener-slide__name {
+        font-weight: 600;
+        color: #fff;
+    }
+    .listener-slide__title {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.75rem;
+    }
+    .listener-swiper .listener-swiper-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        margin: 0;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--ry-bar-bg) 90%, transparent);
+        border: 1px solid var(--border);
+        color: var(--ry-text);
+        z-index: 10;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+    .listener-swiper .listener-swiper-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: var(--ry-line-color);
+    }
+    .listener-swiper .listener-swiper-btn--prev { left: 4px; }
+    .listener-swiper .listener-swiper-btn--next { right: 4px; }
+    .listener-swiper .swiper-button-disabled { opacity: 0.35; pointer-events: none; }
+    .listener-swiper-pagination {
+        position: relative;
+        margin-top: 8px;
+    }
+    .listener-swiper-pagination .swiper-pagination-bullet {
+        background: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+    .listener-swiper-pagination .swiper-pagination-bullet-active {
+        background: var(--ry-schedule-active);
+    }
     @media (max-width: 992px) {
         .home-main {
             grid-template-columns: 1fr;
@@ -620,6 +760,9 @@
             flex-direction: row;
         }
         .btn-live, .btn-request-group { flex: 1; }
+        .listener-widget {
+            grid-column: 1 / -1;
+        }
         .live-dj-card {
             grid-column: 1 / -1;
         }
@@ -749,6 +892,7 @@
                 </a>
                 @endif
             </div>
+            @include('partials.listener-submissions-widget')
             <div class="live-dj-card" id="liveDjCard">
                 <div class="live-banner">CANLI YAYINDA</div>
                 <div class="live-content" id="liveDjCardContent">
