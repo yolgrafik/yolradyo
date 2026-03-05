@@ -35,8 +35,12 @@ class ContactController extends Controller
             return back()->with('success', 'Mesajınız gönderildi.');
         }
 
+        if (!$request->user()) {
+            return back()->with('error', 'Mesaj göndermek için lütfen giriş yapın veya üye olun.');
+        }
+
         $user = $request->user();
-        if ($user && !$user->isApproved()) {
+        if (!$user->isApproved()) {
             return back()->with('error', 'Mesaj gönderebilmek için hesabınızın onaylanması gerekiyor.');
         }
 
@@ -57,7 +61,6 @@ class ContactController extends Controller
         $messageBody = $validated['message'];
         $subjectLine = $validated['subject'] ?? null;
         $phone = $validated['phone'] ?? null;
-        $whereFound = $validated['where_found'] ?? null;
 
         $mailable = new ContactMessageMail(
             $name,
@@ -66,7 +69,7 @@ class ContactController extends Controller
             'İletişim Formu',
             $phone,
             $subjectLine,
-            $whereFound ? array_values($whereFound) : null,
+            null,
         );
 
         try {

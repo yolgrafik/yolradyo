@@ -17,8 +17,6 @@ class ContactRequest extends FormRequest
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email'],
             'phone' => ['nullable', 'string', 'max:30'],
-            'where_found' => ['nullable', 'array'],
-            'where_found.*' => ['in:google,facebook,other'],
             'subject' => ['required', 'string', 'max:200'],
             'message' => ['required', 'string', 'min:20', 'max:2000'],
             'website' => ['nullable', 'string', 'max:1'],
@@ -41,7 +39,6 @@ class ContactRequest extends FormRequest
             'message.min' => 'Mesaj en az 20 karakter olmalıdır.',
             'message.max' => 'Mesaj en fazla 2000 karakter olabilir.',
             'captcha_answer.required' => 'Güvenlik sorusunu cevaplayınız.',
-            'captcha_answer.in' => 'Güvenlik sorusu yanlış.',
         ];
     }
 }
