@@ -12,6 +12,14 @@ Route::get('/profil', [App\Http\Controllers\AuthController::class, 'profile'])->
 Route::get('/bize-gonder', [App\Http\Controllers\MemberSubmissionFrontendController::class, 'show'])->name('bize-gonder')->middleware('auth');
 Route::post('/bize-gonder', [App\Http\Controllers\MemberSubmissionFrontendController::class, 'store'])->name('bize-gonder.store')->middleware('auth');
 
+Route::middleware(['forum.guest', 'auth'])->prefix('forum')->name('forum.')->group(function () {
+    Route::get('/', [App\Http\Controllers\ForumController::class, 'index'])->name('index');
+    Route::get('/yeni', [App\Http\Controllers\ForumController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\ForumController::class, 'store'])->name('store');
+    Route::get('/{slug}', [App\Http\Controllers\ForumController::class, 'show'])->name('show')->where('slug', '[a-z0-9\-]+');
+    Route::post('/{slug}/comments', [App\Http\Controllers\ForumController::class, 'storeComment'])->name('comments.store')->where('slug', '[a-z0-9\-]+');
+});
+
 Route::get('/', [FrontendController::class, 'home']);
 Route::get('/canli-dinle', [FrontendController::class, 'player'])->name('player.popup');
 Route::get('/programlar', [FrontendController::class, 'programlar']);
@@ -202,6 +210,14 @@ Route::prefix('admin')->group(function () {
         Route::prefix('member-settings')->name('admin.member-settings.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\MemberSettingsController::class, 'index'])->name('index');
             Route::post('/', [App\Http\Controllers\Admin\MemberSettingsController::class, 'store'])->name('store');
+        });
+
+        Route::prefix('forum')->name('admin.forum.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\ForumController::class, 'posts'])->name('posts');
+            Route::post('{post}/toggle-status', [App\Http\Controllers\Admin\ForumController::class, 'toggleStatus'])->name('toggle-status');
+            Route::delete('posts/{post}', [App\Http\Controllers\Admin\ForumController::class, 'destroyPost'])->name('destroy-post');
+            Route::get('comments', [App\Http\Controllers\Admin\ForumController::class, 'comments'])->name('comments');
+            Route::delete('comments/{comment}', [App\Http\Controllers\Admin\ForumController::class, 'destroyComment'])->name('destroy-comment');
         });
 
         Route::prefix('mail-settings')->name('admin.mail-settings.')->group(function () {

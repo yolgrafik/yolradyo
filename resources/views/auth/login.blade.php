@@ -56,6 +56,9 @@
 </section>
 <div class="auth-page">
     <div class="auth-card">
+        @if(session('message'))
+            <div class="alert-info" style="padding:0.75rem 1rem;background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);border-radius:10px;color:#93c5fd;margin-bottom:1rem;">{{ session('message') }}</div>
+        @endif
         @if($errors->any())
             <div class="alert-error">{{ $errors->first() }}</div>
         @endif
