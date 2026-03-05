@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\MenuItem;
 use App\Models\Setting;
 use App\Services\SettingsService;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        RateLimiter::for('contact-messages', function ($request) {
+            return Limit::perHour(5)->by($request->user()->id);
+        });
+
         View::composer(['layouts.frontend', 'frontend.home', 'frontend.programlar', 'partials.requests-ticker'], function ($view) {
             $settings = null;
             if (Schema::hasTable('settings')) {

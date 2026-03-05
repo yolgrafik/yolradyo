@@ -3,12 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 
+Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLogin'])->name('login')->middleware('guest');
+Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegister'])->name('register')->middleware('guest');
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
+Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
 Route::get('/', [FrontendController::class, 'home']);
 Route::get('/canli-dinle', [FrontendController::class, 'player'])->name('player.popup');
 Route::get('/programlar', [FrontendController::class, 'programlar']);
 Route::get('/programcilar', [FrontendController::class, 'programcilarIndex'])->name('public.programcilar.index');
 Route::get('/programcilar/{slug}', [FrontendController::class, 'programciShow'])->name('public.programcilar.show')->where('slug', '[a-z0-9\-]+');
-Route::post('/programcilar/{slug}/contact', [App\Http\Controllers\ProgramciContactController::class, 'store'])->name('public.programcilar.contact')->where('slug', '[a-z0-9\-]+');
+Route::post('/programcilar/{slug}/contact', [App\Http\Controllers\ProgramciContactController::class, 'store'])->name('public.programcilar.contact')->middleware(['auth', 'throttle:contact-messages'])->where('slug', '[a-z0-9\-]+');
 Route::get('/haberler', [FrontendController::class, 'haberler']);
 Route::get('/videolar', [FrontendController::class, 'videolar']);
 Route::get('/galeri', [FrontendController::class, 'galeri']);
@@ -16,7 +22,7 @@ Route::get('/reklam', [FrontendController::class, 'reklam']);
 Route::get('/hakkimizda', fn () => redirect('/hakkimizda/biz-kimiz'));
 Route::get('/hakkimizda/{slug}', [FrontendController::class, 'hakkimizda'])->where('slug', 'biz-kimiz|misyon|politika');
 Route::get('/iletisim', [App\Http\Controllers\ContactController::class, 'show'])->name('public.contact');
-Route::post('/iletisim', [App\Http\Controllers\ContactController::class, 'store'])->name('public.contact.store');
+Route::post('/iletisim', [App\Http\Controllers\ContactController::class, 'store'])->name('public.contact.store')->middleware(['auth', 'throttle:contact-messages']);
 Route::get('/gizlilik', [FrontendController::class, 'gizlilik']);
 Route::get('/cerez', [FrontendController::class, 'cerez']);
 Route::get('/kullanim', [FrontendController::class, 'kullanim']);

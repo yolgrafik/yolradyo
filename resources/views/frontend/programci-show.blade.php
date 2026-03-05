@@ -48,6 +48,13 @@
 .alert-success { padding: 0.75rem 1rem; background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); border-radius: 10px; color: #86efac; margin-bottom: 1rem; }
 .alert-error { padding: 0.75rem 1rem; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); border-radius: 10px; color: #fca5a5; margin-bottom: 1rem; }
 .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.25rem; }
+.form-input[readonly] { opacity: 0.85; cursor: default; }
+.auth-required { padding: 1.5rem; text-align: center; color: var(--muted); margin-bottom: 1rem; }
+.auth-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+.auth-buttons a { padding: 0.6rem 1.25rem; font-size: 0.9rem; font-weight: 600; border-radius: 10px; text-decoration: none; transition: opacity 0.2s; }
+.auth-buttons a:hover { opacity: 0.9; }
+.btn-login { background: var(--ry-btn-bg); color: #fff; }
+.btn-register { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
 </style>
 @endpush
 
@@ -120,32 +127,37 @@
         @if(session('error'))
             <div class="alert-error">{{ session('error') }}</div>
         @endif
-        <form method="POST" action="{{ route('public.programcilar.contact', $programci->slug) }}" id="programciContactForm">
-            @csrf
-            <div class="form-group form-hp" aria-hidden="true">
-                <label for="website">Website</label>
-                <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+
+        @guest
+            <p class="auth-required">Mesaj göndermek için üye girişi yapmalısınız.</p>
+            <div class="auth-buttons">
+                <a href="{{ route('login') }}" class="btn-login">Giriş Yap</a>
+                <a href="{{ route('register') }}" class="btn-register">Üye Ol</a>
             </div>
-            <div class="form-group">
-                <label for="contact_name">Ad Soyad *</label>
-                <input type="text" name="name" id="contact_name" class="form-input" value="{{ old('name') }}"
-                    placeholder="Örn: Ali Çelik" maxlength="60">
-                @error('name')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-            <div class="form-group">
-                <label for="contact_email">E-posta *</label>
-                <input type="email" name="email" id="contact_email" class="form-input" value="{{ old('email') }}"
-                    maxlength="120">
-                @error('email')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-            <div class="form-group">
-                <label for="contact_message">Mesajınız *</label>
-                <textarea name="message" id="contact_message" class="form-input" rows="5" maxlength="2000"
-                    placeholder="Mesajınızı buraya yazın (en az 20 karakter)">{{ old('message') }}</textarea>
-                @error('message')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-            <button type="submit" class="btn-submit" id="programciSubmitBtn">Gönder</button>
-        </form>
+        @else
+            <form method="POST" action="{{ route('public.programcilar.contact', $programci->slug) }}" id="programciContactForm">
+                @csrf
+                <div class="form-group form-hp" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="contact_name">Ad Soyad</label>
+                    <input type="text" name="name" id="contact_name" class="form-input" value="{{ auth()->user()->name }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="contact_email">E-posta</label>
+                    <input type="email" name="email" id="contact_email" class="form-input" value="{{ auth()->user()->email }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="contact_message">Mesajınız *</label>
+                    <textarea name="message" id="contact_message" class="form-input" rows="5" maxlength="2000"
+                        placeholder="Mesajınızı buraya yazın (en az 20 karakter)">{{ old('message') }}</textarea>
+                    @error('message')<span class="form-error">{{ $message }}</span>@enderror
+                </div>
+                <button type="submit" class="btn-submit" id="programciSubmitBtn">Gönder</button>
+            </form>
+        @endguest
     </div>
     @endif
 </div>

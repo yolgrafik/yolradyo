@@ -851,6 +851,16 @@
                     @endif
                 </ul>
                 <div class="nav-right">
+                @auth
+                    <span class="nav-user-name" style="font-size:0.85rem;color:rgba(255,255,255,0.9);margin-right:0.25rem;">{{ auth()->user()->name }}</span>
+                    <form method="POST" action="{{ route('logout') }}" class="nav-logout-form" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="nav-logout-btn" style="background:none;border:none;color:var(--ry-schedule-active);font-size:0.8rem;font-weight:600;cursor:pointer;padding:0.35rem 0.5rem;">Çıkış</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="nav-auth-btn" style="font-size:0.8rem;font-weight:600;color:#fff;text-decoration:none;padding:0.4rem 0.75rem;border-radius:8px;background:rgba(255,255,255,0.1);">Giriş Yap</a>
+                    <a href="{{ route('register') }}" class="nav-auth-btn" style="font-size:0.8rem;font-weight:600;color:#fff;text-decoration:none;padding:0.4rem 0.75rem;border-radius:8px;background:var(--ry-btn-bg);">Üye Ol</a>
+                @endauth
                 <div class="header-social nav-social">
                     @php $social = $socialLinks ?? []; @endphp
                     @if(isset($social['whatsapp']) && ($social['whatsapp']['is_active'] ?? false) && !empty($social['whatsapp']['url'] ?? ''))

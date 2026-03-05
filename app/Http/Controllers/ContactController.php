@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Helpers\MailHelper;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMessageMail;
+use App\Models\Message;
 use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\View\View;
 
 class ContactController extends Controller
@@ -25,14 +25,14 @@ class ContactController extends Controller
 
     public function store(ContactRequest $request, SettingsService $settings): RedirectResponse
     {
-        $key = 'contact-form:' . $request->ip();
-        if (RateLimiter::tooManyAttempts($key, 5)) {
-            return back()->with('error', 'Çok fazla deneme. Lütfen daha sonra tekrar deneyin.');
-        }
-
         if (!empty($request->validated('website'))) {
             return back()->with('success', 'Mesajınız gönderildi.');
         }
+
+        $user = $request->user();
+        $name = $user->name;
+        $email = $user->email;
+        $messageBody = $request->validated('message');
 
         $recipient = config('mail.contact_to') ?: $settings->get('contact_email');
         if (!$recipient || !filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
@@ -43,27 +43,38 @@ class ContactController extends Controller
             Log::warning('İletişim formu: Mail log/array modunda, gerçek gönderim yapılamıyor.', [
                 'recipient' => $recipient,
             ]);
-            return back()->with('error', MailHelper::getConfigErrorMessage());
+            $status = 'failed';
+        } else {
+            $mailable = new ContactMessageMail(
+                $name,
+                $email,
+                $messageBody,
+                'İletişim Formu'
+            );
+
+            try {
+                Mail::to($recipient)->send($mailable);
+                $status = 'sent';
+            } catch (\Throwable $e) {
+                Log::error('İletişim formu mail hatası', [
+                    'recipient' => $recipient,
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+                $status = 'failed';
+            }
         }
 
-        $validated = $request->validated();
-        $mailable = new ContactMessageMail(
-            $validated['name'],
-            $validated['email'],
-            $validated['message'],
-            'İletişim Formu'
-        );
+        Message::create([
+            'user_id' => $user->id,
+            'programci_id' => null,
+            'subject' => 'İletişim Formu',
+            'message' => $messageBody,
+            'status' => $status,
+        ]);
 
-        try {
-            Mail::to($recipient)->send($mailable);
-            RateLimiter::hit($key);
-        } catch (\Throwable $e) {
-            Log::error('İletişim formu mail hatası', [
-                'recipient' => $recipient,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return back()->with('error', 'Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.');
+        if ($status === 'failed') {
+            return back()->with('error', MailHelper::isRealMailConfigured() ? 'Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.' : MailHelper::getConfigErrorMessage());
         }
 
         return back()->with('success', 'Mesajınız başarıyla gönderildi.');
