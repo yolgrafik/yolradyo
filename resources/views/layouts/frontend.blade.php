@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>@yield('title', $metaTitle) - Radyo</title>
     @include('partials.seo-meta')
+    @stack('meta')
     @include('frontend.partials.theme-vars')
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
