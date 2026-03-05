@@ -13,6 +13,7 @@
 
         <form method="POST" action="{{ route('admin.legal-texts.update', $slug) }}">
             @csrf
+            @method('PUT')
             <div class="form-group">
                 <label for="content">İçerik</label>
                 <textarea name="content" id="content" rows="20" class="form-input form-textarea">{{ old('content', $content) }}</textarea>
