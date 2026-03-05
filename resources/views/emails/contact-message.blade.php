@@ -9,6 +9,7 @@
         .content { background: #f8f9fa; padding: 20px; border: 1px solid #dee2e6; border-top: none; border-radius: 0 0 8px 8px; }
         .message-box { background: #fff; padding: 15px; border-radius: 8px; border-left: 4px solid #c92a2a; margin-top: 15px; }
         .meta { font-size: 0.9rem; color: #6c757d; margin-top: 15px; }
+        .info-row { margin-bottom: 8px; }
     </style>
 </head>
 <body>
@@ -18,6 +19,15 @@
         </div>
         <div class="content">
             <p><strong>Gönderen:</strong> {{ $senderName }} &lt;{{ $senderEmail }}&gt;</p>
+            @if($senderPhone ?? null)
+            <p class="info-row"><strong>Telefon:</strong> {{ $senderPhone }}</p>
+            @endif
+            @if($subjectLine ?? null)
+            <p class="info-row"><strong>Konu:</strong> {{ $subjectLine }}</p>
+            @endif
+            @if(!empty($whereFound))
+            <p class="info-row"><strong>Bizi nereden buldu:</strong> {{ implode(', ', array_map(fn($k) => ucfirst($k), $whereFound)) }}</p>
+            @endif
             <div class="message-box">
                 {{ $messageBody }}
             </div>

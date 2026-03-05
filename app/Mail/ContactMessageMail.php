@@ -16,13 +16,16 @@ class ContactMessageMail extends Mailable
         public string $senderName,
         public string $senderEmail,
         public string $messageBody,
-        public string $subjectPrefix = 'İletişim Formu'
+        public string $subjectPrefix = 'İletişim Formu',
+        public ?string $senderPhone = null,
+        public ?string $subjectLine = null,
+        public ?array $whereFound = null,
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subjectPrefix . ': ' . $this->senderName,
+            subject: $this->subjectPrefix . ': ' . ($this->subjectLine ?: $this->senderName),
             replyTo: [$this->senderEmail],
         );
     }
