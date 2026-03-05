@@ -13,6 +13,7 @@
     @endphp
     <link rel="icon" href="{{ $faviconPath }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>@yield('title', $metaTitle) - Radyo</title>
     @include('partials.seo-meta')
     @stack('meta')
@@ -1329,6 +1330,7 @@
     });
     </script>
     @include('partials.song-request-modal')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
     <script src="https://r1.comcities.com/system/streaminfo.js"></script>
 </body>
