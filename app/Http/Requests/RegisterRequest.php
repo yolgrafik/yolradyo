@@ -22,6 +22,8 @@ class RegisterRequest extends FormRequest
             ],
             'email' => ['required', 'email:rfc', 'max:120', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'terms_accepted' => ['required', 'accepted'],
+            'privacy_accepted' => ['required', 'accepted'],
         ];
     }
 
@@ -37,6 +39,10 @@ class RegisterRequest extends FormRequest
             'password.required' => 'Lütfen şifre giriniz.',
             'password.min' => 'Şifre en az 8 karakter olmalıdır.',
             'password.confirmed' => 'Şifre tekrarı eşleşmiyor.',
+            'terms_accepted.required' => 'Kullanım şartlarını kabul etmelisiniz.',
+            'terms_accepted.accepted' => 'Kullanım şartlarını kabul etmelisiniz.',
+            'privacy_accepted.required' => 'Gizlilik politikası ve KVKK metnini kabul etmelisiniz.',
+            'privacy_accepted.accepted' => 'Gizlilik politikası ve KVKK metnini kabul etmelisiniz.',
         ];
     }
 }

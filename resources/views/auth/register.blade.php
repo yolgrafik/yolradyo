@@ -26,6 +26,11 @@
     font-size: 0.95rem;
 }
 .form-input:focus { outline: none; border-color: var(--ry-schedule-active); }
+.form-check { display: flex; align-items: flex-start; gap: 0.5rem; }
+.form-check input { margin-top: 0.25rem; flex-shrink: 0; accent-color: var(--ry-btn-bg); }
+.form-check label { margin: 0; font-weight: 500; font-size: 0.9rem; line-height: 1.4; }
+.form-check a { color: var(--ry-schedule-active); text-decoration: underline; }
+.form-check a:hover { color: var(--ry-schedule-active); opacity: 0.9; }
 .btn-submit {
     width: 100%;
     padding: 0.75rem 1.5rem;
@@ -85,6 +90,18 @@
             <div class="form-group">
                 <label for="password_confirmation">Şifre Tekrar *</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" class="form-input" required>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" name="terms_accepted" id="terms_accepted" value="1" {{ old('terms_accepted') ? 'checked' : '' }} required>
+                <label for="terms_accepted">
+                    <a href="{{ url('/kullanim') }}" target="_blank" rel="noopener">Kullanım şartlarını</a> kabul ediyorum *
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" name="privacy_accepted" id="privacy_accepted" value="1" {{ old('privacy_accepted') ? 'checked' : '' }} required>
+                <label for="privacy_accepted">
+                    <a href="{{ url('/gizlilik') }}" target="_blank" rel="noopener">Gizlilik politikasını</a> ve <a href="{{ url('/kvkk') }}" target="_blank" rel="noopener">KVKK aydınlatma metnini</a> okudum, kabul ediyorum *
+                </label>
             </div>
             <button type="submit" class="btn-submit">Üye Ol</button>
         </form>
