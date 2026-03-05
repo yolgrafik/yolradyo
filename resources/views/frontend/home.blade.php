@@ -846,6 +846,7 @@
                 </div>
             </div>
             @include('partials.requests-ticker')
+            @include('partials.programcilar-cards')
         </div>
         <div class="home-right">
             <div class="home-actions">
@@ -903,9 +904,10 @@
                     <div class="live-listeners">👥 <span class="cc_streaminfo" data-type="listeners" data-username="radyoyol"></span> dinleyici</div>
                 </div>
             </div>
+            @include('partials.listener-submissions-widget')
         </div>
     </div>
-    @include('partials.programcilar-sidebar-section')
+</div>
 </div>
 
 @push('scripts')

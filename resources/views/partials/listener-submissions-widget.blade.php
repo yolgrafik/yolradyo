@@ -1,14 +1,13 @@
 @php
     $listenerSubmissions = $listenerSubmissions ?? collect();
-    $sidebarMode = $sidebarMode ?? false;
 @endphp
 @if($listenerSubmissions->isNotEmpty())
-<div class="listener-widget {{ $sidebarMode ? 'sidebar-widget' : '' }}">
-    <div class="listener-widget__header {{ $sidebarMode ? 'sidebar-widget-header' : '' }}">
+<div class="listener-widget">
+    <div class="listener-widget__header">
         <span class="listener-widget__title">Dinleyicilerden Gelenler</span>
     </div>
-    <div class="listener-widget__body {{ $sidebarMode ? 'sidebar-widget-body' : '' }}">
-        <div class="listener-swiper-wrap {{ $sidebarMode ? 'h-100 min-h-0' : '' }}">
+    <div class="listener-widget__body">
+        <div class="listener-swiper-wrap">
             <div class="swiper listener-swiper" id="listenerSwiper">
                 <div class="swiper-wrapper">
                     @foreach($listenerSubmissions as $item)
