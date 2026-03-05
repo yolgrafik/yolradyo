@@ -5,18 +5,14 @@
 <section class="programcilar-section">
     <div class="programcilar-section__header">
         <h2 class="programcilar-section__title">Programcılar</h2>
-        @if($programcilar->count() > 4)
-        <div class="programcilar-nav">
-            <button type="button" class="programcilar-nav__btn programcilar-nav__btn--prev" aria-label="Önceki" title="Önceki">
-                <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-            </button>
-            <button type="button" class="programcilar-nav__btn programcilar-nav__btn--next" aria-label="Sonraki" title="Sonraki">
-                <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-            </button>
-        </div>
-        @endif
     </div>
-    <div class="programcilar-carousel">
+    <div class="programcilar-carousel-wrap">
+        @if($programcilar->count() > 4)
+        <button type="button" class="programcilar-nav__btn programcilar-nav__btn--prev" aria-label="Önceki" title="Önceki">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        @endif
+        <div class="programcilar-carousel">
         <div class="programcilar-track" id="programcilarTrack">
         @foreach($programcilar as $p)
         <div class="programci-card">
@@ -63,18 +59,24 @@
         </div>
         @endforeach
         </div>
+        </div>
+        @if($programcilar->count() > 4)
+        <button type="button" class="programcilar-nav__btn programcilar-nav__btn--next" aria-label="Sonraki" title="Sonraki">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+        @endif
     </div>
 </section>
 
 @push('styles')
 <style>
 .programcilar-section { margin-top: 1.5rem; padding: 0; }
-.programcilar-section__header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem 1rem; border-radius: var(--ry-radius); background: color-mix(in srgb, var(--ry-bar-bg) 85%, transparent); border: 1px solid var(--ry-border); margin-bottom: 1rem; }
+.programcilar-section__header { padding: 0.75rem 1rem; border-radius: var(--ry-radius); background: color-mix(in srgb, var(--ry-bar-bg) 85%, transparent); border: 1px solid var(--ry-border); margin-bottom: 1rem; }
 .programcilar-section__title { font-size: 1.1rem; font-weight: 700; color: var(--ry-text); margin: 0; font-family: inherit; }
-.programcilar-nav { display: flex; gap: 0.5rem; }
-.programcilar-nav__btn { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--ry-border); background: rgba(255,255,255,0.08); color: var(--ry-text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.programcilar-carousel-wrap { display: flex; align-items: center; gap: 0.75rem; }
+.programcilar-nav__btn { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--ry-border); background: color-mix(in srgb, var(--ry-bar-bg) 85%, transparent); color: var(--ry-text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .programcilar-nav__btn:hover { background: rgba(255,255,255,0.15); border-color: var(--ry-line-color); }
-.programcilar-carousel { overflow: hidden; }
+.programcilar-carousel { flex: 1; min-width: 0; overflow: hidden; }
 .programcilar-track { display: flex; gap: 1rem; transition: transform 0.3s ease; }
 .programci-card { flex: 0 0 calc(25% - 0.75rem); min-width: 0; display: flex; flex-direction: column; background: color-mix(in srgb, var(--ry-bar-bg) 75%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--ry-border); border-radius: var(--ry-radius); overflow: hidden; color: inherit; transition: all 0.2s; }
 .programci-card:hover { transform: translateY(-3px); border-color: var(--ry-schedule-active); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
@@ -121,7 +123,7 @@
         var perView = getCardsPerView();
         var cw = carousel.offsetWidth;
         var cardWidth = (cw - gap * (perView - 1)) / perView;
-        return (cardWidth + gap) * perView;
+        return cardWidth + gap;
     }
     function getMaxScroll() {
         if (!cards[0]) return 0;
