@@ -156,85 +156,93 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 0.5rem 1rem 0.5rem 0.5rem;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 0.6rem 1.25rem 0.6rem 0.65rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 0 20px rgba(201, 42, 42, 0.08);
             position: relative;
             z-index: 1;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: Arial, sans-serif;
         }
         .user-box:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), 0 0 24px rgba(201, 42, 42, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
-            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 32px rgba(201, 42, 42, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            transform: translateY(-2px);
         }
         .user-avatar {
-            width: 36px;
-            height: 36px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), rgba(180, 30, 30, 0.95));
+            background: linear-gradient(135deg, rgba(201, 42, 42, 0.95), rgba(180, 30, 30, 1));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 700;
             color: #fff;
             letter-spacing: 0;
             flex-shrink: 0;
-            box-shadow: 0 0 12px rgba(201, 42, 42, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 16px rgba(201, 42, 42, 0.5), 0 3px 12px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(255, 255, 255, 0.15);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
         .user-avatar-img {
             object-fit: cover;
             background: linear-gradient(135deg, rgba(201, 42, 42, 0.5), rgba(180, 30, 30, 0.6));
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
         .user-box:hover .user-avatar {
-            box-shadow: 0 0 18px rgba(201, 42, 42, 0.5), 0 2px 12px rgba(0, 0, 0, 0.25);
-            transform: scale(1.05);
+            box-shadow: 0 0 24px rgba(201, 42, 42, 0.6), 0 4px 16px rgba(0, 0, 0, 0.3);
+            transform: scale(1.06);
         }
         .user-info {
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            gap: 0.2rem;
+            align-items: flex-start;
+            gap: 0.25rem;
             min-width: 0;
         }
         .user-badge {
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.08em;
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             line-height: 1.2;
+            background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), var(--accent));
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(201, 42, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
         .user-role {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.95);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
             line-height: 1.2;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         .btn-logout {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, rgba(201, 42, 42, 0.9), var(--accent));
+            padding: 0.55rem 1.15rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #dc2626, var(--accent));
             color: #fff;
-            border: none;
-            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
             text-decoration: none;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 8px rgba(201, 42, 42, 0.3);
+            box-shadow: 0 3px 12px rgba(201, 42, 42, 0.4);
         }
         .btn-logout:hover {
-            background: linear-gradient(135deg, #e63939, #d62828);
-            box-shadow: 0 4px 16px rgba(201, 42, 42, 0.45);
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 5px 20px rgba(201, 42, 42, 0.5);
+            transform: translateY(-2px);
         }
         .main-row {
             display: flex;
@@ -551,17 +559,17 @@
                 letter-spacing: 0.18em;
             }
             .user-box {
-                padding: 0.4rem 0.75rem 0.4rem 0.4rem;
+                padding: 0.5rem 1rem 0.5rem 0.5rem;
                 gap: 0.75rem;
             }
             .user-avatar {
-                width: 32px;
-                height: 32px;
-                font-size: 0.8rem;
+                width: 38px;
+                height: 38px;
+                font-size: 0.9rem;
             }
-            .user-badge { font-size: 0.6rem; }
-            .user-role { font-size: 0.75rem; }
-            .btn-logout { padding: 0.45rem 0.85rem; font-size: 0.75rem; }
+            .user-badge { font-size: 0.6rem; padding: 0.15rem 0.5rem; }
+            .user-role { font-size: 0.85rem; }
+            .btn-logout { padding: 0.5rem 1rem; font-size: 0.8rem; }
             .nav-section + .nav-section {
                 margin-top: 0.25rem;
                 padding-top: 0.25rem;
@@ -748,17 +756,17 @@
                     @if($admin)
                     <img src="{{ $admin->avatarUrl() }}" alt="" class="user-avatar user-avatar-img" aria-hidden="true">
                     <div class="user-info">
-                        <span class="user-badge">Yetkili</span>
+                        <span class="user-badge">YETKİLİ</span>
                         <span class="user-role">{{ $admin->name }}</span>
                     </div>
                     @else
                     <div class="user-avatar" aria-hidden="true">Y</div>
                     <div class="user-info">
-                        <span class="user-badge">Yetkili</span>
+                        <span class="user-badge">YETKİLİ</span>
                         <span class="user-role">Yonetici</span>
                     </div>
                     @endif
-                    <a href="{{ route('admin.logout') }}" class="btn-logout">Cikis</a>
+                    <a href="{{ route('admin.logout') }}" class="btn-logout">Çıkış</a>
                 </div>
                 </div>
             </div>
