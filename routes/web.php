@@ -180,6 +180,11 @@ Route::prefix('admin')->group(function () {
             Route::post('{schedule}/toggle', [App\Http\Controllers\Admin\ScheduleController::class, 'toggle'])->name('toggle');
         });
 
+        Route::prefix('sponsors')->name('admin.sponsors.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\SponsorController::class, 'index'])->name('index');
+            Route::get('create', [App\Http\Controllers\Admin\SponsorController::class, 'create'])->name('create');
+        });
+
         Route::prefix('sliders')->name('admin.sliders.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SliderController::class, 'index'])->name('index');
             Route::get('create', [App\Http\Controllers\Admin\SliderController::class, 'create'])->name('create');

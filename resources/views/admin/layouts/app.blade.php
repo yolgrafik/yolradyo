@@ -888,17 +888,15 @@
                             <li><a href="{{ route('admin.djs.index') }}" class="nav-item {{ request()->routeIs('admin.djs.*') ? 'is-active' : '' }}">DJ Profilleri</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section" data-section="reklam">
-                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                    <div class="nav-section {{ request()->routeIs('admin.sponsors.*') ? 'is-open' : '' }}" data-section="reklam">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.sponsors.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="7" y1="10" x2="7.01" y2="10"/><line x1="11" y1="10" x2="13" y2="10"/></svg>
                             <span>Sponsorlar</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="#" class="nav-item">Banner Alanlari</a></li>
-                            <li><a href="#" class="nav-item">Popup Reklam</a></li>
-                            <li><a href="#" class="nav-item">Sponsor Yonetimi</a></li>
-                            <li><a href="#" class="nav-item">Kampanya Takibi</a></li>
+                            <li><a href="{{ route('admin.sponsors.index') }}" class="nav-item {{ request()->routeIs('admin.sponsors.*') ? 'is-active' : '' }}">Sponsor Listesi</a></li>
+                            <li><a href="{{ route('admin.sponsors.create') }}" class="nav-item {{ request()->routeIs('admin.sponsors.create') ? 'is-active' : '' }}">Sponsor Ekle</a></li>
                         </ul>
                     </div>
                     <div class="nav-section {{ request()->routeIs('admin.song-requests.*', 'admin.messages.*', 'admin.moderation.*', 'admin.blacklist.*') ? 'is-open' : '' }}" data-section="mesaj">

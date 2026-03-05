@@ -116,10 +116,8 @@
         </div>
         <div class="module-card__body">
             <ul class="module-card__list">
-                <li class="module-card__item">Banner Alanlari</li>
-                <li class="module-card__item">Popup Reklam</li>
-                <li class="module-card__item">Sponsor Yonetimi</li>
-                <li class="module-card__item">Kampanya Takibi</li>
+                <li class="module-card__item">Sponsor Listesi</li>
+                <li class="module-card__item">Sponsor Ekle</li>
             </ul>
         </div>
     </a>
