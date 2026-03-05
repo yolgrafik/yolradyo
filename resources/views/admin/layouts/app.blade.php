@@ -896,7 +896,7 @@
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="{{ route('admin.settings.general') }}" class="nav-item {{ request()->routeIs('admin.settings.general') ? 'is-active' : '' }}">Genel Site Ayarlari</a></li>
+                            <li><a href="{{ route('admin.settings.general') }}" class="nav-item {{ request()->routeIs('admin.settings.general') ? 'is-active' : '' }}">Genel Site Ayarları</a></li>
                             <li><a href="{{ route('admin.settings.branding') }}" class="nav-item {{ request()->routeIs('admin.settings.branding') ? 'is-active' : '' }}">Logo & Favicon</a></li>
                             <li><a href="{{ route('admin.settings.seo') }}" class="nav-item {{ request()->routeIs('admin.settings.seo') ? 'is-active' : '' }}">SEO Ayarlari</a></li>
                             <li><a href="{{ route('admin.settings.social') }}" class="nav-item {{ request()->routeIs('admin.settings.social') ? 'is-active' : '' }}">Sosyal Medya Linkleri</a></li>
