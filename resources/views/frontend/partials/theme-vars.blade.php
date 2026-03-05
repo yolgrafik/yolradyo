@@ -97,13 +97,18 @@ body { background: var(--ry-bg); }
     min-height: 0;
     padding: 0;
 }
+.sidebar-widget .listener-swiper-wrap {
+    height: 100%;
+    min-height: 0;
+}
 .sidebar-widget img,
 .sidebar-widget video {
     max-width: 100%;
     height: auto;
 }
 @media (max-width: 991.98px) {
-    .sidebar-widget {
+    .sidebar-widget,
+    .live-dj-card {
         width: 100%;
         min-width: 0;
         max-width: 100%;
