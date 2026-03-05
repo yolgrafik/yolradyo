@@ -36,6 +36,22 @@
                         <button type="button" class="quick-add-btn" data-preset="Akşam Kuşağı" data-start="18:00" data-end="22:00">Akşam Kuşağı</button>
                     </div>
                 </div>
+                <div class="copy-day-section">
+                    <div class="quick-add-label">Gün Kopyala</div>
+                    <form id="copyForm" method="POST" class="copy-form" onsubmit="return submitCopyForm(this)">
+                        @csrf
+                        <input type="hidden" name="to_day" value="{{ $currentDay }}">
+                        <select name="from_day" class="copy-select" required>
+                            <option value="">— Gün seçin —</option>
+                            @foreach($dayLabels as $d => $label)
+                                @if($d != $currentDay)
+                                    <option value="{{ $d }}">{{ $label }} → {{ $dayLabels[$currentDay] }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <button type="submit" class="quick-add-btn copy-submit">Bu güne kopyala</button>
+                    </form>
+                </div>
             </div>
             <div class="schedule-main">
                 <div class="schedule-day-header">
@@ -153,7 +169,11 @@
 .quick-add-btns{display:flex;flex-direction:column;gap:6px;}
 .quick-add-btn{padding:8px 12px;font-size:12px;font-weight:600;border-radius:8px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid var(--border);cursor:pointer;text-align:left;transition:all 0.2s;}
 .quick-add-btn:hover{background:rgba(220,38,38,0.2);border-color:var(--accent);}
-@media(max-width:768px){.schedule-layout{flex-direction:column;}.schedule-sidebar{flex:1 1 auto;display:flex;gap:1rem;flex-wrap:wrap;}.day-tabs-wrapper,.quick-add-section{flex:1;min-width:180px;}.day-tabs{flex-direction:row;flex-wrap:wrap;}.quick-add-btns{flex-direction:row;flex-wrap:wrap;}}
+.copy-day-section{background:linear-gradient(180deg,#111722,#0b0f18);padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);margin-top:12px;}
+.copy-form{display:flex;flex-direction:column;gap:8px;}
+.copy-select{width:100%;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;}
+.copy-submit{width:100%;text-align:center;}
+@media(max-width:768px){.schedule-layout{flex-direction:column;}.schedule-sidebar{flex:1 1 auto;display:flex;gap:1rem;flex-wrap:wrap;}.day-tabs-wrapper,.quick-add-section,.copy-day-section{flex:1;min-width:180px;}.day-tabs{flex-direction:row;flex-wrap:wrap;}.quick-add-btns{flex-direction:row;flex-wrap:wrap;}}
 .schedule-day-header{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;background:linear-gradient(180deg,#131a26,#0c1018);color:#ffffff;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);font-weight:600;margin-bottom:1rem;}
 .schedule-day-header small,.schedule-day-header span{color:#cbd5e1;}
 .schedule-container,.schedule-wrapper{background:transparent !important;}
@@ -216,6 +236,14 @@
             });
         });
     });
+
+    function submitCopyForm(f){
+        var fromDay=f.querySelector('select[name="from_day"]').value;
+        if(!fromDay){return false;}
+        if(!confirm('Seçilen günün tüm programları bu güne kopyalanacak. Devam?')){return false;}
+        f.action='{{ url("admin/schedule/copy") }}/'+fromDay;
+        return true;
+    }
 
     editBtns.forEach(function(btn){
         btn.addEventListener('click',function(){
