@@ -148,16 +148,23 @@
             <input type="hidden" name="_method" id="formMethod" value="POST">
             <input type="hidden" name="day_of_week" value="{{ $currentDay }}">
             <div class="form-group">
+                <label for="preset_select">Program Adı *</label>
+                <select id="preset_select" class="form-input">
+                    <option value="">— Hızlı Ekle'den seçin —</option>
+                    @foreach($presets as $p)
+                        <option value="{{ $p->title }}" data-start="{{ $p->start_formatted }}" data-end="{{ $p->end_formatted }}">{{ $p->title }}</option>
+                    @endforeach
+                    <option value="__custom__">— Özel girin —</option>
+                </select>
+                <input type="text" name="title" id="title" required maxlength="255" class="form-input mt-1" placeholder="Özel program adı" style="display:none;">
+            </div>
+            <div class="form-group">
                 <label for="start_time">Başlangıç *</label>
                 <input type="time" name="start_time" id="start_time" required class="form-input">
             </div>
             <div class="form-group">
                 <label for="end_time">Bitiş</label>
                 <input type="time" name="end_time" id="end_time" class="form-input">
-            </div>
-            <div class="form-group">
-                <label for="title">Program Adı *</label>
-                <input type="text" name="title" id="title" required maxlength="255" class="form-input" placeholder="Örn: Sabah Kuşağı">
             </div>
             <div class="form-group">
                 <label for="dj_id">DJ Seç</label>
@@ -230,6 +237,7 @@
 .modal-header h3{margin:0;font-size:1.1rem;}
 .modal-close{background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer;padding:0;}
 .form-group{margin-bottom:1rem;}
+.mt-1{margin-top:0.25rem;}
 .form-group label{display:block;margin-bottom:0.35rem;font-size:0.85rem;color:var(--muted);}
 .form-input{width:100%;padding:0.6rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.9rem;}
 .checkbox-label{display:flex;align-items:center;gap:0.5rem;cursor:pointer;}
@@ -249,6 +257,27 @@
     function closeModal(){if(modal){modal.style.display='none';}}
     document.querySelectorAll('[data-close-modal]').forEach(function(el){el.addEventListener('click',closeModal);});
 
+    var presetSelect=document.getElementById('preset_select');
+    var titleInput=document.getElementById('title');
+    if(presetSelect){
+        presetSelect.addEventListener('change',function(){
+            var opt=this.options[this.selectedIndex];
+            if(this.value==='__custom__'){
+                titleInput.style.display='block';
+                titleInput.value='';
+                titleInput.required=true;
+            }else if(this.value){
+                titleInput.value=this.value;
+                titleInput.style.display='none';
+                titleInput.required=true;
+                if(opt.dataset.start)document.getElementById('start_time').value=opt.dataset.start;
+                if(opt.dataset.end)document.getElementById('end_time').value=opt.dataset.end||'';
+            }else{
+                titleInput.value='';
+                titleInput.style.display='none';
+            }
+        });
+    }
     function openAddModal(preset){
         form.action='{{ route("admin.schedule.store") }}';
         form.querySelector('#formMethod').value='POST';
@@ -257,10 +286,15 @@
         form.querySelector('input[name="day_of_week"]').value='{{ $currentDay }}';
         form.querySelector('input[name="is_active"]').checked=true;
         document.getElementById('dj_id').value='';
+        if(presetSelect){presetSelect.style.display='block';}
+        if(titleInput){titleInput.style.display='none';}
         if(preset){
-            document.getElementById('title').value=preset.title||'';
-            document.getElementById('start_time').value=preset.start||'';
-            document.getElementById('end_time').value=preset.end||'';
+            if(presetSelect){
+                presetSelect.value=preset.title||'';
+                var opt=presetSelect.options[presetSelect.selectedIndex];
+                if(opt&&opt.dataset){titleInput.value=preset.title;if(opt.dataset.start)document.getElementById('start_time').value=opt.dataset.start;if(opt.dataset.end)document.getElementById('end_time').value=opt.dataset.end||'';}
+                else{titleInput.value=preset.title||'';document.getElementById('start_time').value=preset.start||'';document.getElementById('end_time').value=preset.end||'';}
+            }else{titleInput.value=preset.title||'';document.getElementById('start_time').value=preset.start||'';document.getElementById('end_time').value=preset.end||'';}
         }
         openModal();
     }
@@ -311,7 +345,8 @@
             form.action='{{ url("admin/schedule") }}/'+id;
             form.querySelector('#formMethod').value='PUT';
             document.getElementById('modalTitle').textContent='Program Düzenle';
-            document.getElementById('title').value=title;
+            if(presetSelect){presetSelect.style.display='none';}
+            if(titleInput){titleInput.style.display='block';titleInput.value=title;}
             document.getElementById('dj_id').value=djId;
             document.getElementById('start_time').value=start;
             document.getElementById('end_time').value=end;
