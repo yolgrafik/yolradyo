@@ -40,22 +40,7 @@
             <div class="schedule-main">
                 <div class="schedule-day-header">
                     <span>{{ $dayLabels[$currentDay] }} programları</span>
-            @if($schedules->isNotEmpty())
-                <div class="schedule-controls" style="margin-left:auto;">
-                    <form action="{{ route('admin.schedule.copy', $currentDay) }}" method="POST" class="d-inline" onsubmit="return confirm('Bu günü seçilen güne kopyalamak istiyor musunuz?');">
-                        @csrf
-                        <select name="to_day" class="schedule-day-select">
-                            @foreach($dayLabels as $d => $label)
-                                @if($d != $currentDay)
-                                    <option value="{{ $d }}">→ {{ $label }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                        <button type="submit" class="btn-sm btn-copy">Bu günü kopyala</button>
-                    </form>
                 </div>
-            @endif
-        </div>
 
         <div class="schedule-table-wrap" style="margin-top:1rem;overflow-x:auto;">
             <table class="schedule-table" style="width:100%;border-collapse:collapse;">
@@ -171,7 +156,6 @@
 @media(max-width:768px){.schedule-layout{flex-direction:column;}.schedule-sidebar{flex:1 1 auto;display:flex;gap:1rem;flex-wrap:wrap;}.day-tabs-wrapper,.quick-add-section{flex:1;min-width:180px;}.day-tabs{flex-direction:row;flex-wrap:wrap;}.quick-add-btns{flex-direction:row;flex-wrap:wrap;}}
 .schedule-day-header{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;background:linear-gradient(180deg,#131a26,#0c1018);color:#ffffff;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);font-weight:600;margin-bottom:1rem;}
 .schedule-day-header small,.schedule-day-header span{color:#cbd5e1;}
-.schedule-controls{display:flex;gap:10px;align-items:center;}
 .schedule-container,.schedule-wrapper{background:transparent !important;}
 .badge{padding:0.25rem 0.5rem;border-radius:6px;font-size:0.75rem;font-weight:600;}
 .badge-success{background:rgba(34,197,94,0.25);color:#86efac;}
@@ -179,7 +163,6 @@
 .btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;margin-left:0.25rem;}
 .btn-edit{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
 .btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
-.btn-copy{background:rgba(234,179,8,0.2);color:#fde047;}
 .d-inline{display:inline;}
 .muted{color:var(--muted);}
 .modal-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;}
