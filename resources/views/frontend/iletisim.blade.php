@@ -1,0 +1,139 @@
+@extends('layouts.frontend')
+
+@section('title', $pageTitle ?? 'İletişim')
+
+@push('styles')
+<style>
+    .page-hero {
+        padding: 2.5rem 1.5rem;
+        background: var(--ry-header-bg);
+        border-bottom: 1px solid var(--ry-border);
+    }
+    .page-hero h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #fff;
+        text-transform: none;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .page-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+    }
+    .page-content p {
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 1rem;
+    }
+    .contact-form {
+        background: var(--ry-bar-bg);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    .contact-form h3 {
+        font-size: 1.1rem;
+        color: #fff;
+        margin: 0 0 1rem 0;
+    }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.35rem; }
+    .form-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 10px;
+        color: var(--text);
+        font-size: 0.95rem;
+    }
+    .form-input:focus { outline: none; border-color: var(--ry-schedule-active); }
+    .form-hp { position: absolute; left: -9999px; }
+    .btn-submit {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, #c92a2a, #b30000);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+    .btn-submit:hover { opacity: 0.9; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .alert-success {
+        padding: 0.75rem 1rem;
+        background: rgba(34,197,94,0.2);
+        border: 1px solid rgba(34,197,94,0.4);
+        border-radius: 10px;
+        color: #86efac;
+        margin-bottom: 1rem;
+    }
+    .alert-error {
+        padding: 0.75rem 1rem;
+        background: rgba(239,68,68,0.2);
+        border: 1px solid rgba(239,68,68,0.4);
+        border-radius: 10px;
+        color: #fca5a5;
+        margin-bottom: 1rem;
+    }
+    .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.25rem; }
+</style>
+@endpush
+
+@section('content')
+<section class="page-hero">
+    <h1>{{ $pageTitle ?? 'İletişim' }}</h1>
+</section>
+<div class="page-content">
+    <p>Bizimle iletişime geçmek için aşağıdaki formu doldurun. En kısa sürede size dönüş yapacağız.</p>
+
+    <div class="contact-form">
+        <h3>Mesaj Gönderin</h3>
+        @if(session('success'))
+            <div class="alert-success">{{ session('success') }}</div>
+        @endif
+        @if(session('error'))
+            <div class="alert-error">{{ session('error') }}</div>
+        @endif
+        <form method="POST" action="{{ route('public.contact.store') }}" id="contactForm">
+            @csrf
+            <div class="form-group form-hp" aria-hidden="true">
+                <label for="website">Website</label>
+                <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="contact_name">Ad Soyad *</label>
+                <input type="text" name="name" id="contact_name" class="form-input" value="{{ old('name') }}"
+                    placeholder="Örn: Ali Çelik" maxlength="60">
+                @error('name')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group">
+                <label for="contact_email">E-posta *</label>
+                <input type="email" name="email" id="contact_email" class="form-input" value="{{ old('email') }}"
+                    maxlength="120">
+                @error('email')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group">
+                <label for="contact_message">Mesajınız *</label>
+                <textarea name="message" id="contact_message" class="form-input" rows="5" maxlength="2000"
+                    placeholder="Mesajınızı buraya yazın (en az 20 karakter)">{{ old('message') }}</textarea>
+                @error('message')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn">Gönder</button>
+        </form>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+document.getElementById('contactForm')?.addEventListener('submit', function() {
+    var btn = document.getElementById('submitBtn');
+    if (btn) btn.disabled = true;
+});
+</script>
+@endpush
+@endsection
