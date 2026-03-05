@@ -241,6 +241,48 @@
             outline-offset: 3px;
         }
         .navbar .header-social-icon i { font-size: 1.15rem; }
+        /* Header auth: social + auth next to each other */
+        .header-social-auth { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .header-auth { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+        .header-auth-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-height: 44px; padding: 0.4rem 0.75rem;
+            font-size: 0.8rem; font-weight: 600; color: #fff; text-decoration: none;
+            border-radius: 8px; border: none; cursor: pointer;
+            background: rgba(255,255,255,0.1); transition: all 0.2s ease;
+        }
+        .header-auth-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
+        .header-auth-register { background: var(--ry-btn-bg); }
+        .header-auth-register:hover { background: var(--ry-btn-hover, rgba(255,255,255,0.2)); }
+        .header-auth-login { border: 1px solid rgba(255,255,255,0.25); }
+        .header-auth-profile { border: 1px solid rgba(255,255,255,0.25); }
+        .header-auth-logout { background: none; color: var(--ry-schedule-active); }
+        .header-auth-logout:hover { background: rgba(255,255,255,0.08); }
+        .header-auth-logout-form { display: inline; margin: 0; }
+        /* Mobile: compact dropdown */
+        .header-more-wrap { display: none; position: relative; }
+        .header-more-btn {
+            display: flex; align-items: center; justify-content: center;
+            min-width: 44px; min-height: 44px;
+            background: rgba(15,19,25,0.6); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 999px; color: #fff; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .header-more-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .header-more-btn i { font-size: 1.25rem; }
+        .header-more-dropdown {
+            position: absolute; top: 100%; right: 0; margin-top: 0.5rem;
+            min-width: 200px; padding: 1rem;
+            background: var(--ry-surface); border: 1px solid var(--ry-border);
+            border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            opacity: 0; visibility: hidden; transform: translateY(-8px);
+            transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+            z-index: 100;
+        }
+        .header-more-dropdown.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+        .header-more-social { margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--ry-border); }
+        .header-more-auth { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+        .header-more-auth .header-auth-btn { justify-content: center; }
         .nav-dropdown {
             position: relative;
         }
@@ -620,6 +662,8 @@
             .navbar .nav-center .nav-right .header-social-icon { width: 44px; height: 44px; }
             .navbar .nav-center .nav-right .header-social-icon i { font-size: 1.25rem; }
             .nav-center .nav-right .header-social { gap: 12px; }
+            .header-social-auth-inline { display: none !important; }
+            .header-more-wrap { display: block !important; }
             .nav-toggle { display: flex; align-items: center; justify-content: center; }
         }
         @media (max-width: 768px) {
@@ -641,6 +685,8 @@
         }
         @media (min-width: 993px) {
             .nav-toggle { display: none; }
+            .header-social-auth-inline { display: flex !important; }
+            .header-more-wrap { display: none !important; }
         }
         /* Footer Logo Player */
         .disc-overlay {
@@ -851,17 +897,9 @@
                     @endif
                 </ul>
                 <div class="nav-right">
-                @auth
-                    <span class="nav-user-name" style="font-size:0.85rem;color:rgba(255,255,255,0.9);margin-right:0.25rem;">{{ auth()->user()->name }}</span>
-                    <form method="POST" action="{{ route('logout') }}" class="nav-logout-form" style="display:inline;">
-                        @csrf
-                        <button type="submit" class="nav-logout-btn" style="background:none;border:none;color:var(--ry-schedule-active);font-size:0.8rem;font-weight:600;cursor:pointer;padding:0.35rem 0.5rem;">Çıkış</button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}" class="nav-auth-btn" style="font-size:0.8rem;font-weight:600;color:#fff;text-decoration:none;padding:0.4rem 0.75rem;border-radius:8px;background:rgba(255,255,255,0.1);">Giriş Yap</a>
-                    <a href="{{ route('register') }}" class="nav-auth-btn" style="font-size:0.8rem;font-weight:600;color:#fff;text-decoration:none;padding:0.4rem 0.75rem;border-radius:8px;background:var(--ry-btn-bg);">Üye Ol</a>
-                @endauth
-                <div class="header-social nav-social">
+                {{-- Desktop: social + auth inline --}}
+                <div class="header-social-auth header-social-auth-inline">
+                    <div class="header-social nav-social">
                     @php $social = $socialLinks ?? []; @endphp
                     @if(isset($social['whatsapp']) && ($social['whatsapp']['is_active'] ?? false) && !empty($social['whatsapp']['url'] ?? ''))
                     <a href="{{ $social['whatsapp']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
@@ -884,6 +922,63 @@
                     @if(isset($social['x']) && ($social['x']['is_active'] ?? false) && !empty($social['x']['url'] ?? ''))
                     <a href="{{ $social['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter-x"></i></a>
                     @endif
+                    </div>
+                    <div class="header-auth">
+                        @guest
+                            <a href="{{ route('register') }}" class="header-auth-btn header-auth-register">Üye Ol</a>
+                            <a href="{{ route('login') }}" class="header-auth-btn header-auth-login">Giriş Yap</a>
+                        @else
+                            <a href="{{ route('profile') }}" class="header-auth-btn header-auth-profile">Hesabım</a>
+                            <form method="POST" action="{{ route('logout') }}" class="header-auth-logout-form">
+                                @csrf
+                                <button type="submit" class="header-auth-btn header-auth-logout">Çıkış</button>
+                            </form>
+                        @endguest
+                    </div>
+                </div>
+                {{-- Mobile: compact dropdown --}}
+                <div class="header-more-wrap">
+                    <button type="button" class="header-more-btn" id="headerMoreBtn" aria-label="Sosyal ve hesap" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <div class="header-more-dropdown" id="headerMoreDropdown" aria-hidden="true">
+                        <div class="header-social nav-social header-more-social">
+                            @php $social = $socialLinks ?? []; @endphp
+                            @if(isset($social['whatsapp']) && ($social['whatsapp']['is_active'] ?? false) && !empty($social['whatsapp']['url'] ?? ''))
+                            <a href="{{ $social['whatsapp']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                            @endif
+                            @if(isset($social['telegram']) && ($social['telegram']['is_active'] ?? false) && !empty($social['telegram']['url'] ?? ''))
+                            <a href="{{ $social['telegram']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Telegram" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
+                            @endif
+                            @if(isset($social['instagram']) && ($social['instagram']['is_active'] ?? false) && !empty($social['instagram']['url'] ?? ''))
+                            <a href="{{ $social['instagram']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                            @endif
+                            @if(isset($social['facebook']) && ($social['facebook']['is_active'] ?? false) && !empty($social['facebook']['url'] ?? ''))
+                            <a href="{{ $social['facebook']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                            @endif
+                            @if(isset($social['tiktok']) && ($social['tiktok']['is_active'] ?? false) && !empty($social['tiktok']['url'] ?? ''))
+                            <a href="{{ $social['tiktok']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                            @endif
+                            @if(isset($social['youtube']) && ($social['youtube']['is_active'] ?? false) && !empty($social['youtube']['url'] ?? ''))
+                            <a href="{{ $social['youtube']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                            @endif
+                            @if(isset($social['x']) && ($social['x']['is_active'] ?? false) && !empty($social['x']['url'] ?? ''))
+                            <a href="{{ $social['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter-x"></i></a>
+                            @endif
+                        </div>
+                        <div class="header-auth header-more-auth">
+                            @guest
+                                <a href="{{ route('register') }}" class="header-auth-btn header-auth-register">Üye Ol</a>
+                                <a href="{{ route('login') }}" class="header-auth-btn header-auth-login">Giriş Yap</a>
+                            @else
+                                <a href="{{ route('profile') }}" class="header-auth-btn header-auth-profile">Hesabım</a>
+                                <form method="POST" action="{{ route('logout') }}" class="header-auth-logout-form">
+                                    @csrf
+                                    <button type="submit" class="header-auth-btn header-auth-logout">Çıkış</button>
+                                </form>
+                            @endguest
+                        </div>
+                    </div>
                 </div>
             </div>
             </div>
@@ -999,6 +1094,25 @@
                     if (center.classList.contains('is-open') && !center.contains(e.target) && !toggle.contains(e.target)) {
                         center.classList.remove('is-open');
                         document.body.classList.remove('nav-open');
+                    }
+                });
+            }
+        })();
+        (function() {
+            var moreBtn = document.getElementById('headerMoreBtn');
+            var moreDropdown = document.getElementById('headerMoreDropdown');
+            if (moreBtn && moreDropdown) {
+                moreBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var isOpen = moreDropdown.classList.toggle('is-open');
+                    moreBtn.setAttribute('aria-expanded', isOpen);
+                    moreDropdown.setAttribute('aria-hidden', !isOpen);
+                });
+                document.addEventListener('click', function(e) {
+                    if (!moreBtn.contains(e.target) && !moreDropdown.contains(e.target)) {
+                        moreDropdown.classList.remove('is-open');
+                        moreBtn.setAttribute('aria-expanded', 'false');
+                        moreDropdown.setAttribute('aria-hidden', 'true');
                     }
                 });
             }

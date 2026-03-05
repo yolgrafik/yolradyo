@@ -52,6 +52,11 @@ class AuthController extends Controller
             ->with('success', 'Hesabınız oluşturuldu. Hoş geldiniz!');
     }
 
+    public function profile(): View
+    {
+        return view('auth.profile');
+    }
+
     public function logout(\Illuminate\Http\Request $request): RedirectResponse
     {
         Auth::logout();

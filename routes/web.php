@@ -8,6 +8,7 @@ Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegister'])->name('register')->middleware('guest');
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('/profil', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile')->middleware('auth');
 
 Route::get('/', [FrontendController::class, 'home']);
 Route::get('/canli-dinle', [FrontendController::class, 'player'])->name('player.popup');
