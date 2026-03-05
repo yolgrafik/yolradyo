@@ -17,8 +17,8 @@
 <style>
 .programci-detail { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
 .programci-hero { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
-.programci-avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.06); }
-.programci-avatar-placeholder { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #c92a2a, #b30000); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; }
+.programci-avatar { width: 120px; height: 120px; border-radius: 12px; object-fit: cover; background: rgba(255,255,255,0.06); }
+.programci-avatar-placeholder { width: 120px; height: 120px; border-radius: 12px; background: linear-gradient(135deg, #c92a2a, #b30000); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; }
 .programci-name { font-size: 1.75rem; font-weight: 700; color: #fff; margin: 0 0 0.25rem 0; }
 .programci-slogan { font-size: 1rem; color: var(--muted); margin: 0 0 1rem 0; }
 .programci-social { display: flex; gap: 0.75rem; flex-wrap: wrap; }

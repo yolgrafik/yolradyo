@@ -77,8 +77,8 @@
 .programci-card { flex: 0 0 calc(25% - 0.75rem); min-width: 0; display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(13,40,24,0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s; }
 .programci-card:hover { border-color: rgba(255,255,255,0.2); background: rgba(13,40,24,0.95); transform: translateY(-2px); }
 .programci-card__avatar-wrap { flex-shrink: 0; }
-.programci-card__avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.06); }
-.programci-card__avatar-placeholder { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #c92a2a, #b30000); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800; }
+.programci-card__avatar { width: 72px; height: 72px; border-radius: 10px; object-fit: cover; background: rgba(255,255,255,0.06); }
+.programci-card__avatar-placeholder { width: 72px; height: 72px; border-radius: 10px; background: linear-gradient(135deg, #c92a2a, #b30000); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800; }
 .programci-card__body { flex: 1; min-width: 0; }
 .programci-card__name { font-size: 1.05rem; font-weight: 700; color: #fff; margin: 0 0 0.25rem 0; }
 .programci-card__slogan { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin: 0 0 0.5rem 0; line-height: 1.3; }
