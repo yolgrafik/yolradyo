@@ -30,34 +30,34 @@ class ProgramciContactController extends Controller
             return back()->with('error', 'Bu programcıya iletişim bilgisi eklenmemiş.');
         }
 
+        MailHelper::applyConfig();
+
+        if (!MailHelper::isRealMailConfigured()) {
+            return back()->with('error', MailHelper::getConfigErrorMessage());
+        }
+
         $name = $user->name;
         $email = $user->email;
         $messageBody = $request->validated('message');
+        $mailable = new ProgramciContactMail($programci, $name, $email, $messageBody);
 
-        if (!MailHelper::isRealMailConfigured()) {
-            Log::warning('Programcı iletişim: Mail log/array modunda, gerçek gönderim yapılamıyor.', [
+        try {
+            Mail::to($programci->email)->send($mailable);
+            $status = 'sent';
+        } catch (\Throwable $e) {
+            Log::error('Programcı iletişim mail hatası', [
                 'programci' => $programci->slug,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
-            $status = 'failed';
-        } else {
-            $mailable = new ProgramciContactMail(
-                $programci,
-                $name,
-                $email,
-                $messageBody
-            );
-
-            try {
-                Mail::to($programci->email)->send($mailable);
-                $status = 'sent';
-            } catch (\Throwable $e) {
-                Log::error('Programcı iletişim mail hatası', [
-                    'programci' => $programci->slug,
-                    'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString(),
-                ]);
-                $status = 'failed';
-            }
+            Message::create([
+                'user_id' => $user->id,
+                'programci_id' => $programci->id,
+                'subject' => 'Programcı İletişim: ' . $programci->ad,
+                'message' => $messageBody,
+                'status' => 'failed',
+            ]);
+            return back()->with('error', 'Mesaj gönderilemedi: ' . $e->getMessage());
         }
 
         Message::create([
@@ -67,10 +67,6 @@ class ProgramciContactController extends Controller
             'message' => $messageBody,
             'status' => $status,
         ]);
-
-        if ($status === 'failed') {
-            return back()->with('error', MailHelper::isRealMailConfigured() ? 'Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.' : MailHelper::getConfigErrorMessage());
-        }
 
         return back()->with('success', 'Mesajınız başarıyla gönderildi.');
     }

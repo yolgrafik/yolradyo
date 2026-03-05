@@ -19,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(SettingsService::class, fn () => new SettingsService());
+        $this->app->singleton(\App\Services\MailConfigService::class, function ($app) {
+            return new \App\Services\MailConfigService($app->make(SettingsService::class));
+        });
         $this->app->singleton(\App\Services\ThemeService::class, fn () => new \App\Services\ThemeService());
     }
 
