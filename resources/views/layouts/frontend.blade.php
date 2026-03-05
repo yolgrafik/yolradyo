@@ -901,8 +901,13 @@
                         <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Anasayfa</a></li>
                         <li><a href="{{ url('/programlar') }}" class="{{ request()->is('programlar') ? 'active' : '' }}">Programlar</a></li>
                         <li><a href="{{ url('/haberler') }}" class="{{ request()->is('haberler') ? 'active' : '' }}">Haberler</a></li>
-                        <li><a href="{{ url('/videolar') }}" class="{{ request()->is('videolar') ? 'active' : '' }}">Video Galeri</a></li>
-                        <li><a href="{{ url('/galeri') }}" class="{{ request()->is('galeri') ? 'active' : '' }}">Foto Galeri</a></li>
+                        <li class="nav-dropdown">
+                            <a href="{{ url('/videolar') }}" class="{{ request()->is('videolar', 'galeri') ? 'active' : '' }}">Medya<span class="arrow">▾</span></a>
+                            <ul class="nav-dropdown-menu">
+                                <li><a href="{{ url('/videolar') }}" class="{{ request()->is('videolar') ? 'active' : '' }}">Video Galeri</a></li>
+                                <li><a href="{{ url('/galeri') }}" class="{{ request()->is('galeri') ? 'active' : '' }}">Foto Galeri</a></li>
+                            </ul>
+                        </li>
                         <li><a href="{{ url('/reklam') }}" class="{{ request()->is('reklam') ? 'active' : '' }}">Reklam & İşbirliği</a></li>
                         <li class="nav-dropdown">
                             <a href="{{ url('/hakkimizda/biz-kimiz') }}" class="{{ request()->is('hakkimizda/*') ? 'active' : '' }}">Hakkımızda<span class="arrow">▾</span></a>
