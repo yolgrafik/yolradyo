@@ -301,15 +301,38 @@
 @push('styles')
 <style>
 .seo-settings-page { max-width: 720px; }
+.seo-settings-page .settings-page-header { margin-bottom: 1.75rem; }
+.seo-settings-page .settings-page-title { font-size: 1.5rem; font-weight: 700; color: #f0f2f5; margin-bottom: 0.35rem; }
+.seo-settings-page .settings-page-desc { font-size: 0.95rem; color: #8b95a5; }
+.settings-success { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.35); border-radius: 12px; color: #86efac; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.settings-success-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: rgba(34,197,94,0.4); border-radius: 50%; font-size: 0.75rem; font-weight: 700; }
+.settings-error { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.35); border-radius: 12px; color: #fca5a5; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.settings-error-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: rgba(239,68,68,0.4); border-radius: 50%; font-size: 0.75rem; font-weight: 700; }
+.seo-settings-page .settings-section { margin-bottom: 1.5rem; padding: 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; }
+.seo-settings-page .settings-section-header { margin-bottom: 1.25rem; }
+.seo-settings-page .settings-section-title { font-size: 1.1rem; font-weight: 700; color: #e5e7eb; margin-bottom: 0.25rem; }
+.seo-settings-page .settings-section-desc { font-size: 0.85rem; color: #8b95a5; }
+.seo-settings-page .settings-section-body { display: flex; flex-direction: column; gap: 1.25rem; }
+.seo-settings-page .form-group { margin: 0; }
+.seo-settings-page .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: #d1d5db; margin-bottom: 0.5rem; }
+.seo-settings-page .form-input { width: 100%; padding: 0.7rem 1rem; font-size: 0.95rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; color: #f0f2f5; }
+.seo-settings-page .form-input:focus { outline: none; border-color: var(--accent); }
+.seo-settings-page .form-textarea { resize: vertical; min-height: 88px; }
+.seo-settings-page .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.4rem; display: block; }
+.seo-settings-page .form-hint { font-size: 0.8rem; color: #8b95a5; margin-top: 0.25rem; display: block; }
+.seo-settings-page .form-check { font-size: 0.85rem; color: #8b95a5; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top: 0.5rem; }
+.seo-settings-page .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.seo-settings-page .form-actions { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+.seo-settings-page .btn-save { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-size: 0.95rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; border: none; border-radius: 10px; cursor: pointer; }
 .seo-image-current { margin-bottom: 0.75rem; }
 .seo-image-current img { display: block; margin-bottom: 0.5rem; }
-.form-hint { font-size: 0.8rem; color: #8b95a5; margin-top: 0.25rem; display: block; }
-.form-check { font-size: 0.85rem; color: #8b95a5; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top: 0.5rem; }
-.seo-settings-page .settings-section,
-.seo-settings-page .settings-page-header,
-.seo-settings-page .form-actions { margin-bottom: 1.5rem; padding: 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; }
-.seo-settings-page .form-actions { padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 0; }
-.seo-settings-page .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.settings-toggle { display: flex; align-items: center; gap: 1rem; cursor: pointer; margin-bottom: 1rem; }
+.settings-toggle-input { position: absolute; opacity: 0; width: 0; height: 0; }
+.settings-toggle-slider { width: 48px; height: 26px; background: rgba(255,255,255,0.1); border-radius: 13px; transition: background 0.2s; flex-shrink: 0; position: relative; }
+.settings-toggle-slider::before { content: ''; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: #9ca3af; border-radius: 50%; transition: transform 0.2s; }
+.settings-toggle-input:checked + .settings-toggle-slider { background: rgba(234,179,8,0.4); }
+.settings-toggle-input:checked + .settings-toggle-slider::before { transform: translateX(22px); background: #fbbf24; }
+.settings-toggle-label { font-size: 0.95rem; font-weight: 600; color: #e5e7eb; }
 @media (max-width: 600px) { .seo-settings-page .form-row-2 { grid-template-columns: 1fr; } }
 </style>
 @endpush
