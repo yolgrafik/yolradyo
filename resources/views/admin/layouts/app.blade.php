@@ -778,9 +778,9 @@
                         </button>
                         <ul class="nav-section__items">
                             <li><a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">Genel Bakış</a></li>
-                            <li><a href="{{ route('admin.shoutcast.player.index') }}" class="nav-item {{ request()->routeIs('admin.shoutcast.player.*') ? 'is-active' : '' }}">Anlık Dinleyici</a></li>
-                            <li><a href="{{ route('admin.shoutcast.player.index') }}#yayin" class="nav-item">Yayın Durumu</a></li>
-                            <li><a href="{{ route('admin.shoutcast.player.index') }}#nowplaying" class="nav-item">Şu An Çalıyor</a></li>
+                            <li><a href="{{ route('admin.dashboard') }}#dinleyici" class="nav-item">Anlık Dinleyici</a></li>
+                            <li><a href="{{ route('admin.dashboard') }}#yayin" class="nav-item">Yayın Durumu</a></li>
+                            <li><a href="{{ route('admin.dashboard') }}#nowplaying" class="nav-item">Şu An Çalıyor</a></li>
                         </ul>
                     </div>
                     <div class="nav-section {{ request()->routeIs('admin.shoutcast.player.*') ? 'is-open' : '' }}" data-section="yayin">

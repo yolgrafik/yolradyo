@@ -215,7 +215,7 @@
             <div class="dashboard-detail__label">Genel Bakış</div>
             <div class="dashboard-detail__value">Kontrol Paneli özeti</div>
         </div>
-        <div class="dashboard-detail__section">
+        <div class="dashboard-detail__section" id="dinleyici">
             <div class="dashboard-detail__label">Anlık Dinleyici</div>
             <div class="dashboard-detail__value" id="dashboardListeners">—</div>
         </div>
