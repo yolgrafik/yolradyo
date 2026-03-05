@@ -125,6 +125,15 @@ Route::prefix('admin')->group(function () {
             Route::delete('{songRequest}', [App\Http\Controllers\Admin\SongRequestAdminController::class, 'destroy'])->name('destroy');
         });
 
+        Route::prefix('programcilar')->name('admin.programcilar.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\ProgramciController::class, 'index'])->name('index');
+            Route::get('create', [App\Http\Controllers\Admin\ProgramciController::class, 'create'])->name('create');
+            Route::post('/', [App\Http\Controllers\Admin\ProgramciController::class, 'store'])->name('store');
+            Route::get('{programci}/edit', [App\Http\Controllers\Admin\ProgramciController::class, 'edit'])->name('edit');
+            Route::put('{programci}', [App\Http\Controllers\Admin\ProgramciController::class, 'update'])->name('update');
+            Route::delete('{programci}', [App\Http\Controllers\Admin\ProgramciController::class, 'destroy'])->name('destroy');
+        });
+
         Route::prefix('djs')->name('admin.djs.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\DjProfileController::class, 'index'])->name('index');
             Route::get('create', [App\Http\Controllers\Admin\DjProfileController::class, 'create'])->name('create');
@@ -138,6 +147,7 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('schedule')->name('admin.schedule.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\ScheduleController::class, 'index'])->name('index');
+            Route::get('programci/{programci}', [App\Http\Controllers\Admin\ScheduleController::class, 'byProgramci'])->name('by-programci');
             Route::post('/', [App\Http\Controllers\Admin\ScheduleController::class, 'store'])->name('store');
             Route::post('copy/{fromDay}', [App\Http\Controllers\Admin\ScheduleController::class, 'copy'])->name('copy');
             Route::post('presets', [App\Http\Controllers\Admin\ScheduleController::class, 'storePreset'])->name('presets.store');

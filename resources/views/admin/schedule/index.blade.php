@@ -74,7 +74,7 @@
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:0.75rem;font-size:0.9rem;font-weight:600;color:var(--accent);">{{ $s->start_time_formatted }}</td>
                         <td style="padding:0.75rem;font-size:0.9rem;">{{ $s->title }}</td>
-                        <td style="padding:0.75rem;font-size:0.9rem;color:var(--muted);">{{ $s->dj_id ? ($s->dj?->name ?? '—') : 'DJ seçilmedi' }}</td>
+                        <td style="padding:0.75rem;font-size:0.9rem;color:var(--muted);">{{ $s->host_name }}</td>
                         <td style="padding:0.75rem;text-align:center;">
                             <form action="{{ route('admin.schedule.toggle', $s) }}" method="POST" class="d-inline">
                                 @csrf
@@ -84,7 +84,7 @@
                             </form>
                         </td>
                         <td style="padding:0.75rem;text-align:right;">
-                            <button type="button" class="btn-sm btn-edit" data-edit="{{ $s->id }}" data-title="{{ $s->title }}" data-description="{{ $s->description ?? '' }}" data-dj-id="{{ $s->dj_id ?? '' }}" data-start="{{ $s->start_time_formatted }}" data-end="{{ $s->end_time ? substr($s->end_time, 0, 5) : '' }}" data-active="{{ $s->is_active ? '1' : '0' }}">Düzenle</button>
+                            <button type="button" class="btn-sm btn-edit" data-edit="{{ $s->id }}" data-title="{{ $s->title }}" data-description="{{ $s->description ?? '' }}" data-dj-id="{{ $s->dj_id ?? '' }}" data-programci-id="{{ $s->programci_id ?? '' }}" data-start="{{ $s->start_time_formatted }}" data-end="{{ $s->end_time_formatted }}" data-active="{{ $s->is_active ? '1' : '0' }}">Düzenle</button>
                             <form action="{{ route('admin.schedule.destroy', $s) }}" method="POST" class="d-inline" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                                 @csrf
                                 @method('DELETE')
@@ -171,7 +171,16 @@
                 <input type="time" name="end_time" id="end_time" class="form-input">
             </div>
             <div class="form-group">
-                <label for="dj_id">DJ Seç</label>
+                <label for="programci_id">Programcı Seç</label>
+                <select name="programci_id" id="programci_id" class="form-input">
+                    <option value="">— Programcı seçin —</option>
+                    @foreach($programcilar ?? [] as $p)
+                        <option value="{{ $p->id }}">{{ $p->ad }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dj_id">DJ Seç (yedek)</label>
                 <select name="dj_id" id="dj_id" class="form-input">
                     <option value="">— DJ seçin —</option>
                     @foreach($djProfiles as $dj)
@@ -290,6 +299,8 @@
         form.querySelector('input[name="day_of_week"]').value='{{ $currentDay }}';
         form.querySelector('input[name="is_active"]').checked=true;
         document.getElementById('dj_id').value='';
+        var programciEl=document.getElementById('programci_id');
+        if(programciEl){programciEl.value='';}
         if(presetSelect){presetSelect.style.display='block';}
         if(titleInput){titleInput.style.display='none';}
         if(preset){
@@ -344,6 +355,7 @@
             var title=btn.dataset.title;
             var description=btn.dataset.description||'';
             var djId=btn.dataset.djId||'';
+            var programciId=btn.dataset.programciId||'';
             var start=btn.dataset.start||'';
             var end=btn.dataset.end||'';
             var active=btn.dataset.active==='1';
@@ -355,6 +367,8 @@
             var descEl=document.getElementById('description');
             if(descEl){descEl.value=description;}
             document.getElementById('dj_id').value=djId;
+            var programciEl=document.getElementById('programci_id');
+            if(programciEl){programciEl.value=programciId;}
             document.getElementById('start_time').value=start;
             document.getElementById('end_time').value=end;
             form.querySelector('input[name="is_active"]').checked=active;
