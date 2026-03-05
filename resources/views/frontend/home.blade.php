@@ -338,6 +338,7 @@
         flex-direction: column;
         gap: 0.75rem;
         padding: 1rem;
+        margin-top: 2%;
         border-radius: var(--ry-radius);
         background: var(--ry-istekler-bg);
         border: 1px solid rgba(255,255,255,0.1);
