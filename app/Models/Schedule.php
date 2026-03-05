@@ -14,6 +14,7 @@ class Schedule extends Model
         'description',
         'host',
         'dj_id',
+        'programci_id',
         'is_active',
         'sort_order',
     ];
@@ -21,6 +22,22 @@ class Schedule extends Model
     public function dj()
     {
         return $this->belongsTo(DjProfile::class, 'dj_id');
+    }
+
+    public function programci()
+    {
+        return $this->belongsTo(Programci::class, 'programci_id');
+    }
+
+    public function getHostNameAttribute(): string
+    {
+        if ($this->programci_id && $this->programci) {
+            return $this->programci->ad;
+        }
+        if ($this->dj_id && $this->dj) {
+            return $this->dj->name;
+        }
+        return $this->host ?? '—';
     }
 
     protected $casts = [

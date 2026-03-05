@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DjProfile;
+use App\Models\Programci;
 use App\Models\Schedule;
 use App\Models\SchedulePreset;
 use Illuminate\Http\Request;
@@ -16,18 +17,33 @@ class ScheduleController extends Controller
     {
         $day = (int) $request->get('day', 0);
         $day = max(0, min(6, $day));
+        $programciId = $request->get('programci');
 
-        $schedules = Schedule::forDay($day)->with('dj')->ordered()->get();
+        $query = Schedule::forDay($day)->with(['dj', 'programci']);
+        if ($programciId) {
+            $query->where('programci_id', $programciId);
+        }
+        $schedules = $query->ordered()->get();
+
         $djProfiles = DjProfile::orderBy('name')->get();
+        $programcilar = Programci::orderBy('sira')->orderBy('ad')->get();
         $presets = SchedulePreset::orderBy('sort_order')->get();
+        $filterProgramci = $programciId ? Programci::find($programciId) : null;
 
         return view('admin.schedule.index', [
             'schedules' => $schedules,
             'djProfiles' => $djProfiles,
+            'programcilar' => $programcilar,
             'presets' => $presets,
             'currentDay' => $day,
             'dayLabels' => self::DAY_LABELS,
+            'filterProgramci' => $filterProgramci,
         ]);
+    }
+
+    public function byProgramci(Programci $programci)
+    {
+        return redirect()->route('admin.schedule.index', ['programci' => $programci->id]);
     }
 
     public function store(Request $request)
@@ -40,12 +56,14 @@ class ScheduleController extends Controller
             'description' => 'nullable|string|max:1000',
             'host' => 'nullable|string|max:255',
             'dj_id' => 'nullable|integer|exists:dj_profiles,id',
+            'programci_id' => 'nullable|integer|exists:programcilar,id',
             'is_active' => 'boolean',
         ]);
 
         $validated['is_active'] = $request->boolean('is_active', true);
         $validated['sort_order'] = Schedule::forDay($validated['day_of_week'])->max('sort_order') + 1;
         $validated['dj_id'] = $request->input('dj_id') ?: null;
+        $validated['programci_id'] = $request->input('programci_id') ?: null;
 
         Schedule::create($validated);
 
@@ -63,11 +81,13 @@ class ScheduleController extends Controller
             'description' => 'nullable|string|max:1000',
             'host' => 'nullable|string|max:255',
             'dj_id' => 'nullable|integer|exists:dj_profiles,id',
+            'programci_id' => 'nullable|integer|exists:programcilar,id',
             'is_active' => 'boolean',
         ]);
 
         $validated['is_active'] = $request->boolean('is_active', true);
         $validated['dj_id'] = $request->input('dj_id') ?: null;
+        $validated['programci_id'] = $request->input('programci_id') ?: null;
 
         $schedule->update($validated);
 
