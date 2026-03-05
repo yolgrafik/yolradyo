@@ -100,22 +100,42 @@
             letter-spacing: 0.05em;
             line-height: 1.2;
         }
+        .nav-logo-slogan-wrap {
+            position: relative;
+            padding: 0.35rem 0.5rem;
+            max-width: 100px;
+            border-radius: 8px;
+        }
+        .nav-logo-slogan-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 10px;
+            background: conic-gradient(from 0deg, #dc2626, #f59e0b, #22c55e, #3b82f6, #a855f7, #dc2626);
+            animation: slogan-border-rotate 3s linear infinite;
+        }
+        .nav-logo-slogan-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 6px;
+            background: var(--ry-header-bg, #0f1419);
+        }
         .nav-logo-slogan {
+            position: relative;
+            z-index: 2;
             font-size: 0.65rem;
             font-weight: 600;
-            letter-spacing: 0.08em;
-            white-space: nowrap;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.5) 50%, #fff 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: slogan-shine 3.5s ease-in-out infinite;
+            line-height: 1.2;
+            white-space: normal;
+            display: block;
+            max-width: 100%;
+            color: rgba(255,255,255,0.95);
         }
-        @keyframes slogan-shine {
-            0%, 100% { background-position: 0% center; }
-            50% { background-position: 100% center; }
+        @keyframes slogan-border-rotate {
+            to { transform: rotate(360deg); }
         }
         .nav-center {
             flex: 1;
@@ -555,7 +575,10 @@
             .navbar.is-scrolled { height: 68px; min-height: 68px; }
             .nav-logo img { height: 56px; }
             .navbar.is-scrolled .nav-logo img { height: 48px; }
-            .nav-logo-slogan { font-size: 0.55rem; letter-spacing: 0.04em; max-width: 80px; white-space: normal; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+            .nav-logo-slogan-wrap { padding: 0.25rem 0.4rem; max-width: 80px; }
+            .nav-logo-slogan-wrap::before { inset: -1px; }
+            .nav-logo-slogan-wrap::after { inset: 1px; }
+            .nav-logo-slogan { font-size: 0.55rem; letter-spacing: 0.04em; white-space: normal; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
             .nav-center {
                 position: fixed;
                 top: 0;
@@ -608,7 +631,8 @@
         }
         @media (max-width: 768px) {
             .nav-logo img { height: 64px; }
-            .nav-logo-slogan { font-size: 0.5rem; max-width: 65px; }
+            .nav-logo-slogan-wrap { max-width: 65px; }
+            .nav-logo-slogan { font-size: 0.5rem; }
             .bottom-bar-player { padding: 0 1rem; gap: 0.5rem; }
             .player-status-group { font-size: 0.7rem; }
             .player-volume-wrap { min-width: 60px; }
@@ -785,7 +809,7 @@
                 @endif
                 @if($logoUrl || file_exists(public_path('logo.png')))
                     @if($siteSlogan)
-                        <span class="nav-logo-slogan">{{ $siteSlogan }}</span>
+                        <span class="nav-logo-slogan-wrap"><span class="nav-logo-slogan">{{ $siteSlogan }}</span></span>
                     @endif
                 @else
                     <span class="nav-logo-text">{{ $siteName }}</span>
