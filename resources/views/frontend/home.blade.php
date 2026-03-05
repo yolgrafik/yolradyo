@@ -331,7 +331,7 @@
         flex-direction: column;
         gap: 1.25rem;
         min-width: 0;
-        max-width: var(--sidebar-width);
+        max-width: 360px;
     }
     .home-actions {
         display: flex;
@@ -476,18 +476,7 @@
         padding: 0;
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-        width: var(--sidebar-width);
-        min-width: var(--sidebar-width);
-        max-width: var(--sidebar-width);
-        height: var(--sidebar-height);
-        min-height: var(--sidebar-height);
-        max-height: var(--sidebar-height);
-        display: flex;
-        flex-direction: column;
     }
-    .live-dj-card .live-banner { flex-shrink: 0; }
-    .live-dj-card .live-content { flex: 1; min-height: 0; overflow-y: auto; }
-    .live-dj-card .live-meta { flex-shrink: 0; }
     .live-dj-card::before {
         content: '';
         position: absolute;
@@ -776,8 +765,7 @@
             flex-direction: row;
         }
         .btn-live, .btn-request-group { flex: 1; }
-        .live-dj-card,
-        .home-right .sidebar-widget {
+        .live-dj-card {
             grid-column: 1 / -1;
         }
     }
@@ -915,10 +903,9 @@
                     <div class="live-listeners">👥 <span class="cc_streaminfo" data-type="listeners" data-username="radyoyol"></span> dinleyici</div>
                 </div>
             </div>
-            @include('partials.listener-submissions-widget', ['sidebarMode' => true])
         </div>
     </div>
-    @include('partials.programcilar-section-only')
+    @include('partials.programcilar-sidebar-section')
 </div>
 
 @push('scripts')

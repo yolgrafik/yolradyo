@@ -107,8 +107,7 @@ body { background: var(--ry-bg); }
     height: auto;
 }
 @media (max-width: 991.98px) {
-    .sidebar-widget,
-    .live-dj-card {
+    .sidebar-widget {
         width: 100%;
         min-width: 0;
         max-width: 100%;
