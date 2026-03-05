@@ -222,7 +222,7 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('mail-settings')->name('admin.mail-settings.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\MailSettingsController::class, 'index'])->name('index');
-            Route::post('/', [App\Http\Controllers\Admin\MailSettingsController::class, 'store'])->name('store');
+            Route::post('/', [App\Http\Controllers\Admin\MailSettingsController::class, 'store'])->name('store')->middleware('admin.super_admin');
             Route::post('test', [App\Http\Controllers\Admin\MailSettingsController::class, 'sendTest'])->name('test');
         });
     });

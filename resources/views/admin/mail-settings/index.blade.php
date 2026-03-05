@@ -11,6 +11,12 @@
             <div class="alert-error">{{ session('error') }}</div>
         @endif
 
+        @if(!$canEdit)
+            <div class="alert-info" style="margin-bottom:1.5rem;padding:1rem;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);border-radius:10px;color:#93c5fd;">
+                Mail ayarlarını yalnızca Super Admin düzenleyebilir. Siz ayarları görüntüleyebilir ve Test Mail gönderebilirsiniz.
+            </div>
+        @endif
+
         <div class="mail-notes" style="margin-bottom:1.5rem;padding:1rem;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);border-radius:10px;font-size:0.9rem;">
             <strong>Geliştirici Notları:</strong>
             <ul style="margin:0.5rem 0 0 1rem;padding:0;">
@@ -25,25 +31,25 @@
             <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
                 <div class="form-group">
                     <label for="mail_mailer">MAIL_MAILER</label>
-                    <select name="mail_mailer" id="mail_mailer" class="form-input">
+                    <select name="mail_mailer" id="mail_mailer" class="form-input" {{ !$canEdit ? 'disabled' : '' }}>
                         <option value="smtp" {{ $mailMailer === 'smtp' ? 'selected' : '' }}>smtp</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="mail_host">MAIL_HOST *</label>
-                    <input type="text" name="mail_host" id="mail_host" class="form-input" value="{{ old('mail_host', $mailHost) }}" placeholder="smtp.gmail.com" required>
+                    <input type="text" name="mail_host" id="mail_host" class="form-input" value="{{ old('mail_host', $mailHost) }}" placeholder="smtp.gmail.com" {{ $canEdit ? 'required' : 'readonly' }} {{ !$canEdit ? 'disabled' : '' }}>
                     @error('mail_host')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
             </div>
             <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
                 <div class="form-group">
                     <label for="mail_port">MAIL_PORT *</label>
-                    <input type="text" name="mail_port" id="mail_port" class="form-input" value="{{ old('mail_port', $mailPort) }}" placeholder="587" required>
+                    <input type="text" name="mail_port" id="mail_port" class="form-input" value="{{ old('mail_port', $mailPort) }}" placeholder="587" {{ $canEdit ? 'required' : 'readonly' }} {{ !$canEdit ? 'disabled' : '' }}>
                     @error('mail_port')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
                     <label for="mail_encryption">MAIL_ENCRYPTION</label>
-                    <select name="mail_encryption" id="mail_encryption" class="form-input">
+                    <select name="mail_encryption" id="mail_encryption" class="form-input" {{ !$canEdit ? 'disabled' : '' }}>
                         <option value="tls" {{ $mailEncryption === 'tls' ? 'selected' : '' }}>tls</option>
                         <option value="ssl" {{ $mailEncryption === 'ssl' ? 'selected' : '' }}>ssl</option>
                         <option value="" {{ !$mailEncryption ? 'selected' : '' }}>Yok</option>
@@ -52,32 +58,34 @@
             </div>
             <div class="form-group">
                 <label for="mail_username">MAIL_USERNAME *</label>
-                <input type="text" name="mail_username" id="mail_username" class="form-input" value="{{ old('mail_username', $mailUsername) }}" required>
+                <input type="text" name="mail_username" id="mail_username" class="form-input" value="{{ old('mail_username', $mailUsername) }}" {{ $canEdit ? 'required' : 'readonly' }} {{ !$canEdit ? 'disabled' : '' }}>
                 @error('mail_username')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
                 <label for="mail_password">MAIL_PASSWORD *</label>
-                <input type="password" name="mail_password" id="mail_password" class="form-input" value="" placeholder="{{ $hasPassword ? '•••••••• (değiştirmek için yeni şifre girin)' : 'Şifre girin' }}" autocomplete="new-password">
+                <input type="password" name="mail_password" id="mail_password" class="form-input" value="" placeholder="{{ $hasPassword ? '•••••••• (değiştirmek için yeni şifre girin)' : 'Şifre girin' }}" autocomplete="new-password" {{ !$canEdit ? 'disabled' : '' }}>
                 @error('mail_password')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
                 <div class="form-group">
                     <label for="mail_from_address">MAIL_FROM_ADDRESS *</label>
-                    <input type="email" name="mail_from_address" id="mail_from_address" class="form-input" value="{{ old('mail_from_address', $mailFromAddress) }}" required>
+                    <input type="email" name="mail_from_address" id="mail_from_address" class="form-input" value="{{ old('mail_from_address', $mailFromAddress) }}" {{ $canEdit ? 'required' : 'readonly' }} {{ !$canEdit ? 'disabled' : '' }}>
                     @error('mail_from_address')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
                     <label for="mail_from_name">MAIL_FROM_NAME *</label>
-                    <input type="text" name="mail_from_name" id="mail_from_name" class="form-input" value="{{ old('mail_from_name', $mailFromName) }}" required>
+                    <input type="text" name="mail_from_name" id="mail_from_name" class="form-input" value="{{ old('mail_from_name', $mailFromName) }}" {{ $canEdit ? 'required' : 'readonly' }} {{ !$canEdit ? 'disabled' : '' }}>
                     @error('mail_from_name')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
             </div>
             <div class="form-group">
                 <label for="mail_contact_to">İletişim Alıcısı (CONTACT_TO) *</label>
-                <input type="email" name="mail_contact_to" id="mail_contact_to" class="form-input" value="{{ old('mail_contact_to', $mailContactTo) }}" placeholder="İletişim formundan gelen mesajların gideceği e-posta" required>
+                <input type="email" name="mail_contact_to" id="mail_contact_to" class="form-input" value="{{ old('mail_contact_to', $mailContactTo) }}" placeholder="İletişim formundan gelen mesajların gideceği e-posta" {{ $canEdit ? 'required' : 'readonly' }} {{ !$canEdit ? 'disabled' : '' }}>
                 @error('mail_contact_to')<span class="form-error">{{ $message }}</span>@enderror
             </div>
+            @if($canEdit)
             <button type="submit" class="btn-save">Kaydet</button>
+            @endif
         </form>
 
         <hr style="margin:2rem 0;border-color:var(--border);">

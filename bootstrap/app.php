@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminAuth::class,
             'admin.permission' => \App\Http\Middleware\AdminPermission::class,
+            'admin.super_admin' => \App\Http\Middleware\AdminSuperAdmin::class,
             'forum.guest' => \App\Http\Middleware\ForumGuestMessage::class,
         ]);
     })

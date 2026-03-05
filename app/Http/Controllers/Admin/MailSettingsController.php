@@ -17,6 +17,16 @@ use Illuminate\View\View;
 
 class MailSettingsController extends Controller
 {
+    protected function isSuperAdmin(): bool
+    {
+        $adminId = session('admin_id');
+        if (!$adminId) {
+            return false;
+        }
+        $admin = \App\Models\Admin::find($adminId);
+        return $admin && $admin->isSuperAdmin();
+    }
+
     public function __construct(
         protected SettingsService $settings,
         protected MailConfigService $mailConfig
@@ -38,6 +48,7 @@ class MailSettingsController extends Controller
     public function index(): View
     {
         return view('admin.mail-settings.index', [
+            'canEdit' => $this->isSuperAdmin(),
             'mailMailer' => $this->getMailSetting('mail_mailer', 'smtp'),
             'mailHost' => $this->getMailSetting('mail_host', ''),
             'mailPort' => $this->getMailSetting('mail_port', '587'),
