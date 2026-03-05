@@ -101,8 +101,7 @@ PHP;
 
 file_put_contents($out . '/index.php', $indexContent);
 
-// 4. .htaccess
-copy($root . '/public/.htaccess', $out . '/.htaccess');
+// 4. .htaccess (9. adımda güncellenecek)
 
 // 5. artisan, composer, .env.example
 copy($root . '/.env.example', $out . '/' . $backend . '/.env.example');
@@ -126,31 +125,56 @@ $yolcuHtaccess = <<<'HTA'
 HTA;
 file_put_contents($out . '/' . $backend . '/.htaccess', $yolcuHtaccess);
 
-// 7. Kök .user.ini (cPanel PHP ayarları - opsiyonel)
-$userIni = "upload_max_filesize = 32M\npost_max_size = 32M\nmax_execution_time = 120\nmemory_limit = 256M";
+// 7. Kök .user.ini (cPanel PHP ayarları)
+$userIni = <<<'INI'
+; cPanel PHP ayarları
+upload_max_filesize = 32M
+post_max_size = 32M
+max_execution_time = 120
+memory_limit = 256M
+max_input_time = 120
+default_charset = "UTF-8"
+INI;
 file_put_contents($out . '/.user.ini', $userIni);
 
-// 8. KURULUM.txt
+// 8. Kök .htaccess
+copy($root . '/public/.htaccess', $out . '/.htaccess');
+
+// 9. schema.sql kopyala (phpMyAdmin import için)
+if (file_exists($root . '/database/schema.sql')) {
+    copy($root . '/database/schema.sql', $out . '/' . $backend . '/database/schema.sql');
+}
+
+// 10. KURULUM.txt
 $kurulum = <<<'TXT'
 CPANEL / FTP KURULUM
-===================
+====================
 
 1. FTP ile bu klasörün İÇERİĞİNİ public_html'e yükleyin.
    (index.php, .htaccess, assets, build, uploads, yolcu hepsi public_html'de olmalı)
 
-2. cPanel > Terminal veya SSH:
+2. cPanel > MySQL Databases: Yeni veritabanı oluşturun.
+
+3. cPanel > phpMyAdmin: Veritabanını seçin, Import > yolcu/database/schema.sql
+
+4. cPanel > Terminal veya SSH:
    cd ~/public_html/yolcu
    cp .env.example .env
    php artisan key:generate
 
-3. .env düzenleyin (APP_URL, DB_*, APP_ENV=production, APP_DEBUG=false)
+5. .env düzenleyin (File Manager veya nano):
+   APP_URL=https://siteniz.com
+   DB_DATABASE=veritabani_adi
+   DB_USERNAME=kullanici
+   DB_PASSWORD=sifre
 
-4. Devam:
+6. Devam:
    php artisan storage:link
-   php artisan migrate --force
    chmod -R 775 storage bootstrap/cache
 
-5. Tarayıcıda siteyi açın.
+7. cPanel > MultiPHP: PHP 8.2 veya 8.3 seçin.
+
+8. Tarayıcıda siteyi açın. Admin: admin@yolcu.com / password
 TXT;
 file_put_contents($out . '/KURULUM.txt', $kurulum);
 
