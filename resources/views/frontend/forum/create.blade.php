@@ -11,6 +11,9 @@
 .form-group { margin-bottom: 1.25rem; }
 .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.35rem; }
 .form-input, .form-textarea { width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: var(--text); font-size: 0.95rem; }
+.form-input[type="file"] { padding: 0.5rem; }
+select.form-input { cursor: pointer; color: #e2e8f0; color-scheme: dark; }
+select.form-input option { background: #1a1d24; color: #e2e8f0; }
 .form-textarea { min-height: 120px; resize: vertical; }
 .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--ry-schedule-active); }
 .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.25rem; }
