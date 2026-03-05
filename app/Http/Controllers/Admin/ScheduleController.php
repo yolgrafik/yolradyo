@@ -131,6 +131,7 @@ class ScheduleController extends Controller
                 'description' => $s->description,
                 'host' => $s->host,
                 'dj_id' => $s->dj_id,
+                'programci_id' => $s->programci_id,
                 'is_active' => $s->is_active,
                 'sort_order' => ++$maxOrder,
             ]);
