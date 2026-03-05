@@ -17,22 +17,13 @@
             <div class="alert-error">{{ session('error') }}</div>
         @endif
 
-        @if($filterProgramci ?? null)
-            <div class="schedule-filter-banner" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;padding:0.75rem 1rem;background:rgba(201,42,42,0.15);border:1px solid rgba(201,42,42,0.3);border-radius:10px;margin-bottom:1rem;">
-                <span><strong>{{ $filterProgramci->ad }}</strong> programları gösteriliyor</span>
-                <a href="{{ route('admin.schedule.index', ['day' => $currentDay]) }}" class="btn-sm btn-muted">Filtreyi Kaldır</a>
-            </div>
-        @endif
-
         <div class="schedule-layout">
             <div class="schedule-sidebar">
                 <div class="day-tabs-wrapper">
                     <div class="day-tabs-label">Gün Seçimi</div>
                     <div class="day-tabs">
-                        @php $dayParams = ($filterProgramci ?? null) ? ['day' => 0, 'programci' => $filterProgramci->id] : ['day' => 0]; @endphp
                         @foreach($dayLabels as $d => $label)
-                            @php $dayParams['day'] = $d; @endphp
-                            <a href="{{ route('admin.schedule.index', $dayParams) }}" class="day-tab {{ $currentDay == $d ? 'active' : '' }}">{{ $label }}</a>
+                            <a href="{{ route('admin.schedule.index', ['day' => $d]) }}" class="day-tab {{ $currentDay == $d ? 'active' : '' }}">{{ $label }}</a>
                         @endforeach
                     </div>
                 </div>

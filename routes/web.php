@@ -150,7 +150,6 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('schedule')->name('admin.schedule.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\ScheduleController::class, 'index'])->name('index');
-            Route::get('programci/{programci}', [App\Http\Controllers\Admin\ScheduleController::class, 'byProgramci'])->name('by-programci');
             Route::post('/', [App\Http\Controllers\Admin\ScheduleController::class, 'store'])->name('store');
             Route::post('copy/{fromDay}', [App\Http\Controllers\Admin\ScheduleController::class, 'copy'])->name('copy');
             Route::post('presets', [App\Http\Controllers\Admin\ScheduleController::class, 'storePreset'])->name('presets.store');

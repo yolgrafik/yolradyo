@@ -43,7 +43,6 @@
                         </td>
                         <td style="padding:0.75rem;text-align:center;font-size:0.85rem;">{{ $p->sira }}</td>
                         <td style="padding:0.75rem;text-align:right;">
-                            <a href="{{ route('admin.schedule.by-programci', $p) }}" class="btn-sm btn-muted" title="Yayın Takvimi">Takvim</a>
                             <a href="{{ route('admin.programcilar.edit', $p) }}" class="btn-sm btn-edit">Düzenle</a>
                             <form action="{{ route('admin.programcilar.destroy', $p) }}" method="POST" class="d-inline" onsubmit="return confirm('Bu programcıyı silmek istediğinize emin misiniz?');">
                                 @csrf

@@ -868,12 +868,7 @@
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="{{ route('admin.schedule.index') }}" class="nav-item {{ request()->routeIs('admin.schedule.index') && !request()->get('programci') ? 'is-active' : '' }}">Yayın Takvimi</a></li>
-                            @if(isset($programcilar) && $programcilar->isNotEmpty())
-                                @foreach($programcilar as $p)
-                                <li style="padding-left:1rem;"><a href="{{ route('admin.schedule.by-programci', $p) }}" class="nav-item {{ (int)request()->get('programci') === $p->id ? 'is-active' : '' }}" style="font-size:0.9rem;">{{ $p->ad }}</a></li>
-                                @endforeach
-                            @endif
+                            <li><a href="{{ route('admin.schedule.index') }}" class="nav-item {{ request()->routeIs('admin.schedule.*') ? 'is-active' : '' }}">Yayın Takvimi</a></li>
                             <li><a href="{{ route('admin.programcilar.index') }}" class="nav-item {{ request()->routeIs('admin.programcilar.*') ? 'is-active' : '' }}">Programcı Listesi</a></li>
                             <li><a href="{{ route('admin.djs.index') }}" class="nav-item {{ request()->routeIs('admin.djs.*') ? 'is-active' : '' }}">DJ Profilleri</a></li>
                         </ul>

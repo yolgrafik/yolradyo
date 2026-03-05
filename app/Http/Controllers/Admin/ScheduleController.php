@@ -17,18 +17,11 @@ class ScheduleController extends Controller
     {
         $day = (int) $request->get('day', 0);
         $day = max(0, min(6, $day));
-        $programciId = $request->get('programci');
 
-        $query = Schedule::forDay($day)->with(['dj', 'programci']);
-        if ($programciId) {
-            $query->where('programci_id', $programciId);
-        }
-        $schedules = $query->ordered()->get();
-
+        $schedules = Schedule::forDay($day)->with(['dj', 'programci'])->ordered()->get();
         $djProfiles = DjProfile::orderBy('name')->get();
         $programcilar = Programci::orderBy('sira')->orderBy('ad')->get();
         $presets = SchedulePreset::orderBy('sort_order')->get();
-        $filterProgramci = $programciId ? Programci::find($programciId) : null;
 
         return view('admin.schedule.index', [
             'schedules' => $schedules,
@@ -37,13 +30,7 @@ class ScheduleController extends Controller
             'presets' => $presets,
             'currentDay' => $day,
             'dayLabels' => self::DAY_LABELS,
-            'filterProgramci' => $filterProgramci,
         ]);
-    }
-
-    public function byProgramci(Programci $programci)
-    {
-        return redirect()->route('admin.schedule.index', ['programci' => $programci->id]);
     }
 
     public function store(Request $request)
