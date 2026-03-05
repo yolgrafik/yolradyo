@@ -116,8 +116,6 @@
             text-transform: uppercase;
             line-height: 1.2;
             color: #fff;
-            text-shadow: 0 0 8px rgba(220,38,38,0.6), 0 0 16px rgba(220,38,38,0.3);
-            animation: slogan-glow 2.5s ease-in-out infinite;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -125,9 +123,17 @@
             text-overflow: ellipsis;
             word-break: break-word;
         }
-        @keyframes slogan-glow {
-            0%, 100% { text-shadow: 0 0 8px rgba(220,38,38,0.6), 0 0 16px rgba(220,38,38,0.3); }
-            50% { text-shadow: 0 0 12px rgba(59,130,246,0.7), 0 0 24px rgba(59,130,246,0.4); }
+        .nav-logo-slogan {
+            background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.7) 25%, #fff 50%, rgba(255,255,255,0.7) 75%, #fff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slogan-shimmer 2.5s ease-in-out infinite;
+        }
+        @keyframes slogan-shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
         .nav-center {
             flex: 1;
@@ -571,6 +577,7 @@
             .navbar.is-scrolled .nav-logo img { height: 48px; }
             .nav-logo { max-width: 180px; }
             .nav-logo-slogan-wrap { padding: 0.2rem 0.35rem; max-width: 75px; }
+            .nav-slogan-eq { display: none; }
             .nav-logo-slogan { font-size: 0.52rem; letter-spacing: 0.03em; }
             .nav-center {
                 position: fixed;
