@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Models\MenuItem;
 use App\Models\Setting;
 use App\Services\SettingsService;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
@@ -30,6 +32,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        ResetPassword::toMailUsing(function ($notifiable, $token) {
+            $url = url(route('password.reset', [
+                'token' => $token,
+                'email' => $notifiable->getEmailForPasswordReset(),
+            ], false));
+            $expire = config('auth.passwords.'.config('auth.defaults.passwords').'.expire', 60);
+            return (new MailMessage)
+                ->subject('Şifre Sıfırlama')
+                ->line('Hesabınız için şifre sıfırlama talebi aldık.')
+                ->action('Şifremi Sıfırla', $url)
+                ->line('Bu bağlantı :count dakika içinde geçerliliğini yitirecektir.', ['count' => $expire])
+                ->line('Bu talebi siz yapmadıysanız, herhangi bir işlem yapmanıza gerek yoktur.');
+        });
+
         RateLimiter::for('contact-messages', function ($request) {
             return Limit::perHour(5)
                 ->by($request->user()->id)

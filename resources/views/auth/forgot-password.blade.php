@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Giriş Yap')
+@section('title', 'Şifremi Unuttum')
 
 @push('styles')
 <style>
@@ -26,9 +26,6 @@
     font-size: 0.95rem;
 }
 .form-input:focus { outline: none; border-color: var(--ry-schedule-active); }
-.form-check { display: flex; align-items: center; gap: 0.5rem; }
-.form-check input { accent-color: var(--ry-btn-bg); }
-.form-check label { margin: 0; font-weight: 500; }
 .btn-submit {
     width: 100%;
     padding: 0.75rem 1.5rem;
@@ -46,7 +43,9 @@
 .auth-links a { color: var(--ry-schedule-active); text-decoration: none; font-weight: 600; }
 .auth-links a:hover { text-decoration: underline; }
 .alert-error { padding: 0.75rem 1rem; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); border-radius: 10px; color: #fca5a5; margin-bottom: 1rem; }
+.alert-success { padding: 0.75rem 1rem; background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); border-radius: 10px; color: #86efac; margin-bottom: 1rem; }
 .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.25rem; }
+.help-text { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
 .page-hero { padding: 2rem 1rem; background: var(--ry-header-bg); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); }
 .page-hero h1 { font-size: 1.5rem; font-weight: 700; color: #fff; margin: 0; text-align: center; }
 </style>
@@ -54,38 +53,28 @@
 
 @section('content')
 <section class="page-hero">
-    <h1>Giriş Yap</h1>
+    <h1>Şifremi Unuttum</h1>
 </section>
 <div class="auth-page">
     <div class="auth-card">
-        @if(session('message'))
-            <div class="alert-info" style="padding:0.75rem 1rem;background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);border-radius:10px;color:#93c5fd;margin-bottom:1rem;">{{ session('message') }}</div>
+        @if(session('status'))
+            <div class="alert-success">{{ session('status') }}</div>
         @endif
         @if($errors->any())
             <div class="alert-error">{{ $errors->first() }}</div>
         @endif
-        <form method="POST" action="{{ route('login') }}">
+        <p class="help-text" style="margin-bottom:1rem;">E-posta adresinizi girin, size şifre sıfırlama bağlantısı gönderelim.</p>
+        <form method="POST" action="{{ route('password.email') }}">
             @csrf
             <div class="form-group">
                 <label for="email">E-posta *</label>
                 <input type="email" name="email" id="email" class="form-input" value="{{ old('email') }}" required autofocus>
                 @error('email')<span class="form-error">{{ $message }}</span>@enderror
             </div>
-            <div class="form-group">
-                <label for="password">Şifre *</label>
-                <input type="password" name="password" id="password" class="form-input" required>
-                @error('password')<span class="form-error">{{ $message }}</span>@enderror
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" name="remember" id="remember">
-                <label for="remember">Beni hatırla</label>
-            </div>
-            <button type="submit" class="btn-submit">Giriş Yap</button>
+            <button type="submit" class="btn-submit">Bağlantı Gönder</button>
         </form>
         <div class="auth-links">
-            <a href="{{ route('password.request') }}">Şifremi unuttum</a>
-            <span style="margin:0 0.5rem;color:var(--muted);">|</span>
-            <a href="{{ route('register') }}">Hesabınız yok mu? Üye Ol</a>
+            <a href="{{ route('login') }}">Giriş sayfasına dön</a>
         </div>
     </div>
 </div>

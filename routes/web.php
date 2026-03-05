@@ -5,6 +5,10 @@ use App\Http\Controllers\FrontendController;
 
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLogin'])->name('login')->middleware('guest');
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::get('/sifremi-unuttum', [App\Http\Controllers\AuthController::class, 'showForgotPassword'])->name('password.request')->middleware('guest');
+Route::post('/sifremi-unuttum', [App\Http\Controllers\AuthController::class, 'sendResetLink'])->name('password.email');
+Route::get('/sifre-sifirla/{token}', [App\Http\Controllers\AuthController::class, 'showResetPassword'])->name('password.reset')->middleware('guest');
+Route::post('/sifre-sifirla', [App\Http\Controllers\AuthController::class, 'resetPassword'])->name('password.update');
 Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegister'])->name('register')->middleware('guest');
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout')->middleware('auth');
