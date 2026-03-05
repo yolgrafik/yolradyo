@@ -46,7 +46,7 @@
     }
     .module-card__title {
         font-size: 1.1rem;
-        font-weight: 700;
+        font-weight: 800;
         letter-spacing: 0.02em;
     }
     .module-card__body {
@@ -63,7 +63,8 @@
     }
     .module-card__item {
         font-size: 0.95rem;
-        color: var(--muted);
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.92);
         padding: 0.4rem 0;
         display: flex;
         align-items: center;
