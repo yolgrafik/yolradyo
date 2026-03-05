@@ -76,6 +76,12 @@ class AppServiceProvider extends ServiceProvider
                 $currentAdmin = \App\Models\Admin::with('role')->find(session('admin_id'));
             }
             $view->with('currentAdmin', $currentAdmin);
+
+            $programcilar = [];
+            if (Schema::hasTable('programcilar')) {
+                $programcilar = \App\Models\Programci::orderBy('sira')->orderBy('ad')->get();
+            }
+            $view->with('programcilar', $programcilar);
         });
     }
 }
