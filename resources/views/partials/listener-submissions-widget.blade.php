@@ -25,14 +25,15 @@
                             @elseif($item->type === 'video')
                                 @php
                                     $thumbUrl = $item->video_thumbnail_url ?? null;
-                                    $embedUrl = null;
+                                    $ytId = null;
                                     if ($item->video_url && preg_match('#(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)([a-zA-Z0-9_-]{11})#', $item->video_url, $m)) {
-                                        $embedUrl = 'https://www.youtube.com/embed/' . $m[1] . '?autoplay=1';
+                                        $ytId = $m[1];
                                     }
+                                    $embedUrl = $ytId ? 'https://www.youtube.com/embed/' . $ytId . '?autoplay=1&enablejsapi=1' : null;
                                     $videoSrc = $item->file_path ? $item->media_url : null;
                                     $playSrc = $embedUrl ?? $videoSrc;
                                 @endphp
-                                <div class="listener-slide__media listener-slide__media--video{{ $playSrc ? ' js-video-play' : '' }}" @if($playSrc) data-video-src="{{ $playSrc }}" data-video-type="{{ $embedUrl ? 'embed' : 'file' }}" @endif>
+                                <div class="listener-slide__media listener-slide__media--video{{ $playSrc ? ' js-video-play' : '' }}" @if($playSrc) data-video-src="{{ $playSrc }}" data-video-type="{{ $embedUrl ? 'embed' : 'file' }}" @if($ytId) data-yt-id="{{ $ytId }}" @endif @endif>
                                     <div class="listener-slide__thumb" @if($thumbUrl) style="background-image: url('{{ $thumbUrl }}');" @endif>
                                         <span class="listener-slide__play" aria-hidden="true">▶</span>
                                     </div>
@@ -70,13 +71,14 @@
 @endpush
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
 (function(){
     var el = document.getElementById('listenerSwiper');
     if (!el) return;
     var slideCount = el.querySelectorAll('.swiper-slide').length;
     if (slideCount < 1) return;
-    new Swiper('#listenerSwiper', {
+    var listenerSwiper = new Swiper('#listenerSwiper', {
         loop: true,
         slidesPerView: 1,
         slidesPerGroup: 1,
@@ -93,33 +95,76 @@
             clickable: true,
         },
     });
+    function resumeSlides() {
+        listenerSwiper.allowTouchMove = true;
+        listenerSwiper.allowSlideNext = true;
+        listenerSwiper.allowSlidePrev = true;
+        if (listenerSwiper.autoplay) listenerSwiper.autoplay.start();
+    }
+    function pauseSlides() {
+        listenerSwiper.allowTouchMove = false;
+        listenerSwiper.allowSlideNext = false;
+        listenerSwiper.allowSlidePrev = false;
+        if (listenerSwiper.autoplay) listenerSwiper.autoplay.stop();
+    }
     document.querySelectorAll('.listener-slide__media--video.js-video-play').forEach(function(media) {
         media.addEventListener('click', function(e) {
             if (media.classList.contains('is-playing')) return;
             var src = media.getAttribute('data-video-src');
             var type = media.getAttribute('data-video-type');
+            var ytId = media.getAttribute('data-yt-id');
             if (!src) return;
             var thumb = media.querySelector('.listener-slide__thumb');
             var player = media.querySelector('.listener-slide__video-player');
             if (player) return;
             player = document.createElement('div');
             player.className = 'listener-slide__video-player is-playing';
-            if (type === 'embed') {
-                var iframe = document.createElement('iframe');
-                iframe.src = src;
-                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                iframe.allowFullscreen = true;
-                player.appendChild(iframe);
+            if (type === 'embed' && ytId) {
+                var playerDiv = document.createElement('div');
+                playerDiv.id = 'listener-yt-' + Math.random().toString(36).slice(2);
+                player.appendChild(playerDiv);
+                thumb.parentNode.insertBefore(player, thumb);
+                media.classList.add('is-playing');
+                pauseSlides();
+                function initYT() {
+                    new YT.Player(playerDiv.id, {
+                        videoId: ytId,
+                        width: '100%',
+                        height: '100%',
+                        playerVars: { autoplay: 1 },
+                        events: {
+                            onStateChange: function(event) {
+                                if (event.data === 0) { resumeSlides(); }
+                            }
+                        }
+                    });
+                }
+                if (typeof YT !== 'undefined' && YT.Player) {
+                    initYT();
+                } else {
+                    var attempts = 0;
+                    var ytCheck = setInterval(function() {
+                        if (typeof YT !== 'undefined' && YT.Player) {
+                            clearInterval(ytCheck);
+                            initYT();
+                        } else if (++attempts > 100) {
+                            clearInterval(ytCheck);
+                            resumeSlides();
+                        }
+                    }, 50);
+                }
             } else {
                 var video = document.createElement('video');
                 video.src = src;
                 video.controls = true;
                 video.autoplay = true;
                 video.playsInline = true;
+                video.addEventListener('ended', function() { resumeSlides(); });
                 player.appendChild(video);
+                thumb.parentNode.insertBefore(player, thumb);
+                media.classList.add('is-playing');
+                pauseSlides();
             }
-            thumb.parentNode.insertBefore(player, thumb);
-            media.classList.add('is-playing');
         });
     });
 })();
