@@ -67,7 +67,7 @@
 @push('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <style>
-.programcilar-section { margin-top: 1.5rem; padding: 0; }
+.programcilar-section { margin-top: calc(1.5rem - 3%); padding: 0; }
 .programcilar-section__header { padding: 0.75rem 1rem; border-radius: var(--ry-radius); background: color-mix(in srgb, var(--ry-bar-bg) 85%, transparent); border: 1px solid var(--ry-border); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); margin-bottom: 1rem; }
 .programcilar-section__title { font-size: 1.1rem; font-weight: 700; color: var(--ry-text); margin: 0; font-family: inherit; }
 .programcilar-swiper-wrap { position: relative; width: 100%; overflow: hidden; }

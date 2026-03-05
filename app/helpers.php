@@ -1,9 +1,10 @@
 <?php
 
-if (!function_exists('setting')) {
-    function setting(string $key, mixed $default = null): mixed
+if (!function_exists('brand_logo_url')) {
+    function brand_logo_url(?string $path = null): string
     {
-        return app(\App\Services\SettingsService::class)->get($key, $default);
+        $path = $path ?? app(\App\Services\SettingsService::class)->get('brand_logo_path');
+        return $path ? asset('storage/' . $path) : asset('logo.png');
     }
 }
 

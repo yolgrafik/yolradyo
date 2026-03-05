@@ -16,10 +16,11 @@ class SettingsService
 
         return Cache::remember($cacheKey, $this->cacheTtl, function () use ($key, $default) {
             $row = DB::table($this->table)->where('key', $key)->first();
-            if (!$row) {
-                return $default;
+            if ($row) {
+                return $this->castValue($row->value, $row->type ?? 'text');
             }
-            return $this->castValue($row->value, $row->type ?? 'text');
+            $configDefault = config('site.defaults.' . $key);
+            return $configDefault !== null ? $configDefault : $default;
         });
     }
 

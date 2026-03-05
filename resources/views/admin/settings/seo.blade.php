@@ -250,6 +250,14 @@
                         class="form-input form-textarea">{{ old('schema_description', $seo_schema_description ?? '') }}</textarea>
                     @error('schema_description')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
+                <div class="form-group">
+                    <label for="schema_json">Özel JSON-LD (boş bırakılırsa otomatik oluşturulur)</label>
+                    <textarea name="schema_json" id="schema_json" rows="6"
+                        placeholder='{"@context":"https://schema.org","@graph":[...]}'
+                        class="form-input form-textarea font-mono">{{ old('schema_json', is_string($seo_schema_json ?? null) ? $seo_schema_json : '') }}</textarea>
+                    <span class="form-hint">Geçerli JSON-LD. Boş bırakılırsa Organization, WebSite ve RadioStation şemaları otomatik eklenir.</span>
+                    @error('schema_json')<span class="form-error">{{ $message }}</span>@enderror
+                </div>
             </div>
         </section>
 
@@ -318,6 +326,7 @@
 .seo-settings-page .form-input { width: 100%; padding: 0.7rem 1rem; font-size: 0.95rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; color: #f0f2f5; }
 .seo-settings-page .form-input:focus { outline: none; border-color: var(--accent); }
 .seo-settings-page .form-textarea { resize: vertical; min-height: 88px; }
+.seo-settings-page .font-mono { font-family: ui-monospace, monospace; font-size: 0.85rem; }
 .seo-settings-page .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.4rem; display: block; }
 .seo-settings-page .form-hint { font-size: 0.8rem; color: #8b95a5; margin-top: 0.25rem; display: block; }
 .seo-settings-page .form-check { font-size: 0.85rem; color: #8b95a5; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top: 0.5rem; }

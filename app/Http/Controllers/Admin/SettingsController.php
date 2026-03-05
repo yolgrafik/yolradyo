@@ -145,6 +145,7 @@ class SettingsController extends Controller
             'seo_sitemap_url' => $this->settings->get('seo_sitemap_url'),
             'seo_geo_region' => $this->settings->get('seo_geo_region'),
             'seo_meta_referrer' => $this->settings->get('seo_meta_referrer', ''),
+            'seo_schema_json' => $this->settings->get('seo_schema_json'),
         ]);
     }
 
@@ -178,6 +179,7 @@ class SettingsController extends Controller
             'sitemap_url' => 'nullable|url|max:500',
             'geo_region' => 'nullable|string|max:10',
             'meta_referrer' => 'nullable|string|max:50',
+            'schema_json' => 'nullable|string|max:8000',
         ]);
 
         $items = [
@@ -205,6 +207,7 @@ class SettingsController extends Controller
             'seo_sitemap_url' => ['value' => trim($validated['sitemap_url'] ?? ''), 'type' => 'text'],
             'seo_geo_region' => ['value' => trim($validated['geo_region'] ?? ''), 'type' => 'text'],
             'seo_meta_referrer' => ['value' => trim($validated['meta_referrer'] ?? ''), 'type' => 'text'],
+            'seo_schema_json' => ['value' => trim($validated['schema_json'] ?? ''), 'type' => 'text'],
         ];
         $this->settings->setMany($items);
 
