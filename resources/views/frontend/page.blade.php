@@ -7,7 +7,8 @@
     .page-hero {
         padding: 2.5rem 1.5rem;
         background: var(--ry-header-bg);
-        border-bottom: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
     }
     .page-hero h1 {
         font-size: 1.75rem;
