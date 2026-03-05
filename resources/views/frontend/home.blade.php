@@ -897,7 +897,6 @@
                 </a>
                 @endif
             </div>
-            @include('partials.listener-submissions-widget')
             <div class="live-dj-card" id="liveDjCard">
                 <div class="live-banner">CANLI YAYINDA</div>
                 <div class="live-content" id="liveDjCardContent">
@@ -908,6 +907,7 @@
                     <div class="live-listeners">👥 <span class="cc_streaminfo" data-type="listeners" data-username="radyoyol"></span> dinleyici</div>
                 </div>
             </div>
+            @include('partials.listener-submissions-widget')
         </div>
     </div>
 </div>
