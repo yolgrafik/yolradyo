@@ -39,6 +39,7 @@
         width: 100%;
         min-height: 386px;
         overflow: hidden;
+        perspective: 1200px;
     }
     .home-slider__slide {
         position: absolute;
@@ -49,19 +50,35 @@
         justify-content: flex-start;
         background-size: cover;
         background-position: center;
-        transform: scale(1.03);
-        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: scale(1);
+        transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), filter 0.9s ease;
+        filter: blur(0);
+        backface-visibility: hidden;
     }
     .home-slider__slide.is-active {
         opacity: 1;
         z-index: 1;
         transform: scale(1);
+        filter: blur(0);
     }
-    .home-slider__slide.is-exiting {
-        opacity: 0;
-        transform: scale(0.98);
-        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    .home-slider__slide.is-exiting { }
+    .home-slider__slide.effect-fade.is-exiting { opacity: 0; }
+    .home-slider__slide.effect-fade:not(.is-active) { opacity: 0; }
+    .home-slider__slide.effect-slide-left { transform: translateX(100%); }
+    .home-slider__slide.effect-slide-left.is-active { transform: translateX(0); }
+    .home-slider__slide.effect-slide-left.is-exiting { transform: translateX(-100%); }
+    .home-slider__slide.effect-slide-right { transform: translateX(-100%); }
+    .home-slider__slide.effect-slide-right.is-active { transform: translateX(0); }
+    .home-slider__slide.effect-slide-right.is-exiting { transform: translateX(100%); }
+    .home-slider__slide.effect-zoom { transform: scale(0.7); opacity: 0; }
+    .home-slider__slide.effect-zoom.is-active { transform: scale(1); opacity: 1; }
+    .home-slider__slide.effect-zoom.is-exiting { transform: scale(1.1); opacity: 0; }
+    .home-slider__slide.effect-blur { filter: blur(12px); opacity: 0; }
+    .home-slider__slide.effect-blur.is-active { filter: blur(0); opacity: 1; }
+    .home-slider__slide.effect-blur.is-exiting { filter: blur(8px); opacity: 0; }
+    .home-slider__slide.effect-rotate { transform: perspective(1200px) rotateY(-95deg); opacity: 0; }
+    .home-slider__slide.effect-rotate.is-active { transform: perspective(1200px) rotateY(0); opacity: 1; }
+    .home-slider__slide.effect-rotate.is-exiting { transform: perspective(1200px) rotateY(95deg); opacity: 0; }
     .home-slider__slide::before {
         content: '';
         position: absolute;
@@ -866,24 +883,44 @@
         var current = 0;
         var total = slides.length;
         var isTransitioning = false;
+        var effects = ['effect-fade', 'effect-slide-left', 'effect-slide-right', 'effect-zoom', 'effect-blur', 'effect-rotate'];
+        var effectIndex = 0;
+
+        function getNextEffect() {
+            var e = effects[effectIndex % effects.length];
+            effectIndex++;
+            return e;
+        }
 
         function goTo(i) {
             if (isTransitioning || i === current) return;
             isTransitioning = true;
             var prev = current;
             var next = (i + total) % total;
+            var effect = getNextEffect();
+            var dir = next > prev || (prev === total - 1 && next === 0) ? 1 : -1;
+            if (effect === 'effect-slide-left' && dir < 0) effect = 'effect-slide-right';
+            else if (effect === 'effect-slide-right' && dir < 0) effect = 'effect-slide-left';
             slides[prev].classList.remove('is-active');
-            slides[prev].classList.add('is-exiting');
-            slides[next].classList.add('is-active');
+            slides[prev].className = slides[prev].className.replace(/\beffect-\w+/g, '').trim();
+            slides[prev].classList.add(effect, 'is-exiting');
+            slides[next].className = slides[next].className.replace(/\beffect-\w+/g, '').trim();
+            slides[next].classList.add(effect);
             slides[next].classList.remove('is-exiting');
             current = next;
             dots.forEach(function(d, idx) {
                 d.classList.toggle('is-active', idx === current);
             });
+            requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                    slides[next].classList.add('is-active');
+                });
+            });
             setTimeout(function() {
-                slides[prev].classList.remove('is-exiting');
+                slides[prev].classList.remove('is-exiting', effect);
+                slides[next].classList.remove(effect);
                 isTransitioning = false;
-            }, 800);
+            }, 950);
         }
 
         dots.forEach(function(dot, i) {
