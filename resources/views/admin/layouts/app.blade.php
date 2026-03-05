@@ -793,8 +793,8 @@
                             <li><a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Kullanıcı Yönetimi</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section {{ request()->routeIs('admin.members.*', 'admin.member-submissions.*', 'admin.member-settings.*', 'admin.mail-settings.*', 'admin.forum.*') ? 'is-open' : '' }}" data-section="uye">
-                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.members.*', 'admin.member-submissions.*', 'admin.member-settings.*', 'admin.mail-settings.*', 'admin.forum.*') ? 'true' : 'false' }}">
+                    <div class="nav-section {{ request()->routeIs('admin.members.*', 'admin.member-submissions.*', 'admin.member-settings.*', 'admin.forum.*') ? 'is-open' : '' }}" data-section="uye">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.members.*', 'admin.member-submissions.*', 'admin.member-settings.*', 'admin.forum.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                             <span>Üye Yönetimi</span>
                             <span class="nav-section__chevron">&#9660;</span>
@@ -803,7 +803,6 @@
                             <li><a href="{{ route('admin.members.index') }}" class="nav-item {{ request()->routeIs('admin.members.*') ? 'is-active' : '' }}">Üyeler</a></li>
                             <li><a href="{{ route('admin.member-submissions.index') }}" class="nav-item {{ request()->routeIs('admin.member-submissions.*') ? 'is-active' : '' }}">Üye Gönderileri</a></li>
                             <li><a href="{{ route('admin.member-settings.index') }}" class="nav-item {{ request()->routeIs('admin.member-settings.*') ? 'is-active' : '' }}">Üye Ayarları</a></li>
-                            <li><a href="{{ route('admin.mail-settings.index') }}" class="nav-item {{ request()->routeIs('admin.mail-settings.*') ? 'is-active' : '' }}">Mail Ayarları</a></li>
                             <li><a href="{{ route('admin.forum.posts') }}" class="nav-item {{ request()->routeIs('admin.forum.posts') ? 'is-active' : '' }}">Forum Gönderileri</a></li>
                             <li><a href="{{ route('admin.forum.comments') }}" class="nav-item {{ request()->routeIs('admin.forum.comments') ? 'is-active' : '' }}">Forum Yorumları</a></li>
                         </ul>
@@ -928,8 +927,8 @@
                             <li><a href="{{ route('admin.settings.theme') }}" class="nav-item {{ request()->routeIs('admin.settings.theme') ? 'is-active' : '' }}">Tema & Renk Ayarlari</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section {{ request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.activity-logs.*', 'admin.security.*') ? 'is-open' : '' }}" data-section="kullanici">
-                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.activity-logs.*', 'admin.security.*') ? 'true' : 'false' }}">
+                    <div class="nav-section {{ request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.activity-logs.*', 'admin.security.*', 'admin.mail-settings.*') ? 'is-open' : '' }}" data-section="kullanici">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.activity-logs.*', 'admin.security.*', 'admin.mail-settings.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                             <span>Kullanici Yonetimi</span>
                             <span class="nav-section__chevron">&#9660;</span>
@@ -939,6 +938,7 @@
                             <li><a href="{{ route('admin.roles.index') }}" class="nav-item {{ request()->routeIs('admin.roles.*') ? 'is-active' : '' }}">Rol & Yetkiler</a></li>
                             <li><a href="{{ route('admin.activity-logs.index') }}" class="nav-item {{ request()->routeIs('admin.activity-logs.*') ? 'is-active' : '' }}">Aktivite Loglari</a></li>
                             <li><a href="{{ route('admin.security.2fa') }}" class="nav-item {{ request()->routeIs('admin.security.*') ? 'is-active' : '' }}">2FA Guvenlik</a></li>
+                            <li><a href="{{ route('admin.mail-settings.index') }}" class="nav-item {{ request()->routeIs('admin.mail-settings.*') ? 'is-active' : '' }}">Mail Ayarları</a></li>
                         </ul>
                     </div>
                 </nav>
