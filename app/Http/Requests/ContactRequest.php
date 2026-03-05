@@ -22,7 +22,11 @@ class ContactRequest extends FormRequest
             'subject' => ['required', 'string', 'max:200'],
             'message' => ['required', 'string', 'min:20', 'max:2000'],
             'website' => ['nullable', 'string', 'max:1'],
-            'captcha_answer' => ['required', 'in:5'],
+            'captcha_answer' => ['required', function ($attr, $value, $fail) {
+                if (trim($value) !== '5') {
+                    $fail('Güvenlik sorusu yanlış.');
+                }
+            }],
         ];
     }
 
