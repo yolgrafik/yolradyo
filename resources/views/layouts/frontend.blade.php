@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     @php
         $siteSettings = $siteSettings ?? [];
         $siteName = $siteSettings['site_name'] ?? 'RADYOYOL';
@@ -131,19 +131,21 @@
         }
         .nav-center {
             flex: 1;
-            flex-shrink: 0;
             min-width: 0;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            justify-content: space-between;
+            gap: 0.75rem;
         }
         .nav-menu {
-            flex: 1;
+            flex: 1 1 auto;
+            min-width: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.15rem;
             list-style: none;
+            flex-wrap: nowrap;
         }
         .nav-menu > li > a {
             color: #ffffff;
@@ -155,6 +157,9 @@
             border-radius: 8px;
             position: relative;
             transition: color 0.2s ease, background 0.2s ease;
+            white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         .nav-menu > li > a::after {
             content: '';
@@ -182,7 +187,8 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: flex-end;
+            gap: 0.5rem;
             flex-shrink: 0;
         }
         .nav-social {
@@ -250,6 +256,8 @@
             font-size: 0.8rem; font-weight: 600; color: #fff; text-decoration: none;
             border-radius: 8px; border: none; cursor: pointer;
             background: rgba(255,255,255,0.1); transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         .header-auth-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
         .header-auth-register { background: var(--ry-btn-bg); }
@@ -267,6 +275,8 @@
             background: rgba(15,19,25,0.6); border: 1px solid rgba(255,255,255,0.1);
             border-radius: 999px; color: #fff; cursor: pointer;
             transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         .header-more-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
         .header-more-btn i { font-size: 1.25rem; }
@@ -639,7 +649,7 @@
                 align-items: stretch;
                 gap: 0.25rem;
             }
-            .nav-menu > li > a { padding: 0.75rem 1rem; font-size: 0.9rem; }
+            .nav-menu > li > a { padding: 0.75rem 1rem; font-size: 0.9rem; white-space: normal; min-height: 44px; display: flex; align-items: center; }
             .nav-dropdown-menu {
                 position: static;
                 opacity: 1;
@@ -652,7 +662,7 @@
             }
             .nav-center .nav-right {
                 display: flex;
-                justify-content: center;
+                justify-content: flex-end;
                 flex-wrap: wrap;
                 gap: 0.75rem;
                 margin-top: 1.5rem;
@@ -682,6 +692,15 @@
             .nav-logo { max-width: 200px; }
             .nav-logo-slogan-wrap { max-width: 90px; padding: 0.15rem 0.3rem; }
             .nav-logo-slogan { font-size: clamp(0.45rem, 3vw, 0.55rem); }
+            .nav-center { width: min(300px, 100vw - 2rem); }
+            .header-more-dropdown { min-width: 180px; right: 0; left: auto; }
+            .header-auth-btn { min-height: 44px; }
+        }
+        @media (min-width: 993px) and (max-width: 1200px) {
+            .nav-menu > li > a { font-size: 0.75rem; padding: 0.45rem 0.6rem; }
+            .header-auth-btn { font-size: 0.75rem; padding: 0.35rem 0.6rem; min-height: 40px; }
+            .navbar .header-social-icon { width: 36px; height: 36px; }
+            .navbar .header-social-icon i { font-size: 1rem; }
         }
         @media (min-width: 993px) {
             .nav-toggle { display: none; }
@@ -886,11 +905,11 @@
                         <li><a href="{{ url('/galeri') }}" class="{{ request()->is('galeri') ? 'active' : '' }}">Foto Galeri</a></li>
                         <li><a href="{{ url('/reklam') }}" class="{{ request()->is('reklam') ? 'active' : '' }}">Reklam & İşbirliği</a></li>
                         <li class="nav-dropdown">
-                            <a href="{{ url('/hakkimizda/biz-kimiz') }}" class="{{ request()->is('hakkimizda/*') ? 'active' : '' }}">Hakkimizda<span class="arrow">▾</span></a>
+                            <a href="{{ url('/hakkimizda/biz-kimiz') }}" class="{{ request()->is('hakkimizda/*') ? 'active' : '' }}">Hakkımızda<span class="arrow">▾</span></a>
                             <ul class="nav-dropdown-menu">
                                 <li><a href="{{ url('/hakkimizda/biz-kimiz') }}">Biz Kimiz</a></li>
                                 <li><a href="{{ url('/hakkimizda/misyon') }}">Misyon & Vizyon</a></li>
-                                <li><a href="{{ url('/hakkimizda/politika') }}">Yayin Politikamiz</a></li>
+                                <li><a href="{{ url('/hakkimizda/politika') }}">Yayın Politikamız</a></li>
                             </ul>
                         </li>
                         <li><a href="{{ url('/iletisim') }}" class="{{ request()->is('iletisim') ? 'active' : '' }}">İletişim</a></li>
