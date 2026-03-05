@@ -405,20 +405,22 @@ INSERT INTO `menu_items` (`location`, `title`, `type`, `url`, `parent_id`, `sort
 ('header', 'Anasayfa', 'page', '/', NULL, 0, 0, 1, NOW(), NOW()),
 ('header', 'Programlar', 'page', '/programlar', NULL, 1, 0, 1, NOW(), NOW()),
 ('header', 'Haberler', 'page', '/haberler', NULL, 2, 0, 1, NOW(), NOW()),
-('header', 'Video Galeri', 'page', '/videolar', NULL, 3, 0, 1, NOW(), NOW()),
-('header', 'Foto Galeri', 'page', '/galeri', NULL, 4, 0, 1, NOW(), NOW()),
-('header', 'Reklam & Isbirligi', 'page', '/reklam', NULL, 5, 0, 1, NOW(), NOW()),
-('header', 'Hakkimizda', 'page', '/hakkimizda/biz-kimiz', NULL, 6, 0, 1, NOW(), NOW()),
-('header', 'Iletisim', 'page', '/iletisim', NULL, 8, 0, 1, NOW(), NOW()),
+('header', 'Medya', 'page', '/videolar', NULL, 3, 0, 1, NOW(), NOW()),
+('header', 'Reklam & Isbirligi', 'page', '/reklam', NULL, 4, 0, 1, NOW(), NOW()),
+('header', 'Hakkimizda', 'page', '/hakkimizda/biz-kimiz', NULL, 5, 0, 1, NOW(), NOW()),
+('header', 'Iletisim', 'page', '/iletisim', NULL, 6, 0, 1, NOW(), NOW()),
 ('footer', 'Gizlilik Politikasi', 'page', '/gizlilik', NULL, 0, 0, 1, NOW(), NOW()),
 ('footer', 'Cerez Politikasi', 'page', '/cerez', NULL, 1, 0, 1, NOW(), NOW()),
 ('footer', 'Kullanim Sartlari', 'page', '/kullanim', NULL, 2, 0, 1, NOW(), NOW()),
 ('footer', 'KVKK Aydinlatma Metni', 'page', '/kvkk', NULL, 3, 0, 1, NOW(), NOW());
 
+-- Medya alt menüleri (parent_id=4 Medya), Hakkımızda alt menüleri (parent_id=6 Hakkımızda)
 INSERT INTO `menu_items` (`location`, `title`, `type`, `url`, `parent_id`, `sort_order`, `target_blank`, `is_active`, `created_at`, `updated_at`) VALUES
-('header', 'Biz Kimiz', 'page', '/hakkimizda/biz-kimiz', 7, 0, 0, 1, NOW(), NOW()),
-('header', 'Misyon & Vizyon', 'page', '/hakkimizda/misyon', 7, 1, 0, 1, NOW(), NOW()),
-('header', 'Yayin Politikamiz', 'page', '/hakkimizda/politika', 7, 2, 0, 1, NOW(), NOW());
+('header', 'Video Galeri', 'page', '/videolar', 4, 0, 0, 1, NOW(), NOW()),
+('header', 'Foto Galeri', 'page', '/galeri', 4, 1, 0, 1, NOW(), NOW()),
+('header', 'Biz Kimiz', 'page', '/hakkimizda/biz-kimiz', 6, 0, 0, 1, NOW(), NOW()),
+('header', 'Misyon & Vizyon', 'page', '/hakkimizda/misyon', 6, 1, 0, 1, NOW(), NOW()),
+('header', 'Yayin Politikamiz', 'page', '/hakkimizda/politika', 6, 2, 0, 1, NOW(), NOW());
 
 -- Admin giriş: admin@yolcu.com / password
 -- Şifre değiştirmek: php artisan tinker
