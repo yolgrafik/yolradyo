@@ -801,7 +801,7 @@
         .request-modal { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
         .request-modal.is-open { opacity: 1; visibility: visible; }
         .request-modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.7); cursor: pointer; }
-        .request-modal__box { position: relative; background: var(--ry-surface); border: 1px solid var(--ry-border); border-radius: var(--ry-radius); padding: 1.5rem; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+        .request-modal__box { position: relative; background: var(--ry-surface); border: 1px solid var(--ry-border); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: var(--ry-radius); padding: 1.5rem; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
         .request-modal__close { position: absolute; top: .75rem; right: .75rem; background: none; border: none; color: var(--ry-text-muted); font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 4px; }
         .request-modal__close:hover { color: var(--ry-text); }
         .request-modal__title { margin-bottom: 1rem; font-size: 1.25rem; }

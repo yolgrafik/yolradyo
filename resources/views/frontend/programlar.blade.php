@@ -9,7 +9,7 @@
 @push('styles')
 <style>
     .programlar-layout { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
-    .programlar-hero { padding: 2rem 0; margin-bottom: 2rem; border-bottom: 1px solid var(--ry-border); }
+    .programlar-hero { padding: 2rem 0; margin-bottom: 2rem; border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); }
     .programlar-hero h1 { font-size: 2rem; font-weight: 700; color: #fff; margin: 0 0 0.5rem 0; }
     .programlar-hero p { color: var(--muted); font-size: 1rem; margin: 0; }
     .dj-section { margin-bottom: 2.5rem; }
