@@ -158,7 +158,7 @@ class SettingsController extends Controller
             'meta_keywords' => 'nullable|string|max:500',
             'meta_author' => 'nullable|string|max:100',
             'meta_robots' => ['nullable', 'string', Rule::in(['index,follow', 'noindex,nofollow', 'index,nofollow', 'noindex,follow'])],
-            'canonical_url' => ['nullable', 'string', 'max:500', Rule::when(fn ($v) => filled(trim($v ?? '')), ['url'])],
+            'canonical_url' => 'nullable|string|max:500',
             'og_image_file' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
             'remove_og_image' => 'nullable|boolean',
             'og_title' => 'nullable|string|max:95',
@@ -172,20 +172,37 @@ class SettingsController extends Controller
             'bing_site_verification' => 'nullable|string|max:100',
             'yandex_verification' => 'nullable|string|max:100',
             'schema_organization_name' => 'nullable|string|max:150',
-            'schema_organization_url' => ['nullable', 'string', 'max:500', Rule::when(fn ($v) => filled(trim($v ?? '')), ['url'])],
-            'schema_organization_logo' => ['nullable', 'string', 'max:500', Rule::when(fn ($v) => filled(trim($v ?? '')), ['url'])],
+            'schema_organization_url' => 'nullable|string|max:500',
+            'schema_organization_logo' => 'nullable|string|max:500',
             'schema_description' => 'nullable|string|max:500',
             'schema_radio_station' => 'nullable|boolean',
-            'sitemap_url' => ['nullable', 'string', 'max:500', Rule::when(fn ($v) => filled(trim($v ?? '')), ['url'])],
+            'sitemap_url' => 'nullable|string|max:500',
             'geo_region' => 'nullable|string|max:10',
             'meta_referrer' => 'nullable|string|max:50',
-            'schema_json' => ['nullable', 'string', 'max:8000', Rule::when(fn ($v) => filled(trim($v ?? '')), [function ($attr, $value, $fail) {
-                json_decode($value);
-                if (json_last_error() !== JSON_ERROR_NONE) {
-                    $fail('Geçerli JSON formatı girin.');
-                }
-            }])],
+            'schema_json' => 'nullable|string|max:8000',
+        ], [
+            'meta_title.max' => 'Meta başlık en fazla 60 karakter olabilir.',
+            'meta_description.max' => 'Meta açıklama en fazla 160 karakter olabilir.',
         ]);
+
+        if (filled(trim($validated['canonical_url'] ?? '')) && ! filter_var(trim($validated['canonical_url']), FILTER_VALIDATE_URL)) {
+            return redirect()->route('admin.settings.seo')->withInput()->withErrors(['canonical_url' => 'Geçerli bir URL girin.']);
+        }
+        if (filled(trim($validated['schema_organization_url'] ?? '')) && ! filter_var(trim($validated['schema_organization_url']), FILTER_VALIDATE_URL)) {
+            return redirect()->route('admin.settings.seo')->withInput()->withErrors(['schema_organization_url' => 'Geçerli bir URL girin.']);
+        }
+        if (filled(trim($validated['schema_organization_logo'] ?? '')) && ! filter_var(trim($validated['schema_organization_logo']), FILTER_VALIDATE_URL)) {
+            return redirect()->route('admin.settings.seo')->withInput()->withErrors(['schema_organization_logo' => 'Geçerli bir URL girin.']);
+        }
+        if (filled(trim($validated['sitemap_url'] ?? '')) && ! filter_var(trim($validated['sitemap_url']), FILTER_VALIDATE_URL)) {
+            return redirect()->route('admin.settings.seo')->withInput()->withErrors(['sitemap_url' => 'Geçerli bir URL girin.']);
+        }
+        if (filled(trim($validated['schema_json'] ?? ''))) {
+            json_decode($validated['schema_json']);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                return redirect()->route('admin.settings.seo')->withInput()->withErrors(['schema_json' => 'Geçerli JSON formatı girin.']);
+            }
+        }
 
         $items = [
             'seo_meta_title' => ['value' => trim($validated['meta_title'] ?? ''), 'type' => 'text'],
