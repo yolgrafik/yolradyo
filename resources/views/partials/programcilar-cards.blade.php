@@ -58,23 +58,23 @@
 
 @push('styles')
 <style>
-.programcilar-section { margin-top: 1.5rem; padding: 1.25rem; background: linear-gradient(135deg, #0d2818 0%, #0a1f12 100%); border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); }
+.programcilar-section { margin-top: 1.5rem; padding: 1.25rem; background: var(--ry-bar-bg); border-radius: var(--ry-radius); border: 1px solid var(--ry-border); }
 .programcilar-section__header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-.programcilar-section__title { font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0; }
+.programcilar-section__title { font-size: 1.1rem; font-weight: 700; color: var(--ry-text); margin: 0; font-family: inherit; }
 .programcilar-nav { display: flex; gap: 0.5rem; }
-.programcilar-nav__btn { width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.programcilar-nav__btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); }
+.programcilar-nav__btn { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--ry-border); background: rgba(255,255,255,0.08); color: var(--ry-text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.programcilar-nav__btn:hover { background: rgba(255,255,255,0.15); border-color: var(--ry-line-color); }
 .programcilar-carousel { overflow: hidden; }
 .programcilar-track { display: flex; gap: 1rem; transition: transform 0.3s ease; }
-.programci-card { flex: 0 0 calc(25% - 0.75rem); min-width: 0; display: flex; flex-direction: column; background: rgba(255,255,255,0.95); border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit; transition: all 0.2s; box-shadow: 0 4px 24px rgba(0,0,0,0.15); }
-.programci-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
-.programci-card__img-wrap { width: 100%; aspect-ratio: 1; background: #2a2d32; overflow: hidden; }
+.programci-card { flex: 0 0 calc(25% - 0.75rem); min-width: 0; display: flex; flex-direction: column; background: var(--ry-surface); border-radius: var(--ry-radius); overflow: hidden; text-decoration: none; color: inherit; transition: all 0.2s; border: 1px solid var(--ry-border); }
+.programci-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); border-color: var(--ry-line-color); }
+.programci-card__img-wrap { width: 100%; aspect-ratio: 1; background: var(--ry-schedule-bg); overflow: hidden; }
 .programci-card__img { width: 100%; height: 100%; object-fit: cover; }
-.programci-card__img-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #c92a2a, #b30000); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; }
-.programci-card__body { padding: 1rem; text-align: center; }
-.programci-card__name { font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin: 0 0 0.75rem 0; }
+.programci-card__img-placeholder { width: 100%; height: 100%; background: var(--ry-schedule-active); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; font-family: inherit; }
+.programci-card__body { padding: 1rem; text-align: center; background: color-mix(in srgb, var(--ry-surface) 80%, var(--ry-bar-bg)); }
+.programci-card__name { font-size: 1.05rem; font-weight: 700; color: var(--ry-text); margin: 0 0 0.75rem 0; font-family: inherit; }
 .programci-card__social { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
-.programci-card__social-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.2s; }
+.programci-card__social-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: transform 0.2s; }
 .programci-card__social-btn:hover { transform: scale(1.1); }
 .programci-card__social-btn--fb { background: #1877f2; color: #fff; }
 .programci-card__social-btn--ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
