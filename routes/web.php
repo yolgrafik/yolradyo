@@ -132,6 +132,9 @@ Route::prefix('admin')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\ScheduleController::class, 'index'])->name('index');
             Route::post('/', [App\Http\Controllers\Admin\ScheduleController::class, 'store'])->name('store');
             Route::post('copy/{fromDay}', [App\Http\Controllers\Admin\ScheduleController::class, 'copy'])->name('copy');
+            Route::post('presets', [App\Http\Controllers\Admin\ScheduleController::class, 'storePreset'])->name('presets.store');
+            Route::put('presets/{preset}', [App\Http\Controllers\Admin\ScheduleController::class, 'updatePreset'])->name('presets.update');
+            Route::delete('presets/{preset}', [App\Http\Controllers\Admin\ScheduleController::class, 'destroyPreset'])->name('presets.destroy');
             Route::put('{schedule}', [App\Http\Controllers\Admin\ScheduleController::class, 'update'])->name('update');
             Route::delete('{schedule}', [App\Http\Controllers\Admin\ScheduleController::class, 'destroy'])->name('destroy');
             Route::post('{schedule}/toggle', [App\Http\Controllers\Admin\ScheduleController::class, 'toggle'])->name('toggle');

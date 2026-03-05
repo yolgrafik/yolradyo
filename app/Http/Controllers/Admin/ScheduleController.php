@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DjProfile;
 use App\Models\Schedule;
+use App\Models\SchedulePreset;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -18,10 +19,12 @@ class ScheduleController extends Controller
 
         $schedules = Schedule::forDay($day)->with('dj')->ordered()->get();
         $djProfiles = DjProfile::orderBy('name')->get();
+        $presets = SchedulePreset::orderBy('sort_order')->get();
 
         return view('admin.schedule.index', [
             'schedules' => $schedules,
             'djProfiles' => $djProfiles,
+            'presets' => $presets,
             'currentDay' => $day,
             'dayLabels' => self::DAY_LABELS,
         ]);
@@ -112,5 +115,42 @@ class ScheduleController extends Controller
 
         return redirect()->route('admin.schedule.index', ['day' => $toDay])
             ->with('success', 'Gün kopyalandı.');
+    }
+
+    public function storePreset(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+        ]);
+
+        $validated['sort_order'] = SchedulePreset::max('sort_order') + 1;
+        SchedulePreset::create($validated);
+
+        return redirect()->route('admin.schedule.index', ['day' => $request->get('day', 0)])
+            ->with('success', 'Hızlı ekle programı eklendi.');
+    }
+
+    public function updatePreset(Request $request, SchedulePreset $preset)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+        ]);
+
+        $preset->update($validated);
+
+        return redirect()->route('admin.schedule.index', ['day' => $request->get('day', 0)])
+            ->with('success', 'Hızlı ekle programı güncellendi.');
+    }
+
+    public function destroyPreset(Request $request, SchedulePreset $preset)
+    {
+        $preset->delete();
+
+        return redirect()->route('admin.schedule.index', ['day' => $request->get('day', 0)])
+            ->with('success', 'Hızlı ekle programı silindi.');
     }
 }

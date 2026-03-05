@@ -28,12 +28,28 @@
                     </div>
                 </div>
                 <div class="quick-add-section">
-                    <div class="quick-add-label">Hızlı Ekle</div>
+                    <div class="quick-add-header">
+                        <span class="quick-add-label">Hızlı Ekle</span>
+                        <button type="button" class="preset-add-btn" id="btnAddPreset" title="Yeni preset ekle">+</button>
+                    </div>
                     <div class="quick-add-btns">
-                        <button type="button" class="quick-add-btn" data-preset="Sabah Kuşağı" data-start="06:00" data-end="10:00">Sabah Kuşağı</button>
-                        <button type="button" class="quick-add-btn" data-preset="Öğle Yayını" data-start="12:00" data-end="15:00">Öğle Yayını</button>
-                        <button type="button" class="quick-add-btn" data-preset="Öğleden Sonra" data-start="15:00" data-end="18:00">Öğleden Sonra</button>
-                        <button type="button" class="quick-add-btn" data-preset="Akşam Kuşağı" data-start="18:00" data-end="22:00">Akşam Kuşağı</button>
+                        @foreach($presets as $p)
+                        <div class="preset-item">
+                            <button type="button" class="quick-add-btn" data-preset="{{ $p->title }}" data-start="{{ $p->start_formatted }}" data-end="{{ $p->end_formatted }}">{{ $p->title }}</button>
+                            <div class="preset-actions">
+                                <button type="button" class="preset-edit" data-id="{{ $p->id }}" data-title="{{ $p->title }}" data-start="{{ $p->start_formatted }}" data-end="{{ $p->end_formatted }}" title="Düzenle">✎</button>
+                                <form action="{{ route('admin.schedule.presets.destroy', $p) }}" method="POST" class="d-inline" onsubmit="return confirm('Bu preset silinsin mi?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="day" value="{{ $currentDay }}">
+                                    <button type="submit" class="preset-delete" title="Sil">×</button>
+                                </form>
+                            </div>
+                        </div>
+                        @endforeach
+                        @if($presets->isEmpty())
+                        <p class="preset-empty">Preset yok. + ile ekleyin.</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -86,6 +102,37 @@
         </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="presetModal" class="modal-overlay" style="display:none;">
+    <div class="modal-backdrop" data-close-preset-modal></div>
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 id="presetModalTitle">Preset Ekle</h3>
+            <button type="button" class="modal-close" data-close-preset-modal>&times;</button>
+        </div>
+        <form id="presetForm" method="POST" action="{{ route('admin.schedule.presets.store') }}">
+            @csrf
+            <input type="hidden" name="_method" id="presetFormMethod" value="POST">
+            <input type="hidden" name="day" value="{{ $currentDay }}">
+            <div class="form-group">
+                <label for="preset_title">Program Adı *</label>
+                <input type="text" name="title" id="preset_title" required maxlength="255" class="form-input" placeholder="Örn: Gece Kuşağı">
+            </div>
+            <div class="form-group">
+                <label for="preset_start">Başlangıç *</label>
+                <input type="time" name="start_time" id="preset_start" required class="form-input">
+            </div>
+            <div class="form-group">
+                <label for="preset_end">Bitiş</label>
+                <input type="time" name="end_time" id="preset_end" class="form-input">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" data-close-preset-modal>İptal</button>
+                <button type="submit" class="quick-btn">Kaydet</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -153,6 +200,17 @@
 .quick-add-btns{display:flex;flex-direction:column;gap:6px;}
 .quick-add-btn{padding:8px 12px;font-size:12px;font-weight:600;border-radius:8px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid var(--border);cursor:pointer;text-align:left;transition:all 0.2s;}
 .quick-add-btn:hover{background:rgba(220,38,38,0.2);border-color:var(--accent);}
+.quick-add-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.preset-add-btn{width:24px;height:24px;border-radius:6px;background:rgba(34,197,94,0.3);color:#86efac;border:1px solid rgba(34,197,94,0.5);cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;}
+.preset-add-btn:hover{background:rgba(34,197,94,0.5);}
+.preset-item{display:flex;align-items:center;gap:4px;margin-bottom:4px;}
+.preset-item:last-child{margin-bottom:0;}
+.preset-item .quick-add-btn{flex:1;}
+.preset-actions{display:flex;gap:2px;}
+.preset-edit,.preset-delete{width:24px;height:24px;border:none;border-radius:4px;background:rgba(255,255,255,0.06);color:var(--muted);cursor:pointer;font-size:12px;line-height:1;padding:0;}
+.preset-edit:hover{background:rgba(59,130,246,0.3);color:#93c5fd;}
+.preset-delete:hover{background:rgba(239,68,68,0.3);color:#fca5a5;}
+.preset-empty{font-size:0.8rem;color:var(--muted);margin:0;}
 @media(max-width:768px){.schedule-layout{flex-direction:column;}.schedule-sidebar{flex:1 1 auto;display:flex;gap:1rem;flex-wrap:wrap;}.day-tabs-wrapper,.quick-add-section{flex:1;min-width:180px;}.day-tabs{flex-direction:row;flex-wrap:wrap;}.quick-add-btns{flex-direction:row;flex-wrap:wrap;}}
 .schedule-day-header{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;background:linear-gradient(180deg,#131a26,#0c1018);color:#ffffff;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);font-weight:600;margin-bottom:1rem;}
 .schedule-day-header small,.schedule-day-header span{color:#cbd5e1;}
@@ -214,6 +272,31 @@
                 start:this.dataset.start,
                 end:this.dataset.end
             });
+        });
+    });
+
+    var presetModal=document.getElementById('presetModal');
+    var presetForm=document.getElementById('presetForm');
+    document.querySelectorAll('[data-close-preset-modal]').forEach(function(el){el.addEventListener('click',function(){if(presetModal)presetModal.style.display='none';});});
+    document.getElementById('btnAddPreset')&&document.getElementById('btnAddPreset').addEventListener('click',function(){
+        presetForm.action='{{ route("admin.schedule.presets.store") }}';
+        presetForm.querySelector('#presetFormMethod').value='POST';
+        document.getElementById('presetModalTitle').textContent='Preset Ekle';
+        presetForm.reset();
+        presetForm.querySelector('input[name="day"]').value='{{ $currentDay }}';
+        if(presetModal)presetModal.style.display='flex';
+    });
+    document.querySelectorAll('.preset-edit').forEach(function(btn){
+        btn.addEventListener('click',function(){
+            var id=this.dataset.id;
+            presetForm.action='{{ url("admin/schedule/presets") }}/'+id;
+            presetForm.querySelector('#presetFormMethod').value='PUT';
+            document.getElementById('presetModalTitle').textContent='Preset Düzenle';
+            document.getElementById('preset_title').value=this.dataset.title||'';
+            document.getElementById('preset_start').value=this.dataset.start||'';
+            document.getElementById('preset_end').value=this.dataset.end||'';
+            presetForm.querySelector('input[name="day"]').value='{{ $currentDay }}';
+            if(presetModal)presetModal.style.display='flex';
         });
     });
 
