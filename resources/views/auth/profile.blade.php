@@ -42,19 +42,20 @@
             <span class="profile-label">Durum</span>
             <span class="profile-value">
                 @if(auth()->user()->status === 'aktif')
-                    <span style="color:#86efac;">Onaylı</span>
-                @elseif(auth()->user()->status === 'pending')
-                    <span style="color:#fde047;">Beklemede</span>
+                    <span style="color:#86efac;">Aktif</span>
+                @elseif(auth()->user()->status === 'pasif')
+                    <span style="color:#fde047;">Pasif</span>
                 @else
-                    <span style="color:#94a3b8;">Reddedildi</span>
+                    <span style="color:#94a3b8;">Ban</span>
                 @endif
             </span>
         </div>
-        @if(auth()->user()->isApproved())
-            <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08);">
-                <a href="{{ route('bize-gonder') }}" style="display:inline-block;padding:0.6rem 1.25rem;font-size:0.9rem;font-weight:600;background:var(--ry-btn-bg);color:#fff;border-radius:10px;text-decoration:none;">Bize Gönder</a>
-            </div>
-        @endif
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:0.75rem;flex-wrap:wrap;">
+            <a href="{{ route('profile.edit') }}" style="display:inline-block;padding:0.6rem 1.25rem;font-size:0.9rem;font-weight:600;background:var(--ry-btn-bg);color:#fff;border-radius:10px;text-decoration:none;">Profilimi Düzenle</a>
+            @if(auth()->user()->isApproved())
+                <a href="{{ route('bize-gonder') }}" style="display:inline-block;padding:0.6rem 1.25rem;font-size:0.9rem;font-weight:600;background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:10px;text-decoration:none;">Bize Gönder</a>
+            @endif
+        </div>
     </div>
 </div>
 @endsection

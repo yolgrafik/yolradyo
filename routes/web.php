@@ -13,6 +13,8 @@ Route::get('/register', [App\Http\Controllers\AuthController::class, 'showRegist
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout')->middleware('auth');
 Route::get('/profil', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile')->middleware('auth');
+Route::get('/profilim', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile.edit')->middleware('auth');
+Route::post('/profilim/guncelle', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
 Route::get('/bize-gonder', [App\Http\Controllers\MemberSubmissionFrontendController::class, 'show'])->name('bize-gonder')->middleware('auth');
 Route::post('/bize-gonder', [App\Http\Controllers\MemberSubmissionFrontendController::class, 'store'])->name('bize-gonder.store')->middleware('auth');
 
