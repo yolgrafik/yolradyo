@@ -86,7 +86,7 @@
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
-            max-width: 220px;
+            max-width: 260px;
         }
         .nav-logo img {
             height: 72px;
@@ -107,10 +107,10 @@
             flex-shrink: 1;
             min-width: 0;
             padding: 0.25rem 0.4rem;
-            max-width: 120px;
+            max-width: 140px;
         }
         .nav-logo-slogan {
-            font-size: clamp(0.5rem, 1.2vw, 0.65rem);
+            font-size: clamp(0.52rem, 1.5vw, 0.68rem);
             font-weight: 600;
             letter-spacing: 0.04em;
             text-transform: uppercase;
@@ -124,8 +124,9 @@
             word-break: break-word;
         }
         .nav-logo-slogan {
-            background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.7) 25%, #fff 50%, rgba(255,255,255,0.7) 75%, #fff 100%);
-            background-size: 200% 100%;
+            color: #fff;
+            background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.6) 50%, #fff 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -573,12 +574,11 @@
         @media (max-width: 992px) {
             .navbar { height: 72px; min-height: 72px; padding: 0 1rem; }
             .navbar.is-scrolled { height: 68px; min-height: 68px; }
-            .nav-logo img { height: 56px; }
-            .navbar.is-scrolled .nav-logo img { height: 48px; }
-            .nav-logo { max-width: 180px; }
-            .nav-logo-slogan-wrap { padding: 0.2rem 0.35rem; max-width: 75px; }
-            .nav-slogan-eq { display: none; }
-            .nav-logo-slogan { font-size: 0.52rem; letter-spacing: 0.03em; }
+            .nav-logo { flex-direction: row; max-width: 240px; }
+            .nav-logo img { height: 52px; }
+            .navbar.is-scrolled .nav-logo img { height: 46px; }
+            .nav-logo-slogan-wrap { padding: 0.2rem 0.4rem; max-width: 110px; min-width: 60px; }
+            .nav-logo-slogan { font-size: clamp(0.5rem, 2.5vw, 0.6rem); letter-spacing: 0.02em; }
             .nav-center {
                 position: fixed;
                 top: 0;
@@ -630,18 +630,21 @@
             .nav-toggle { display: flex; align-items: center; justify-content: center; }
         }
         @media (max-width: 768px) {
-            .nav-logo img { height: 64px; }
-            .nav-logo { max-width: 160px; }
-            .nav-logo-slogan-wrap { max-width: 60px; }
-            .nav-logo-slogan { font-size: 0.48rem; }
+            .nav-logo { max-width: 220px; }
+            .nav-logo img { height: 50px; }
+            .navbar.is-scrolled .nav-logo img { height: 44px; }
+            .nav-logo-slogan-wrap { max-width: 100px; min-width: 50px; }
+            .nav-logo-slogan { font-size: clamp(0.48rem, 2.8vw, 0.58rem); }
             .bottom-bar-player { padding: 0 1rem; gap: 0.5rem; }
             .player-status-group { font-size: 0.7rem; }
             .player-volume-wrap { min-width: 60px; }
             .player-volume-wrap input[type="range"] { width: 50px; }
             .player-eq { display: none; }
         }
-        @media (max-width: 400px) {
-            .nav-logo-slogan { display: none; }
+        @media (max-width: 480px) {
+            .nav-logo { max-width: 200px; }
+            .nav-logo-slogan-wrap { max-width: 90px; padding: 0.15rem 0.3rem; }
+            .nav-logo-slogan { font-size: clamp(0.45rem, 3vw, 0.55rem); }
         }
         @media (min-width: 993px) {
             .nav-toggle { display: none; }
