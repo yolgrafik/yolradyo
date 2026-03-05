@@ -4,6 +4,14 @@
 @php
     $lastSaved = $seo_last_saved ?? null;
     $siteName = $site_name ?? 'RADYOYOL';
+    $lastSavedFormatted = null;
+    if ($lastSaved) {
+        try {
+            $lastSavedFormatted = \Carbon\Carbon::parse($lastSaved)->format('d.m.Y H:i');
+        } catch (\Exception $e) {
+            $lastSavedFormatted = $lastSaved;
+        }
+    }
 @endphp
 <div class="seo-page">
     {{-- Page Header --}}
@@ -11,8 +19,8 @@
         <div class="seo-header__left">
             <h1 class="seo-header__title">SEO Ayarları</h1>
             <p class="seo-header__subtitle">Arama motorları ve sosyal medya için meta etiketleri.</p>
-            @if($lastSaved)
-            <span class="seo-header__saved">Son kaydedilme: {{ \Carbon\Carbon::parse($lastSaved)->format('d.m.Y H:i') }}</span>
+            @if($lastSavedFormatted)
+            <span class="seo-header__saved">Son kaydedilme: {{ $lastSavedFormatted }}</span>
             @endif
         </div>
         <div class="seo-header__actions">
@@ -85,7 +93,7 @@
                             </div>
                             <div class="seo-field">
                                 <label for="meta_keywords">Meta Anahtar Kelimeler</label>
-                                <input type="text" name="meta_keywords" id="meta_keywords" class="seo-input seo-chips-input"
+                                <input type="text" name="meta_keywords" id="meta_keywords" class="seo-input"
                                     value="{{ old('meta_keywords', $seo_meta_keywords ?? '') }}"
                                     placeholder="radyoyol, canlı radyo, online radyo (virgülle ayırın)">
                                 @error('meta_keywords')<span class="seo-error">{{ $message }}</span>@enderror
@@ -425,9 +433,10 @@
 <script>
 (function() {
     var form = document.getElementById('seoForm');
+    if (!form) return;
     var saveBtn = document.getElementById('seoSaveBtn');
     var saveBar = document.getElementById('seoSaveBar');
-    var initialData = {};
+    var initialData = '';
     var toast = document.getElementById('seoToast');
 
     function getFormData() {
@@ -474,7 +483,7 @@
 
     var tabs = document.querySelectorAll('.seo-tab');
     var panels = document.querySelectorAll('.seo-panel');
-    tabs.forEach(function(tab, i) {
+    tabs.forEach(function(tab) {
         tab.addEventListener('click', function() {
             tabs.forEach(function(t) { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
             panels.forEach(function(p) { p.classList.remove('is-active'); p.hidden = true; });
@@ -497,7 +506,7 @@
         });
     }
 
-    function setCount(id, inpId, max) {
+    function setCount(id, inpId) {
         var inp = document.getElementById(inpId);
         var el = document.getElementById(id);
         if (!inp || !el) return;
@@ -548,8 +557,8 @@
     var schemaDesc = document.getElementById('schema_description');
     if (btnSchema && schemaJson) {
         btnSchema.addEventListener('click', function() {
-            var name = (schemaName && schemaName.value) || '{{ addslashes($siteName) }}';
-            var url = (schemaUrl && schemaUrl.value) || '{{ addslashes(url("/")) }}';
+            var name = (schemaName && schemaName.value) || {!! json_encode($siteName) !!};
+            var url = (schemaUrl && schemaUrl.value) || {!! json_encode(url('/')) !!};
             var logo = schemaLogo && schemaLogo.value ? schemaLogo.value : '';
             var desc = schemaDesc && schemaDesc.value ? schemaDesc.value : '';
             var org = { '@type': 'Organization', name: name, url: url };
