@@ -158,7 +158,7 @@ class SettingsController extends Controller
             'meta_keywords' => 'nullable|string|max:500',
             'meta_author' => 'nullable|string|max:100',
             'meta_robots' => ['nullable', 'string', Rule::in(['index,follow', 'noindex,nofollow', 'index,nofollow', 'noindex,follow'])],
-            'canonical_url' => 'nullable|url|max:500',
+            'canonical_url' => ['nullable', 'string', 'max:500', Rule::when(fn ($v) => filled(trim($v ?? '')), ['url'])],
             'og_image_file' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
             'remove_og_image' => 'nullable|boolean',
             'og_title' => 'nullable|string|max:95',
@@ -172,14 +172,19 @@ class SettingsController extends Controller
             'bing_site_verification' => 'nullable|string|max:100',
             'yandex_verification' => 'nullable|string|max:100',
             'schema_organization_name' => 'nullable|string|max:150',
-            'schema_organization_url' => 'nullable|url|max:500',
-            'schema_organization_logo' => 'nullable|url|max:500',
+            'schema_organization_url' => ['nullable', 'string', 'max:500', Rule::when(fn ($v) => filled(trim($v ?? '')), ['url'])],
+            'schema_organization_logo' => ['nullable', 'string', 'max:500', Rule::when(fn ($v) => filled(trim($v ?? '')), ['url'])],
             'schema_description' => 'nullable|string|max:500',
             'schema_radio_station' => 'nullable|boolean',
-            'sitemap_url' => 'nullable|url|max:500',
+            'sitemap_url' => ['nullable', 'string', 'max:500', Rule::when(fn ($v) => filled(trim($v ?? '')), ['url'])],
             'geo_region' => 'nullable|string|max:10',
             'meta_referrer' => 'nullable|string|max:50',
-            'schema_json' => 'nullable|string|max:8000',
+            'schema_json' => ['nullable', 'string', 'max:8000', Rule::when(fn ($v) => filled(trim($v ?? '')), [function ($attr, $value, $fail) {
+                json_decode($value);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    $fail('Geçerli JSON formatı girin.');
+                }
+            }])],
         ]);
 
         $items = [
