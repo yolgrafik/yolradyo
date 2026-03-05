@@ -38,6 +38,7 @@ class ForumController extends Controller
         return view('frontend.forum.create', [
             'maxMp3Mb' => $maxMp3Mb,
             'maxPhotoMb' => $maxPhotoMb,
+            'maxVideoMb' => (int) $settings->get('member_max_video_size_mb', 500),
             'todayCount' => $todayCount,
         ]);
     }
@@ -56,7 +57,7 @@ class ForumController extends Controller
 
         $maxMp3Mb = (int) $settings->get('member_max_mp3_size_mb', 20);
         $maxPhotoMb = 5;
-        $maxVideoMb = 50;
+        $maxVideoMb = (int) $settings->get('member_max_video_size_mb', 500);
 
         $rules = [
             'type' => 'required|in:video,mp3,photo,request,complaint',
@@ -78,6 +79,7 @@ class ForumController extends Controller
             'mp3_file.required_if' => 'MP3 dosyası zorunludur.',
             'mp3_file.mimes' => 'Sadece MP3 dosyası yükleyebilirsiniz.',
             'mp3_file.max' => "MP3 en fazla {$maxMp3Mb}MB olabilir.",
+            'video_file.max' => "Video en fazla {$maxVideoMb}MB olabilir.",
             'photo_file.required_if' => 'Fotoğraf dosyası zorunludur.',
             'photo_file.mimes' => 'Sadece JPG, PNG veya WebP yükleyebilirsiniz.',
             'photo_file.max' => "Fotoğraf en fazla {$maxPhotoMb}MB olabilir.",

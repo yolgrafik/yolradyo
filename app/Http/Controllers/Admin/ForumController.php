@@ -7,7 +7,9 @@ use App\Models\ForumComment;
 use App\Models\ForumPost;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ForumController extends Controller
 {
@@ -60,6 +62,21 @@ class ForumController extends Controller
     {
         $post->delete();
         return back()->with('success', 'Gönderi silindi.');
+    }
+
+    public function download(ForumPost $post): StreamedResponse|RedirectResponse
+    {
+        if (!$post->file_path) {
+            return back()->with('error', 'Bu gönderide indirilebilir dosya yok.');
+        }
+
+        if (!Storage::disk('public')->exists($post->file_path)) {
+            return back()->with('error', 'Dosya bulunamadı.');
+        }
+
+        $fileName = $post->file_name ?? basename($post->file_path);
+
+        return Storage::disk('public')->download($post->file_path, $fileName);
     }
 
     public function comments(): View

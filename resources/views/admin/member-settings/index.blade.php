@@ -27,6 +27,11 @@
                 <input type="number" name="member_max_mp3_size_mb" id="max_mp3" value="{{ $maxMp3Mb }}" min="1" max="100" class="form-input" style="max-width:120px;">
                 <p style="font-size:0.85rem;color:var(--muted);margin-top:0.35rem;">MP3 yükleme için izin verilen maksimum dosya boyutu.</p>
             </div>
+            <div class="form-group" style="margin-bottom:1.25rem;">
+                <label for="max_video">Maksimum Video boyutu (MB)</label>
+                <input type="number" name="member_max_video_size_mb" id="max_video" value="{{ $maxVideoMb }}" min="1" max="1000" class="form-input" style="max-width:120px;">
+                <p style="font-size:0.85rem;color:var(--muted);margin-top:0.35rem;">Video dosyası yükleme için izin verilen maksimum boyut.</p>
+            </div>
             <button type="submit" class="btn-save">Kaydet</button>
         </form>
     </div>

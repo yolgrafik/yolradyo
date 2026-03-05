@@ -77,7 +77,7 @@
             <div class="form-group type-option" id="videoGroup">
                 <label for="video_url">Video Link (YouTube, TikTok, Instagram vb.)</label>
                 <input type="url" name="video_url" id="video_url" class="form-input" value="{{ old('video_url') }}" placeholder="https://...">
-                <p class="form-hint">veya video dosyası yükleyin:</p>
+                <p class="form-hint">veya video dosyası yükleyin (max {{ $maxVideoMb }}MB):</p>
                 <input type="file" name="video_file" id="video_file" class="form-input" accept="video/mp4,video/webm,video/quicktime" style="margin-top:0.5rem;">
                 @error('video_url')<span class="form-error">{{ $message }}</span>@enderror
                 @error('video_file')<span class="form-error">{{ $message }}</span>@enderror
