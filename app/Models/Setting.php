@@ -15,6 +15,7 @@ class Setting extends Model
         'radio_default_volume',
         'shoutcast_base_url',
         'shoutcast_sid',
+        'radio_force_status',
     ];
 
     protected $casts = [
@@ -24,6 +25,7 @@ class Setting extends Model
         'radio_default_volume' => 'float',
         'shoutcast_base_url' => 'string',
         'shoutcast_sid' => 'integer',
+        'radio_force_status' => 'string',
     ];
 
     /**

@@ -25,6 +25,16 @@ class RadioStatusController extends Controller
         $baseUrl = $settings?->shoutcast_base_url ?? '';
         $sid = (int) ($settings?->shoutcast_sid ?? 1);
 
+        $forceStatus = $settings?->radio_force_status ?? null;
+        if ($forceStatus === 'online' || $forceStatus === 'offline') {
+            return [
+                'ok' => true,
+                'song' => '-',
+                'listeners' => 0,
+                'status' => $forceStatus,
+            ];
+        }
+
         if (empty($baseUrl)) {
             return [
                 'ok' => false,
@@ -47,19 +57,28 @@ class RadioStatusController extends Controller
                 $response = Http::timeout(3)->get($url);
                 if ($response->successful()) {
                     $json = $response->json();
-                    return $this->normalizeResponse($json);
+                    $data = $this->normalizeResponse($json);
+                    if ($forceStatus === 'online' || $forceStatus === 'offline') {
+                        $data['status'] = $forceStatus;
+                    }
+                    return $data;
                 }
             } catch (\Throwable $e) {
                 continue;
             }
         }
 
-        return [
+        $data = [
             'ok' => false,
             'song' => '-',
             'listeners' => 0,
             'status' => 'offline',
         ];
+        if ($forceStatus === 'online' || $forceStatus === 'offline') {
+            $data['status'] = $forceStatus;
+            $data['ok'] = true;
+        }
+        return $data;
     }
 
     private function normalizeResponse(?array $json): array
