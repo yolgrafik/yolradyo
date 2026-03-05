@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer(['layouts.frontend', 'frontend.home', 'partials.requests-ticker'], function ($view) {
+        View::composer(['layouts.frontend', 'frontend.home', 'frontend.programlar', 'partials.requests-ticker'], function ($view) {
             $settings = null;
             if (Schema::hasTable('settings')) {
                 $settings = Setting::getSettings();

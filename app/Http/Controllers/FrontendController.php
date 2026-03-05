@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DjProfile;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Services\SettingsService;
@@ -33,7 +34,8 @@ class FrontendController extends Controller
 
     public function programlar()
     {
-        return view('frontend.page', ['pageTitle' => 'Programlar']);
+        $djs = DjProfile::orderBy('name')->get();
+        return view('frontend.programlar', compact('djs'));
     }
 
     public function haberler()
