@@ -17,7 +17,7 @@ class ProgramciContactMail extends Mailable
         public Programci $programci,
         public string $senderName,
         public string $senderEmail,
-        public string $message
+        public string $messageBody
     ) {}
 
     public function envelope(): Envelope

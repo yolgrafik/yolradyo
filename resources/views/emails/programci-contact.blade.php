@@ -19,7 +19,7 @@
         <div class="content">
             <p><strong>Gönderen:</strong> {{ $senderName }} &lt;{{ $senderEmail }}&gt;</p>
             <div class="message-box">
-                {{ $message }}
+                {{ $messageBody }}
             </div>
             <p class="meta">Bu mesaj {{ config('app.name') }} web sitesindeki programcı iletişim formundan gönderildi.</p>
         </div>
