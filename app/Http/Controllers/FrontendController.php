@@ -34,7 +34,9 @@ class FrontendController extends Controller
 
     public function programlar()
     {
-        $djs = DjProfile::orderBy('name')->get();
+        $djs = DjProfile::with(['schedules' => fn ($q) => $q->active()->ordered()])
+            ->orderBy('name')
+            ->get();
         return view('frontend.programlar', compact('djs'));
     }
 

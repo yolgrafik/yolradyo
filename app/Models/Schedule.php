@@ -11,6 +11,7 @@ class Schedule extends Model
         'start_time',
         'end_time',
         'title',
+        'description',
         'host',
         'dj_id',
         'is_active',
@@ -45,6 +46,13 @@ class Schedule extends Model
     {
         if (!$this->start_time) return '';
         $t = is_string($this->start_time) ? $this->start_time : $this->start_time->format('H:i:s');
+        return substr($t, 0, 5); // HH:MM
+    }
+
+    public function getEndTimeFormattedAttribute(): string
+    {
+        if (!$this->end_time) return '';
+        $t = is_string($this->end_time) ? $this->end_time : $this->end_time->format('H:i:s');
         return substr($t, 0, 5); // HH:MM
     }
 }

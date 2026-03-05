@@ -84,7 +84,7 @@
                             </form>
                         </td>
                         <td style="padding:0.75rem;text-align:right;">
-                            <button type="button" class="btn-sm btn-edit" data-edit="{{ $s->id }}" data-title="{{ $s->title }}" data-dj-id="{{ $s->dj_id ?? '' }}" data-start="{{ $s->start_time_formatted }}" data-end="{{ $s->end_time ? substr($s->end_time, 0, 5) : '' }}" data-active="{{ $s->is_active ? '1' : '0' }}">Düzenle</button>
+                            <button type="button" class="btn-sm btn-edit" data-edit="{{ $s->id }}" data-title="{{ $s->title }}" data-description="{{ $s->description ?? '' }}" data-dj-id="{{ $s->dj_id ?? '' }}" data-start="{{ $s->start_time_formatted }}" data-end="{{ $s->end_time ? substr($s->end_time, 0, 5) : '' }}" data-active="{{ $s->is_active ? '1' : '0' }}">Düzenle</button>
                             <form action="{{ route('admin.schedule.destroy', $s) }}" method="POST" class="d-inline" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                                 @csrf
                                 @method('DELETE')
@@ -157,6 +157,10 @@
                     <option value="__custom__">— Özel girin —</option>
                 </select>
                 <input type="text" name="title" id="title" required maxlength="255" class="form-input mt-1" placeholder="Özel program adı" style="display:none;">
+            </div>
+            <div class="form-group">
+                <label for="description">Açıklama</label>
+                <textarea name="description" id="description" rows="3" maxlength="1000" class="form-input" placeholder="Program hakkında kısa açıklama"></textarea>
             </div>
             <div class="form-group">
                 <label for="start_time">Başlangıç *</label>
@@ -338,6 +342,7 @@
         btn.addEventListener('click',function(){
             var id=btn.dataset.edit;
             var title=btn.dataset.title;
+            var description=btn.dataset.description||'';
             var djId=btn.dataset.djId||'';
             var start=btn.dataset.start||'';
             var end=btn.dataset.end||'';
@@ -347,6 +352,8 @@
             document.getElementById('modalTitle').textContent='Program Düzenle';
             if(presetSelect){presetSelect.style.display='none';}
             if(titleInput){titleInput.style.display='block';titleInput.value=title;}
+            var descEl=document.getElementById('description');
+            if(descEl){descEl.value=description;}
             document.getElementById('dj_id').value=djId;
             document.getElementById('start_time').value=start;
             document.getElementById('end_time').value=end;

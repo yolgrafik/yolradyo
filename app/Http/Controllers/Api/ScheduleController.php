@@ -77,6 +77,7 @@ class ScheduleController extends Controller
                 'start_time' => $start,
                 'end_time' => $end,
                 'title' => $s->title,
+                'description' => $s->description ?? '',
                 'host' => $dj ? $dj->name : '',
                 'dj' => $djData,
                 'is_live' => $isLive,
