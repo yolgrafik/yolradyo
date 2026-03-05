@@ -71,40 +71,19 @@
 @php
     $schemaName = $schemaOrgName ?: $siteName;
     $schemaUrl = $schemaOrgUrl ?: url('/');
+    $org = ['@type' => 'Organization', 'name' => $schemaName, 'url' => $schemaUrl];
+    if ($schemaOrgLogo) $org['logo'] = $schemaOrgLogo;
+    if ($schemaDesc) $org['description'] = $schemaDesc;
+    $website = ['@type' => 'WebSite', 'name' => $schemaName, 'url' => $schemaUrl];
+    if ($schemaDesc) $website['description'] = $schemaDesc;
+    $schemaGraph = [$org];
+    if ($schemaRadioStation) {
+        $radio = ['@type' => 'RadioStation', 'name' => $schemaName, 'url' => $schemaUrl];
+        if ($schemaDesc) $radio['description'] = $schemaDesc;
+        $schemaGraph[] = $radio;
+    }
+    $schemaGraph[] = $website;
 @endphp
 <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@graph": [
-        {
-            "@type": "Organization",
-            "name": "{{ $schemaName }}",
-            "url": "{{ $schemaUrl }}"
-            @if($schemaOrgLogo)
-            ,"logo": "{{ $schemaOrgLogo }}"
-            @endif
-            @if($schemaDesc)
-            ,"description": {!! json_encode($schemaDesc) !!}
-            @endif
-        }
-        @if($schemaRadioStation)
-        ,{
-            "@type": "RadioStation",
-            "name": "{{ $schemaName }}",
-            "url": "{{ $schemaUrl }}"
-            @if($schemaDesc)
-            ,"description": {!! json_encode($schemaDesc) !!}
-            @endif
-        }
-        @endif
-        ,{
-            "@type": "WebSite",
-            "name": "{{ $schemaName }}",
-            "url": "{{ $schemaUrl }}"
-            @if($schemaDesc)
-            ,"description": {!! json_encode($schemaDesc) !!}
-            @endif
-        }
-    ]
-}
+{!! json_encode(['@context' => 'https://schema.org', '@graph' => $schemaGraph], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}
 </script>
