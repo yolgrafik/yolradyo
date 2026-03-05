@@ -48,16 +48,7 @@
             padding: 0 1.5rem;
             transition: height 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
         }
-        .navbar::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-            pointer-events: none;
-        }
+        .navbar { border-bottom: 1px solid var(--ry-line-color); }
         .navbar.is-scrolled {
             height: 68px;
             min-height: 68px;
@@ -422,16 +413,7 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             padding: 0 1rem;
-        }
-        .legal-footer::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-            pointer-events: none;
+            border-top: 1px solid var(--ry-line-color);
         }
         .site-footer-bar {
             display: flex;
@@ -497,23 +479,14 @@
             background: var(--ry-bar-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.15);
+            border-top: 1px solid var(--ry-line-color);
+            border-bottom: 1px solid var(--ry-line-color);
             box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0 1.5rem;
             gap: 0;
-        }
-        .bottom-bar-player::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-            pointer-events: none;
         }
         .bottom-bar-player > * { pointer-events: auto; }
         .player-logo-wrap {

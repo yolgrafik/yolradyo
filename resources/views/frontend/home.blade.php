@@ -180,31 +180,12 @@
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
         border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         min-width: 0;
-    }
-    .schedule-card::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-        pointer-events: none;
-        z-index: 1;
-    }
-    .schedule-card::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-        pointer-events: none;
     }
     .schedule-top-bar {
         position: relative;
@@ -214,16 +195,7 @@
         gap: 0.75rem;
         padding: 0.6rem 1rem 0.5rem;
         background: rgba(255, 255, 255, 0.02);
-    }
-    .schedule-top-bar::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-        pointer-events: none;
+        border-bottom: 1px solid var(--ry-line-color);
     }
     .schedule-top-bar__title {
         display: flex;
@@ -341,7 +313,9 @@
         margin-top: 2%;
         border-radius: var(--ry-radius);
         background: var(--ry-istekler-bg);
-        border: 1px solid rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
     }
     .btn-live {
         display: grid;
@@ -477,17 +451,7 @@
         padding: 0;
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-    }
-    .live-dj-card::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-        pointer-events: none;
-        z-index: 1;
+        border-top: 1px solid var(--ry-line-color);
     }
     .live-banner {
         background: var(--ry-bar-bg);
@@ -612,22 +576,12 @@
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         min-height: 335px;
+        border-top: 1px solid var(--ry-line-color);
     }
     .listener-widget img,
     .listener-widget video {
         width: 100%;
         height: auto;
-    }
-    .listener-widget::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 4%, var(--ry-line-color) 12%, var(--ry-line-color) 88%, color-mix(in srgb, var(--ry-line-color) 30%, transparent) 96%, transparent 100%);
-        pointer-events: none;
-        z-index: 1;
     }
     .listener-widget__header {
         background: var(--ry-bar-bg);
