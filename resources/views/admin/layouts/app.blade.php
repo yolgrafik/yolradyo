@@ -793,18 +793,18 @@
                             <li><a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Kullanıcı Yönetimi</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section {{ request()->routeIs('admin.shoutcast.player.*') ? 'is-open' : '' }}" data-section="yayin">
-                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.shoutcast.player.*') ? 'true' : 'false' }}">
+                    <div class="nav-section {{ request()->routeIs('admin.shoutcast.*') ? 'is-open' : '' }}" data-section="yayin">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.shoutcast.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-                            <span>Yayin Yonetimi (Shoutcast)</span>
+                            <span>Yayın Yönetimi (Shoutcast)</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="#" class="nav-item">Stream Link Ayarlari</a></li>
-                            <li><a href="#" class="nav-item">Online / Offline Kontrol</a></li>
-                            <li><a href="#" class="nav-item">Now Playing Kontrol</a></li>
-                            <li><a href="#" class="nav-item">Yedek Stream</a></li>
-                            <li><a href="{{ route('admin.shoutcast.player.index') }}" class="nav-item {{ request()->routeIs('admin.shoutcast.player.*') ? 'is-active' : '' }}">Web Player Yonetimi</a></li>
+                            <li><a href="{{ route('admin.shoutcast.stream') }}" class="nav-item {{ request()->routeIs('admin.shoutcast.stream') ? 'is-active' : '' }}">Stream Link Ayarları</a></li>
+                            <li><a href="{{ route('admin.shoutcast.status') }}" class="nav-item {{ request()->routeIs('admin.shoutcast.status') ? 'is-active' : '' }}">Online / Offline Kontrol</a></li>
+                            <li><a href="{{ route('admin.shoutcast.nowplaying') }}" class="nav-item {{ request()->routeIs('admin.shoutcast.nowplaying') ? 'is-active' : '' }}">Now Playing Kontrol</a></li>
+                            <li><a href="{{ route('admin.shoutcast.backup') }}" class="nav-item {{ request()->routeIs('admin.shoutcast.backup') ? 'is-active' : '' }}">Yedek Stream</a></li>
+                            <li><a href="{{ route('admin.shoutcast.player.index') }}" class="nav-item {{ request()->routeIs('admin.shoutcast.player.*') ? 'is-active' : '' }}">Web Player Yönetimi</a></li>
                         </ul>
                     </div>
                     <div class="nav-section {{ request()->routeIs('admin.sliders.*') ? 'is-open' : '' }}" data-section="icerik">

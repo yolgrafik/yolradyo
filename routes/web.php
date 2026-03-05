@@ -44,9 +44,17 @@ Route::prefix('admin')->group(function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
 
+        Route::get('shoutcast/stream', [App\Http\Controllers\Admin\ShoutcastController::class, 'stream'])->name('admin.shoutcast.stream');
+        Route::post('shoutcast/stream', [App\Http\Controllers\Admin\ShoutcastController::class, 'storeStream']);
+        Route::get('shoutcast/status', [App\Http\Controllers\Admin\ShoutcastController::class, 'status'])->name('admin.shoutcast.status');
+        Route::post('shoutcast/status', [App\Http\Controllers\Admin\ShoutcastController::class, 'storeStatus']);
+        Route::get('shoutcast/nowplaying', [App\Http\Controllers\Admin\ShoutcastController::class, 'nowplaying'])->name('admin.shoutcast.nowplaying');
+        Route::post('shoutcast/nowplaying', [App\Http\Controllers\Admin\ShoutcastController::class, 'storeNowplaying']);
+        Route::get('shoutcast/backup', [App\Http\Controllers\Admin\ShoutcastController::class, 'backup'])->name('admin.shoutcast.backup');
+        Route::post('shoutcast/backup', [App\Http\Controllers\Admin\ShoutcastController::class, 'storeBackup']);
         Route::get('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'index'])->name('admin.shoutcast.player.index');
-    Route::post('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'store'])->name('admin.shoutcast.player.store');
-    Route::redirect('stream-settings', '/admin/shoutcast/player', 301);
+        Route::post('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'store'])->name('admin.shoutcast.player.store');
+        Route::redirect('stream-settings', '/admin/shoutcast/stream', 301);
 
     Route::get('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'generalForm'])->name('admin.settings.general');
     Route::post('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'saveGeneral']);

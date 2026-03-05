@@ -61,12 +61,11 @@
 <script>
 (function() {
     var btn = document.getElementById('streamTestBtn');
-    var urlInput = document.getElementById('radio_stream_url');
-    if (btn && urlInput) {
+    if (btn) {
         btn.addEventListener('click', function() {
-            var url = urlInput.value.trim();
+            var url = (btn.getAttribute('data-url') || '').trim();
             if (!url) {
-                alert('Lütfen önce Stream URL girin.');
+                alert('Lütfen önce Stream Link Ayarları sayfasından Stream URL girin.');
                 return;
             }
             window.open(url, '_blank', 'noopener,noreferrer');
