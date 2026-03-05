@@ -406,7 +406,7 @@ INSERT INTO `menu_items` (`location`, `title`, `type`, `url`, `parent_id`, `sort
 ('header', 'Programlar', 'page', '/programlar', NULL, 1, 0, 1, NOW(), NOW()),
 ('header', 'Haberler', 'page', '/haberler', NULL, 2, 0, 1, NOW(), NOW()),
 ('header', 'Medya', 'page', '/videolar', NULL, 3, 0, 1, NOW(), NOW()),
-('header', 'Reklam & Isbirligi', 'page', '/reklam', NULL, 4, 0, 1, NOW(), NOW()),
+('header', 'Sponsorlar', 'page', '/reklam', NULL, 4, 0, 1, NOW(), NOW()),
 ('header', 'Hakkimizda', 'page', '/hakkimizda/biz-kimiz', NULL, 5, 0, 1, NOW(), NOW()),
 ('header', 'Iletisim', 'page', '/iletisim', NULL, 6, 0, 1, NOW(), NOW()),
 ('footer', 'Gizlilik Politikasi', 'page', '/gizlilik', NULL, 0, 0, 1, NOW(), NOW()),
