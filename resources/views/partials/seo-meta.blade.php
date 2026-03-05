@@ -69,21 +69,27 @@
 
 {{-- Schema.org JSON-LD --}}
 @php
-    $schemaName = $schemaOrgName ?: $siteName;
-    $schemaUrl = $schemaOrgUrl ?: url('/');
-    $org = ['@type' => 'Organization', 'name' => $schemaName, 'url' => $schemaUrl];
-    if ($schemaOrgLogo) $org['logo'] = $schemaOrgLogo;
-    if ($schemaDesc) $org['description'] = $schemaDesc;
-    $website = ['@type' => 'WebSite', 'name' => $schemaName, 'url' => $schemaUrl];
-    if ($schemaDesc) $website['description'] = $schemaDesc;
-    $schemaGraph = [$org];
-    if ($schemaRadioStation) {
-        $radio = ['@type' => 'RadioStation', 'name' => $schemaName, 'url' => $schemaUrl];
-        if ($schemaDesc) $radio['description'] = $schemaDesc;
-        $schemaGraph[] = $radio;
+    $schemaJsonOverride = $siteSettings['seo_schema_json'] ?? '';
+    if (!empty(trim($schemaJsonOverride))) {
+        $schemaLd = $schemaJsonOverride;
+    } else {
+        $schemaName = $schemaOrgName ?: $siteName;
+        $schemaUrl = $schemaOrgUrl ?: url('/');
+        $org = ['@type' => 'Organization', 'name' => $schemaName, 'url' => $schemaUrl];
+        if ($schemaOrgLogo) $org['logo'] = $schemaOrgLogo;
+        if ($schemaDesc) $org['description'] = $schemaDesc;
+        $website = ['@type' => 'WebSite', 'name' => $schemaName, 'url' => $schemaUrl];
+        if ($schemaDesc) $website['description'] = $schemaDesc;
+        $schemaGraph = [$org];
+        if ($schemaRadioStation) {
+            $radio = ['@type' => 'RadioStation', 'name' => $schemaName, 'url' => $schemaUrl];
+            if ($schemaDesc) $radio['description'] = $schemaDesc;
+            $schemaGraph[] = $radio;
+        }
+        $schemaGraph[] = $website;
+        $schemaLd = json_encode(['@context' => 'https://schema.org', '@graph' => $schemaGraph], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
-    $schemaGraph[] = $website;
 @endphp
 <script type="application/ld+json">
-{!! json_encode(['@context' => 'https://schema.org', '@graph' => $schemaGraph], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}
+{!! $schemaLd !!}
 </script>

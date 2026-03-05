@@ -416,8 +416,7 @@
     display: none;
 }
 @media (max-width: 768px) {
-    .seo-save-bar { display: block !important; }
-    .seo-save-bar[hidden] { display: none !important; }
+    .seo-save-bar:not([hidden]) { display: block; }
 }
 </style>
 @endpush
@@ -435,12 +434,13 @@
         var fd = new FormData(form);
         var o = {};
         for (var p of fd.entries()) {
-            if (p[1] instanceof File) continue;
-            o[p[0]] = p[1];
+            o[p[0]] = p[1] instanceof File ? p[1].name + ':' + p[1].size : p[1];
         }
-        var inputs = form.querySelectorAll('input[type="text"], input[type="url"], input[type="email"], textarea, select');
-        inputs.forEach(function(inp) {
-            if (inp.name && !(inp.name in o)) o[inp.name] = inp.value || '';
+        form.querySelectorAll('input, textarea, select').forEach(function(inp) {
+            if (!inp.name) return;
+            if (inp.name in o) return;
+            if (inp.type === 'checkbox') o[inp.name] = inp.checked ? inp.value : '';
+            else o[inp.name] = inp.value || '';
         });
         return JSON.stringify(o);
     }
