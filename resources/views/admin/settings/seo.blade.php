@@ -254,7 +254,7 @@
                     <label for="schema_json">Özel JSON-LD (boş bırakılırsa otomatik oluşturulur)</label>
                     <textarea name="schema_json" id="schema_json" rows="6"
                         placeholder='{"@context":"https://schema.org","@graph":[...]}'
-                        class="form-input form-textarea font-mono">{{ old('schema_json', is_string($seo_schema_json ?? null) ? $seo_schema_json : '') }}</textarea>
+                        class="form-input form-textarea font-mono">{{ old('schema_json', is_string($seo_schema_json ?? null) ? $seo_schema_json : (is_array($seo_schema_json ?? null) ? json_encode($seo_schema_json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : '')) }}</textarea>
                     <span class="form-hint">Geçerli JSON-LD. Boş bırakılırsa Organization, WebSite ve RadioStation şemaları otomatik eklenir.</span>
                     @error('schema_json')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
