@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 
 class MailSettingsController extends Controller
@@ -21,23 +22,40 @@ class MailSettingsController extends Controller
         protected MailConfigService $mailConfig
     ) {}
 
+    protected function getMailSetting(string $key, mixed $default = ''): mixed
+    {
+        if (!Schema::hasTable('site_settings')) {
+            return $default;
+        }
+        try {
+            return $this->settings->get($key, $default);
+        } catch (\Throwable $e) {
+            Log::warning('MailSettingsController::getMailSetting failed', ['key' => $key, 'error' => $e->getMessage()]);
+            return $default;
+        }
+    }
+
     public function index(): View
     {
         return view('admin.mail-settings.index', [
-            'mailMailer' => $this->settings->get('mail_mailer', 'smtp'),
-            'mailHost' => $this->settings->get('mail_host', ''),
-            'mailPort' => $this->settings->get('mail_port', '587'),
-            'mailUsername' => $this->settings->get('mail_username', ''),
-            'hasPassword' => !empty($this->settings->get('mail_password')),
-            'mailEncryption' => $this->settings->get('mail_encryption', 'tls'),
-            'mailFromAddress' => $this->settings->get('mail_from_address', ''),
-            'mailFromName' => $this->settings->get('mail_from_name', ''),
-            'mailContactTo' => $this->settings->get('mail_contact_to', ''),
+            'mailMailer' => $this->getMailSetting('mail_mailer', 'smtp'),
+            'mailHost' => $this->getMailSetting('mail_host', ''),
+            'mailPort' => $this->getMailSetting('mail_port', '587'),
+            'mailUsername' => $this->getMailSetting('mail_username', ''),
+            'hasPassword' => !empty($this->getMailSetting('mail_password')),
+            'mailEncryption' => $this->getMailSetting('mail_encryption', 'tls'),
+            'mailFromAddress' => $this->getMailSetting('mail_from_address', ''),
+            'mailFromName' => $this->getMailSetting('mail_from_name', ''),
+            'mailContactTo' => $this->getMailSetting('mail_contact_to', ''),
         ]);
     }
 
     public function store(Request $request): RedirectResponse
     {
+        if (!Schema::hasTable('site_settings')) {
+            return back()->with('error', 'site_settings tablosu bulunamadı. Lütfen migration\'ları çalıştırın: php artisan migrate');
+        }
+
         $rules = [
             'mail_mailer' => 'required|in:smtp',
             'mail_host' => 'required|string|max:255',
@@ -49,7 +67,7 @@ class MailSettingsController extends Controller
             'mail_from_name' => 'required|string|max:255',
             'mail_contact_to' => 'required|email',
         ];
-        if (!$this->settings->get('mail_password')) {
+        if (empty($this->getMailSetting('mail_password'))) {
             $rules['mail_password'] = 'required|string|max:500';
         }
         $validated = $request->validate($rules, [
