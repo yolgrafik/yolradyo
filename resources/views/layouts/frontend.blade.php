@@ -267,7 +267,10 @@
         .header-auth-logout { background: none; color: var(--ry-schedule-active); }
         .header-auth-logout:hover { background: rgba(255,255,255,0.08); }
         .header-auth-logout-form { display: inline; margin: 0; }
-        /* Mobile: compact dropdown */
+        /* Mobile: auth always visible */
+        .header-auth-mobile { display: none; gap: 0.75rem; align-items: stretch; flex: 1; min-width: 0; }
+        .header-auth-mobile .header-auth-btn { flex: 1; min-width: 120px; justify-content: center; min-height: 48px; font-size: 0.95rem; padding: 0.6rem 1rem; }
+        /* Mobile: social dropdown */
         .header-more-wrap { display: none; position: relative; }
         .header-more-btn {
             display: flex; align-items: center; justify-content: center;
@@ -290,9 +293,7 @@
             z-index: 100;
         }
         .header-more-dropdown.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
-        .header-more-social { margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--ry-border); }
-        .header-more-auth { flex-direction: column; align-items: stretch; gap: 0.5rem; }
-        .header-more-auth .header-auth-btn { justify-content: center; }
+        .header-more-social { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .nav-dropdown {
             position: relative;
         }
@@ -673,7 +674,11 @@
             .navbar .nav-center .nav-right .header-social-icon i { font-size: 1.25rem; }
             .nav-center .nav-right .header-social { gap: 12px; }
             .header-social-auth-inline { display: none !important; }
+            .header-auth-mobile { display: flex !important; }
             .header-more-wrap { display: block !important; }
+            .nav-center .nav-right { flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 1rem; }
+            .header-auth-mobile .header-auth-logout-form { flex: 1; min-width: 120px; }
+            .header-auth-mobile .header-auth-logout-form .header-auth-btn { width: 100%; }
             .nav-toggle { display: flex; align-items: center; justify-content: center; }
         }
         @media (max-width: 768px) {
@@ -705,6 +710,7 @@
         @media (min-width: 993px) {
             .nav-toggle { display: none; }
             .header-social-auth-inline { display: flex !important; }
+            .header-auth-mobile { display: none !important; }
             .header-more-wrap { display: none !important; }
         }
         /* Footer Logo Player */
@@ -960,10 +966,22 @@
                         @endguest
                     </div>
                 </div>
-                {{-- Mobile: compact dropdown --}}
+                {{-- Mobile: auth buttons always visible + social in dropdown --}}
+                <div class="header-auth-mobile">
+                    @guest
+                        <a href="{{ route('register') }}" class="header-auth-btn header-auth-register">Üye Ol</a>
+                        <a href="{{ route('login') }}" class="header-auth-btn header-auth-login">Giriş Yap</a>
+                    @else
+                        <a href="{{ route('profile') }}" class="header-auth-btn header-auth-profile">Hesabım</a>
+                        <form method="POST" action="{{ route('logout') }}" class="header-auth-logout-form">
+                            @csrf
+                            <button type="submit" class="header-auth-btn header-auth-logout">Çıkış</button>
+                        </form>
+                    @endguest
+                </div>
                 <div class="header-more-wrap">
-                    <button type="button" class="header-more-btn" id="headerMoreBtn" aria-label="Sosyal ve hesap" aria-expanded="false">
-                        <i class="bi bi-three-dots-vertical"></i>
+                    <button type="button" class="header-more-btn" id="headerMoreBtn" aria-label="Sosyal medya" aria-expanded="false">
+                        <i class="bi bi-share"></i>
                     </button>
                     <div class="header-more-dropdown" id="headerMoreDropdown" aria-hidden="true">
                         <div class="header-social nav-social header-more-social">
@@ -989,18 +1007,6 @@
                             @if(isset($social['x']) && ($social['x']['is_active'] ?? false) && !empty($social['x']['url'] ?? ''))
                             <a href="{{ $social['x']['url'] }}" class="header-social-icon" target="_blank" rel="noopener noreferrer" title="X" aria-label="X"><i class="bi bi-twitter-x"></i></a>
                             @endif
-                        </div>
-                        <div class="header-auth header-more-auth">
-                            @guest
-                                <a href="{{ route('register') }}" class="header-auth-btn header-auth-register">Üye Ol</a>
-                                <a href="{{ route('login') }}" class="header-auth-btn header-auth-login">Giriş Yap</a>
-                            @else
-                                <a href="{{ route('profile') }}" class="header-auth-btn header-auth-profile">Hesabım</a>
-                                <form method="POST" action="{{ route('logout') }}" class="header-auth-logout-form">
-                                    @csrf
-                                    <button type="submit" class="header-auth-btn header-auth-logout">Çıkış</button>
-                                </form>
-                            @endguest
                         </div>
                     </div>
                 </div>
