@@ -895,7 +895,7 @@
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="{{ route('admin.sponsors.index') }}" class="nav-item {{ request()->routeIs('admin.sponsors.*') ? 'is-active' : '' }}">Sponsor Listesi</a></li>
+                            <li><a href="{{ route('admin.sponsors.index') }}" class="nav-item {{ request()->routeIs('admin.sponsors.index') ? 'is-active' : '' }}">Sponsor Listesi</a></li>
                             <li><a href="{{ route('admin.sponsors.create') }}" class="nav-item {{ request()->routeIs('admin.sponsors.create') ? 'is-active' : '' }}">Sponsor Ekle</a></li>
                         </ul>
                     </div>
