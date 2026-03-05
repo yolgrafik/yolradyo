@@ -1085,19 +1085,19 @@
             @php
                 $footerText = $siteSettings['footer_legal_text'] ?? config('site.defaults.footer_legal_text', 'Radyoyol Tüm Hakları Saklıdır');
                 $footerMenu = $footerMenu ?? collect();
-                $footerLinks = [];
-                if ($footerMenu->isEmpty()) {
-                    $footerLinks = $siteSettings['footer_legal_links_json'] ?? [];
-                    if (!is_array($footerLinks)) $footerLinks = [];
-                    if (empty($footerLinks)) {
-                        $footerLinks = [
-                            ['label' => 'Gizlilik Politikası', 'url' => '/gizlilik'],
-                            ['label' => 'Çerez Politikası', 'url' => '/cerez'],
-                            ['label' => 'Kullanım Şartları', 'url' => '/kullanim'],
-                            ['label' => 'DMCA / Telif Hakkı Bildirimi', 'url' => '/dmca'],
-                            ['label' => 'KVKK Aydınlatma Metni', 'url' => '/kvkk'],
-                        ];
-                    }
+                $footerLinks = $siteSettings['footer_legal_links_json'] ?? [];
+                if (!is_array($footerLinks)) $footerLinks = [];
+                if (empty($footerLinks) && $footerMenu->isNotEmpty()) {
+                    $footerLinks = $footerMenu->map(fn($m) => ['label' => $m->title, 'url' => $m->url ?? '/'])->values()->toArray();
+                }
+                if (empty($footerLinks)) {
+                    $footerLinks = [
+                        ['label' => 'Gizlilik Politikası', 'url' => '/gizlilik'],
+                        ['label' => 'Çerez Politikası', 'url' => '/cerez'],
+                        ['label' => 'Kullanım Şartları', 'url' => '/kullanim'],
+                        ['label' => 'DMCA / Telif Hakkı Bildirimi', 'url' => '/dmca'],
+                        ['label' => 'KVKK Aydınlatma Metni', 'url' => '/kvkk'],
+                    ];
                 }
             @endphp
             <div class="footer-social">
@@ -1105,17 +1105,11 @@
             </div>
             <div class="footer-legal">
                 | {{ $footerText }} |
-                @if($footerMenu->isNotEmpty())
-                    @foreach($footerMenu as $m)
-                        <a href="{{ $m->href }}" @if($m->target_blank) target="_blank" rel="noopener noreferrer" @endif>{{ $m->title }}</a> |
-                    @endforeach
-                @else
-                    @foreach($footerLinks as $link)
-                        @if(!empty($link['label']) && !empty($link['url']))
-                            <a href="{{ url($link['url']) }}">{{ $link['label'] }}</a> |
-                        @endif
-                    @endforeach
-                @endif
+                @foreach($footerLinks as $link)
+                    @if(!empty($link['label']) && !empty($link['url']))
+                        <a href="{{ url($link['url']) }}">{{ $link['label'] }}</a> |
+                    @endif
+                @endforeach
             </div>
         </div>
     </footer>
