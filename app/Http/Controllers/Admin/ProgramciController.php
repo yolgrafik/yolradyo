@@ -26,7 +26,7 @@ class ProgramciController extends Controller
     {
         $validated = $request->validate([
             'ad' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:programcilar,slug',
+            'slug' => 'nullable|string|max:255',
             'avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'kisa_aciklama' => 'nullable|string|max:500',
             'uzun_aciklama' => 'nullable|string',
@@ -36,15 +36,16 @@ class ProgramciController extends Controller
             'tiktok' => 'nullable|string|max:500',
             'youtube' => 'nullable|string|max:500',
             'website' => 'nullable|string|max:500',
-            'aktif' => 'boolean',
+            'aktif' => 'nullable|boolean',
             'sira' => 'nullable|integer|min:0',
             'seo_title' => 'nullable|string|max:255',
             'seo_description' => 'nullable|string|max:500',
         ]);
 
+        $baseSlug = !empty(trim($validated['slug'] ?? '')) ? Str::slug($validated['slug']) : Str::slug($validated['ad']);
         $data = [
             'ad' => $validated['ad'],
-            'slug' => !empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['ad']),
+            'slug' => Programci::uniqueSlug($baseSlug),
             'kisa_aciklama' => $validated['kisa_aciklama'] ?? null,
             'uzun_aciklama' => $validated['uzun_aciklama'] ?? null,
             'email' => $validated['email'] ?? null,
@@ -53,7 +54,7 @@ class ProgramciController extends Controller
             'tiktok' => $validated['tiktok'] ?? null,
             'youtube' => $validated['youtube'] ?? null,
             'website' => $validated['website'] ?? null,
-            'aktif' => $request->boolean('aktif', true),
+            'aktif' => $request->filled('aktif'),
             'sira' => (int) ($validated['sira'] ?? 0),
             'seo_title' => $validated['seo_title'] ?? null,
             'seo_description' => $validated['seo_description'] ?? null,
@@ -77,7 +78,7 @@ class ProgramciController extends Controller
     {
         $validated = $request->validate([
             'ad' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:programcilar,slug,' . $programci->id,
+            'slug' => 'nullable|string|max:255',
             'avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'kisa_aciklama' => 'nullable|string|max:500',
             'uzun_aciklama' => 'nullable|string',
@@ -87,15 +88,16 @@ class ProgramciController extends Controller
             'tiktok' => 'nullable|string|max:500',
             'youtube' => 'nullable|string|max:500',
             'website' => 'nullable|string|max:500',
-            'aktif' => 'boolean',
+            'aktif' => 'nullable|boolean',
             'sira' => 'nullable|integer|min:0',
             'seo_title' => 'nullable|string|max:255',
             'seo_description' => 'nullable|string|max:500',
         ]);
 
+        $baseSlug = !empty(trim($validated['slug'] ?? '')) ? Str::slug($validated['slug']) : Str::slug($validated['ad']);
         $data = [
             'ad' => $validated['ad'],
-            'slug' => !empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['ad']),
+            'slug' => Programci::uniqueSlug($baseSlug, $programci->id),
             'kisa_aciklama' => $validated['kisa_aciklama'] ?? null,
             'uzun_aciklama' => $validated['uzun_aciklama'] ?? null,
             'email' => $validated['email'] ?? null,
@@ -104,7 +106,7 @@ class ProgramciController extends Controller
             'tiktok' => $validated['tiktok'] ?? null,
             'youtube' => $validated['youtube'] ?? null,
             'website' => $validated['website'] ?? null,
-            'aktif' => $request->boolean('aktif', true),
+            'aktif' => $request->filled('aktif'),
             'sira' => (int) ($validated['sira'] ?? 0),
             'seo_title' => $validated['seo_title'] ?? null,
             'seo_description' => $validated['seo_description'] ?? null,

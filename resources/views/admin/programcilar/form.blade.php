@@ -11,7 +11,7 @@
             <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
                 <div class="form-group">
                     <label for="ad">Ad *</label>
-                    <input type="text" name="ad" id="ad" required value="{{ old('ad', $programci?->ad) }}" class="form-input" placeholder="Örn: Fido">
+                    <input type="text" name="ad" id="ad" value="{{ old('ad', $programci?->ad) }}" class="form-input" placeholder="Örn: Fido" required>
                     @error('ad')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
@@ -53,28 +53,28 @@
             <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
                 <div class="form-group">
                     <label for="instagram">Instagram</label>
-                    <input type="url" name="instagram" id="instagram" value="{{ old('instagram', $programci?->instagram) }}" class="form-input" placeholder="https://instagram.com/...">
+                    <input type="text" name="instagram" id="instagram" value="{{ old('instagram', $programci?->instagram) }}" class="form-input" placeholder="https://instagram.com/... veya instagram.com/kullanici">
                     @error('instagram')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
                     <label for="facebook">Facebook</label>
-                    <input type="url" name="facebook" id="facebook" value="{{ old('facebook', $programci?->facebook) }}" class="form-input" placeholder="https://facebook.com/...">
+                    <input type="text" name="facebook" id="facebook" value="{{ old('facebook', $programci?->facebook) }}" class="form-input" placeholder="https://facebook.com/...">
                     @error('facebook')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
                     <label for="tiktok">TikTok</label>
-                    <input type="url" name="tiktok" id="tiktok" value="{{ old('tiktok', $programci?->tiktok) }}" class="form-input" placeholder="https://tiktok.com/...">
+                    <input type="text" name="tiktok" id="tiktok" value="{{ old('tiktok', $programci?->tiktok) }}" class="form-input" placeholder="https://tiktok.com/...">
                     @error('tiktok')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
                     <label for="youtube">YouTube</label>
-                    <input type="url" name="youtube" id="youtube" value="{{ old('youtube', $programci?->youtube) }}" class="form-input" placeholder="https://youtube.com/...">
+                    <input type="text" name="youtube" id="youtube" value="{{ old('youtube', $programci?->youtube) }}" class="form-input" placeholder="https://youtube.com/...">
                     @error('youtube')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
             </div>
             <div class="form-group">
                 <label for="website">Web Sitesi</label>
-                <input type="url" name="website" id="website" value="{{ old('website', $programci?->website) }}" class="form-input" placeholder="https://...">
+                <input type="text" name="website" id="website" value="{{ old('website', $programci?->website) }}" class="form-input" placeholder="https://...">
                 @error('website')<span class="form-error">{{ $message }}</span>@enderror
             </div>
 

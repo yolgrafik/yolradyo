@@ -71,35 +71,19 @@ class Programci extends Model
     {
         $slug = $base;
         $i = 1;
-        $q = static::query()->where('slug', $slug);
+        $query = static::withTrashed()->where('slug', $slug);
         if ($excludeId) {
-            $q->where('id', '!=', $excludeId);
+            $query->where('id', '!=', $excludeId);
         }
-        while ($q->exists()) {
+        while ($query->exists()) {
             $slug = $base . '-' . $i;
             $i++;
-            $q = static::query()->where('slug', $slug);
+            $query = static::withTrashed()->where('slug', $slug);
             if ($excludeId) {
-                $q->where('id', '!=', $excludeId);
+                $query->where('id', '!=', $excludeId);
             }
         }
         return $slug;
     }
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            if (empty($model->slug)) {
-                $model->slug = static::uniqueSlug(Str::slug($model->ad));
-            }
-        });
-
-        static::updating(function ($model) {
-            if ($model->isDirty('ad') && !$model->isDirty('slug')) {
-                $model->slug = static::uniqueSlug(Str::slug($model->ad), $model->id);
-            }
-        });
-    }
 }
