@@ -8,6 +8,7 @@ use App\Services\SettingsService;
 use App\Services\ThemeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
 {
@@ -112,7 +113,28 @@ class SettingsController extends Controller
             'seo_meta_title' => $this->settings->get('seo_meta_title'),
             'seo_meta_description' => $this->settings->get('seo_meta_description'),
             'seo_meta_keywords' => $this->settings->get('seo_meta_keywords'),
+            'seo_meta_author' => $this->settings->get('seo_meta_author'),
+            'seo_meta_robots' => $this->settings->get('seo_meta_robots', 'index,follow'),
+            'seo_canonical_url' => $this->settings->get('seo_canonical_url'),
             'seo_og_image_path' => $this->settings->get('seo_og_image_path'),
+            'seo_og_title' => $this->settings->get('seo_og_title'),
+            'seo_og_description' => $this->settings->get('seo_og_description'),
+            'seo_og_type' => $this->settings->get('seo_og_type', 'website'),
+            'seo_og_locale' => $this->settings->get('seo_og_locale', 'tr_TR'),
+            'seo_twitter_card' => $this->settings->get('seo_twitter_card', 'summary_large_image'),
+            'seo_twitter_site' => $this->settings->get('seo_twitter_site'),
+            'seo_twitter_creator' => $this->settings->get('seo_twitter_creator'),
+            'seo_google_verification' => $this->settings->get('seo_google_verification'),
+            'seo_bing_verification' => $this->settings->get('seo_bing_verification'),
+            'seo_yandex_verification' => $this->settings->get('seo_yandex_verification'),
+            'seo_schema_org_name' => $this->settings->get('seo_schema_org_name'),
+            'seo_schema_org_url' => $this->settings->get('seo_schema_org_url'),
+            'seo_schema_org_logo' => $this->settings->get('seo_schema_org_logo'),
+            'seo_schema_description' => $this->settings->get('seo_schema_description'),
+            'seo_schema_radio_station' => (bool) $this->settings->get('seo_schema_radio_station', true),
+            'seo_sitemap_url' => $this->settings->get('seo_sitemap_url'),
+            'seo_geo_region' => $this->settings->get('seo_geo_region'),
+            'seo_meta_referrer' => $this->settings->get('seo_meta_referrer', 'strict-origin-when-cross-origin'),
         ]);
     }
 
@@ -120,18 +142,70 @@ class SettingsController extends Controller
     {
         if ($r = $this->ensureAdmin()) return $r;
         $validated = $request->validate([
-            'meta_title' => 'nullable|string|max:255',
+            'meta_title' => 'nullable|string|max:70',
             'meta_description' => 'nullable|string|max:160',
             'meta_keywords' => 'nullable|string|max:500',
+            'meta_author' => 'nullable|string|max:100',
+            'meta_robots' => ['nullable', 'string', Rule::in(['index,follow', 'noindex,nofollow', 'index,nofollow', 'noindex,follow'])],
+            'canonical_url' => 'nullable|url|max:500',
             'og_image_file' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
+            'remove_og_image' => 'nullable|boolean',
+            'og_title' => 'nullable|string|max:95',
+            'og_description' => 'nullable|string|max:200',
+            'og_type' => 'nullable|string|in:website,article',
+            'og_locale' => 'nullable|string|max:10',
+            'twitter_card' => 'nullable|string|in:summary,summary_large_image,app',
+            'twitter_site' => 'nullable|string|max:50',
+            'twitter_creator' => 'nullable|string|max:50',
+            'google_site_verification' => 'nullable|string|max:100',
+            'bing_site_verification' => 'nullable|string|max:100',
+            'yandex_verification' => 'nullable|string|max:100',
+            'schema_organization_name' => 'nullable|string|max:150',
+            'schema_organization_url' => 'nullable|url|max:500',
+            'schema_organization_logo' => 'nullable|url|max:500',
+            'schema_description' => 'nullable|string|max:500',
+            'schema_radio_station' => 'nullable|boolean',
+            'sitemap_url' => 'nullable|url|max:500',
+            'geo_region' => 'nullable|string|max:10',
+            'meta_referrer' => 'nullable|string|max:50',
         ]);
 
-        $this->settings->set('seo_meta_title', $validated['meta_title'] ?? '', 'text');
-        $this->settings->set('seo_meta_description', $validated['meta_description'] ?? '', 'text');
-        $this->settings->set('seo_meta_keywords', $validated['meta_keywords'] ?? '', 'text');
+        $items = [
+            'seo_meta_title' => ['value' => trim($validated['meta_title'] ?? ''), 'type' => 'text'],
+            'seo_meta_description' => ['value' => trim($validated['meta_description'] ?? ''), 'type' => 'text'],
+            'seo_meta_keywords' => ['value' => trim($validated['meta_keywords'] ?? ''), 'type' => 'text'],
+            'seo_meta_author' => ['value' => trim($validated['meta_author'] ?? ''), 'type' => 'text'],
+            'seo_meta_robots' => ['value' => $validated['meta_robots'] ?? 'index,follow', 'type' => 'text'],
+            'seo_canonical_url' => ['value' => trim($validated['canonical_url'] ?? ''), 'type' => 'text'],
+            'seo_og_title' => ['value' => trim($validated['og_title'] ?? ''), 'type' => 'text'],
+            'seo_og_description' => ['value' => trim($validated['og_description'] ?? ''), 'type' => 'text'],
+            'seo_og_type' => ['value' => $validated['og_type'] ?? 'website', 'type' => 'text'],
+            'seo_og_locale' => ['value' => $validated['og_locale'] ?? 'tr_TR', 'type' => 'text'],
+            'seo_twitter_card' => ['value' => $validated['twitter_card'] ?? 'summary_large_image', 'type' => 'text'],
+            'seo_twitter_site' => ['value' => trim($validated['twitter_site'] ?? ''), 'type' => 'text'],
+            'seo_twitter_creator' => ['value' => trim($validated['twitter_creator'] ?? ''), 'type' => 'text'],
+            'seo_google_verification' => ['value' => trim($validated['google_site_verification'] ?? ''), 'type' => 'text'],
+            'seo_bing_verification' => ['value' => trim($validated['bing_site_verification'] ?? ''), 'type' => 'text'],
+            'seo_yandex_verification' => ['value' => trim($validated['yandex_verification'] ?? ''), 'type' => 'text'],
+            'seo_schema_org_name' => ['value' => trim($validated['schema_organization_name'] ?? ''), 'type' => 'text'],
+            'seo_schema_org_url' => ['value' => trim($validated['schema_organization_url'] ?? ''), 'type' => 'text'],
+            'seo_schema_org_logo' => ['value' => trim($validated['schema_organization_logo'] ?? ''), 'type' => 'text'],
+            'seo_schema_description' => ['value' => trim($validated['schema_description'] ?? ''), 'type' => 'text'],
+            'seo_schema_radio_station' => ['value' => $request->boolean('schema_radio_station'), 'type' => 'boolean'],
+            'seo_sitemap_url' => ['value' => trim($validated['sitemap_url'] ?? ''), 'type' => 'text'],
+            'seo_geo_region' => ['value' => trim($validated['geo_region'] ?? ''), 'type' => 'text'],
+            'seo_meta_referrer' => ['value' => trim($validated['meta_referrer'] ?? ''), 'type' => 'text'],
+        ];
+        $this->settings->setMany($items);
 
         $dir = 'assets/seo';
-        if ($request->hasFile('og_image_file')) {
+        if ($request->boolean('remove_og_image')) {
+            $oldPath = $this->settings->get('seo_og_image_path');
+            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+            $this->settings->set('seo_og_image_path', '', 'text');
+        } elseif ($request->hasFile('og_image_file')) {
             if (!Storage::disk('public')->exists($dir)) {
                 Storage::disk('public')->makeDirectory($dir);
             }
@@ -144,7 +218,7 @@ class SettingsController extends Controller
         }
         ActivityLogger::log('settings.updated', ['section' => 'seo']);
 
-        return redirect()->route('admin.settings.seo')->with('success', 'Kaydedildi');
+        return redirect()->route('admin.settings.seo')->with('success', 'SEO ayarları kaydedildi.');
     }
 
     public function socialForm()

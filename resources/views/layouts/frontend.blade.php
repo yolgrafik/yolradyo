@@ -8,21 +8,13 @@
         $siteName = $siteSettings['site_name'] ?? 'RADYOYOL';
         $siteSlogan = $siteSettings['site_slogan'] ?? '';
         $metaTitle = $siteSettings['seo_meta_title'] ?? $siteName;
-        $metaDesc = $siteSettings['seo_meta_description'] ?? '';
-        $metaKeywords = $siteSettings['seo_meta_keywords'] ?? '';
-        $ogImage = isset($siteSettings['seo_og_image_path']) && $siteSettings['seo_og_image_path']
-            ? asset('storage/' . $siteSettings['seo_og_image_path']) : '';
         $faviconPath = isset($siteSettings['brand_favicon_path']) && $siteSettings['brand_favicon_path']
             ? asset('storage/' . $siteSettings['brand_favicon_path']) : asset('favicon.ico');
     @endphp
     <link rel="icon" href="{{ $faviconPath }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>@yield('title', $metaTitle) - Radyo</title>
-    @if($metaDesc)<meta name="description" content="{{ $metaDesc }}">@endif
-    @if($metaKeywords)<meta name="keywords" content="{{ $metaKeywords }}">@endif
-    <meta property="og:title" content="{{ $metaTitle }}">
-    @if($metaDesc)<meta property="og:description" content="{{ $metaDesc }}">@endif
-    @if($ogImage)<meta property="og:image" content="{{ $ogImage }}">@endif
+    @include('partials.seo-meta')
     @include('frontend.partials.theme-vars')
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
