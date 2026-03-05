@@ -24,10 +24,6 @@
         gap: 1.25rem;
         min-width: 0;
     }
-    .home-left .programcilar-section {
-        flex: 1;
-        min-height: 0;
-    }
     .home-slider-wrap {
         position: relative;
         border-radius: 14px;
@@ -336,34 +332,6 @@
         gap: 1.25rem;
         min-width: 0;
         max-width: 360px;
-    }
-    .home-right .listener-widget {
-        flex: 1;
-        min-height: 280px;
-        display: flex;
-        flex-direction: column;
-    }
-    .home-right .listener-widget .listener-widget__body {
-        flex: 1;
-        min-height: 0;
-        display: flex;
-        flex-direction: column;
-    }
-    .home-right .listener-widget .listener-swiper-wrap {
-        flex: 1;
-        min-height: 0;
-        display: flex;
-        flex-direction: column;
-    }
-    .home-right .listener-widget .listener-swiper {
-        flex: 1;
-        min-height: 0;
-    }
-    .home-right .listener-widget .listener-swiper .swiper-wrapper {
-        align-items: stretch;
-    }
-    .home-right .listener-widget .listener-swiper .swiper-slide {
-        height: auto;
     }
     .home-actions {
         display: flex;
@@ -797,11 +765,6 @@
             flex-direction: row;
         }
         .btn-live, .btn-request-group { flex: 1; }
-        .listener-widget {
-            grid-column: 1 / -1;
-            flex: none;
-            min-height: 220px;
-        }
         .live-dj-card {
             grid-column: 1 / -1;
         }
@@ -883,7 +846,6 @@
                 </div>
             </div>
             @include('partials.requests-ticker')
-            @include('partials.programcilar-cards')
         </div>
         <div class="home-right">
             <div class="home-actions">
@@ -941,9 +903,9 @@
                     <div class="live-listeners">👥 <span class="cc_streaminfo" data-type="listeners" data-username="radyoyol"></span> dinleyici</div>
                 </div>
             </div>
-            @include('partials.listener-submissions-widget')
         </div>
     </div>
+    @include('partials.programcilar-sidebar-section')
 </div>
 
 @push('scripts')

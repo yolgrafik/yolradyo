@@ -3,12 +3,12 @@
     $sidebarMode = $sidebarMode ?? false;
 @endphp
 @if($listenerSubmissions->isNotEmpty())
-<div class="listener-widget {{ $sidebarMode ? 'listener-widget--sidebar h-100 d-flex flex-column min-h-0 flex-grow-1 w-100' : '' }}">
-    <div class="listener-widget__header {{ $sidebarMode ? 'flex-shrink-0' : '' }}">
+<div class="listener-widget {{ $sidebarMode ? 'sidebar-widget' : '' }}">
+    <div class="listener-widget__header {{ $sidebarMode ? 'sidebar-widget-header' : '' }}">
         <span class="listener-widget__title">Dinleyicilerden Gelenler</span>
     </div>
-    <div class="listener-widget__body {{ $sidebarMode ? 'flex-grow-1 min-h-0 d-flex flex-column overflow-hidden' : '' }}">
-        <div class="listener-swiper-wrap {{ $sidebarMode ? 'flex-grow-1 min-h-0 overflow-auto' : '' }}">
+    <div class="listener-widget__body {{ $sidebarMode ? 'sidebar-widget-body' : '' }}">
+        <div class="listener-swiper-wrap {{ $sidebarMode ? 'h-100 min-h-0' : '' }}">
             <div class="swiper listener-swiper" id="listenerSwiper">
                 <div class="swiper-wrapper">
                     @foreach($listenerSubmissions as $item)
