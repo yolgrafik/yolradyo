@@ -570,8 +570,9 @@
         .home-main {
             grid-template-columns: 1fr;
         }
+        .home-left { order: 1; }
         .home-right {
-            order: -1;
+            order: 2;
             max-width: none;
             display: grid;
             grid-template-columns: 1fr 1fr;
