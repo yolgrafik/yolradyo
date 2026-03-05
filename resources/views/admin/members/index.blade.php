@@ -57,6 +57,7 @@
                             @endif
                         </td>
                         <td>
+                            <a href="{{ route('admin.members.edit', $m) }}" class="btn-sm btn-edit" style="text-decoration:none;">Düzenle</a>
                             @if($m->status === 'pending')
                                 <form action="{{ route('admin.members.approve', $m) }}" method="POST" class="d-inline">
                                     @csrf

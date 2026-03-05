@@ -197,6 +197,8 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('members')->name('admin.members.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\MemberController::class, 'index'])->name('index');
+            Route::get('{user}/edit', [App\Http\Controllers\Admin\MemberController::class, 'edit'])->name('edit');
+            Route::put('{user}', [App\Http\Controllers\Admin\MemberController::class, 'update'])->name('update');
             Route::post('{user}/approve', [App\Http\Controllers\Admin\MemberController::class, 'approve'])->name('approve');
             Route::post('{user}/reject', [App\Http\Controllers\Admin\MemberController::class, 'reject'])->name('reject');
             Route::post('{user}/deactivate', [App\Http\Controllers\Admin\MemberController::class, 'deactivate'])->name('deactivate');
