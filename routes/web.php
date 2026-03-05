@@ -83,6 +83,8 @@ Route::prefix('admin')->group(function () {
     Route::post('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'saveGeneral']);
     Route::get('settings/branding', [App\Http\Controllers\Admin\SettingsController::class, 'brandingForm'])->name('admin.settings.branding');
     Route::post('settings/branding', [App\Http\Controllers\Admin\SettingsController::class, 'saveBranding']);
+    Route::get('settings/seo', [App\Http\Controllers\Admin\SettingsController::class, 'seoForm'])->name('admin.settings.seo');
+    Route::post('settings/seo', [App\Http\Controllers\Admin\SettingsController::class, 'saveSeo']);
     Route::get('settings/social', [App\Http\Controllers\Admin\SettingsController::class, 'socialForm'])->name('admin.settings.social');
     Route::post('settings/social', [App\Http\Controllers\Admin\SettingsController::class, 'saveSocial']);
     Route::get('settings/footer', [App\Http\Controllers\Admin\SettingsController::class, 'footerForm'])->name('admin.settings.footer');
