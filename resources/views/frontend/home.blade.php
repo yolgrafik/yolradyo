@@ -24,6 +24,16 @@
         gap: 1.25rem;
         min-width: 0;
     }
+    .home-left .programcilar-section {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .home-left .programcilar-section .programcilar-swiper-wrap {
+        flex: 1;
+        min-height: 0;
+    }
     .home-slider-wrap {
         position: relative;
         border-radius: 14px;
