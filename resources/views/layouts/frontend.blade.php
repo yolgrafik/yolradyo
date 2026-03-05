@@ -941,6 +941,9 @@
                                 <li><a href="{{ $m->href }}" class="{{ $isActive ? 'active' : '' }}" @if($m->target_blank) target="_blank" rel="noopener noreferrer" @endif>{{ $m->title }}</a></li>
                             @endif
                         @endforeach
+                        @auth
+                        <li><a href="{{ route('forum.index') }}" class="{{ request()->is('forum', 'forum/*') ? 'active' : '' }}">Forum</a></li>
+                        @endauth
                     @else
                         {{-- Fallback: hardcoded menu --}}
                         <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Anasayfa</a></li>
@@ -963,6 +966,9 @@
                             </ul>
                         </li>
                         <li><a href="{{ url('/iletisim') }}" class="{{ request()->is('iletisim') ? 'active' : '' }}">İletişim</a></li>
+                        @auth
+                        <li><a href="{{ route('forum.index') }}" class="{{ request()->is('forum', 'forum/*') ? 'active' : '' }}">Forum</a></li>
+                        @endauth
                     @endif
                 </ul>
                 <div class="nav-right">
