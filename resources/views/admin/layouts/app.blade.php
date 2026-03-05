@@ -830,6 +830,20 @@
                             <li><a href="{{ route('admin.sliders.index') }}" class="nav-item {{ request()->routeIs('admin.sliders.*') ? 'is-active' : '' }}">Slider Yonetimi</a></li>
                         </ul>
                     </div>
+                    <div class="nav-section {{ request()->routeIs('admin.legal-texts.*') ? 'is-open' : '' }}" data-section="yasal">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.legal-texts.*') ? 'true' : 'false' }}">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            <span>Yasal Metinler</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="{{ route('admin.legal-texts.index') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.index') ? 'is-active' : '' }}">Tüm Yasal Metinler</a></li>
+                            <li><a href="{{ route('admin.legal-texts.edit', 'kullanim') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.edit') && request()->route('slug') == 'kullanim' ? 'is-active' : '' }}">Kullanım Şartları</a></li>
+                            <li><a href="{{ route('admin.legal-texts.edit', 'gizlilik') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.edit') && request()->route('slug') == 'gizlilik' ? 'is-active' : '' }}">Gizlilik Politikası</a></li>
+                            <li><a href="{{ route('admin.legal-texts.edit', 'cerez') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.edit') && request()->route('slug') == 'cerez' ? 'is-active' : '' }}">Çerez Politikası</a></li>
+                            <li><a href="{{ route('admin.legal-texts.edit', 'kvkk') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.edit') && request()->route('slug') == 'kvkk' ? 'is-active' : '' }}">KVKK Aydınlatma Metni</a></li>
+                        </ul>
+                    </div>
                     <div class="nav-section" data-section="haberler">
                         <button class="nav-section__toggle" type="button" aria-expanded="false">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/></svg>

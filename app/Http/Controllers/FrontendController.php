@@ -104,23 +104,27 @@ class FrontendController extends Controller
         return view('frontend.page', ['pageTitle' => 'Iletisim']);
     }
 
-    public function gizlilik()
+    public function gizlilik(SettingsService $settings)
     {
-        return view('frontend.page', ['pageTitle' => 'Gizlilik Politikasi']);
+        $content = $settings->get('legal_gizlilik', '');
+        return view('frontend.page', ['pageTitle' => 'Gizlilik Politikası', 'pageContent' => $content]);
     }
 
-    public function cerez()
+    public function cerez(SettingsService $settings)
     {
-        return view('frontend.page', ['pageTitle' => 'Cerez Politikasi']);
+        $content = $settings->get('legal_cerez', '');
+        return view('frontend.page', ['pageTitle' => 'Çerez Politikası', 'pageContent' => $content]);
     }
 
-    public function kullanim()
+    public function kullanim(SettingsService $settings)
     {
-        return view('frontend.page', ['pageTitle' => 'Kullanim Sartlari']);
+        $content = $settings->get('legal_kullanim', '');
+        return view('frontend.page', ['pageTitle' => 'Kullanım Şartları', 'pageContent' => $content]);
     }
 
-    public function kvkk()
+    public function kvkk(SettingsService $settings)
     {
-        return view('frontend.page', ['pageTitle' => 'KVKK Aydinlatma Metni']);
+        $content = $settings->get('legal_kvkk', '');
+        return view('frontend.page', ['pageTitle' => 'KVKK Aydınlatma Metni', 'pageContent' => $content]);
     }
 }

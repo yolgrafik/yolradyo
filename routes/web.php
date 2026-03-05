@@ -98,6 +98,12 @@ Route::prefix('admin')->group(function () {
     Route::get('settings/theme', [App\Http\Controllers\Admin\SettingsController::class, 'themeForm'])->name('admin.settings.theme');
     Route::post('settings/theme', [App\Http\Controllers\Admin\SettingsController::class, 'saveTheme']);
 
+        Route::prefix('legal-texts')->name('admin.legal-texts.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\LegalTextsController::class, 'index'])->name('index');
+            Route::get('{slug}/edit', [App\Http\Controllers\Admin\LegalTextsController::class, 'edit'])->name('edit')->where('slug', 'kullanim|gizlilik|cerez|kvkk');
+            Route::put('{slug}', [App\Http\Controllers\Admin\LegalTextsController::class, 'update'])->name('update')->where('slug', 'kullanim|gizlilik|cerez|kvkk');
+        });
+
         Route::prefix('menu')->name('admin.menu.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\MenuController::class, 'index'])->name('index');
             Route::get('create', [App\Http\Controllers\Admin\MenuController::class, 'create'])->name('create');
