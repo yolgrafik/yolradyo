@@ -1,6 +1,7 @@
-# FTP ile Yayına Alma Rehberi
+# FTP ile Yayına Alma Rehberi (cPanel Uyumlu)
 
-Bu rehber, RADYOYOL projesini FTP ile sunucuya (özellikle cPanel host) yüklemek için adımları içerir.
+Bu rehber, RADYOYOL projesini cPanel hostlara FTP ile yüklemek için adımları içerir.
+Tüm dosyalar PHP 8.2+ ve cPanel ile uyumlu olacak şekilde yapılandırılmıştır.
 
 ---
 
