@@ -15,7 +15,7 @@
 .btn-new:hover { opacity: 0.95; color: #fff; }
 .forum-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
 .post-list { display: flex; flex-direction: column; gap: 0.75rem; }
-.post-card { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem 1.25rem; transition: background 0.2s; }
+.post-card { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: 12px; padding: 1rem 1.25rem; transition: background 0.2s; }
 .post-card:hover { background: rgba(255,255,255,0.04); }
 .post-card a { text-decoration: none; color: inherit; }
 .post-title { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 0.35rem; }

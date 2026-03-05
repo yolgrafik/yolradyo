@@ -24,10 +24,10 @@
 .programci-social { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .programci-social a { color: rgba(255,255,255,0.8); transition: color 0.2s; }
 .programci-social a:hover { color: #fff; }
-.programci-content { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem; }
+.programci-content { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem; }
 .programci-content h3 { font-size: 1.1rem; color: #fff; margin: 0 0 1rem 0; }
 .programci-bio { color: var(--muted); line-height: 1.7; white-space: pre-wrap; }
-.programci-schedule { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem; }
+.programci-schedule { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem; }
 .programci-schedule h3 { font-size: 1.1rem; color: #fff; margin: 0 0 1rem 0; }
 .schedule-item { display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
 .schedule-item:last-child { border-bottom: none; }
@@ -35,7 +35,7 @@
 .schedule-day { font-weight: 600; color: var(--ry-schedule-active); }
 .schedule-time { color: var(--muted); font-size: 0.85rem; }
 .schedule-title { font-weight: 600; color: #fff; }
-.contact-form { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; }
+.contact-form { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: 14px; padding: 1.5rem; }
 .contact-form h3 { font-size: 1.1rem; color: #fff; margin: 0 0 1rem 0; }
 .form-group { margin-bottom: 1rem; }
 .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.35rem; }

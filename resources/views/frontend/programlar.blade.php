@@ -13,7 +13,7 @@
     .programlar-hero h1 { font-size: 2rem; font-weight: 700; color: #fff; margin: 0 0 0.5rem 0; }
     .programlar-hero p { color: var(--muted); font-size: 1rem; margin: 0; }
     .dj-section { margin-bottom: 2.5rem; }
-    .dj-card { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
+    .dj-card { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: 14px; overflow: hidden; }
     .dj-header { display: flex; align-items: center; gap: 1.25rem; padding: 1.25rem 1.5rem; background: rgba(255,255,255,0.03); flex-wrap: wrap; }
     .dj-avatar { width: 80px; height: 80px; border-radius: 14px; object-fit: cover; flex-shrink: 0; background: rgba(255,255,255,0.06); }
     .dj-avatar-placeholder { width: 80px; height: 80px; border-radius: 14px; background: var(--ry-schedule-active); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; font-weight: 800; flex-shrink: 0; }

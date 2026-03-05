@@ -8,6 +8,8 @@
 .auth-card {
     background: var(--ry-bar-bg);
     border: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid var(--ry-line-color);
+    border-bottom: 1px solid var(--ry-line-color);
     border-radius: 14px;
     padding: 2rem;
 }

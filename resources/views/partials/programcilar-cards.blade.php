@@ -68,13 +68,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <style>
 .programcilar-section { margin-top: 1.5rem; padding: 0; }
-.programcilar-section__header { padding: 0.75rem 1rem; border-radius: var(--ry-radius); background: color-mix(in srgb, var(--ry-bar-bg) 85%, transparent); border: 1px solid var(--ry-border); margin-bottom: 1rem; }
+.programcilar-section__header { padding: 0.75rem 1rem; border-radius: var(--ry-radius); background: color-mix(in srgb, var(--ry-bar-bg) 85%, transparent); border: 1px solid var(--ry-border); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); margin-bottom: 1rem; }
 .programcilar-section__title { font-size: 1.1rem; font-weight: 700; color: var(--ry-text); margin: 0; font-family: inherit; }
 .programcilar-swiper-wrap { position: relative; width: 100%; overflow: hidden; }
 .programcilar-swiper { overflow: visible; padding: 0 2px; }
 .programcilar-swiper .swiper-wrapper { align-items: stretch; }
 .programcilar-swiper .swiper-slide { height: auto; display: flex; }
-.programci-card { width: 100%; display: flex; flex-direction: column; background: color-mix(in srgb, var(--ry-bar-bg) 75%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--ry-border); border-radius: var(--ry-radius); overflow: hidden; color: inherit; transition: all 0.2s; }
+.programci-card { width: 100%; display: flex; flex-direction: column; background: color-mix(in srgb, var(--ry-bar-bg) 75%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--ry-border); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: var(--ry-radius); overflow: hidden; color: inherit; transition: all 0.2s; }
 .programci-card:hover { transform: translateY(-3px); border-color: var(--ry-schedule-active); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 .programci-card__link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; cursor: pointer; }
 .programci-card__img-wrap { width: 100%; aspect-ratio: 1; background: var(--ry-schedule-bg); overflow: hidden; flex-shrink: 0; }

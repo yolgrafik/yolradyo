@@ -7,7 +7,7 @@
 .page-hero { padding: 2rem 1.5rem; background: var(--ry-header-bg); border-bottom: 1px solid var(--ry-border); }
 .page-hero h1 { font-size: 1.75rem; font-weight: 700; color: #fff; margin: 0; }
 .forum-form-wrap { max-width: 600px; margin: 0 auto; padding: 2rem 1.5rem; }
-.form-card { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; }
+.form-card { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: 14px; padding: 1.5rem; }
 .form-group { margin-bottom: 1.25rem; }
 .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.35rem; }
 .form-input, .form-textarea { width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: var(--text); font-size: 0.95rem; }

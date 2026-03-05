@@ -33,6 +33,8 @@
         min-height: 386px;
         background: var(--panel);
         border: 1px solid var(--border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
     }
     .home-slider {
         position: relative;
@@ -172,6 +174,8 @@
         font-size: 1.25rem;
         background: var(--panel);
         border: 1px solid var(--border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
         border-radius: 14px;
     }
     .schedule-card {
@@ -263,6 +267,8 @@
         border-radius: 10px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.06);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
         margin-top: 8px;
         min-height: 44px;
     }
@@ -383,6 +389,8 @@
         padding: 0.12rem 0.4rem;
         background: color-mix(in srgb, var(--ry-bar-bg) 65%, #0b0f16);
         border: 1px solid var(--border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
         border-radius: 6px;
         width: 100%;
         box-sizing: border-box;
@@ -420,6 +428,8 @@
         padding: 0.5rem 0.75rem;
         background: color-mix(in srgb, var(--ry-bar-bg) 65%, #0b0f16);
         border: 1px solid var(--border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
         border-radius: 10px;
         width: 100%;
         box-sizing: border-box;

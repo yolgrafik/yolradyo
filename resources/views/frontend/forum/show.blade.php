@@ -7,7 +7,7 @@
 .page-hero { padding: 2rem 1.5rem; background: var(--ry-header-bg); border-bottom: 1px solid var(--ry-border); }
 .page-hero h1 { font-size: 1.5rem; font-weight: 700; color: #fff; margin: 0; }
 .forum-detail { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem; }
-.post-detail { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.post-detail { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; }
 .post-meta { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
 .badge { display: inline-block; padding: 0.2rem 0.5rem; font-size: 0.75rem; font-weight: 600; border-radius: 6px; }
 .badge-video { background: rgba(168,85,247,0.25); color: #c4b5fd; }

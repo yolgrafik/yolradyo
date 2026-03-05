@@ -7,7 +7,7 @@
 .page-hero { padding: 2.5rem 1.5rem; background: var(--ry-header-bg); border-bottom: 1px solid var(--ry-border); }
 .page-hero h1 { font-size: 1.75rem; font-weight: 700; color: #fff; margin: 0; }
 .page-content { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem; }
-.submit-form { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; }
+.submit-form { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: 14px; padding: 1.5rem; }
 .submit-form h3 { font-size: 1.1rem; color: #fff; margin: 0 0 1rem 0; }
 .form-group { margin-bottom: 1rem; }
 .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.35rem; }

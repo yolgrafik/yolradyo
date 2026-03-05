@@ -14,12 +14,16 @@
     .contact-left {
         background: color-mix(in srgb, var(--ry-bar-bg) 60%, #0b0f16);
         border: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
         border-radius: 16px;
         padding: 2rem;
     }
     .contact-right {
         background: var(--ry-surface);
         border: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
         border-radius: 16px;
         padding: 2rem;
         box-shadow: 0 4px 20px rgba(0,0,0,0.2);
