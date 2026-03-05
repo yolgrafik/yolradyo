@@ -72,7 +72,7 @@ class FrontendController extends Controller
 
     public function reklam()
     {
-        return view('frontend.page', ['pageTitle' => 'Reklam & Isbirligi']);
+        return view('frontend.page', ['pageTitle' => 'Sponsor']);
     }
 
     public function hakkimizda(string $slug)

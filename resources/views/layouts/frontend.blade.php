@@ -956,7 +956,7 @@
                                 <li><a href="{{ url('/galeri') }}" class="{{ request()->is('galeri') ? 'active' : '' }}">Foto Galeri</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ url('/reklam') }}" class="{{ request()->is('reklam') ? 'active' : '' }}">Reklam & İşbirliği</a></li>
+                        <li><a href="{{ url('/reklam') }}" class="{{ request()->is('reklam') ? 'active' : '' }}">Sponsor</a></li>
                         <li class="nav-dropdown">
                             <a href="{{ url('/hakkimizda/biz-kimiz') }}" class="{{ request()->is('hakkimizda/*') ? 'active' : '' }}">Hakkımızda<span class="arrow">▾</span></a>
                             <ul class="nav-dropdown-menu">
