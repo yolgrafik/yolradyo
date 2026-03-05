@@ -27,6 +27,7 @@
                     <div class="programci-card__img-placeholder">{{ $p->display_initials }}</div>
                 @endif
             </div>
+            <div class="programci-card__divider"></div>
             <div class="programci-card__body">
                 <h3 class="programci-card__name">{{ $p->ad }}</h3>
                 @php $hasSocial = $p->instagram || $p->facebook || $p->tiktok; @endphp
@@ -66,13 +67,14 @@
 .programcilar-nav__btn:hover { background: rgba(255,255,255,0.15); border-color: var(--ry-line-color); }
 .programcilar-carousel { overflow: hidden; }
 .programcilar-track { display: flex; gap: 1rem; transition: transform 0.3s ease; }
-.programci-card { flex: 0 0 calc(25% - 0.75rem); min-width: 0; display: flex; flex-direction: column; background: var(--ry-surface); border-radius: var(--ry-radius); overflow: hidden; text-decoration: none; color: inherit; transition: all 0.2s; border: 1px solid var(--ry-border); }
-.programci-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); border-color: var(--ry-line-color); }
+.programci-card { flex: 0 0 calc(25% - 0.75rem); min-width: 0; display: flex; flex-direction: column; background: var(--ry-theme); border-radius: var(--ry-radius); overflow: hidden; text-decoration: none; color: inherit; transition: all 0.2s; border: 2px solid var(--ry-theme); }
+.programci-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
 .programci-card__img-wrap { width: 100%; aspect-ratio: 1; background: var(--ry-schedule-bg); overflow: hidden; }
 .programci-card__img { width: 100%; height: 100%; object-fit: cover; }
 .programci-card__img-placeholder { width: 100%; height: 100%; background: var(--ry-schedule-active); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; font-family: inherit; }
-.programci-card__body { padding: 1rem; text-align: center; background: color-mix(in srgb, var(--ry-surface) 80%, var(--ry-bar-bg)); }
-.programci-card__name { font-size: 1.05rem; font-weight: 700; color: var(--ry-text); margin: 0 0 0.75rem 0; font-family: inherit; }
+.programci-card__divider { width: 100%; height: 2px; background: rgba(255,255,255,0.9); flex-shrink: 0; }
+.programci-card__body { padding: 1rem; text-align: center; background: var(--ry-theme); flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+.programci-card__name { font-size: 1.05rem; font-weight: 700; color: var(--ry-text); margin: 0; font-family: inherit; }
 .programci-card__social { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
 .programci-card__social-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: transform 0.2s; }
 .programci-card__social-btn:hover { transform: scale(1.1); }
