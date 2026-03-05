@@ -1,10 +1,10 @@
 <?php
 
 if (!function_exists('brand_logo_url')) {
-    function brand_logo_url(?string $path = null): string
+    function brand_logo_url(?string $path = null, string $fallback = 'logo.png'): string
     {
         $path = $path ?? app(\App\Services\SettingsService::class)->get('brand_logo_path');
-        return $path ? asset('storage/' . $path) : asset('logo.png');
+        return $path ? asset('storage/' . $path) : asset($fallback);
     }
 }
 

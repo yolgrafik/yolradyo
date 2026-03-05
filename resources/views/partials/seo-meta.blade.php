@@ -1,6 +1,6 @@
 @php
     $siteSettings = $siteSettings ?? [];
-    $siteName = $siteSettings['site_name'] ?? 'RADYOYOL';
+    $siteName = $siteSettings['site_name'] ?? config('site.defaults.site_name', 'RADYOYOL');
     $metaTitle = $siteSettings['seo_meta_title'] ?? $siteName;
     $metaDesc = $siteSettings['seo_meta_description'] ?? '';
     $metaKeywords = $siteSettings['seo_meta_keywords'] ?? '';

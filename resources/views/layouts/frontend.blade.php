@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     @php
         $siteSettings = $siteSettings ?? [];
-        $siteName = $siteSettings['site_name'] ?? 'RADYOYOL';
+        $siteName = $siteSettings['site_name'] ?? config('site.defaults.site_name', 'RADYOYOL');
         $siteSlogan = $siteSettings['site_slogan'] ?? '';
         $metaTitle = $siteSettings['seo_meta_title'] ?? $siteName;
-        $faviconPath = isset($siteSettings['brand_favicon_path']) && $siteSettings['brand_favicon_path']
-            ? asset('storage/' . $siteSettings['brand_favicon_path']) : asset('favicon.ico');
+        $faviconPath = !empty($siteSettings['brand_favicon_path']) ? asset('storage/' . $siteSettings['brand_favicon_path']) : asset('favicon.ico');
     @endphp
     <link rel="icon" href="{{ $faviconPath }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -879,16 +878,11 @@
     <nav class="navbar" id="mainNavbar">
         <div class="navbar-inner">
             <a href="{{ url('/') }}" class="nav-logo">
-                @php
-                    $logoPath = $siteSettings['brand_logo_path'] ?? null;
-                    $logoUrl = $logoPath ? asset('storage/' . $logoPath) : null;
-                @endphp
-                @if($logoUrl)
-                    <img src="{{ $logoUrl }}" alt="{{ $siteName }}">
-                @elseif(file_exists(public_path('logo.png')))
-                    <img src="{{ asset('logo.png') }}" alt="{{ $siteName }}">
+                @php $navLogoUrl = brand_logo_url(); @endphp
+                @if($navLogoUrl)
+                    <img src="{{ $navLogoUrl }}" alt="{{ $siteName }}">
                 @endif
-                @if($logoUrl || file_exists(public_path('logo.png')))
+                @if($navLogoUrl)
                     @if($siteSlogan)
                         <span class="nav-logo-slogan-wrap"><span class="nav-logo-slogan">{{ $siteSlogan }}</span></span>
                     @endif
@@ -1055,7 +1049,7 @@
     <div class="bottom-bar-player">
         <div class="player-logo-wrap">
             <div class="logo-player bottom-bar-logo-wrap">
-                @php $playerLogo = isset($siteSettings['brand_logo_path']) && $siteSettings['brand_logo_path'] ? asset('storage/' . $siteSettings['brand_logo_path']) : asset('assets/images/play.png'); @endphp
+                @php $playerLogo = brand_logo_url(null, 'assets/images/play.png'); @endphp
                 <img src="{{ $playerLogo }}" class="bottom-bar-logo" alt="{{ $siteName }}">
                 <button type="button" id="discBtn" class="disc-overlay" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
             </div>
@@ -1089,7 +1083,7 @@
     <footer class="legal-footer">
         <div class="site-footer-bar">
             @php
-                $footerText = $siteSettings['footer_legal_text'] ?? 'Radyoyol Tum Haklari Saklidir';
+                $footerText = $siteSettings['footer_legal_text'] ?? config('site.defaults.footer_legal_text', 'Radyoyol Tüm Hakları Saklıdır');
                 $footerMenu = $footerMenu ?? collect();
                 $footerLinks = [];
                 if ($footerMenu->isEmpty()) {

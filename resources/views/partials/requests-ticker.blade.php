@@ -1,8 +1,5 @@
 @php
-    $siteSettings = $siteSettings ?? [];
-    $logoUrl = !empty($siteSettings['brand_logo_path'])
-        ? asset('storage/' . $siteSettings['brand_logo_path'])
-        : asset('logo.png');
+    $logoUrl = brand_logo_url();
 @endphp
 <div class="ticker-wrap">
     <div class="ticker" id="requestsTicker">
