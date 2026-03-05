@@ -76,8 +76,7 @@
 .programcilar-nav__btn:hover { background: rgba(255,255,255,0.15); border-color: var(--ry-line-color); }
 .programcilar-carousel { overflow: hidden; }
 .programcilar-track { display: flex; gap: 1rem; transition: transform 0.3s ease; }
-.programci-card { flex: 0 0 calc(25% - 0.75rem); min-width: 0; }
-.programci-card { display: flex; flex-direction: column; background: color-mix(in srgb, var(--ry-bar-bg) 75%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--ry-border); border-radius: var(--ry-radius); overflow: hidden; color: inherit; transition: all 0.2s; min-height: 0; }
+.programci-card { flex: 0 0 calc(25% - 0.75rem); min-width: 0; display: flex; flex-direction: column; background: color-mix(in srgb, var(--ry-bar-bg) 75%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--ry-border); border-radius: var(--ry-radius); overflow: hidden; color: inherit; transition: all 0.2s; }
 .programci-card:hover { transform: translateY(-3px); border-color: var(--ry-schedule-active); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
 .programci-card__link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; cursor: pointer; }
 .programci-card__img-wrap { width: 100%; aspect-ratio: 1; background: var(--ry-schedule-bg); overflow: hidden; flex-shrink: 0; }
@@ -141,7 +140,6 @@
         nextBtn.style.pointerEvents = current >= maxScroll ? 'none' : 'auto';
     }
     prevBtn.addEventListener('click', function() {
-        var perView = getCardsPerView();
         current -= getStep();
         updateScroll();
     });
