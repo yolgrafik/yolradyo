@@ -82,6 +82,24 @@
                         @error('contact_phone')<span class="form-error">{{ $message }}</span>@enderror
                     </div>
                 </div>
+                <div class="form-row form-row-2">
+                    <div class="form-group">
+                        <label for="contact_mobile">Mobil Telefon</label>
+                        <input type="text" name="contact_mobile" id="contact_mobile"
+                            value="{{ old('contact_mobile', $contact_mobile ?? '') }}"
+                            placeholder="+90 555 123 4567"
+                            class="form-input">
+                        @error('contact_mobile')<span class="form-error">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_fax">Faks</label>
+                        <input type="text" name="contact_fax" id="contact_fax"
+                            value="{{ old('contact_fax', $contact_fax ?? '') }}"
+                            placeholder="+90 212 123 4567"
+                            class="form-input">
+                        @error('contact_fax')<span class="form-error">{{ $message }}</span>@enderror
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="address_text">Adres</label>
                     <textarea name="address_text" id="address_text" rows="3"

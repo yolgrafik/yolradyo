@@ -32,6 +32,8 @@ class SettingsController extends Controller
             'site_slogan' => $this->settings->get('site_slogan'),
             'contact_email' => $this->settings->get('contact_email'),
             'contact_phone' => $this->settings->get('contact_phone'),
+            'contact_mobile' => $this->settings->get('contact_mobile'),
+            'contact_fax' => $this->settings->get('contact_fax'),
             'address_text' => $this->settings->get('address_text'),
             'maintenance_mode' => $this->settings->get('maintenance_mode', false),
         ]);
@@ -45,6 +47,8 @@ class SettingsController extends Controller
             'site_slogan' => 'nullable|string|max:255',
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:50',
+            'contact_mobile' => 'nullable|string|max:50',
+            'contact_fax' => 'nullable|string|max:50',
             'address_text' => 'nullable|string|max:500',
             'maintenance_mode' => 'nullable|boolean',
         ]);
@@ -54,6 +58,8 @@ class SettingsController extends Controller
             'site_slogan' => ['value' => $validated['site_slogan'] ?? '', 'type' => 'text'],
             'contact_email' => ['value' => $validated['contact_email'] ?? '', 'type' => 'text'],
             'contact_phone' => ['value' => $validated['contact_phone'] ?? '', 'type' => 'text'],
+            'contact_mobile' => ['value' => $validated['contact_mobile'] ?? '', 'type' => 'text'],
+            'contact_fax' => ['value' => $validated['contact_fax'] ?? '', 'type' => 'text'],
             'address_text' => ['value' => $validated['address_text'] ?? '', 'type' => 'text'],
             'maintenance_mode' => ['value' => (bool) ($validated['maintenance_mode'] ?? false), 'type' => 'boolean'],
         ]);

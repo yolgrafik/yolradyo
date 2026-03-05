@@ -16,11 +16,16 @@ class ContactController extends Controller
 {
     public function show(SettingsService $settings): View
     {
+        $user = auth()->user();
         return view('frontend.iletisim', [
             'pageTitle' => 'İletişim',
-            'contactEmail' => $settings->get('contact_email'),
+            'contactMobile' => $settings->get('contact_mobile') ?: $settings->get('contact_phone'),
             'contactPhone' => $settings->get('contact_phone'),
-            'addressText' => $settings->get('address_text'),
+            'contactEmail' => $settings->get('contact_email'),
+            'contactFax' => $settings->get('contact_fax'),
+            'addressText' => $settings->get('address_text') ?: 'Bergischer Ring 38, 58095 Hagen, Almanya',
+            'prefillName' => $user?->name,
+            'prefillEmail' => $user?->email,
         ]);
     }
 
@@ -31,7 +36,7 @@ class ContactController extends Controller
         }
 
         $user = $request->user();
-        if (!$user->isApproved()) {
+        if ($user && !$user->isApproved()) {
             return back()->with('error', 'Mesaj gönderebilmek için hesabınızın onaylanması gerekiyor.');
         }
 
@@ -46,11 +51,23 @@ class ContactController extends Controller
             return back()->with('error', 'İletişim e-posta adresi tanımlanmamış. Lütfen Mail Ayarları\'ndan "İletişim Alıcısı" ekleyin.');
         }
 
-        $name = $user->name;
-        $email = $user->email;
-        $messageBody = $request->validated('message');
+        $validated = $request->validated();
+        $name = $validated['name'];
+        $email = $validated['email'];
+        $messageBody = $validated['message'];
+        $subjectLine = $validated['subject'] ?? null;
+        $phone = $validated['phone'] ?? null;
+        $whereFound = $validated['where_found'] ?? null;
 
-        $mailable = new ContactMessageMail($name, $email, $messageBody, 'İletişim Formu');
+        $mailable = new ContactMessageMail(
+            $name,
+            $email,
+            $messageBody,
+            'İletişim Formu',
+            $phone,
+            $subjectLine,
+            $whereFound ? array_values($whereFound) : null,
+        );
 
         try {
             Mail::to($recipient)->send($mailable);
@@ -62,20 +79,20 @@ class ContactController extends Controller
                 'trace' => $e->getTraceAsString(),
             ]);
             Message::create([
-                'user_id' => $user->id,
+                'user_id' => $user?->id,
                 'programci_id' => null,
-                'subject' => 'İletişim Formu',
-                'message' => $messageBody,
+                'subject' => $subjectLine ?: 'İletişim Formu',
+                'message' => "Ad: $name\nE-posta: $email\nTelefon: " . ($phone ?: '-') . "\n\n$messageBody",
                 'status' => 'failed',
             ]);
             return back()->with('error', 'Mesaj gönderilemedi: ' . $e->getMessage());
         }
 
         Message::create([
-            'user_id' => $user->id,
+            'user_id' => $user?->id,
             'programci_id' => null,
-            'subject' => 'İletişim Formu',
-            'message' => $messageBody,
+            'subject' => $subjectLine ?: 'İletişim Formu',
+            'message' => "Ad: $name\nE-posta: $email\nTelefon: " . ($phone ?: '-') . "\n\n$messageBody",
             'status' => $status,
         ]);
 
