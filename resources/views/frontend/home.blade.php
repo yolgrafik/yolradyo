@@ -45,8 +45,8 @@
         inset: 0;
         opacity: 0;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-end;
+        justify-content: flex-start;
         background-size: cover;
         background-position: center;
         transform: scale(1.03);
@@ -75,25 +75,44 @@
         padding: 2rem;
         max-width: 60%;
         text-align: left;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
     }
-    .home-slider__slide.is-active .home-slider__content {
+    .home-slider__title,
+    .home-slider__subtitle,
+    .home-slider__btn {
+        opacity: 0;
+        transform: translateX(-40px) translateY(15px);
+        transition: opacity 0.55s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .home-slider__slide.is-active .home-slider__title {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(0);
+        transition-delay: 0.1s;
+    }
+    .home-slider__slide.is-active .home-slider__subtitle {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.25s;
+    }
+    .home-slider__slide.is-active .home-slider__btn {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.4s;
     }
     .home-slider__title {
         font-size: 2rem;
         font-weight: 700;
         color: #fff;
-        margin-bottom: 0.5rem;
+        margin: 0;
         text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
     .home-slider__subtitle {
         font-size: 1.1rem;
         color: rgba(255,255,255,0.9);
-        margin-bottom: 1rem;
+        margin: 0;
         text-shadow: 0 1px 4px rgba(0,0,0,0.5);
     }
     .home-slider__btn {
@@ -104,8 +123,9 @@
         border-radius: var(--ry-radius);
         transition: all 0.2s ease;
         border: 1px solid var(--ry-btn-bg);
+        margin-top: 0.25rem;
     }
-    .home-slider__btn:hover { transform: translateY(-1px); }
+    .home-slider__btn:hover { transform: translateX(0) translateY(-1px); }
     .home-slider__nav {
         position: absolute;
         bottom: 1rem;
@@ -588,6 +608,9 @@
         }
     }
     @media (max-width: 768px) {
+        .home-slider__content { padding: 1.5rem; max-width: 85%; }
+        .home-slider__title { font-size: 1.5rem; }
+        .home-slider__subtitle { font-size: 0.95rem; }
         .schedule-day { padding: 4px 8px; font-size: 0.7rem; min-height: 26px; }
         .schedule-chip { font-size: 0.75rem; padding: 4px 8px; }
         .live-banner { font-size: 12px; padding: 8px; }
