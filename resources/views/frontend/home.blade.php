@@ -15,7 +15,7 @@
         display: grid;
         grid-template-columns: 3fr 1fr;
         gap: 2rem;
-        align-items: start;
+        align-items: stretch;
         min-width: 0;
     }
     .home-left {
@@ -332,6 +332,34 @@
         gap: 1.25rem;
         min-width: 0;
         max-width: 360px;
+    }
+    .home-right .listener-widget {
+        flex: 1;
+        min-height: 280px;
+        display: flex;
+        flex-direction: column;
+    }
+    .home-right .listener-widget .listener-widget__body {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .home-right .listener-widget .listener-swiper-wrap {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .home-right .listener-widget .listener-swiper {
+        flex: 1;
+        min-height: 0;
+    }
+    .home-right .listener-widget .listener-swiper .swiper-wrapper {
+        align-items: stretch;
+    }
+    .home-right .listener-widget .listener-swiper .swiper-slide {
+        height: auto;
     }
     .home-actions {
         display: flex;
@@ -767,6 +795,8 @@
         .btn-live, .btn-request-group { flex: 1; }
         .listener-widget {
             grid-column: 1 / -1;
+            flex: none;
+            min-height: 220px;
         }
         .live-dj-card {
             grid-column: 1 / -1;
