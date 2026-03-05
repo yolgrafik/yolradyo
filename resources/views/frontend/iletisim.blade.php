@@ -126,6 +126,9 @@
                 <a href="{{ route('register') }}" class="btn-register">Üye Ol</a>
             </div>
         @else
+            @if(!auth()->user()->isApproved())
+                <p class="auth-required">Mesaj gönderebilmek için hesabınızın onaylanması gerekiyor. Lütfen e-posta adresinizi kontrol edin veya yönetici ile iletişime geçin.</p>
+            @else
             <form method="POST" action="{{ route('public.contact.store') }}" id="contactForm">
                 @csrf
                 <div class="form-group form-hp" aria-hidden="true">
@@ -148,11 +151,13 @@
                 </div>
                 <button type="submit" class="btn-submit" id="submitBtn">Gönder</button>
             </form>
+            @endif
         @endguest
     </div>
 </div>
 
 @auth
+@if(auth()->user()->isApproved())
 @push('scripts')
 <script>
 document.getElementById('contactForm')?.addEventListener('submit', function() {
@@ -161,5 +166,6 @@ document.getElementById('contactForm')?.addEventListener('submit', function() {
 });
 </script>
 @endpush
+@endif
 @endauth
 @endsection

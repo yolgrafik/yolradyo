@@ -135,6 +135,9 @@
                 <a href="{{ route('register') }}" class="btn-register">Üye Ol</a>
             </div>
         @else
+            @if(!auth()->user()->isApproved())
+                <p class="auth-required">Mesaj gönderebilmek için hesabınızın onaylanması gerekiyor.</p>
+            @else
             <form method="POST" action="{{ route('public.programcilar.contact', $programci->slug) }}" id="programciContactForm">
                 @csrf
                 <div class="form-group form-hp" aria-hidden="true">
@@ -157,6 +160,7 @@
                 </div>
                 <button type="submit" class="btn-submit" id="programciSubmitBtn">Gönder</button>
             </form>
+            @endif
         @endguest
     </div>
     @endif
