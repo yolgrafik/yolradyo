@@ -770,17 +770,19 @@
                     <span class="sidebar-brand-text">RADYOYOL</span>
                 </div>
                 <nav class="nav-accordion" id="navAccordion">
-                    <div class="nav-section {{ request()->routeIs('admin.dashboard') || request()->routeIs('admin.shoutcast.player.*') ? 'is-open' : '' }}" data-section="dashboard">
-                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.dashboard') || request()->routeIs('admin.shoutcast.player.*') ? 'true' : 'false' }}">
+                    <div class="nav-section {{ request()->routeIs('admin.dashboard') || request()->routeIs('admin.schedule.*') || request()->routeIs('admin.messages.*') || request()->routeIs('admin.settings.*') || request()->routeIs('admin.menu.*') || request()->routeIs('admin.users.*') ? 'is-open' : '' }}" data-section="dashboard">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.dashboard') || request()->routeIs('admin.schedule.*') || request()->routeIs('admin.messages.*') || request()->routeIs('admin.settings.*') || request()->routeIs('admin.menu.*') || request()->routeIs('admin.users.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                             <span>Kontrol Paneli</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
                             <li><a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">Genel Bakış</a></li>
-                            <li><a href="{{ route('admin.dashboard') }}#dinleyici" class="nav-item">Anlık Dinleyici</a></li>
-                            <li><a href="{{ route('admin.dashboard') }}#yayin" class="nav-item">Yayın Durumu</a></li>
-                            <li><a href="{{ route('admin.dashboard') }}#nowplaying" class="nav-item">Şu An Çalıyor</a></li>
+                            <li><a href="{{ route('admin.schedule.index') }}" class="nav-item {{ request()->routeIs('admin.schedule.*') ? 'is-active' : '' }}">Program & DJ</a></li>
+                            <li><a href="{{ route('admin.messages.index') }}" class="nav-item {{ request()->routeIs('admin.messages.*') ? 'is-active' : '' }}">Mesaj & İstek</a></li>
+                            <li><a href="{{ route('admin.dashboard') }}" class="nav-item">Canlı Yayın Bilgisi</a></li>
+                            <li><a href="{{ route('admin.settings.general') }}" class="nav-item {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}">Ayarlar</a></li>
+                            <li><a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">Kullanıcı Yönetimi</a></li>
                         </ul>
                     </div>
                     <div class="nav-section {{ request()->routeIs('admin.shoutcast.player.*') ? 'is-open' : '' }}" data-section="yayin">
@@ -924,7 +926,7 @@
             <main class="content-area">
                 <div class="waveform-line"></div>
                 <div class="content-bg-vignette"></div>
-                <div class="content-inner">
+                <div class="content-inner {{ request()->routeIs('admin.dashboard') ? 'content-inner--dashboard' : '' }}">
                     @yield('content')
                 </div>
             </main>
