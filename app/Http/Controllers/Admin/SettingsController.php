@@ -117,7 +117,6 @@ class SettingsController extends Controller
         if ($r = $this->ensureAdmin()) return $r;
         return view('admin.settings.seo', [
             'site_name' => $this->settings->get('site_name', 'RADYOYOL'),
-            'seo_last_saved' => $this->settings->get('seo_last_saved'),
             'seo_meta_title' => $this->settings->get('seo_meta_title'),
             'seo_meta_description' => $this->settings->get('seo_meta_description'),
             'seo_meta_keywords' => $this->settings->get('seo_meta_keywords'),
@@ -140,10 +139,9 @@ class SettingsController extends Controller
             'seo_schema_org_logo' => $this->settings->get('seo_schema_org_logo'),
             'seo_schema_description' => $this->settings->get('seo_schema_description'),
             'seo_schema_radio_station' => (bool) $this->settings->get('seo_schema_radio_station', true),
-            'seo_schema_json' => $this->settings->get('seo_schema_json'),
             'seo_sitemap_url' => $this->settings->get('seo_sitemap_url'),
             'seo_geo_region' => $this->settings->get('seo_geo_region'),
-            'seo_meta_referrer' => $this->settings->get('seo_meta_referrer', 'strict-origin-when-cross-origin'),
+            'seo_meta_referrer' => $this->settings->get('seo_meta_referrer', ''),
         ]);
     }
 
@@ -163,7 +161,7 @@ class SettingsController extends Controller
             'og_description' => 'nullable|string|max:200',
             'og_type' => 'nullable|string|in:website,article',
             'og_locale' => 'nullable|string|max:10',
-            'twitter_card' => 'nullable|string|in:summary,summary_large_image,app',
+            'twitter_card' => 'nullable|string|in:summary,summary_large_image',
             'twitter_site' => 'nullable|string|max:50',
             'twitter_creator' => 'nullable|string|max:50',
             'google_site_verification' => 'nullable|string|max:100',
@@ -177,15 +175,6 @@ class SettingsController extends Controller
             'sitemap_url' => 'nullable|url|max:500',
             'geo_region' => 'nullable|string|max:10',
             'meta_referrer' => 'nullable|string|max:50',
-            'schema_json' => ['nullable', 'string', 'max:10000', function ($attr, $value, $fail) {
-                $v = trim($value ?? '');
-                if ($v !== '') {
-                    json_decode($v);
-                    if (json_last_error() !== JSON_ERROR_NONE) {
-                        $fail('JSON-LD geçerli JSON formatında olmalıdır.');
-                    }
-                }
-            }],
         ]);
 
         $items = [
@@ -213,8 +202,6 @@ class SettingsController extends Controller
             'seo_sitemap_url' => ['value' => trim($validated['sitemap_url'] ?? ''), 'type' => 'text'],
             'seo_geo_region' => ['value' => trim($validated['geo_region'] ?? ''), 'type' => 'text'],
             'seo_meta_referrer' => ['value' => trim($validated['meta_referrer'] ?? ''), 'type' => 'text'],
-            'seo_schema_json' => ['value' => trim($validated['schema_json'] ?? ''), 'type' => 'text'],
-            'seo_last_saved' => ['value' => now()->toDateTimeString(), 'type' => 'text'],
         ];
         $this->settings->setMany($items);
 
