@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Forum - İstek & Şikayet')
+@section('title', 'Forum')
 
 @push('styles')
 <style>
@@ -21,8 +21,11 @@
 .post-title { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 0.35rem; }
 .post-meta { font-size: 0.85rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
 .badge { display: inline-block; padding: 0.2rem 0.5rem; font-size: 0.75rem; font-weight: 600; border-radius: 6px; }
-.badge-istek { background: rgba(34,197,94,0.25); color: #86efac; }
-.badge-sikayet { background: rgba(239,68,68,0.25); color: #fca5a5; }
+.badge-video { background: rgba(168,85,247,0.25); color: #c4b5fd; }
+.badge-mp3 { background: rgba(34,197,94,0.25); color: #86efac; }
+.badge-photo { background: rgba(59,130,246,0.25); color: #93c5fd; }
+.badge-istek, .badge-request { background: rgba(34,197,94,0.25); color: #86efac; }
+.badge-sikayet, .badge-complaint { background: rgba(239,68,68,0.25); color: #fca5a5; }
 .badge-open { background: rgba(59,130,246,0.25); color: #93c5fd; }
 .badge-closed { background: rgba(107,114,128,0.3); color: #9ca3af; }
 .alert-success { padding: 0.75rem 1rem; background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); border-radius: 10px; color: #86efac; margin-bottom: 1rem; }
@@ -46,6 +49,9 @@
     <div class="forum-header">
         <div class="forum-tabs">
             <a href="{{ route('forum.index') }}" class="forum-tab {{ !request('type') ? 'active' : '' }}">Tümü</a>
+            <a href="{{ route('forum.index', ['type' => 'video']) }}" class="forum-tab {{ request('type') === 'video' ? 'active' : '' }}">Video</a>
+            <a href="{{ route('forum.index', ['type' => 'mp3']) }}" class="forum-tab {{ request('type') === 'mp3' ? 'active' : '' }}">MP3</a>
+            <a href="{{ route('forum.index', ['type' => 'photo']) }}" class="forum-tab {{ request('type') === 'photo' ? 'active' : '' }}">Foto</a>
             <a href="{{ route('forum.index', ['type' => 'request']) }}" class="forum-tab {{ request('type') === 'request' ? 'active' : '' }}">İstek</a>
             <a href="{{ route('forum.index', ['type' => 'complaint']) }}" class="forum-tab {{ request('type') === 'complaint' ? 'active' : '' }}">Şikayet</a>
         </div>
@@ -58,7 +64,7 @@
                 <a href="{{ route('forum.show', $post->slug) }}">
                     <div class="post-title">{{ $post->title }}</div>
                     <div class="post-meta">
-                        <span class="badge badge-{{ $post->type === 'request' ? 'istek' : 'sikayet' }}">{{ $post->type_label }}</span>
+                        <span class="badge badge-{{ $post->type }}">{{ $post->type_label }}</span>
                         <span class="badge badge-{{ $post->status === 'open' ? 'open' : 'closed' }}">{{ $post->status_label }}</span>
                         <span>{{ $post->user->name }}</span>
                         <span>{{ $post->created_at->format('d.m.Y H:i') }}</span>

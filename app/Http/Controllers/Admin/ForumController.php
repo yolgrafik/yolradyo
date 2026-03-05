@@ -16,7 +16,8 @@ class ForumController extends Controller
         $type = $request->get('type');
         $query = ForumPost::with('user')->latest();
 
-        if (in_array($type, [ForumPost::TYPE_REQUEST, ForumPost::TYPE_COMPLAINT])) {
+        $types = [ForumPost::TYPE_VIDEO, ForumPost::TYPE_MP3, ForumPost::TYPE_PHOTO, ForumPost::TYPE_REQUEST, ForumPost::TYPE_COMPLAINT];
+        if (in_array($type, $types)) {
             $query->where('type', $type);
         }
 

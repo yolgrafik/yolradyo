@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ForumComment;
 use App\Models\ForumPost;
+use App\Services\SettingsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -15,7 +16,8 @@ class ForumController extends Controller
         $type = $request->get('type');
         $query = ForumPost::with('user')->latest();
 
-        if (in_array($type, [ForumPost::TYPE_REQUEST, ForumPost::TYPE_COMPLAINT])) {
+        $types = [ForumPost::TYPE_VIDEO, ForumPost::TYPE_MP3, ForumPost::TYPE_PHOTO, ForumPost::TYPE_REQUEST, ForumPost::TYPE_COMPLAINT];
+        if (in_array($type, $types)) {
             $query->where('type', $type);
         }
 
@@ -27,46 +29,102 @@ class ForumController extends Controller
         ]);
     }
 
-    public function create(): View
+    public function create(SettingsService $settings): View
     {
-        return view('frontend.forum.create');
+        $maxMp3Mb = (int) $settings->get('member_max_mp3_size_mb', 20);
+        $maxPhotoMb = 10;
+        $todayCount = ForumPost::where('user_id', auth()->id())->whereDate('created_at', today())->count();
+
+        return view('frontend.forum.create', [
+            'maxMp3Mb' => $maxMp3Mb,
+            'maxPhotoMb' => $maxPhotoMb,
+            'todayCount' => $todayCount,
+        ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, SettingsService $settings): RedirectResponse
     {
         $user = $request->user();
         if (!$user->isApproved()) {
             return back()->with('error', 'Forum gönderisi yapabilmek için hesabınızın onaylanması gerekiyor.');
         }
 
-        $todayCount = ForumPost::where('user_id', $user->id)
-            ->whereDate('created_at', today())
-            ->count();
-
+        $todayCount = ForumPost::where('user_id', $user->id)->whereDate('created_at', today())->count();
         if ($todayCount >= 5) {
             return back()->with('error', 'Günlük gönderi limitinize (5) ulaştınız. Yarın tekrar deneyin.');
         }
 
-        $validated = $request->validate([
-            'type' => 'required|in:request,complaint',
+        $maxMp3Mb = (int) $settings->get('member_max_mp3_size_mb', 20);
+        $maxPhotoMb = 10;
+
+        $rules = [
+            'type' => 'required|in:video,mp3,photo,request,complaint',
             'title' => 'required|string|max:120',
-            'body' => 'required|string|min:20|max:2000',
-        ], [
+            'body' => 'required_unless:type,video,mp3,photo|nullable|string|min:5|max:2000',
+            'video_url' => 'required_if:type,video|nullable|url|max:500',
+            'mp3_file' => 'required_if:type,mp3|nullable|file|mimes:mp3,mpeg|max:' . ($maxMp3Mb * 1024),
+            'photo_file' => 'required_if:type,photo|nullable|file|mimes:jpeg,jpg,png,gif,webp|max:' . ($maxPhotoMb * 1024),
+            'disclaimer_accepted' => 'required|accepted',
+        ];
+
+        $messages = [
             'type.required' => 'Lütfen tür seçin.',
             'title.required' => 'Başlık zorunludur.',
-            'title.max' => 'Başlık en fazla 120 karakter olabilir.',
-            'body.required' => 'Mesaj zorunludur.',
-            'body.min' => 'Mesaj en az 20 karakter olmalıdır.',
-            'body.max' => 'Mesaj en fazla 2000 karakter olabilir.',
-        ]);
+            'body.required_unless' => 'İstek ve şikayet için mesaj zorunludur.',
+            'body.min' => 'Mesaj en az 5 karakter olmalıdır.',
+            'video_url.required_if' => 'Video linki zorunludur.',
+            'mp3_file.required_if' => 'MP3 dosyası zorunludur.',
+            'mp3_file.mimes' => 'Sadece MP3 dosyası yükleyebilirsiniz.',
+            'mp3_file.max' => "MP3 en fazla {$maxMp3Mb}MB olabilir.",
+            'photo_file.required_if' => 'Fotoğraf dosyası zorunludur.',
+            'photo_file.mimes' => 'Sadece resim dosyası (JPG, PNG, GIF, WebP) yükleyebilirsiniz.',
+            'photo_file.max' => "Fotoğraf en fazla {$maxPhotoMb}MB olabilir.",
+            'disclaimer_accepted.required' => 'Sorumluluk reddi kabul edilmelidir.',
+            'disclaimer_accepted.accepted' => 'Sorumluluk reddini kabul etmelisiniz.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
+
+        if (in_array($validated['type'], ['request', 'complaint']) && strlen($validated['body'] ?? '') < 20) {
+            return back()->withErrors(['body' => 'İstek ve şikayet için mesaj en az 20 karakter olmalıdır.'])->withInput();
+        }
+
+        $videoUrl = null;
+        $filePath = null;
+        $fileName = null;
+        $fileType = null;
+
+        if ($request->type === 'video' && !empty($validated['video_url'])) {
+            $videoUrl = $validated['video_url'];
+        }
+
+        if ($request->hasFile('mp3_file')) {
+            $file = $request->file('mp3_file');
+            $filePath = $file->store('uploads/forum/mp3', 'public');
+            $fileName = $file->getClientOriginalName();
+            $fileType = 'mp3';
+        }
+
+        if ($request->hasFile('photo_file')) {
+            $file = $request->file('photo_file');
+            $filePath = $file->store('uploads/forum/photos', 'public');
+            $fileName = $file->getClientOriginalName();
+            $fileType = 'photo';
+        }
+
+        $body = $validated['body'] ?? '';
 
         $post = ForumPost::create([
             'user_id' => $user->id,
             'type' => $validated['type'],
             'title' => $validated['title'],
             'slug' => ForumPost::makeSlug($validated['title']),
-            'body' => $validated['body'],
+            'body' => $body,
             'status' => ForumPost::STATUS_OPEN,
+            'video_url' => $videoUrl,
+            'file_path' => $filePath,
+            'file_name' => $fileName,
+            'file_type' => $fileType,
         ]);
 
         return redirect()->route('forum.show', $post->slug)

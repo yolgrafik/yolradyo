@@ -10,14 +10,22 @@
 .post-detail { background: var(--ry-bar-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; }
 .post-meta { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
 .badge { display: inline-block; padding: 0.2rem 0.5rem; font-size: 0.75rem; font-weight: 600; border-radius: 6px; }
-.badge-istek { background: rgba(34,197,94,0.25); color: #86efac; }
-.badge-sikayet { background: rgba(239,68,68,0.25); color: #fca5a5; }
+.badge-video { background: rgba(168,85,247,0.25); color: #c4b5fd; }
+.badge-mp3 { background: rgba(34,197,94,0.25); color: #86efac; }
+.badge-photo { background: rgba(59,130,246,0.25); color: #93c5fd; }
+.badge-istek, .badge-request { background: rgba(34,197,94,0.25); color: #86efac; }
+.badge-sikayet, .badge-complaint { background: rgba(239,68,68,0.25); color: #fca5a5; }
 .badge-open { background: rgba(59,130,246,0.25); color: #93c5fd; }
 .badge-closed { background: rgba(107,114,128,0.3); color: #9ca3af; }
-.post-body { color: var(--text); line-height: 1.6; white-space: pre-wrap; }
+.post-body { color: var(--text); line-height: 1.6; white-space: pre-wrap; margin-bottom: 1rem; }
+.post-media { margin: 1rem 0; }
+.post-media video, .post-media iframe { max-width: 100%; border-radius: 10px; }
+.post-media img { max-width: 100%; height: auto; border-radius: 10px; }
+.post-media audio { width: 100%; margin: 0.5rem 0; }
+.media-link { display: inline-block; padding: 0.5rem 1rem; background: rgba(255,255,255,0.1); border-radius: 8px; color: var(--ry-schedule-active); text-decoration: none; margin-top: 0.5rem; }
+.media-link:hover { background: rgba(255,255,255,0.15); color: #fff; }
 .comments-section { margin-top: 2rem; }
 .comments-section h3 { font-size: 1.1rem; color: #fff; margin-bottom: 1rem; }
-.comment-form { margin-bottom: 1.5rem; }
 .comment-form .form-textarea { width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: var(--text); font-size: 0.95rem; min-height: 80px; resize: vertical; }
 .comment-form .form-textarea:focus { outline: none; border-color: var(--ry-schedule-active); }
 .comment-form .btn-submit { padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: 600; background: var(--ry-btn-bg); color: #fff; border: none; border-radius: 8px; cursor: pointer; margin-top: 0.5rem; }
@@ -50,12 +58,46 @@
 
     <article class="post-detail">
         <div class="post-meta">
-            <span class="badge badge-{{ $post->type === 'request' ? 'istek' : 'sikayet' }}">{{ $post->type_label }}</span>
+            <span class="badge badge-{{ $post->type }}">{{ $post->type_label }}</span>
             <span class="badge badge-{{ $post->status === 'open' ? 'open' : 'closed' }}">{{ $post->status_label }}</span>
             <span>{{ $post->user->name }}</span>
             <span>{{ $post->created_at->format('d.m.Y H:i') }}</span>
         </div>
-        <div class="post-body">{{ $post->body }}</div>
+
+        @if($post->body)
+            <div class="post-body">{{ $post->body }}</div>
+        @endif
+
+        <div class="post-media">
+            @if($post->video_url)
+                @php
+                    $url = $post->video_url;
+                    $embed = null;
+                    if (preg_match('#youtube\.com/watch\?v=([\w-]+)#', $url, $m)) {
+                        $embed = 'https://www.youtube.com/embed/' . $m[1];
+                    } elseif (preg_match('#youtu\.be/([\w-]+)#', $url, $m)) {
+                        $embed = 'https://www.youtube.com/embed/' . $m[1];
+                    }
+                @endphp
+                @if($embed)
+                    <iframe src="{{ $embed }}" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+                @else
+                    <a href="{{ $post->video_url }}" target="_blank" rel="noopener" class="media-link">Video linkini aç</a>
+                @endif
+            @endif
+
+            @if($post->file_type === 'mp3' && $post->file_path)
+                @php $mp3Url = asset('storage/' . $post->file_path); @endphp
+                <audio controls>
+                    <source src="{{ $mp3Url }}" type="audio/mpeg">
+                    Tarayıcınız ses oynatmayı desteklemiyor. <a href="{{ $mp3Url }}" download class="media-link">İndir</a>
+                </audio>
+            @endif
+
+            @if($post->file_type === 'photo' && $post->file_path)
+                <img src="{{ asset('storage/' . $post->file_path) }}" alt="{{ $post->title }}">
+            @endif
+        </div>
     </article>
 
     <div class="comments-section">

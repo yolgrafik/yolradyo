@@ -17,6 +17,9 @@
         <form method="GET" action="{{ route('admin.forum.posts') }}" class="filter-form" style="margin-bottom:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
             <select name="type" class="form-input" style="max-width:150px;">
                 <option value="">Tüm türler</option>
+                <option value="video" {{ request('type') === 'video' ? 'selected' : '' }}>Video</option>
+                <option value="mp3" {{ request('type') === 'mp3' ? 'selected' : '' }}>MP3</option>
+                <option value="photo" {{ request('type') === 'photo' ? 'selected' : '' }}>Foto</option>
                 <option value="request" {{ request('type') === 'request' ? 'selected' : '' }}>İstek</option>
                 <option value="complaint" {{ request('type') === 'complaint' ? 'selected' : '' }}>Şikayet</option>
             </select>
@@ -40,11 +43,14 @@
                     <tr>
                         <td>{{ $post->user->name }}</td>
                         <td>
-                            @if($post->type === 'request')
-                                <span class="badge badge-success">İstek</span>
-                            @else
-                                <span class="badge badge-warning">Şikayet</span>
-                            @endif
+                            @switch($post->type)
+                                @case('video')<span class="badge badge-success">Video</span>@break
+                                @case('mp3')<span class="badge badge-success">MP3</span>@break
+                                @case('photo')<span class="badge badge-success">Foto</span>@break
+                                @case('request')<span class="badge badge-success">İstek</span>@break
+                                @case('complaint')<span class="badge badge-warning">Şikayet</span>@break
+                                @default<span class="badge badge-muted">{{ $post->type_label }}</span>
+                            @endswitch
                         </td>
                         <td>
                             <a href="{{ route('forum.show', $post->slug) }}" target="_blank" rel="noopener">{{ Str::limit($post->title, 50) }}</a>

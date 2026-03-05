@@ -16,8 +16,15 @@ class ForumPost extends Model
         'slug',
         'body',
         'status',
+        'video_url',
+        'file_path',
+        'file_name',
+        'file_type',
     ];
 
+    public const TYPE_VIDEO = 'video';
+    public const TYPE_MP3 = 'mp3';
+    public const TYPE_PHOTO = 'photo';
     public const TYPE_REQUEST = 'request';
     public const TYPE_COMPLAINT = 'complaint';
 
@@ -37,10 +44,18 @@ class ForumPost extends Model
     public function getTypeLabelAttribute(): string
     {
         return match ($this->type) {
+            self::TYPE_VIDEO => 'Video',
+            self::TYPE_MP3 => 'MP3',
+            self::TYPE_PHOTO => 'Foto',
             self::TYPE_REQUEST => 'İstek',
             self::TYPE_COMPLAINT => 'Şikayet',
             default => $this->type,
         };
+    }
+
+    public function hasMedia(): bool
+    {
+        return !empty($this->video_url) || !empty($this->file_path);
     }
 
     public function getStatusLabelAttribute(): string
