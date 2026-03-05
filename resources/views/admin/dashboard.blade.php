@@ -3,12 +3,17 @@
 @push('styles')
 <style>
     .dashboard-layout {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - 180px);
     }
     .module-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 0.75rem;
+        grid-auto-rows: 1fr;
+        gap: 1rem;
+        flex: 1;
+        min-height: 0;
     }
     .module-card {
         background: var(--card);
@@ -18,7 +23,9 @@
         transition: transform 0.15s, box-shadow 0.15s;
         text-decoration: none;
         color: inherit;
-        display: block;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
     }
     .module-card:hover {
         transform: scale(1.02);
@@ -45,6 +52,9 @@
     .module-card__body {
         padding: 0.5rem 1rem 0.65rem;
         background: rgba(0,0,0,0.25);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
     }
     .module-card__list {
         list-style: none;
@@ -74,6 +84,7 @@
     }
     @media (max-width: 768px) {
         .module-grid { grid-template-columns: 1fr; gap: 0.6rem; }
+        .dashboard-layout { min-height: auto; }
     }
 </style>
 @endpush
@@ -216,6 +227,9 @@
     border-radius: 12px;
     overflow: hidden;
     grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 .stream-widget__header {
     background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
@@ -236,6 +250,10 @@
 }
 .stream-widget__body {
     padding: 0.65rem 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 .stream-widget__track {
     display: flex;
@@ -280,6 +298,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
+    flex: 1;
+    min-height: 0;
 }
 .stream-widget__item {
     background: rgba(15,23,42,0.6);
