@@ -21,7 +21,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('public.contact'));
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
@@ -48,7 +48,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('public.contact'))
+        return redirect()->intended('/')
             ->with('success', 'Hesabınız oluşturuldu. Hoş geldiniz!');
     }
 

@@ -28,7 +28,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('contact-messages', function ($request) {
-            return Limit::perHour(5)->by($request->user()->id);
+            return Limit::perHour(5)
+                ->by($request->user()->id)
+                ->response(fn () => redirect()->back()->with('error', 'Çok fazla mesaj gönderdiniz. Lütfen 1 saat sonra tekrar deneyin.'));
         });
 
         View::composer(['layouts.frontend', 'frontend.home', 'frontend.programlar', 'partials.requests-ticker'], function ($view) {
