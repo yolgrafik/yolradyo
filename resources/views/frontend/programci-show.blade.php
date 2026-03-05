@@ -44,6 +44,7 @@
 .form-hp { position: absolute; left: -9999px; }
 .btn-submit { padding: 0.75rem 1.5rem; font-size: 0.95rem; font-weight: 600; background: linear-gradient(135deg, #c92a2a, #b30000); color: #fff; border: none; border-radius: 10px; cursor: pointer; }
 .btn-submit:hover { opacity: 0.9; }
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 .alert-success { padding: 0.75rem 1rem; background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.4); border-radius: 10px; color: #86efac; margin-bottom: 1rem; }
 .alert-error { padding: 0.75rem 1rem; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); border-radius: 10px; color: #fca5a5; margin-bottom: 1rem; }
 .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.25rem; }
@@ -119,30 +120,41 @@
         @if(session('error'))
             <div class="alert-error">{{ session('error') }}</div>
         @endif
-        <form method="POST" action="{{ route('public.programcilar.contact', $programci->slug) }}">
+        <form method="POST" action="{{ route('public.programcilar.contact', $programci->slug) }}" id="programciContactForm">
             @csrf
             <div class="form-group form-hp" aria-hidden="true">
                 <label for="website">Website</label>
                 <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
             </div>
             <div class="form-group">
-                <label for="contact_name">Adınız *</label>
-                <input type="text" name="name" id="contact_name" class="form-input" value="{{ old('name') }}" required maxlength="255">
+                <label for="contact_name">Ad Soyad *</label>
+                <input type="text" name="name" id="contact_name" class="form-input" value="{{ old('name') }}"
+                    placeholder="Örn: Ali Çelik" maxlength="60">
                 @error('name')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
                 <label for="contact_email">E-posta *</label>
-                <input type="email" name="email" id="contact_email" class="form-input" value="{{ old('email') }}" required>
+                <input type="email" name="email" id="contact_email" class="form-input" value="{{ old('email') }}"
+                    maxlength="120">
                 @error('email')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
                 <label for="contact_message">Mesajınız *</label>
-                <textarea name="message" id="contact_message" class="form-input" rows="5" required maxlength="2000">{{ old('message') }}</textarea>
+                <textarea name="message" id="contact_message" class="form-input" rows="5" maxlength="2000"
+                    placeholder="Mesajınızı buraya yazın (en az 20 karakter)">{{ old('message') }}</textarea>
                 @error('message')<span class="form-error">{{ $message }}</span>@enderror
             </div>
-            <button type="submit" class="btn-submit">Gönder</button>
+            <button type="submit" class="btn-submit" id="programciSubmitBtn">Gönder</button>
         </form>
     </div>
     @endif
 </div>
+@push('scripts')
+<script>
+document.getElementById('programciContactForm')?.addEventListener('submit', function() {
+    var btn = document.getElementById('programciSubmitBtn');
+    if (btn) btn.disabled = true;
+});
+</script>
+@endpush
 @endsection

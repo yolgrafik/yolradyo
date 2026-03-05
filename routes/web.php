@@ -15,7 +15,8 @@ Route::get('/galeri', [FrontendController::class, 'galeri']);
 Route::get('/reklam', [FrontendController::class, 'reklam']);
 Route::get('/hakkimizda', fn () => redirect('/hakkimizda/biz-kimiz'));
 Route::get('/hakkimizda/{slug}', [FrontendController::class, 'hakkimizda'])->where('slug', 'biz-kimiz|misyon|politika');
-Route::get('/iletisim', [FrontendController::class, 'iletisim']);
+Route::get('/iletisim', [App\Http\Controllers\ContactController::class, 'show'])->name('public.contact');
+Route::post('/iletisim', [App\Http\Controllers\ContactController::class, 'store'])->name('public.contact.store');
 Route::get('/gizlilik', [FrontendController::class, 'gizlilik']);
 Route::get('/cerez', [FrontendController::class, 'cerez']);
 Route::get('/kullanim', [FrontendController::class, 'kullanim']);
@@ -59,7 +60,9 @@ Route::prefix('admin')->group(function () {
         Route::post('shoutcast/player', [App\Http\Controllers\Admin\ShoutcastPlayerController::class, 'store'])->name('admin.shoutcast.player.store');
         Route::redirect('stream-settings', '/admin/shoutcast/stream', 301);
 
-    Route::get('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'generalForm'])->name('admin.settings.general');
+        Route::post('mail-test', [App\Http\Controllers\Admin\MailTestController::class, 'sendTest'])->name('admin.mail-test');
+
+        Route::get('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'generalForm'])->name('admin.settings.general');
     Route::post('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'saveGeneral']);
     Route::get('settings/branding', [App\Http\Controllers\Admin\SettingsController::class, 'brandingForm'])->name('admin.settings.branding');
     Route::post('settings/branding', [App\Http\Controllers\Admin\SettingsController::class, 'saveBranding']);

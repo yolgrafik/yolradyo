@@ -14,6 +14,13 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div class="settings-error">
+            <span class="settings-error-icon">!</span>
+            {{ session('error') }}
+        </div>
+    @endif
+
     @if($errors->any())
         <div class="settings-error">
             <span class="settings-error-icon">!</span>
@@ -81,6 +88,13 @@
                         placeholder="Fiziksel adres bilgisi"
                         class="form-input form-textarea">{{ old('address_text', $address_text ?? '') }}</textarea>
                     @error('address_text')<span class="form-error">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group">
+                    <p class="settings-section-desc" style="margin-bottom:0.5rem;">İletişim formundan gelen mesajlar bu e-posta adresine gönderilir. .env dosyasında CONTACT_TO veya Admin → Ayarlar → Genel → E-posta alanını doldurun.</p>
+                    <form method="POST" action="{{ route('admin.mail-test') }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn-mail-test">Test E-postası Gönder</button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -150,6 +164,9 @@
 .btn-save:hover { opacity: 0.95; }
 .btn-save:active { transform: scale(0.98); }
 .btn-save-icon { font-size: 1rem; }
+.btn-mail-test { padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; background: rgba(59,130,246,0.3); color: #93c5fd; border: 1px solid rgba(59,130,246,0.5); border-radius: 8px; cursor: pointer; }
+.btn-mail-test:hover { background: rgba(59,130,246,0.4); }
+.d-inline { display: inline; }
 </style>
 @endpush
 @endsection

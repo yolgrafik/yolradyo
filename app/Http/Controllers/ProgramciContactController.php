@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\MailHelper;
+use App\Http\Requests\ProgramciContactRequest;
 use App\Mail\ProgramciContactMail;
 use App\Models\Programci;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 
 class ProgramciContactController extends Controller
 {
-    public function store(Request $request, string $slug)
+    public function store(ProgramciContactRequest $request, string $slug): RedirectResponse
     {
         $programci = Programci::where('slug', $slug)->active()->firstOrFail();
 
@@ -20,14 +22,7 @@ class ProgramciContactController extends Controller
             return back()->with('error', 'Çok fazla deneme. Lütfen daha sonra tekrar deneyin.');
         }
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'message' => 'required|string|max:2000',
-            'website' => 'nullable|string|max:1', // honeypot
-        ]);
-
-        if (!empty($validated['website'])) {
+        if (!empty($request->validated('website'))) {
             return back()->with('success', 'Mesajınız gönderildi.');
         }
 
@@ -35,18 +30,29 @@ class ProgramciContactController extends Controller
             return back()->with('error', 'Bu programcıya iletişim bilgisi eklenmemiş.');
         }
 
+        if (!MailHelper::isRealMailConfigured()) {
+            Log::warning('Programcı iletişim: Mail log/array modunda, gerçek gönderim yapılamıyor.', [
+                'programci' => $programci->slug,
+            ]);
+            return back()->with('error', MailHelper::getConfigErrorMessage());
+        }
+
+        $validated = $request->validated();
+        $mailable = new ProgramciContactMail(
+            $programci,
+            $validated['name'],
+            $validated['email'],
+            $validated['message']
+        );
+
         try {
-            Mail::to($programci->email)->send(new ProgramciContactMail(
-                $programci,
-                $validated['name'],
-                $validated['email'],
-                $validated['message']
-            ));
+            Mail::to($programci->email)->send($mailable);
             RateLimiter::hit($key);
         } catch (\Throwable $e) {
             Log::error('Programcı iletişim mail hatası', [
                 'programci' => $programci->slug,
                 'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
             return back()->with('error', 'Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.');
         }

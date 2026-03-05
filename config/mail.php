@@ -115,4 +115,15 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Contact Form Recipient
+    |--------------------------------------------------------------------------
+    |
+    | E-posta adresi: Genel iletişim formundan gelen mesajların gönderileceği adres.
+    | Önce config, yoksa env('CONTACT_TO'), yoksa site_settings.contact_email kullanılır.
+    |
+    */
+    'contact_to' => env('CONTACT_TO', null),
+
 ];
