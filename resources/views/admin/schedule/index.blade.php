@@ -4,7 +4,10 @@
 <div class="card">
     <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
         <span>Yayın Takvimi</span>
-        <button type="button" class="quick-btn" id="btnAdd">+ Ekle</button>
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="schedule-day-label">{{ $dayLabels[$currentDay] }}</span>
+            <button type="button" class="quick-btn" id="btnAdd">+ Program Ekle</button>
+        </div>
     </div>
     <div class="card-body">
         @if(session('success'))
@@ -14,16 +17,29 @@
             <div class="alert-error">{{ session('error') }}</div>
         @endif
 
-        <div class="day-tabs-wrapper">
-            <div class="day-tabs">
-                @foreach($dayLabels as $d => $label)
-                    <a href="{{ route('admin.schedule.index', ['day' => $d]) }}" class="day-tab {{ $currentDay == $d ? 'active' : '' }}">{{ $label }}</a>
-                @endforeach
+        <div class="schedule-layout">
+            <div class="schedule-sidebar">
+                <div class="day-tabs-wrapper">
+                    <div class="day-tabs-label">Gün Seçimi</div>
+                    <div class="day-tabs">
+                        @foreach($dayLabels as $d => $label)
+                            <a href="{{ route('admin.schedule.index', ['day' => $d]) }}" class="day-tab {{ $currentDay == $d ? 'active' : '' }}">{{ $label }}</a>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="quick-add-section">
+                    <div class="quick-add-label">Hızlı Ekle</div>
+                    <div class="quick-add-btns">
+                        <button type="button" class="quick-add-btn" data-preset="Sabah Kuşağı" data-start="06:00" data-end="10:00">Sabah Kuşağı</button>
+                        <button type="button" class="quick-add-btn" data-preset="Öğle Yayını" data-start="12:00" data-end="15:00">Öğle Yayını</button>
+                        <button type="button" class="quick-add-btn" data-preset="Öğleden Sonra" data-start="15:00" data-end="18:00">Öğleden Sonra</button>
+                        <button type="button" class="quick-add-btn" data-preset="Akşam Kuşağı" data-start="18:00" data-end="22:00">Akşam Kuşağı</button>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="schedule-day-header">
-            <span>{{ $dayLabels[$currentDay] }} programları</span>
+            <div class="schedule-main">
+                <div class="schedule-day-header">
+                    <span>{{ $dayLabels[$currentDay] }} programları</span>
             @if($schedules->isNotEmpty())
                 <div class="schedule-controls" style="margin-left:auto;">
                     <form action="{{ route('admin.schedule.copy', $currentDay) }}" method="POST" class="d-inline" onsubmit="return confirm('Bu günü seçilen güne kopyalamak istiyor musunuz?');">
@@ -83,6 +99,8 @@
                 </tbody>
             </table>
         </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -135,11 +153,22 @@
 <style>
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;font-size:0.9rem;margin-bottom:1rem;}
 .alert-error{padding:0.75rem 1rem;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.9rem;margin-bottom:1rem;}
-.day-tabs-wrapper{background:linear-gradient(180deg,#111722,#0b0f18);padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);margin-bottom:20px;}
-.day-tabs{display:flex;gap:8px;flex-wrap:wrap;}
-.day-tab{padding:8px 14px;font-size:14px;font-weight:600;border-radius:10px;background:#1b2230;color:#ffffff;border:1px solid rgba(255,255,255,0.15);text-decoration:none;flex:0 0 auto;transition:all 0.2s ease;}
+.schedule-layout{display:flex;gap:1.5rem;margin-bottom:1.5rem;}
+.schedule-sidebar{flex:0 0 220px;}
+.schedule-main{flex:1;min-width:0;}
+.schedule-day-label{font-size:0.9rem;color:var(--muted);}
+.day-tabs-wrapper{background:linear-gradient(180deg,#111722,#0b0f18);padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);margin-bottom:12px;}
+.day-tabs-label{font-size:0.75rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;}
+.day-tabs{display:flex;flex-direction:column;gap:6px;}
+.day-tab{padding:8px 12px;font-size:13px;font-weight:600;border-radius:8px;background:#1b2230;color:#ffffff;border:1px solid rgba(255,255,255,0.15);text-decoration:none;transition:all 0.2s ease;}
 .day-tab:hover{background:#273043;}
 .day-tab.active{background:linear-gradient(135deg,#ff3b3b,#b30000);color:white;border:none;}
+.quick-add-section{background:linear-gradient(180deg,#111722,#0b0f18);padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);}
+.quick-add-label{font-size:0.75rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;}
+.quick-add-btns{display:flex;flex-direction:column;gap:6px;}
+.quick-add-btn{padding:8px 12px;font-size:12px;font-weight:600;border-radius:8px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid var(--border);cursor:pointer;text-align:left;transition:all 0.2s;}
+.quick-add-btn:hover{background:rgba(220,38,38,0.2);border-color:var(--accent);}
+@media(max-width:768px){.schedule-layout{flex-direction:column;}.schedule-sidebar{flex:1 1 auto;display:flex;gap:1rem;flex-wrap:wrap;}.day-tabs-wrapper,.quick-add-section{flex:1;min-width:180px;}.day-tabs{flex-direction:row;flex-wrap:wrap;}.quick-add-btns{flex-direction:row;flex-wrap:wrap;}}
 .schedule-day-header{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;background:linear-gradient(180deg,#131a26,#0c1018);color:#ffffff;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);font-weight:600;margin-bottom:1rem;}
 .schedule-day-header small,.schedule-day-header span{color:#cbd5e1;}
 .schedule-controls{display:flex;gap:10px;align-items:center;}
@@ -179,15 +208,30 @@
     function closeModal(){if(modal){modal.style.display='none';}}
     document.querySelectorAll('[data-close-modal]').forEach(function(el){el.addEventListener('click',closeModal);});
 
-    btnAdd&&btnAdd.addEventListener('click',function(){
+    function openAddModal(preset){
         form.action='{{ route("admin.schedule.store") }}';
         form.querySelector('#formMethod').value='POST';
-        document.getElementById('modalTitle').textContent='Program Ekle';
+        document.getElementById('modalTitle').textContent=preset?'Program Ekle (Hızlı)':'Program Ekle';
         form.reset();
         form.querySelector('input[name="day_of_week"]').value='{{ $currentDay }}';
         form.querySelector('input[name="is_active"]').checked=true;
         document.getElementById('dj_id').value='';
+        if(preset){
+            document.getElementById('title').value=preset.title||'';
+            document.getElementById('start_time').value=preset.start||'';
+            document.getElementById('end_time').value=preset.end||'';
+        }
         openModal();
+    }
+    btnAdd&&btnAdd.addEventListener('click',function(){openAddModal();});
+    document.querySelectorAll('.quick-add-btn').forEach(function(btn){
+        btn.addEventListener('click',function(){
+            openAddModal({
+                title:this.dataset.preset,
+                start:this.dataset.start,
+                end:this.dataset.end
+            });
+        });
     });
 
     editBtns.forEach(function(btn){
