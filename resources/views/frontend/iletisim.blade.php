@@ -159,9 +159,15 @@
                     </div>
                 </div>
             </div>
+            @if(!empty($mapEmbed))
+            <div class="contact-map">
+                {!! $mapEmbed !!}
+            </div>
+            @else
             <div class="contact-map">
                 <iframe src="https://www.google.com/maps?q=Bergischer+Ring+38,+58095+Hagen,+Germany&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Konum"></iframe>
             </div>
+            @endif
         </div>
 
         {{-- Sağ: İletişim Formu --}}

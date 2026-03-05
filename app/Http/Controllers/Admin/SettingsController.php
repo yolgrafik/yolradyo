@@ -35,6 +35,7 @@ class SettingsController extends Controller
             'contact_mobile' => $this->settings->get('contact_mobile'),
             'contact_fax' => $this->settings->get('contact_fax'),
             'address_text' => $this->settings->get('address_text'),
+            'contact_map_embed' => $this->settings->get('contact_map_embed'),
             'maintenance_mode' => $this->settings->get('maintenance_mode', false),
         ]);
     }
@@ -50,6 +51,7 @@ class SettingsController extends Controller
             'contact_mobile' => 'nullable|string|max:50',
             'contact_fax' => 'nullable|string|max:50',
             'address_text' => 'nullable|string|max:500',
+            'contact_map_embed' => 'nullable|string|max:4000',
             'maintenance_mode' => 'nullable|boolean',
         ]);
 
@@ -61,6 +63,7 @@ class SettingsController extends Controller
             'contact_mobile' => ['value' => $validated['contact_mobile'] ?? '', 'type' => 'text'],
             'contact_fax' => ['value' => $validated['contact_fax'] ?? '', 'type' => 'text'],
             'address_text' => ['value' => $validated['address_text'] ?? '', 'type' => 'text'],
+            'contact_map_embed' => ['value' => trim($validated['contact_map_embed'] ?? ''), 'type' => 'text'],
             'maintenance_mode' => ['value' => (bool) ($validated['maintenance_mode'] ?? false), 'type' => 'boolean'],
         ]);
         ActivityLogger::log('settings.updated', ['section' => 'general']);

@@ -106,11 +106,15 @@
                     @error('contact_fax')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
-                    <p class="settings-section-desc" style="margin-bottom:0.5rem;">İletişim formundan gelen mesajlar bu e-posta adresine gönderilir. .env dosyasında CONTACT_TO veya Admin → Ayarlar → Genel → E-posta alanını doldurun.</p>
-                    <form method="POST" action="{{ route('admin.mail-test') }}" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn-mail-test">Test E-postası Gönder</button>
-                    </form>
+                    <label for="contact_map_embed">Google Maps Embed Kodu</label>
+                    <textarea name="contact_map_embed" id="contact_map_embed" rows="4"
+                        placeholder='<iframe src="https://www.google.com/maps/embed?pb=..." ...></iframe>'
+                        class="form-input form-textarea">{{ old('contact_map_embed', $contact_map_embed ?? '') }}</textarea>
+                    <p class="settings-section-desc" style="margin-top:0.5rem;">Google Maps → Paylaş → Haritayı yerleştir → HTML kopyala</p>
+                    @error('contact_map_embed')<span class="form-error">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group">
+                    <p class="settings-section-desc" style="margin-bottom:0.5rem;">İletişim formundan gelen mesajlar bu e-posta adresine gönderilir. Mail Ayarları'ndan "İletişim Alıcısı" tanımlayın.</p>
                 </div>
             </div>
         </section>
@@ -139,6 +143,13 @@
             </button>
         </div>
     </form>
+
+    <div class="form-group" style="margin-top:1rem;">
+        <form method="POST" action="{{ route('admin.mail-test') }}" class="d-inline">
+            @csrf
+            <button type="submit" class="btn-mail-test">Test E-postası Gönder</button>
+        </form>
+    </div>
 </div>
 
 @push('styles')

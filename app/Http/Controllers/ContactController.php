@@ -24,6 +24,7 @@ class ContactController extends Controller
             'contactEmail' => $settings->get('contact_email'),
             'contactFax' => $settings->get('contact_fax'),
             'addressText' => $settings->get('address_text') ?: 'Bergischer Ring 38, 58095 Hagen, Almanya',
+            'mapEmbed' => $settings->get('contact_map_embed'),
             'prefillName' => $user?->name,
             'prefillEmail' => $user?->email,
         ]);
