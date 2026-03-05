@@ -1,0 +1,24 @@
+---
+description: Başlık, buton veya serit eklendiğinde otomatik üst/alt beyaz çizgi uygula
+globs: resources/views/**/*.blade.php
+alwaysApply: false
+---
+
+# Başlık, Buton, Serit – Beyaz Çizgi Kuralı
+
+Yeni **başlık**, **buton grubu** veya **serit/ticker** bileşeni eklerken üst ve alt kenarlara her zaman beyaz çizgi ekle.
+
+## Uygulanacak CSS
+
+```css
+border-top: 1px solid var(--ry-line-color);
+border-bottom: 1px solid var(--ry-line-color);
+```
+
+## Örnekler
+
+- **Serit/Ticker**: `.ticker`, `.ticker-wrap` vb.
+- **Başlık bloğu**: `.section-title`, `.card-header` vb.
+- **Buton grubu**: `.btn-group`, `.home-actions` vb.
+
+Bu bileşenlerde `--ry-line-color` ile üst ve alt çizgiler tutarlı olmalı.
