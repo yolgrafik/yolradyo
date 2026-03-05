@@ -28,7 +28,7 @@ class MailSettingsController extends Controller
             'mailHost' => $this->settings->get('mail_host', ''),
             'mailPort' => $this->settings->get('mail_port', '587'),
             'mailUsername' => $this->settings->get('mail_username', ''),
-            'mailPassword' => $this->settings->get('mail_password', ''),
+            'hasPassword' => !empty($this->settings->get('mail_password')),
             'mailEncryption' => $this->settings->get('mail_encryption', 'tls'),
             'mailFromAddress' => $this->settings->get('mail_from_address', ''),
             'mailFromName' => $this->settings->get('mail_from_name', ''),

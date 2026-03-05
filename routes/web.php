@@ -203,5 +203,11 @@ Route::prefix('admin')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\MemberSettingsController::class, 'index'])->name('index');
             Route::post('/', [App\Http\Controllers\Admin\MemberSettingsController::class, 'store'])->name('store');
         });
+
+        Route::prefix('mail-settings')->name('admin.mail-settings.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\MailSettingsController::class, 'index'])->name('index');
+            Route::post('/', [App\Http\Controllers\Admin\MailSettingsController::class, 'store'])->name('store');
+            Route::post('test', [App\Http\Controllers\Admin\MailSettingsController::class, 'sendTest'])->name('test');
+        });
     });
 });
