@@ -17,6 +17,9 @@
 .badge-sikayet, .badge-complaint { background: rgba(239,68,68,0.25); color: #fca5a5; }
 .badge-open { background: rgba(59,130,246,0.25); color: #93c5fd; }
 .badge-closed { background: rgba(107,114,128,0.3); color: #9ca3af; }
+.badge-warning { background: rgba(234,179,8,0.25); color: #fde047; }
+.badge-success { background: rgba(34,197,94,0.25); color: #86efac; }
+.badge-muted { background: rgba(107,114,128,0.3); color: #9ca3af; }
 .post-body { color: var(--text); line-height: 1.6; white-space: pre-wrap; margin-bottom: 1rem; }
 .post-media { margin: 1rem 0; }
 .post-media video, .post-media iframe { max-width: 100%; border-radius: 10px; }
@@ -59,6 +62,15 @@
     <article class="post-detail">
         <div class="post-meta">
             <span class="badge badge-{{ $post->type }}">{{ $post->type_label }}</span>
+            @if(in_array($post->type, ['photo', 'video']))
+                @if($post->approval_status === 'pending')
+                    <span class="badge badge-warning">Onay bekliyor</span>
+                @elseif($post->approval_status === 'approved')
+                    <span class="badge badge-success">Onaylı</span>
+                @else
+                    <span class="badge badge-muted">Reddedildi</span>
+                @endif
+            @endif
             <span class="badge badge-{{ $post->status === 'open' ? 'open' : 'closed' }}">{{ $post->status_label }}</span>
             <span>{{ $post->user->name }}</span>
             <span>{{ $post->created_at->format('d.m.Y H:i') }}</span>
@@ -69,7 +81,12 @@
         @endif
 
         <div class="post-media">
-            @if($post->video_url)
+            @if($post->file_type === 'video' && $post->file_path)
+                <video controls width="100%" style="max-width:100%;border-radius:10px;">
+                    <source src="{{ $post->media_url }}" type="video/mp4">
+                    Tarayıcınız video oynatmayı desteklemiyor. <a href="{{ $post->media_url }}" target="_blank" rel="noopener" class="media-link">Videoyu aç</a>
+                </video>
+            @elseif($post->video_url)
                 @php
                     $url = $post->video_url;
                     $embed = null;

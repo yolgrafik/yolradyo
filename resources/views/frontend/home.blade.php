@@ -706,6 +706,11 @@
         color: rgba(255, 255, 255, 0.85);
         font-size: 0.75rem;
     }
+    .listener-slide__desc {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.7rem;
+        margin-top: 2px;
+    }
     .listener-swiper .listener-swiper-btn {
         position: absolute;
         top: 50%;

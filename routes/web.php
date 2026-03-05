@@ -220,6 +220,8 @@ Route::prefix('admin')->group(function () {
         Route::prefix('forum')->name('admin.forum.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\ForumController::class, 'posts'])->name('posts');
             Route::post('{post}/toggle-status', [App\Http\Controllers\Admin\ForumController::class, 'toggleStatus'])->name('toggle-status');
+            Route::post('{post}/approve', [App\Http\Controllers\Admin\ForumController::class, 'approve'])->name('approve');
+            Route::post('{post}/reject', [App\Http\Controllers\Admin\ForumController::class, 'reject'])->name('reject');
             Route::delete('posts/{post}', [App\Http\Controllers\Admin\ForumController::class, 'destroyPost'])->name('destroy-post');
             Route::get('comments', [App\Http\Controllers\Admin\ForumController::class, 'comments'])->name('comments');
             Route::delete('comments/{comment}', [App\Http\Controllers\Admin\ForumController::class, 'destroyComment'])->name('destroy-comment');

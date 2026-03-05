@@ -14,14 +14,20 @@
             <div class="alert-error">{{ session('error') }}</div>
         @endif
 
-        <form method="GET" action="{{ route('admin.forum.posts') }}" class="filter-form" style="margin-bottom:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <form method="GET" action="{{ route('admin.forum.posts') }}" class="filter-form" style="margin-bottom:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
             <select name="type" class="form-input" style="max-width:150px;">
                 <option value="">Tüm türler</option>
-                <option value="video" {{ request('type') === 'video' ? 'selected' : '' }}>Video</option>
-                <option value="mp3" {{ request('type') === 'mp3' ? 'selected' : '' }}>MP3</option>
-                <option value="photo" {{ request('type') === 'photo' ? 'selected' : '' }}>Foto</option>
                 <option value="request" {{ request('type') === 'request' ? 'selected' : '' }}>İstek</option>
                 <option value="complaint" {{ request('type') === 'complaint' ? 'selected' : '' }}>Şikayet</option>
+                <option value="photo" {{ request('type') === 'photo' ? 'selected' : '' }}>Foto Gönder</option>
+                <option value="video" {{ request('type') === 'video' ? 'selected' : '' }}>Video Gönder</option>
+                <option value="mp3" {{ request('type') === 'mp3' ? 'selected' : '' }}>MP3</option>
+            </select>
+            <select name="approval_status" class="form-input" style="max-width:150px;">
+                <option value="">Tüm onay durumları</option>
+                <option value="pending" {{ request('approval_status') === 'pending' ? 'selected' : '' }}>Beklemede</option>
+                <option value="approved" {{ request('approval_status') === 'approved' ? 'selected' : '' }}>Onaylı</option>
+                <option value="rejected" {{ request('approval_status') === 'rejected' ? 'selected' : '' }}>Reddedildi</option>
             </select>
             <button type="submit" class="btn-sm btn-edit">Filtrele</button>
         </form>
@@ -33,8 +39,9 @@
                         <th>Üye</th>
                         <th>Tür</th>
                         <th>Başlık</th>
+                        <th>Önizleme</th>
                         <th>Tarih</th>
-                        <th>Durum</th>
+                        <th>Onay</th>
                         <th>İşlem</th>
                     </tr>
                 </thead>
@@ -53,17 +60,47 @@
                             @endswitch
                         </td>
                         <td>
-                            <a href="{{ route('forum.show', $post->slug) }}" target="_blank" rel="noopener">{{ Str::limit($post->title, 50) }}</a>
-                        </td>
-                        <td>{{ $post->created_at->format('d.m.Y H:i') }}</td>
-                        <td>
-                            @if($post->status === 'open')
-                                <span class="badge badge-success">Açık</span>
-                            @else
-                                <span class="badge badge-muted">Kapalı</span>
+                            <a href="{{ route('forum.show', $post->slug) }}" target="_blank" rel="noopener">{{ Str::limit($post->title, 40) }}</a>
+                            @if($post->body)
+                                <br><small style="color:var(--muted);">{{ Str::limit($post->body, 50) }}</small>
                             @endif
                         </td>
                         <td>
+                            @if($post->type === 'photo' && $post->file_path)
+                                <a href="{{ $post->media_url }}" target="_blank" rel="noopener"><img src="{{ $post->media_url }}" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:6px;"></a>
+                            @elseif($post->type === 'video')
+                                @if($post->video_url)
+                                    <a href="{{ $post->video_url }}" target="_blank" rel="noopener" class="btn-sm btn-edit">Video</a>
+                                @elseif($post->file_path)
+                                    <a href="{{ $post->media_url }}" target="_blank" rel="noopener" class="btn-sm btn-edit">Video</a>
+                                @else
+                                    —
+                                @endif
+                            @else
+                                —
+                            @endif
+                        </td>
+                        <td>{{ $post->created_at->format('d.m.Y H:i') }}</td>
+                        <td>
+                            @if($post->approval_status === 'pending')
+                                <span class="badge badge-warning">Beklemede</span>
+                            @elseif($post->approval_status === 'approved')
+                                <span class="badge badge-success">Onaylı</span>
+                            @else
+                                <span class="badge badge-muted">Reddedildi</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if(in_array($post->type, ['photo', 'video']) && $post->approval_status === 'pending')
+                                <form action="{{ route('admin.forum.approve', $post) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn-sm btn-edit">Onayla</button>
+                                </form>
+                                <form action="{{ route('admin.forum.reject', $post) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn-sm btn-danger">Reddet</button>
+                                </form>
+                            @endif
                             <form action="{{ route('admin.forum.toggle-status', $post) }}" method="POST" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn-sm btn-edit">{{ $post->status === 'open' ? 'Kapat' : 'Aç' }}</button>
@@ -77,7 +114,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" style="text-align:center;padding:2rem;color:var(--muted);">Henüz gönderi yok.</td>
+                        <td colspan="7" style="text-align:center;padding:2rem;color:var(--muted);">Henüz gönderi yok.</td>
                     </tr>
                     @endforelse
                 </tbody>

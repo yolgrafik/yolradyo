@@ -16,6 +16,7 @@ class ForumPost extends Model
         'slug',
         'body',
         'status',
+        'approval_status',
         'video_url',
         'file_path',
         'file_name',
@@ -31,6 +32,10 @@ class ForumPost extends Model
     public const STATUS_OPEN = 'open';
     public const STATUS_CLOSED = 'closed';
 
+    public const APPROVAL_PENDING = 'pending';
+    public const APPROVAL_APPROVED = 'approved';
+    public const APPROVAL_REJECTED = 'rejected';
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -44,13 +49,42 @@ class ForumPost extends Model
     public function getTypeLabelAttribute(): string
     {
         return match ($this->type) {
-            self::TYPE_VIDEO => 'Video',
-            self::TYPE_MP3 => 'MP3',
-            self::TYPE_PHOTO => 'Foto',
+            self::TYPE_VIDEO => 'Video Gönder',
+            self::TYPE_MP3 => 'MP3 Gönder',
+            self::TYPE_PHOTO => 'Foto Gönder',
             self::TYPE_REQUEST => 'İstek',
             self::TYPE_COMPLAINT => 'Şikayet',
             default => $this->type,
         };
+    }
+
+    public function getMediaUrlAttribute(): ?string
+    {
+        if ($this->file_path) {
+            return asset('storage/' . $this->file_path);
+        }
+        return null;
+    }
+
+    public function getVideoThumbnailUrlAttribute(): ?string
+    {
+        if (!$this->video_url) {
+            return null;
+        }
+        if (preg_match('#(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)([a-zA-Z0-9_-]{11})#', $this->video_url, $m)) {
+            return 'https://img.youtube.com/vi/' . $m[1] . '/mqdefault.jpg';
+        }
+        return null;
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->approval_status === self::APPROVAL_APPROVED;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->approval_status === self::APPROVAL_PENDING;
     }
 
     public function hasMedia(): bool

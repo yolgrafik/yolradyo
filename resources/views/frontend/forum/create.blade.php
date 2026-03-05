@@ -47,11 +47,11 @@
                 <label for="type">Tür *</label>
                 <select name="type" id="type" class="form-input" required>
                     <option value="">Seçiniz</option>
-                    <option value="video" {{ old('type') === 'video' ? 'selected' : '' }}>Video Gönder</option>
-                    <option value="mp3" {{ old('type') === 'mp3' ? 'selected' : '' }}>MP3 Gönder</option>
-                    <option value="photo" {{ old('type') === 'photo' ? 'selected' : '' }}>Foto Gönder</option>
                     <option value="request" {{ old('type') === 'request' ? 'selected' : '' }}>İstek</option>
                     <option value="complaint" {{ old('type') === 'complaint' ? 'selected' : '' }}>Şikayet</option>
+                    <option value="photo" {{ old('type') === 'photo' ? 'selected' : '' }}>Foto Gönder</option>
+                    <option value="video" {{ old('type') === 'video' ? 'selected' : '' }}>Video Gönder</option>
+                    <option value="mp3" {{ old('type') === 'mp3' ? 'selected' : '' }}>MP3 Gönder</option>
                 </select>
             </div>
             <div class="form-group">
@@ -61,15 +61,18 @@
                 <p class="form-hint">En fazla 120 karakter</p>
             </div>
             <div class="form-group" id="bodyGroup">
-                <label for="body">Mesaj</label>
+                <label for="body">Mesaj / Açıklama</label>
                 <textarea name="body" id="body" class="form-textarea form-input" minlength="5" maxlength="2000" placeholder="Açıklama yazın...">{{ old('body') }}</textarea>
                 @error('body')<span class="form-error">{{ $message }}</span>@enderror
-                <p class="form-hint">İstek/şikayet için en az 20 karakter zorunlu. Diğer türlerde isteğe bağlı.</p>
+                <p class="form-hint" id="bodyHint">İstek/şikayet için en az 20 karakter. Foto/Video için en az 10 karakter (Foto Açıklaması / Video Açıklaması) zorunlu.</p>
             </div>
             <div class="form-group type-option" id="videoGroup">
-                <label for="video_url">Video Link *</label>
+                <label for="video_url">Video Link (YouTube, TikTok, Instagram vb.)</label>
                 <input type="url" name="video_url" id="video_url" class="form-input" value="{{ old('video_url') }}" placeholder="https://...">
+                <p class="form-hint" style="margin-top:0.5rem;">veya video dosyası yükleyin (MP4, max 50MB):</p>
+                <input type="file" name="video_file" id="video_file" class="form-input" accept="video/mp4,video/webm,video/quicktime" style="margin-top:0.5rem;">
                 @error('video_url')<span class="form-error">{{ $message }}</span>@enderror
+                @error('video_file')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group type-option" id="mp3Group">
                 <label for="mp3_file">MP3 Dosyası * (max {{ $maxMp3Mb }}MB)</label>
@@ -77,8 +80,8 @@
                 @error('mp3_file')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group type-option" id="photoGroup">
-                <label for="photo_file">Fotoğraf * (max {{ $maxPhotoMb }}MB, JPG/PNG/GIF/WebP)</label>
-                <input type="file" name="photo_file" id="photo_file" class="form-input" accept=".jpg,.jpeg,.png,.gif,.webp,image/*">
+                <label for="photo_file">Fotoğraf * (max {{ $maxPhotoMb }}MB, JPG/PNG/WebP)</label>
+                <input type="file" name="photo_file" id="photo_file" class="form-input" accept=".jpg,.jpeg,.png,.webp,image/*">
                 @error('photo_file')<span class="form-error">{{ $message }}</span>@enderror
             </div>
 
@@ -113,10 +116,11 @@
         videoGroup.style.display = v === 'video' ? 'block' : 'none';
         mp3Group.style.display = v === 'mp3' ? 'block' : 'none';
         photoGroup.style.display = v === 'photo' ? 'block' : 'none';
-        if (v === 'video') { videoInput.setAttribute('required','required'); } else { videoInput.removeAttribute('required'); }
         if (v === 'mp3') { mp3Input.setAttribute('required','required'); } else { mp3Input.removeAttribute('required'); }
         if (v === 'photo') { photoInput.setAttribute('required','required'); } else { photoInput.removeAttribute('required'); }
-        if (v === 'request' || v === 'complaint') { bodyInput.setAttribute('required','required'); bodyInput.setAttribute('minlength','20'); } else { bodyInput.removeAttribute('required'); bodyInput.setAttribute('minlength','5'); }
+        if (v === 'request' || v === 'complaint') { bodyInput.setAttribute('required','required'); bodyInput.setAttribute('minlength','20'); }
+        else if (v === 'photo' || v === 'video') { bodyInput.setAttribute('required','required'); bodyInput.setAttribute('minlength','10'); }
+        else { bodyInput.removeAttribute('required'); bodyInput.setAttribute('minlength','5'); }
     }
     type.addEventListener('change', toggleFields);
     toggleFields();

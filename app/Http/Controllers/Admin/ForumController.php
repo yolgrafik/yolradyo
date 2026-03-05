@@ -14,14 +14,18 @@ class ForumController extends Controller
     public function posts(Request $request): View
     {
         $type = $request->get('type');
+        $approvalStatus = $request->get('approval_status');
         $query = ForumPost::with('user')->latest();
 
         $types = [ForumPost::TYPE_VIDEO, ForumPost::TYPE_MP3, ForumPost::TYPE_PHOTO, ForumPost::TYPE_REQUEST, ForumPost::TYPE_COMPLAINT];
         if (in_array($type, $types)) {
             $query->where('type', $type);
         }
+        if (in_array($approvalStatus, ['pending', 'approved', 'rejected'])) {
+            $query->where('approval_status', $approvalStatus);
+        }
 
-        $posts = $query->paginate(20);
+        $posts = $query->paginate(20)->withQueryString();
 
         return view('admin.forum.posts', [
             'posts' => $posts,
@@ -38,6 +42,18 @@ class ForumController extends Controller
         ]);
 
         return back()->with('success', 'Durum güncellendi.');
+    }
+
+    public function approve(ForumPost $post): RedirectResponse
+    {
+        $post->update(['approval_status' => ForumPost::APPROVAL_APPROVED]);
+        return back()->with('success', 'Gönderi onaylandı.');
+    }
+
+    public function reject(ForumPost $post): RedirectResponse
+    {
+        $post->update(['approval_status' => ForumPost::APPROVAL_REJECTED]);
+        return back()->with('success', 'Gönderi reddedildi.');
     }
 
     public function destroyPost(ForumPost $post): RedirectResponse

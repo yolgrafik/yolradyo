@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DjProfile;
-use App\Models\MemberSubmission;
+use App\Models\ForumPost;
 use App\Models\Programci;
 use App\Models\Setting;
 use App\Models\Slider;
@@ -15,13 +15,13 @@ class FrontendController extends Controller
     {
         $sliders = Slider::active()->ordered()->get();
         $programcilar = Programci::active()->ordered()->get();
-        $listenerSubmissions = MemberSubmission::with('user')
-            ->where('status', 'approved')
-            ->whereIn('type', ['image', 'video'])
+        $listenerSubmissions = ForumPost::with('user')
+            ->where('approval_status', ForumPost::APPROVAL_APPROVED)
+            ->whereIn('type', [ForumPost::TYPE_PHOTO, ForumPost::TYPE_VIDEO])
             ->where(function ($q) {
                 $q->whereNotNull('file_path')
                     ->orWhere(function ($q2) {
-                        $q2->where('type', 'video')->whereNotNull('video_url');
+                        $q2->where('type', ForumPost::TYPE_VIDEO)->whereNotNull('video_url');
                     });
             })
             ->orderByDesc('created_at')

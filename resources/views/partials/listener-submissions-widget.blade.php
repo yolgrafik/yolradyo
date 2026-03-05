@@ -13,12 +13,13 @@
                     @foreach($listenerSubmissions as $item)
                     <div class="swiper-slide">
                         <div class="listener-slide">
-                            @if($item->type === 'image' && $item->file_path)
+                            @if($item->type === 'photo' && $item->file_path)
                                 <a href="{{ $item->media_url }}" target="_blank" rel="noopener" class="listener-slide__link">
                                     <img src="{{ $item->media_url }}" alt="{{ $item->title }}" class="listener-slide__img">
                                     <div class="listener-slide__caption">
                                         <span class="listener-slide__name">{{ $item->user->name ?? 'Dinleyici' }}</span>
                                         @if($item->title)<span class="listener-slide__title">{{ Str::limit($item->title, 40) }}</span>@endif
+                                        @if($item->body)<span class="listener-slide__desc">{{ Str::limit($item->body, 60) }}</span>@endif
                                     </div>
                                 </a>
                             @elseif($item->type === 'video')
@@ -33,6 +34,7 @@
                                     <div class="listener-slide__caption">
                                         <span class="listener-slide__name">{{ $item->user->name ?? 'Dinleyici' }}</span>
                                         @if($item->title)<span class="listener-slide__title">{{ Str::limit($item->title, 40) }}</span>@endif
+                                        @if($item->body)<span class="listener-slide__desc">{{ Str::limit($item->body, 60) }}</span>@endif
                                     </div>
                                 </a>
                             @endif

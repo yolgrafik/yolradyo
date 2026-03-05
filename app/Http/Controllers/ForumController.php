@@ -55,29 +55,31 @@ class ForumController extends Controller
         }
 
         $maxMp3Mb = (int) $settings->get('member_max_mp3_size_mb', 20);
-        $maxPhotoMb = 10;
+        $maxPhotoMb = 5;
+        $maxVideoMb = 50;
 
         $rules = [
             'type' => 'required|in:video,mp3,photo,request,complaint',
             'title' => 'required|string|max:120',
-            'body' => 'required_unless:type,video,mp3,photo|nullable|string|min:5|max:2000',
-            'video_url' => 'required_if:type,video|nullable|url|max:500',
+            'body' => 'required_if:type,photo,video|nullable|string|min:5|max:2000',
+            'video_url' => 'nullable|url|max:500',
+            'video_file' => 'nullable|file|mimes:mp4,mov,webm|max:' . ($maxVideoMb * 1024),
             'mp3_file' => 'required_if:type,mp3|nullable|file|mimes:mp3,mpeg|max:' . ($maxMp3Mb * 1024),
-            'photo_file' => 'required_if:type,photo|nullable|file|mimes:jpeg,jpg,png,gif,webp|max:' . ($maxPhotoMb * 1024),
+            'photo_file' => 'required_if:type,photo|nullable|file|mimes:jpeg,jpg,png,webp|max:' . ($maxPhotoMb * 1024),
             'disclaimer_accepted' => 'required|accepted',
         ];
 
         $messages = [
             'type.required' => 'Lütfen tür seçin.',
             'title.required' => 'Başlık zorunludur.',
-            'body.required_unless' => 'İstek ve şikayet için mesaj zorunludur.',
+            'body.required' => 'Açıklama zorunludur.',
             'body.min' => 'Mesaj en az 5 karakter olmalıdır.',
-            'video_url.required_if' => 'Video linki zorunludur.',
+            'video_url.url' => 'Geçerli bir video URL girin.',
             'mp3_file.required_if' => 'MP3 dosyası zorunludur.',
             'mp3_file.mimes' => 'Sadece MP3 dosyası yükleyebilirsiniz.',
             'mp3_file.max' => "MP3 en fazla {$maxMp3Mb}MB olabilir.",
             'photo_file.required_if' => 'Fotoğraf dosyası zorunludur.',
-            'photo_file.mimes' => 'Sadece resim dosyası (JPG, PNG, GIF, WebP) yükleyebilirsiniz.',
+            'photo_file.mimes' => 'Sadece JPG, PNG veya WebP yükleyebilirsiniz.',
             'photo_file.max' => "Fotoğraf en fazla {$maxPhotoMb}MB olabilir.",
             'disclaimer_accepted.required' => 'Sorumluluk reddi kabul edilmelidir.',
             'disclaimer_accepted.accepted' => 'Sorumluluk reddini kabul etmelisiniz.',
@@ -89,12 +91,28 @@ class ForumController extends Controller
             return back()->withErrors(['body' => 'İstek ve şikayet için mesaj en az 20 karakter olmalıdır.'])->withInput();
         }
 
+        if (in_array($validated['type'], ['photo', 'video']))
+        {
+            $body = trim($validated['body'] ?? '');
+            if (strlen($body) < 10) {
+                return back()->withErrors(['body' => 'Foto ve video için açıklama en az 10 karakter olmalıdır.'])->withInput();
+            }
+        }
+
+        if ($validated['type'] === 'video') {
+            $hasUrl = !empty(trim($validated['video_url'] ?? ''));
+            $hasFile = $request->hasFile('video_file');
+            if (!$hasUrl && !$hasFile) {
+                return back()->withErrors(['video_url' => 'Video linki veya video dosyası zorunludur.'])->withInput();
+            }
+        }
+
         $videoUrl = null;
         $filePath = null;
         $fileName = null;
         $fileType = null;
 
-        if ($request->type === 'video' && !empty($validated['video_url'])) {
+        if ($request->type === 'video' && !empty(trim($validated['video_url'] ?? ''))) {
             $videoUrl = $validated['video_url'];
         }
 
@@ -103,13 +121,16 @@ class ForumController extends Controller
             $filePath = $file->store('uploads/forum/mp3', 'public');
             $fileName = $file->getClientOriginalName();
             $fileType = 'mp3';
-        }
-
-        if ($request->hasFile('photo_file')) {
+        } elseif ($request->hasFile('photo_file')) {
             $file = $request->file('photo_file');
-            $filePath = $file->store('uploads/forum/photos', 'public');
+            $filePath = $file->store('uploads/listener/photos', 'public');
             $fileName = $file->getClientOriginalName();
             $fileType = 'photo';
+        } elseif ($request->hasFile('video_file')) {
+            $file = $request->file('video_file');
+            $filePath = $file->store('uploads/listener/videos', 'public');
+            $fileName = $file->getClientOriginalName();
+            $fileType = 'video';
         }
 
         $body = $validated['body'] ?? '';
@@ -121,14 +142,19 @@ class ForumController extends Controller
             'slug' => ForumPost::makeSlug($validated['title']),
             'body' => $body,
             'status' => ForumPost::STATUS_OPEN,
+            'approval_status' => in_array($validated['type'], ['photo', 'video']) ? ForumPost::APPROVAL_PENDING : ForumPost::APPROVAL_APPROVED,
             'video_url' => $videoUrl,
             'file_path' => $filePath,
             'file_name' => $fileName,
             'file_type' => $fileType,
         ]);
 
+        $successMsg = in_array($validated['type'], ['photo', 'video'])
+            ? 'Gönderiniz alındı. Onay sonrası yayınlanacaktır.'
+            : 'Gönderiniz yayınlandı.';
+
         return redirect()->route('forum.show', $post->slug)
-            ->with('success', 'Gönderiniz yayınlandı.');
+            ->with('success', $successMsg);
     }
 
     public function show(string $slug): View|RedirectResponse
