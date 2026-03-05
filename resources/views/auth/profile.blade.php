@@ -36,6 +36,23 @@
             <span class="profile-label">E-posta</span>
             <span class="profile-value">{{ auth()->user()->email }}</span>
         </div>
+        <div class="profile-row">
+            <span class="profile-label">Durum</span>
+            <span class="profile-value">
+                @if(auth()->user()->status === 'approved')
+                    <span style="color:#86efac;">Onaylı</span>
+                @elseif(auth()->user()->status === 'pending')
+                    <span style="color:#fde047;">Beklemede</span>
+                @else
+                    <span style="color:#94a3b8;">Reddedildi</span>
+                @endif
+            </span>
+        </div>
+        @if(auth()->user()->isApproved())
+            <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08);">
+                <a href="{{ route('bize-gonder') }}" style="display:inline-block;padding:0.6rem 1.25rem;font-size:0.9rem;font-weight:600;background:var(--ry-btn-bg);color:#fff;border-radius:10px;text-decoration:none;">Bize Gönder</a>
+            </div>
+        @endif
     </div>
 </div>
 @endsection

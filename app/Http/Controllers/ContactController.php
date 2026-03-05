@@ -30,6 +30,9 @@ class ContactController extends Controller
         }
 
         $user = $request->user();
+        if (!$user->isApproved()) {
+            return back()->with('error', 'Mesaj gönderebilmek için hesabınızın onaylanması gerekiyor.');
+        }
         $name = $user->name;
         $email = $user->email;
         $messageBody = $request->validated('message');

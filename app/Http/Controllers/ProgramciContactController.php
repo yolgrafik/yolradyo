@@ -18,6 +18,10 @@ class ProgramciContactController extends Controller
         $programci = Programci::where('slug', $slug)->active()->firstOrFail();
         $user = $request->user();
 
+        if (!$user->isApproved()) {
+            return back()->with('error', 'Mesaj gönderebilmek için hesabınızın onaylanması gerekiyor.');
+        }
+
         if (!empty($request->validated('website'))) {
             return back()->with('success', 'Mesajınız gönderildi.');
         }
