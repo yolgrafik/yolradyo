@@ -16,10 +16,6 @@
     $ogType = $siteSettings['seo_og_type'] ?? 'website';
     $ogLocale = $siteSettings['seo_og_locale'] ?? 'tr_TR';
 
-    $twitterCard = $siteSettings['seo_twitter_card'] ?? 'summary_large_image';
-    $twitterSite = $siteSettings['seo_twitter_site'] ?? '';
-    $twitterCreator = $siteSettings['seo_twitter_creator'] ?? '';
-
     $googleVerification = $siteSettings['seo_google_verification'] ?? '';
     $bingVerification = $siteSettings['seo_bing_verification'] ?? '';
     $yandexVerification = $siteSettings['seo_yandex_verification'] ?? '';
@@ -53,14 +49,6 @@
 <meta property="og:url" content="{{ $canonicalUrl }}">
 <meta property="og:site_name" content="{{ $siteName }}">
 <meta property="og:locale" content="{{ $ogLocale }}">
-
-{{-- Twitter Card --}}
-<meta name="twitter:card" content="{{ $twitterCard }}">
-<meta name="twitter:title" content="{{ $ogTitle }}">
-@if($ogDesc)<meta name="twitter:description" content="{{ $ogDesc }}">@endif
-@if($ogImage)<meta name="twitter:image" content="{{ $ogImage }}">@endif
-@if($twitterSite)<meta name="twitter:site" content="{{ $twitterSite }}">@endif
-@if($twitterCreator)<meta name="twitter:creator" content="{{ $twitterCreator }}">@endif
 
 {{-- Arama Motoru Doğrulama --}}
 @if($googleVerification)<meta name="google-site-verification" content="{{ $googleVerification }}">@endif

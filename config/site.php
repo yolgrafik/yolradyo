@@ -15,6 +15,5 @@ return [
         'seo_meta_robots' => 'index,follow',
         'seo_og_type' => 'website',
         'seo_og_locale' => 'tr_TR',
-        'seo_twitter_card' => 'summary_large_image',
     ],
 ];

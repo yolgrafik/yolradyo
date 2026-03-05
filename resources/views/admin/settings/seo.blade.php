@@ -136,41 +136,6 @@
             </div>
         </section>
 
-        {{-- Twitter Card --}}
-        <section class="settings-section">
-            <div class="settings-section-header">
-                <h2 class="settings-section-title">Twitter Card</h2>
-                <p class="settings-section-desc">Twitter/X paylaşım kartı</p>
-            </div>
-            <div class="settings-section-body">
-                <div class="form-group">
-                    <label for="twitter_card">twitter:card</label>
-                    <select name="twitter_card" id="twitter_card" class="form-input">
-                        <option value="summary_large_image" {{ old('twitter_card', $seo_twitter_card ?? 'summary_large_image') == 'summary_large_image' ? 'selected' : '' }}>summary_large_image</option>
-                        <option value="summary" {{ old('twitter_card', $seo_twitter_card ?? '') == 'summary' ? 'selected' : '' }}>summary</option>
-                    </select>
-                </div>
-                <div class="form-row form-row-2">
-                    <div class="form-group">
-                        <label for="twitter_site">Twitter @Kullanıcı</label>
-                        <input type="text" name="twitter_site" id="twitter_site"
-                            value="{{ old('twitter_site', $seo_twitter_site ?? '') }}"
-                            placeholder="@radyoyol"
-                            class="form-input">
-                        @error('twitter_site')<span class="form-error">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="twitter_creator">Twitter İçerik Sahibi</label>
-                        <input type="text" name="twitter_creator" id="twitter_creator"
-                            value="{{ old('twitter_creator', $seo_twitter_creator ?? '') }}"
-                            placeholder="@radyoyol"
-                            class="form-input">
-                        @error('twitter_creator')<span class="form-error">{{ $message }}</span>@enderror
-                    </div>
-                </div>
-            </div>
-        </section>
-
         {{-- Doğrulama --}}
         <section class="settings-section">
             <div class="settings-section-header">
