@@ -175,6 +175,53 @@
         </div>
     </a>
 
+    <div class="stream-widget-card">
+        <div class="stream-widget__header">
+            <svg class="stream-widget__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <span class="stream-widget__title">Canlı Yayın Bilgisi</span>
+        </div>
+        <div class="stream-widget__body">
+            <div class="stream-widget__track">
+                <img class="cc_streaminfo stream-widget__img" data-type="trackimageurl" data-username="radyoyol" src="" alt="" onerror="this.style.display='none'">
+                <div class="stream-widget__track-info">
+                    <div class="stream-widget__label">Şu An Çalıyor</div>
+                    <div class="cc_streaminfo stream-widget__song" data-type="song" data-username="radyoyol">—</div>
+                    <div class="stream-widget__meta">
+                        <span class="cc_streaminfo" data-type="trackartist" data-username="radyoyol">—</span>
+                        <span class="stream-widget__sep">•</span>
+                        <span class="cc_streaminfo" data-type="tracktitle" data-username="radyoyol">—</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stream-widget__grid">
+                <div class="stream-widget__item">
+                    <span class="stream-widget__item-label">Dinleyici</span>
+                    <span class="cc_streaminfo stream-widget__item-value" data-type="listeners" data-username="radyoyol">—</span>
+                </div>
+                <div class="stream-widget__item">
+                    <span class="stream-widget__item-label">Bitrate</span>
+                    <span class="cc_streaminfo stream-widget__item-value" data-type="bitrate" data-username="radyoyol">—</span>
+                </div>
+                <div class="stream-widget__item">
+                    <span class="stream-widget__item-label">Sunucu</span>
+                    <span class="cc_streaminfo stream-widget__item-value" data-type="server" data-username="radyoyol">—</span>
+                </div>
+                <div class="stream-widget__item">
+                    <span class="stream-widget__item-label">AutoDJ</span>
+                    <span class="cc_streaminfo stream-widget__item-value" data-type="autodj" data-username="radyoyol">—</span>
+                </div>
+                <div class="stream-widget__item">
+                    <span class="stream-widget__item-label">Kaynak</span>
+                    <span class="cc_streaminfo stream-widget__item-value" data-type="source" data-username="radyoyol">—</span>
+                </div>
+                <div class="stream-widget__item">
+                    <span class="stream-widget__item-label">İstasyon Saati</span>
+                    <span class="cc_streaminfo stream-widget__item-value" data-type="stationtime" data-username="radyoyol">—</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <a href="{{ route('admin.settings.general') }}" class="module-card module-card--green">
         <div class="module-card__header">
             <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -232,7 +279,106 @@
 </div>
 @endsection
 
+@push('styles')
+<style>
+.stream-widget-card {
+    background: linear-gradient(135deg, rgba(30,41,59,0.95) 0%, rgba(15,23,42,0.98) 100%);
+    border: 1px solid rgba(148,163,184,0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    grid-column: span 1;
+}
+.stream-widget__header {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: #fff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.stream-widget__icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+.stream-widget__title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+.stream-widget__body {
+    padding: 20px;
+}
+.stream-widget__track {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(148,163,184,0.15);
+}
+.stream-widget__img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.stream-widget__track-info {
+    flex: 1;
+    min-width: 0;
+}
+.stream-widget__label {
+    font-size: 0.75rem;
+    color: rgba(148,163,184,0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+.stream-widget__song {
+    font-weight: 600;
+    color: #f8fafc;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+.stream-widget__meta {
+    font-size: 0.85rem;
+    color: rgba(148,163,184,0.9);
+}
+.stream-widget__sep {
+    margin: 0 6px;
+    opacity: 0.6;
+}
+.stream-widget__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+.stream-widget__item {
+    background: rgba(15,23,42,0.6);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.stream-widget__item-label {
+    font-size: 0.7rem;
+    color: rgba(148,163,184,0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.stream-widget__item-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #e2e8f0;
+}
+@media (min-width: 768px) {
+    .stream-widget__grid { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+@endpush
+
 @push('scripts')
+<script src="https://r1.comcities.com/system/streaminfo.js"></script>
 <script>
 (function() {
     var listenersEl = document.getElementById('dashboardListeners');
