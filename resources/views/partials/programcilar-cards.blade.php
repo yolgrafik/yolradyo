@@ -32,6 +32,8 @@
                 @if($p->kisa_aciklama)
                     <p class="programci-card__slogan">{{ $p->kisa_aciklama }}</p>
                 @endif
+                @php $hasSocial = $p->instagram || $p->facebook || $p->tiktok || $p->youtube; @endphp
+                @if($hasSocial)
                 <div class="programci-card__social">
                     @if($p->instagram)
                         <a href="{{ Str::startsWith($p->instagram, 'http') ? $p->instagram : 'https://' . $p->instagram }}" target="_blank" rel="noopener noreferrer" class="programci-card__social-icon" title="Instagram" aria-label="Instagram">
@@ -54,7 +56,7 @@
                         </a>
                     @endif
                 </div>
-                <span class="programci-card__cta">Profil</span>
+                @endif
             </div>
         </a>
         @endforeach
@@ -80,10 +82,9 @@
 .programci-card__body { flex: 1; min-width: 0; }
 .programci-card__name { font-size: 1.05rem; font-weight: 700; color: #fff; margin: 0 0 0.25rem 0; }
 .programci-card__slogan { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin: 0 0 0.5rem 0; line-height: 1.3; }
-.programci-card__social { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.programci-card__social { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
 .programci-card__social-icon { color: rgba(255,255,255,0.8); transition: color 0.2s; }
 .programci-card__social-icon:hover { color: #fff; }
-.programci-card__cta { display: inline-block; font-size: 0.8rem; font-weight: 600; color: var(--ry-schedule-active, #c92a2a); }
 @media (max-width: 1024px) { .programci-card { flex: 0 0 calc(50% - 0.5rem); } }
 @media (max-width: 600px) { .programci-card { flex: 0 0 100%; } .programcilar-nav { display: none; } }
 </style>
