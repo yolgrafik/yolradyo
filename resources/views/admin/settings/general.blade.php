@@ -61,51 +61,49 @@
         <section class="settings-section">
             <div class="settings-section-header">
                 <h2 class="settings-section-title">İletişim Bilgileri</h2>
-                <p class="settings-section-desc">Footer ve iletişim sayfalarında kullanılır</p>
+                <p class="settings-section-desc">İletişim sayfasında (Bize Ulaşın) ve footer'da görünen bilgiler</p>
             </div>
             <div class="settings-section-body">
-                <div class="form-row form-row-2">
-                    <div class="form-group">
-                        <label for="contact_email">E-posta</label>
-                        <input type="email" name="contact_email" id="contact_email"
-                            value="{{ old('contact_email', $contact_email ?? '') }}"
-                            placeholder="info@radyoyol.com"
-                            class="form-input">
-                        @error('contact_email')<span class="form-error">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="contact_phone">Telefon</label>
-                        <input type="text" name="contact_phone" id="contact_phone"
-                            value="{{ old('contact_phone', $contact_phone ?? '') }}"
-                            placeholder="+90 555 123 4567"
-                            class="form-input">
-                        @error('contact_phone')<span class="form-error">{{ $message }}</span>@enderror
-                    </div>
-                </div>
                 <div class="form-row form-row-2">
                     <div class="form-group">
                         <label for="contact_mobile">Mobil Telefon</label>
                         <input type="text" name="contact_mobile" id="contact_mobile"
                             value="{{ old('contact_mobile', $contact_mobile ?? '') }}"
-                            placeholder="+90 555 123 4567"
+                            placeholder="+49 2331 123456"
                             class="form-input">
                         @error('contact_mobile')<span class="form-error">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group">
-                        <label for="contact_fax">Faks</label>
-                        <input type="text" name="contact_fax" id="contact_fax"
-                            value="{{ old('contact_fax', $contact_fax ?? '') }}"
-                            placeholder="+90 212 123 4567"
+                        <label for="contact_phone">Telefon</label>
+                        <input type="text" name="contact_phone" id="contact_phone"
+                            value="{{ old('contact_phone', $contact_phone ?? '') }}"
+                            placeholder="+49 2331 123456"
                             class="form-input">
-                        @error('contact_fax')<span class="form-error">{{ $message }}</span>@enderror
+                        @error('contact_phone')<span class="form-error">{{ $message }}</span>@enderror
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact_email">E-posta</label>
+                    <input type="email" name="contact_email" id="contact_email"
+                        value="{{ old('contact_email', $contact_email ?? '') }}"
+                        placeholder="info@radyoyol.com"
+                        class="form-input">
+                    @error('contact_email')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
                     <label for="address_text">Adres</label>
                     <textarea name="address_text" id="address_text" rows="3"
-                        placeholder="Fiziksel adres bilgisi"
+                        placeholder="Bergischer Ring 38, 58095 Hagen, Almanya"
                         class="form-input form-textarea">{{ old('address_text', $address_text ?? '') }}</textarea>
                     @error('address_text')<span class="form-error">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group">
+                    <label for="contact_fax">Faks</label>
+                    <input type="text" name="contact_fax" id="contact_fax"
+                        value="{{ old('contact_fax', $contact_fax ?? '') }}"
+                        placeholder="+49 2331 123457"
+                        class="form-input">
+                    @error('contact_fax')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
                     <p class="settings-section-desc" style="margin-bottom:0.5rem;">İletişim formundan gelen mesajlar bu e-posta adresine gönderilir. .env dosyasında CONTACT_TO veya Admin → Ayarlar → Genel → E-posta alanını doldurun.</p>
