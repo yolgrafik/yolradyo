@@ -104,26 +104,8 @@
             position: relative;
             padding: 0.35rem 0.5rem;
             max-width: 100px;
-            border-radius: 8px;
-        }
-        .nav-logo-slogan-wrap::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 10px;
-            background: conic-gradient(from 0deg, #dc2626, #f59e0b, #22c55e, #3b82f6, #a855f7, #dc2626);
-            animation: slogan-border-rotate 3s linear infinite;
-        }
-        .nav-logo-slogan-wrap::after {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            border-radius: 6px;
-            background: var(--ry-header-bg, #0f1419);
         }
         .nav-logo-slogan {
-            position: relative;
-            z-index: 2;
             font-size: 0.65rem;
             font-weight: 600;
             letter-spacing: 0.06em;
@@ -132,10 +114,13 @@
             white-space: normal;
             display: block;
             max-width: 100%;
-            color: rgba(255,255,255,0.95);
+            color: #fff;
+            text-shadow: 0 0 8px rgba(220,38,38,0.6), 0 0 16px rgba(220,38,38,0.3);
+            animation: slogan-glow 2.5s ease-in-out infinite;
         }
-        @keyframes slogan-border-rotate {
-            to { transform: rotate(360deg); }
+        @keyframes slogan-glow {
+            0%, 100% { text-shadow: 0 0 8px rgba(220,38,38,0.6), 0 0 16px rgba(220,38,38,0.3); }
+            50% { text-shadow: 0 0 12px rgba(59,130,246,0.7), 0 0 24px rgba(59,130,246,0.4); }
         }
         .nav-center {
             flex: 1;
@@ -576,8 +561,6 @@
             .nav-logo img { height: 56px; }
             .navbar.is-scrolled .nav-logo img { height: 48px; }
             .nav-logo-slogan-wrap { padding: 0.25rem 0.4rem; max-width: 80px; }
-            .nav-logo-slogan-wrap::before { inset: -1px; }
-            .nav-logo-slogan-wrap::after { inset: 1px; }
             .nav-logo-slogan { font-size: 0.55rem; letter-spacing: 0.04em; white-space: normal; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
             .nav-center {
                 position: fixed;
