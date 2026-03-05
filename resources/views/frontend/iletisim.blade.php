@@ -33,8 +33,9 @@
         background: color-mix(in srgb, var(--ry-btn-bg) 25%, transparent);
         color: var(--ry-schedule-active);
         display: flex; align-items: center; justify-content: center;
-        font-size: 1.25rem;
+        font-size: 1.15rem;
     }
+    .contact-info-icon i { font-size: inherit; }
     .contact-info-text { flex: 1; }
     .contact-info-label { font-size: 0.8rem; color: var(--ry-text-muted); margin-bottom: 0.25rem; }
     .contact-info-value { font-size: 1rem; color: var(--ry-text); font-weight: 500; }
@@ -125,7 +126,7 @@
             <div class="contact-info-list">
                 @if(!empty($contactMobile ?? $contactPhone))
                 <div class="contact-info-item">
-                    <span class="contact-info-icon">📱</span>
+                    <span class="contact-info-icon"><i class="bi bi-phone"></i></span>
                     <div class="contact-info-text">
                         <div class="contact-info-label">Mobil Telefon</div>
                         <div class="contact-info-value"><a href="tel:{{ preg_replace('/[^0-9+]/', '', $contactMobile ?? $contactPhone) }}">{{ $contactMobile ?: $contactPhone }}</a></div>
@@ -134,7 +135,7 @@
                 @endif
                 @if(!empty($contactPhone))
                 <div class="contact-info-item">
-                    <span class="contact-info-icon">📞</span>
+                    <span class="contact-info-icon"><i class="bi bi-telephone"></i></span>
                     <div class="contact-info-text">
                         <div class="contact-info-label">Telefon</div>
                         <div class="contact-info-value"><a href="tel:{{ preg_replace('/[^0-9+]/', '', $contactPhone) }}">{{ $contactPhone }}</a></div>
@@ -143,7 +144,7 @@
                 @endif
                 @if(!empty($contactEmail))
                 <div class="contact-info-item">
-                    <span class="contact-info-icon">✉️</span>
+                    <span class="contact-info-icon"><i class="bi bi-envelope"></i></span>
                     <div class="contact-info-text">
                         <div class="contact-info-label">E-posta</div>
                         <div class="contact-info-value"><a href="mailto:{{ $contactEmail }}">{{ $contactEmail }}</a></div>
@@ -151,7 +152,7 @@
                 </div>
                 @endif
                 <div class="contact-info-item">
-                    <span class="contact-info-icon">📍</span>
+                    <span class="contact-info-icon"><i class="bi bi-geo-alt"></i></span>
                     <div class="contact-info-text">
                         <div class="contact-info-label">Adres</div>
                         <div class="contact-info-value">{{ !empty($addressText) ? $addressText : 'Bergischer Ring 38, 58095 Hagen, Almanya' }}</div>
