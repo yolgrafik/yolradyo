@@ -9,11 +9,51 @@
         margin: 0 auto;
         padding: 2rem 1.5rem;
     }
-    .news-page__title {
-        font-size: 1.8rem;
-        font-weight: 700;
+    .news-page__header {
+        margin-bottom: 1.25rem;
+        padding: 0.9rem 1rem;
+        border-radius: var(--ry-radius);
+        border: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
+        background: color-mix(in srgb, var(--ry-bar-bg) 86%, transparent);
+    }
+    .news-page__heading {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+    }
+    .news-page__icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: color-mix(in srgb, var(--ry-btn-bg) 30%, transparent);
+        border: 1px solid color-mix(in srgb, var(--ry-line-color) 80%, transparent);
         color: #fff;
-        margin: 0 0 1.25rem;
+        font-size: 0.92rem;
+        flex-shrink: 0;
+    }
+    .news-page__title {
+        font-size: clamp(1.4rem, 2.6vw, 1.95rem);
+        font-weight: 800;
+        color: #fff;
+        margin: 0;
+        letter-spacing: 0.01em;
+    }
+    .news-page__subtitle {
+        margin: 0.35rem 0 0;
+        color: var(--ry-text-muted);
+        font-size: 0.88rem;
+        line-height: 1.45;
+    }
+    .news-page__divider {
+        margin-top: 0.55rem;
+        height: 1px;
+        width: min(220px, 48%);
+        background: linear-gradient(90deg, var(--ry-line-color), transparent);
     }
     .news-page__grid {
         display: grid;
@@ -89,13 +129,22 @@
     @media (max-width: 640px) {
         .news-page { padding: 1.1rem 1rem; }
         .news-page__grid { grid-template-columns: 1fr; }
+        .news-page__header { padding: 0.8rem 0.85rem; }
+        .news-page__subtitle { font-size: 0.84rem; }
     }
 </style>
 @endpush
 
 @section('content')
 <section class="news-page">
-    <h1 class="news-page__title">Haberler</h1>
+    <header class="news-page__header">
+        <div class="news-page__heading">
+            <span class="news-page__icon" aria-hidden="true">📰</span>
+            <h1 class="news-page__title">Tum Haberler</h1>
+        </div>
+        <p class="news-page__subtitle">Guncel gelismeler, duyurular ve onemli paylasimlar.</p>
+        <div class="news-page__divider" aria-hidden="true"></div>
+    </header>
 
     @if($news->isEmpty())
         <p class="news-page__empty">Henüz aktif haber bulunmuyor.</p>
