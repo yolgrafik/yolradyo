@@ -845,20 +845,16 @@
                             <li><a href="{{ route('admin.legal-texts.edit', 'dmca') }}" class="nav-item {{ request()->routeIs('admin.legal-texts.edit') && request()->route('slug') == 'dmca' ? 'is-active' : '' }}">DMCA / Telif Hakkı Bildirimi</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section" data-section="haberler">
-                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                    <div class="nav-section {{ request()->routeIs('admin.news.*') ? 'is-open' : '' }}" data-section="haberler">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.news.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
                             <span>Haberler</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="#" class="nav-item">Tum Haberler (liste + arama)</a></li>
-                            <li><a href="#" class="nav-item">Haber Ekle</a></li>
-                            <li><a href="#" class="nav-item">Haber Duzenle</a></li>
-                            <li><a href="#" class="nav-item">Haber Sil</a></li>
-                            <li><a href="#" class="nav-item">Kategori Yonetimi</a></li>
-                            <li><a href="#" class="nav-item">One Cikan Ayari</a></li>
-                            <li><a href="#" class="nav-item">Yayin Tarihi Planlama</a></li>
+                            <li><a href="{{ route('admin.news.index') }}" class="nav-item {{ request()->routeIs('admin.news.index') ? 'is-active' : '' }}">Tum Haberler</a></li>
+                            <li><a href="{{ route('admin.news.create') }}" class="nav-item {{ request()->routeIs('admin.news.create') ? 'is-active' : '' }}">Haber Ekle</a></li>
+                            <li><a href="{{ route('admin.news.index') }}" class="nav-item {{ request()->routeIs('admin.news.edit') ? 'is-active' : '' }}">Haber Duzenle</a></li>
                         </ul>
                     </div>
                     <div class="nav-section" data-section="videolar">

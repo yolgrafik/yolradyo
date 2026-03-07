@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DjProfile;
 use App\Models\ForumPost;
+use App\Models\News;
 use App\Models\Programci;
 use App\Models\Setting;
 use App\Models\Slider;
@@ -14,9 +15,9 @@ class FrontendController extends Controller
     public function home()
     {
         $sliders = Slider::active()->ordered()->get();
-        $latestNews = Slider::query()
+        $latestNews = News::query()
             ->where('status', true)
-            ->orderByDesc('created_at')
+            ->latest()
             ->limit(4)
             ->get();
         $programcilar = Programci::active()->ordered()->get();
