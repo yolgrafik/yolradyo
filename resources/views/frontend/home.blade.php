@@ -265,11 +265,9 @@
         max-width: 100%;
         overflow: hidden;
         padding: 8px 10px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-top: 1px solid var(--ry-line-color);
-        border-bottom: 1px solid var(--ry-line-color);
+        border-radius: 0;
+        background: transparent;
+        border: none;
         margin-top: 8px;
         min-height: 44px;
     }
