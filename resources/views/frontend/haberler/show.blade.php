@@ -12,11 +12,52 @@
     .news-detail__main {
         max-width: 860px;
     }
+    .news-detail__topnav {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        color: var(--ry-text-muted);
+        font-size: 0.8rem;
+    }
+    .news-detail__topnav-sep {
+        opacity: 0.65;
+        font-size: 0.75rem;
+    }
     .news-detail__back {
-        margin-bottom: 1.25rem;
         display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.32rem 0.62rem;
+        border-radius: 999px;
+        border: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
+        background: color-mix(in srgb, var(--ry-bar-bg) 76%, transparent);
+        color: var(--ry-text);
         text-decoration: none;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .news-detail__back:hover {
+        background: color-mix(in srgb, var(--ry-btn-bg) 26%, transparent);
+        border-color: color-mix(in srgb, var(--ry-line-color) 85%, transparent);
+        transform: translateY(-1px);
+    }
+    .news-detail__back-icon {
+        font-size: 0.82rem;
+        line-height: 1;
+        opacity: 0.95;
+    }
+    .news-detail__crumb {
+        color: var(--ry-text-muted);
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .news-detail__crumb:hover {
+        color: var(--ry-text);
     }
     .news-detail__title {
         margin: 0;
@@ -286,7 +327,17 @@
     @endphp
 
     <div class="news-detail__main">
-        <a href="{{ route('news.index') }}" class="news-detail__back ry-btn ry-btn-primary">Tum Haberler</a>
+        <div class="news-detail__topnav" aria-label="Sayfa yolu">
+            <a href="{{ url('/') }}" class="news-detail__crumb">Ana Sayfa</a>
+            <span class="news-detail__topnav-sep">/</span>
+            <a href="{{ route('news.index') }}" class="news-detail__crumb">Haberler</a>
+            <span class="news-detail__topnav-sep">/</span>
+            <span>Haber Detayi</span>
+        </div>
+        <a href="{{ route('news.index') }}" class="news-detail__back" aria-label="Tum haberlere don">
+            <span class="news-detail__back-icon" aria-hidden="true">←</span>
+            <span>Tum Haberler</span>
+        </a>
         <h1 class="news-detail__title">{{ $newsItem->title }}</h1>
 
         <div class="news-detail__meta-row">
