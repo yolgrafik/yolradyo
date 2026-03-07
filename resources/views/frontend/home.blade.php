@@ -198,7 +198,7 @@
         justify-content: space-between;
         gap: 0.75rem;
         padding: 0.6rem 1rem 0.5rem;
-        background: rgba(255, 255, 255, 0.02);
+        background: transparent;
         border-bottom: 1px solid var(--ry-line-color);
     }
     .schedule-top-bar__title {
