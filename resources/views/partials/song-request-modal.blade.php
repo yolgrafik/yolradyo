@@ -45,8 +45,17 @@
     var form=document.getElementById('songRequestForm');
     var closeBtns=document.querySelectorAll('[data-close-modal]');
     var successEl=document.getElementById('formSuccess');
-    function openModal(){if(modal){modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}}
-    function closeModal(){if(modal){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}}
+    function lockBodyScroll(){
+        var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        document.body.style.overflow = 'hidden';
+        if (scrollbarWidth > 0) document.body.style.paddingRight = scrollbarWidth + 'px';
+    }
+    function unlockBodyScroll(){
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+    }
+    function openModal(){if(modal){modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');lockBodyScroll();}}
+    function closeModal(){if(modal){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');unlockBodyScroll();}}
     window.openSongRequestModal=openModal;
     if(window.location.hash==='#istek'){openModal();}
     document.addEventListener('click',function(e){

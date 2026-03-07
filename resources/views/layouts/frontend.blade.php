@@ -45,12 +45,10 @@
             -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 2px 20px rgba(0,0,0,0.2);
             padding: 0 1.5rem;
-            transition: height 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            transition: box-shadow 0.25s ease, background 0.25s ease;
         }
         .navbar { border-bottom: 1px solid var(--ry-line-color); }
         .navbar.is-scrolled {
-            height: 68px;
-            min-height: 68px;
             background: var(--ry-header-bg);
             box-shadow: 0 4px 24px rgba(0,0,0,0.4);
         }
@@ -77,9 +75,9 @@
             width: auto;
             flex-shrink: 0;
             object-fit: contain;
-            transition: height 0.25s ease;
+            transition: transform 0.25s ease;
         }
-        .navbar.is-scrolled .nav-logo img { height: 56px; }
+        .navbar.is-scrolled .nav-logo img { transform: scale(0.9); transform-origin: left center; }
         .nav-logo-text {
             font-size: 1.5rem;
             font-weight: 700;
@@ -628,10 +626,9 @@
         }
         @media (max-width: 992px) {
             .navbar { height: 72px; min-height: 72px; padding: 0 1rem; }
-            .navbar.is-scrolled { height: 68px; min-height: 68px; }
             .nav-logo { flex-direction: row; max-width: 240px; }
             .nav-logo img { height: 52px; }
-            .navbar.is-scrolled .nav-logo img { height: 46px; }
+            .navbar.is-scrolled .nav-logo img { transform: scale(0.92); transform-origin: left center; }
             .nav-logo-slogan-wrap { padding: 0.2rem 0.4rem; max-width: 110px; min-width: 60px; }
             .nav-logo-slogan { font-size: clamp(0.5rem, 2.5vw, 0.6rem); letter-spacing: 0.02em; }
             .nav-center {

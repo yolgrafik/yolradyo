@@ -253,6 +253,7 @@
         padding: 0 1rem 1rem;
         min-width: 0;
         overflow: hidden;
+        min-height: 72px;
     }
     .schedule-strip {
         display: flex;
@@ -475,6 +476,7 @@
     .live-content {
         padding: 14px;
         transition: opacity 0.3s ease;
+        min-height: 136px;
     }
     .live-content.updating {
         opacity: 0.6;
@@ -891,15 +893,32 @@
     var loadingEl = document.getElementById('scheduleLoading');
     var emptyEl = document.getElementById('scheduleEmpty');
     var currentDay = (function(){ var d=new Date().getDay(); return d===0?6:d-1; })();
+    var hasInitialScheduleLoad = false;
+    var lastScheduleSignature = '';
+    var lastLiveSignature = '';
 
     function renderSchedule(items) {
         if (!container) return;
         if (loadingEl) loadingEl.style.display='none';
         if (emptyEl) emptyEl.style.display=items.length===0?'block':'none';
-        container.querySelectorAll('.schedule-strip').forEach(function(el){ el.remove(); });
-        if (items.length===0) return;
-        var strip = document.createElement('div');
-        strip.className = 'schedule-strip';
+        var signature = JSON.stringify(items || []);
+        if (signature === lastScheduleSignature) return;
+        lastScheduleSignature = signature;
+
+        var strip = container.querySelector('.schedule-strip');
+        if (!strip) {
+            strip = document.createElement('div');
+            strip.className = 'schedule-strip';
+            container.appendChild(strip);
+        }
+        strip.textContent = '';
+
+        if (items.length===0) {
+            strip.style.display = 'none';
+            return;
+        }
+
+        strip.style.display = 'flex';
         items.forEach(function(it, i){
             var chip = document.createElement('span');
             chip.className = 'schedule-chip' + (it.is_live ? ' is-live' : '');
@@ -928,15 +947,24 @@
                 strip.appendChild(dot);
             }
         });
-        container.appendChild(strip);
     }
 
     function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
     function renderLiveCard(activeDj) {
         var cardContent = document.getElementById('liveDjCardContent');
         if (!cardContent) return;
+        var signature = activeDj ? JSON.stringify({
+            id: activeDj.id || '',
+            name: activeDj.name || '',
+            avatar_url: activeDj.avatar_url || '',
+            initials: activeDj.initials || '',
+            program_title: activeDj.program_title || '',
+            tagline: activeDj.tagline || ''
+        }) : 'no-live';
+        if (signature === lastLiveSignature) return;
+        lastLiveSignature = signature;
+
         cardContent.classList.add('updating');
-        setTimeout(function() {
         if (activeDj) {
             var html = '<div class="live-dj-row">';
             if (activeDj.avatar_url) {
@@ -958,21 +986,22 @@
             cardContent.classList.add('empty');
         }
         cardContent.classList.remove('updating');
-        }, 50);
     }
 
     function loadSchedule(day) {
-        if (loadingEl) loadingEl.style.display='block';
+        if (!hasInitialScheduleLoad && loadingEl) loadingEl.style.display='block';
         if (emptyEl) emptyEl.style.display='none';
         fetch('{{ url("/api/schedule") }}?day=' + day)
             .then(function(r){ return r.json(); })
             .then(function(data){
                 renderSchedule(data.items || []);
                 renderLiveCard(data.activeDj || null);
+                hasInitialScheduleLoad = true;
             })
             .catch(function(){
                 renderSchedule([]);
                 renderLiveCard(null);
+                hasInitialScheduleLoad = true;
             });
     }
 
