@@ -208,6 +208,15 @@ Route::prefix('admin')->group(function () {
             Route::delete('{slider}', [App\Http\Controllers\Admin\SliderController::class, 'destroy'])->name('destroy');
         });
 
+        Route::prefix('news')->name('admin.news.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\NewsController::class, 'index'])->name('index');
+            Route::get('create', [App\Http\Controllers\Admin\NewsController::class, 'create'])->name('create');
+            Route::post('/', [App\Http\Controllers\Admin\NewsController::class, 'store'])->name('store');
+            Route::get('{news}/edit', [App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('edit');
+            Route::put('{news}', [App\Http\Controllers\Admin\NewsController::class, 'update'])->name('update');
+            Route::delete('{news}', [App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('destroy');
+        });
+
         Route::prefix('members')->name('admin.members.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\MemberController::class, 'index'])->name('index');
             Route::get('{user}/edit', [App\Http\Controllers\Admin\MemberController::class, 'edit'])->name('edit');
