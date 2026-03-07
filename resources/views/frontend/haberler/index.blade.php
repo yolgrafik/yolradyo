@@ -103,16 +103,16 @@
         <div class="news-page__grid">
             @foreach($news as $item)
             <article class="news-page__card">
-                <a href="{{ route('news.show', $item->id) }}" class="news-page__img-wrap">
-                    @if($item->image)
-                        <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="news-page__img">
+                <a href="{{ route('news.show', $item->slug) }}" class="news-page__img-wrap">
+                    @if($item->cover_image)
+                        <img src="{{ asset($item->cover_image) }}" alt="{{ $item->title }}" class="news-page__img">
                     @endif
                 </a>
                 <div class="news-page__body">
                     <h2 class="news-page__card-title">{{ $item->title }}</h2>
                     <p class="news-page__excerpt">{{ \Illuminate\Support\Str::limit($item->excerpt ?: '', 140) }}</p>
                     <span class="news-page__meta">{{ $item->created_at?->format('d.m.Y H:i') }}</span>
-                    <a href="{{ route('news.show', $item->id) }}" class="news-page__link ry-btn ry-btn-primary">Devamını Oku</a>
+                    <a href="{{ route('news.show', $item->slug) }}" class="news-page__link ry-btn ry-btn-primary">Devamını Oku</a>
                 </div>
             </article>
             @endforeach

@@ -33,7 +33,7 @@ Route::get('/programcilar', [FrontendController::class, 'programcilarIndex'])->n
 Route::get('/programcilar/{slug}', [FrontendController::class, 'programciShow'])->name('public.programcilar.show')->where('slug', '[a-z0-9\-]+');
 Route::post('/programcilar/{slug}/contact', [App\Http\Controllers\ProgramciContactController::class, 'store'])->name('public.programcilar.contact')->middleware(['auth', 'throttle:contact-messages'])->where('slug', '[a-z0-9\-]+');
 Route::get('/haberler', [FrontendController::class, 'haberler'])->name('news.index');
-Route::get('/haberler/{id}', [FrontendController::class, 'haberDetay'])->name('news.show')->whereNumber('id');
+Route::get('/haberler/{slug}', [FrontendController::class, 'haberDetay'])->name('news.show')->where('slug', '[a-z0-9\-]+');
 Route::get('/videolar', [FrontendController::class, 'videolar']);
 Route::get('/galeri', [FrontendController::class, 'galeri']);
 Route::get('/reklam', [FrontendController::class, 'reklam']);

@@ -16,7 +16,7 @@ class FrontendController extends Controller
     {
         $sliders = Slider::active()->ordered()->get();
         $latestNews = News::query()
-            ->where('status', true)
+            ->active()
             ->latest()
             ->limit(4)
             ->get();
@@ -77,18 +77,19 @@ class FrontendController extends Controller
     public function haberler()
     {
         $news = News::query()
-            ->where('status', true)
+            ->active()
             ->latest()
             ->get();
 
         return view('frontend.haberler.index', compact('news'));
     }
 
-    public function haberDetay(int $id)
+    public function haberDetay(string $slug)
     {
         $newsItem = News::query()
-            ->where('status', true)
-            ->where('id', $id)
+            ->active()
+            ->with('media')
+            ->where('slug', $slug)
             ->firstOrFail();
 
         return view('frontend.haberler.show', compact('newsItem'));

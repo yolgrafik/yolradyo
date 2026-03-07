@@ -935,12 +935,14 @@
                     @foreach($latestNews as $news)
                     <article class="home-news-card">
                         <div class="home-news-card__img-wrap">
-                            <img src="{{ asset($news->image) }}" alt="{{ $news->title }}" class="home-news-card__img">
+                            @if($news->cover_image)
+                            <img src="{{ asset($news->cover_image) }}" alt="{{ $news->title }}" class="home-news-card__img">
+                            @endif
                         </div>
                         <div class="home-news-card__body">
                             <h3 class="home-news-card__title" title="{{ $news->title }}">{{ $news->title }}</h3>
                             <p class="home-news-card__excerpt" title="{{ $news->excerpt }}">{{ \Illuminate\Support\Str::limit($news->excerpt ?: $news->title, 120) }}</p>
-                            <a href="{{ route('news.show', $news->id) }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
+                            <a href="{{ route('news.show', $news->slug) }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
                         </div>
                     </article>
                     @endforeach

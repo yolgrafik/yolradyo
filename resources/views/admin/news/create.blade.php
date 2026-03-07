@@ -12,6 +12,11 @@
                 @error('title')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
+                <label for="slug">Slug (opsiyonel)</label>
+                <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="form-input" placeholder="haber-basligi">
+                @error('slug')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group">
                 <label for="excerpt">Kisa Aciklama</label>
                 <textarea name="excerpt" id="excerpt" rows="3" class="form-input">{{ old('excerpt') }}</textarea>
                 @error('excerpt')<span class="form-error">{{ $message }}</span>@enderror
@@ -22,9 +27,20 @@
                 @error('content')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
-                <label for="image">Gorsel Yukleme</label>
-                <input type="file" name="image" id="image" accept="image/*" class="form-input">
-                @error('image')<span class="form-error">{{ $message }}</span>@enderror
+                <label for="cover_image">Kapak Gorseli</label>
+                <input type="file" name="cover_image" id="cover_image" accept="image/*" class="form-input">
+                @error('cover_image')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group">
+                <label for="gallery_images">Foto Galeri (coklu secim)</label>
+                <input type="file" name="gallery_images[]" id="gallery_images" accept="image/*" multiple class="form-input">
+                @error('gallery_images')<span class="form-error">{{ $message }}</span>@enderror
+                @error('gallery_images.*')<span class="form-error">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group">
+                <label for="video_url">Video Linki (YouTube)</label>
+                <input type="url" name="video_url" id="video_url" value="{{ old('video_url') }}" class="form-input" placeholder="https://www.youtube.com/watch?v=...">
+                @error('video_url')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
                 <label class="checkbox-label">
