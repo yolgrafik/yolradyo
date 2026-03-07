@@ -38,7 +38,7 @@ class NewsController extends Controller
             'title' => $validated['title'],
             'excerpt' => $validated['excerpt'] ?? null,
             'content' => $validated['content'] ?? null,
-            'image_path' => $imagePath,
+            'image' => $imagePath,
             'status' => (bool) ($validated['status'] ?? true),
         ]);
 
@@ -60,9 +60,9 @@ class NewsController extends Controller
             'status' => 'nullable|boolean',
         ]);
 
-        $imagePath = $news->image_path;
+        $imagePath = $news->image;
         if ($request->hasFile('image')) {
-            $this->deleteFile($news->image_path);
+            $this->deleteFile($news->image);
             $imagePath = $this->handleUpload($request->file('image'));
         }
 
@@ -70,7 +70,7 @@ class NewsController extends Controller
             'title' => $validated['title'],
             'excerpt' => $validated['excerpt'] ?? null,
             'content' => $validated['content'] ?? null,
-            'image_path' => $imagePath,
+            'image' => $imagePath,
             'status' => (bool) ($validated['status'] ?? true),
         ]);
 
@@ -79,7 +79,7 @@ class NewsController extends Controller
 
     public function destroy(News $news)
     {
-        $this->deleteFile($news->image_path);
+        $this->deleteFile($news->image);
         $news->delete();
         return redirect()->route('admin.news.index')->with('success', 'Haber silindi.');
     }

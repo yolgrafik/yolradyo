@@ -31,8 +31,8 @@
                         <tr>
                             <td>
                                 <div class="news-thumb">
-                                    @if($item->image_path)
-                                        <img src="{{ asset($item->image_path) }}" alt="{{ $item->title }}">
+                                    @if($item->image)
+                                        <img src="{{ asset($item->image) }}" alt="{{ $item->title }}">
                                     @else
                                         <span>Yok</span>
                                     @endif

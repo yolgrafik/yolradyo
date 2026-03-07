@@ -24,9 +24,9 @@
             </div>
             <div class="form-group">
                 <label for="image">Gorsel Yukleme (degistirmek icin yeni secin)</label>
-                @if($news->image_path)
+                @if($news->image)
                     <div style="margin-bottom:0.5rem;">
-                        <img src="{{ asset($news->image_path) }}" alt="{{ $news->title }}" style="max-width:240px;max-height:140px;border-radius:10px;">
+                        <img src="{{ asset($news->image) }}" alt="{{ $news->title }}" style="max-width:240px;max-height:140px;border-radius:10px;">
                     </div>
                 @endif
                 <input type="file" name="image" id="image" accept="image/*" class="form-input">

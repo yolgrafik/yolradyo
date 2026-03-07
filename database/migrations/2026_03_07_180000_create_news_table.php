@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('excerpt', 500)->nullable();
             $table->text('content')->nullable();
-            $table->string('image_path')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

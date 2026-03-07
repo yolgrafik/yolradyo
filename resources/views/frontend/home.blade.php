@@ -935,7 +935,7 @@
                     @foreach($latestNews as $news)
                     <article class="home-news-card">
                         <div class="home-news-card__img-wrap">
-                            <img src="{{ asset($news->image_path) }}" alt="{{ $news->title }}" class="home-news-card__img">
+                            <img src="{{ asset($news->image) }}" alt="{{ $news->title }}" class="home-news-card__img">
                         </div>
                         <div class="home-news-card__body">
                             <h3 class="home-news-card__title" title="{{ $news->title }}">{{ $news->title }}</h3>
