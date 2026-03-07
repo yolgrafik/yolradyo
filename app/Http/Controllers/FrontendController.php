@@ -14,6 +14,11 @@ class FrontendController extends Controller
     public function home()
     {
         $sliders = Slider::active()->ordered()->get();
+        $latestNews = Slider::query()
+            ->where('status', true)
+            ->orderByDesc('created_at')
+            ->limit(4)
+            ->get();
         $programcilar = Programci::active()->ordered()->get();
         $listenerSubmissions = ForumPost::with('user')
             ->where('approval_status', ForumPost::APPROVAL_APPROVED)
@@ -28,7 +33,7 @@ class FrontendController extends Controller
             ->limit(20)
             ->get();
 
-        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions'));
+        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions', 'latestNews'));
     }
 
     public function player(SettingsService $settings, \Illuminate\Http\Request $request)

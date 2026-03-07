@@ -719,6 +719,104 @@
     .listener-swiper-pagination .swiper-pagination-bullet-active {
         background: var(--ry-schedule-active);
     }
+    .home-news-section {
+        margin-top: 1.25rem;
+    }
+    .home-news-section__header {
+        padding: 0.75rem 1rem;
+        border-radius: var(--ry-radius);
+        background: color-mix(in srgb, var(--ry-bar-bg) 85%, transparent);
+        border: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
+        margin-bottom: 1rem;
+    }
+    .home-news-section__title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--ry-text);
+        margin: 0;
+    }
+    .home-news-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+    }
+    .home-news-card {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background: color-mix(in srgb, var(--ry-bar-bg) 75%, transparent);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
+        border-radius: var(--ry-radius);
+        overflow: hidden;
+        transition: all 0.2s;
+        min-height: 100%;
+    }
+    .home-news-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--ry-schedule-active);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .home-news-card__img-wrap {
+        width: 100%;
+        aspect-ratio: 1;
+        background: var(--ry-schedule-bg);
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    .home-news-card__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .home-news-card__body {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        flex: 1;
+        min-width: 0;
+    }
+    .home-news-card__title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--ry-text);
+        margin: 0;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 2.7em;
+    }
+    .home-news-card__excerpt {
+        font-size: 0.85rem;
+        color: var(--ry-text-muted);
+        margin: 0;
+        line-height: 1.45;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 2.9em;
+    }
+    .home-news-card__btn {
+        margin-top: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.95rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-decoration: none;
+    }
     @media (max-width: 992px) {
         .home-main {
             grid-template-columns: 1fr;
@@ -742,6 +840,9 @@
         .live-dj-card {
             grid-column: 1 / -1;
         }
+        .home-news-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
     @media (max-width: 768px) {
         .home-slider__content { padding: 1.5rem; max-width: 85%; }
@@ -764,6 +865,9 @@
         }
         .home-actions { flex-direction: column; }
         .btn-request, .btn-whatsapp-istek { font-size: 0.8rem; padding: 0.9rem 0.75rem; }
+        .home-news-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 @endpush
@@ -821,6 +925,28 @@
             </div>
             @include('partials.requests-ticker')
             @include('partials.programcilar-cards')
+            @php $latestNews = $latestNews ?? collect(); @endphp
+            @if($latestNews->isNotEmpty())
+            <section class="home-news-section" aria-label="Haberler">
+                <div class="home-news-section__header">
+                    <h2 class="home-news-section__title">Haberler</h2>
+                </div>
+                <div class="home-news-grid">
+                    @foreach($latestNews as $news)
+                    <article class="home-news-card">
+                        <div class="home-news-card__img-wrap">
+                            <img src="{{ asset($news->image_path) }}" alt="{{ $news->title }}" class="home-news-card__img">
+                        </div>
+                        <div class="home-news-card__body">
+                            <h3 class="home-news-card__title" title="{{ $news->title }}">{{ $news->title }}</h3>
+                            <p class="home-news-card__excerpt" title="{{ $news->subtitle }}">{{ \Illuminate\Support\Str::limit($news->subtitle ?: $news->title, 120) }}</p>
+                            <a href="{{ !empty($news->button_link) ? url($news->button_link) : url('/haberler') }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
+                        </div>
+                    </article>
+                    @endforeach
+                </div>
+            </section>
+            @endif
         </div>
         <div class="home-right">
             <div class="home-actions">
