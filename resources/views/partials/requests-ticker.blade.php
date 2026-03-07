@@ -80,12 +80,15 @@
     flex-wrap: nowrap;
     height: 100%;
     white-space: nowrap;
-    animation: tickerMove 30s linear infinite;
+    width: max-content;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    animation: tickerMove var(--ticker-duration, 30s) linear infinite;
 }
 .ticker:hover .ticker__track { animation-play-state: paused; }
 @keyframes tickerMove {
-    from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
 }
 .ticker__item {
     display: inline-flex;
@@ -104,6 +107,12 @@
     flex-shrink: 0;
     margin: 0 0.5rem;
 }
+.ticker__group {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+}
 .ticker__empty {
     padding: 0 1rem;
     color: var(--muted);
@@ -114,6 +123,12 @@
     .ticker__label { padding: 0 0.75rem; font-size: 0.85rem; }
     .ticker__item { font-size: 0.85rem; padding: 0 0.5rem; }
     .ticker__logo { height: 18px; margin: 0 0.35rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ticker__track {
+        animation: none !important;
+        transform: none !important;
+    }
 }
 </style>
 @endpush
@@ -132,8 +147,20 @@
         { artist: 'Mahsun Kırmızıgül', song: 'Sevda', name: 'Mehmet Demir' },
     ];
 
+    function getRequester(r) {
+        return r.requester || r.requester_name || r.name || r.full_name || '';
+    }
+
+    function getArtist(r) {
+        return r.artist || r.artist_name || '';
+    }
+
+    function getSong(r) {
+        return r.song || r.song_name || '';
+    }
+
     function formatItem(r) {
-        return (r.artist || '') + ' - ' + (r.song || '') + ' | ' + (r.name || '');
+        return getRequester(r) + ' | ' + getArtist(r) + ' | ' + getSong(r);
     }
 
     function renderItems(items) {
@@ -147,8 +174,18 @@
         items.forEach(function(r) {
             html += '<span class="ticker__item">' + escapeHtml(formatItem(r)) + '</span>' + logo;
         });
-        track.innerHTML = html + html;
+        track.innerHTML = '<span class="ticker__group">' + html + '</span><span class="ticker__group" aria-hidden="true">' + html + '</span>';
+        applyTickerSpeed();
         track.style.animation = '';
+    }
+
+    function applyTickerSpeed() {
+        var firstGroup = track.querySelector('.ticker__group');
+        if (!firstGroup) return;
+        var width = firstGroup.offsetWidth || 1;
+        var pxPerSecond = 85;
+        var duration = Math.max(12, width / pxPerSecond);
+        track.style.setProperty('--ticker-duration', duration + 's');
     }
 
     function escapeHtml(s) {
@@ -165,6 +202,10 @@
         .catch(function() {
             renderItems(fallback);
         });
+
+    window.addEventListener('resize', function() {
+        applyTickerSpeed();
+    });
 })();
 </script>
 @endpush
