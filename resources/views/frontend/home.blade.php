@@ -938,12 +938,6 @@
                 chip.appendChild(badge);
             }
             strip.appendChild(chip);
-            if (i < items.length - 1) {
-                var dot = document.createElement('span');
-                dot.className = 'dot';
-                dot.textContent = '•';
-                strip.appendChild(dot);
-            }
         });
     }
 
