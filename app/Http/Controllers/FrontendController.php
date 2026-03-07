@@ -92,7 +92,14 @@ class FrontendController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return view('frontend.haberler.show', compact('newsItem'));
+        $relatedNews = News::query()
+            ->active()
+            ->where('id', '!=', $newsItem->id)
+            ->latest()
+            ->limit(4)
+            ->get();
+
+        return view('frontend.haberler.show', compact('newsItem', 'relatedNews'));
     }
 
     public function videolar()
