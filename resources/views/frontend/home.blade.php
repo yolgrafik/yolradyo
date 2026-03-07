@@ -940,7 +940,7 @@
                         <div class="home-news-card__body">
                             <h3 class="home-news-card__title" title="{{ $news->title }}">{{ $news->title }}</h3>
                             <p class="home-news-card__excerpt" title="{{ $news->excerpt }}">{{ \Illuminate\Support\Str::limit($news->excerpt ?: $news->title, 120) }}</p>
-                            <a href="{{ url('/haberler') }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
+                            <a href="{{ route('news.show', $news->id) }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
                         </div>
                     </article>
                     @endforeach

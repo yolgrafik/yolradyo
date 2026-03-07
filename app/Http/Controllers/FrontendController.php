@@ -76,7 +76,22 @@ class FrontendController extends Controller
 
     public function haberler()
     {
-        return view('frontend.page', ['pageTitle' => 'Haberler']);
+        $news = News::query()
+            ->where('status', true)
+            ->latest()
+            ->get();
+
+        return view('frontend.haberler.index', compact('news'));
+    }
+
+    public function haberDetay(int $id)
+    {
+        $newsItem = News::query()
+            ->where('status', true)
+            ->where('id', $id)
+            ->firstOrFail();
+
+        return view('frontend.haberler.show', compact('newsItem'));
     }
 
     public function videolar()
