@@ -926,11 +926,11 @@
             @include('partials.requests-ticker')
             @include('partials.programcilar-cards')
             @php $latestNews = $latestNews ?? collect(); @endphp
-            @if($latestNews->isNotEmpty())
             <section class="home-news-section" aria-label="Haberler">
                 <div class="home-news-section__header">
                     <h2 class="home-news-section__title">Haberler</h2>
                 </div>
+                @if($latestNews->isNotEmpty())
                 <div class="home-news-grid">
                     @foreach($latestNews as $news)
                     <article class="home-news-card">
@@ -947,8 +947,12 @@
                     </article>
                     @endforeach
                 </div>
+                @else
+                <div class="schedule-empty" style="display:block;padding:1rem 0;text-align:center;color:rgba(255,255,255,0.75);font-size:0.95rem;">
+                    Henuz yayinlanmis haber bulunmuyor.
+                </div>
+                @endif
             </section>
-            @endif
         </div>
         <div class="home-right">
             <div class="home-actions">
