@@ -746,6 +746,22 @@
         color: var(--ry-text);
         margin: 0;
     }
+    .video-gallery-section,
+    .photo-gallery-announcement-section {
+        display: flex;
+        flex-direction: column;
+    }
+    .video-gallery-section .home-news-section__header,
+    .photo-gallery-announcement-section .home-news-section__header {
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+    }
+    .video-gallery-widget,
+    .photo-gallery-announcement-widget {
+        flex: 1;
+        min-height: 0;
+    }
     .home-news-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -854,6 +870,10 @@
         }
         .home-news-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .video-gallery-section .home-news-section__header,
+        .photo-gallery-announcement-section .home-news-section__header {
+            min-height: unset;
         }
     }
     @media (max-width: 768px) {
@@ -1219,6 +1239,38 @@
             if (total > 1) goTo(current + 1);
         }, 5000);
     }
+
+    function syncNewsReferencedHeights() {
+        var newsSection = document.querySelector('.home-left > .home-news-section');
+        var videoSection = document.querySelector('.video-gallery-section');
+        var photoSection = document.querySelector('.photo-gallery-announcement-section');
+        if (!newsSection) return;
+
+        var desktop = window.matchMedia('(min-width: 993px)').matches;
+        [videoSection, photoSection].forEach(function(section) {
+            if (!section) return;
+            var widget = section.querySelector('.video-gallery-widget, .photo-gallery-announcement-widget');
+            if (!desktop) {
+                section.style.minHeight = '';
+                if (widget) widget.style.minHeight = '';
+                return;
+            }
+
+            var newsHeight = newsSection.offsetHeight || 0;
+            var header = section.querySelector('.home-news-section__header');
+            var headerHeight = header ? header.offsetHeight : 0;
+            var sectionStyle = window.getComputedStyle(section);
+            var widgetGap = parseFloat(sectionStyle.rowGap || sectionStyle.gap || 0) || 0;
+            var targetWidgetHeight = Math.max(220, newsHeight - headerHeight - widgetGap);
+
+            section.style.minHeight = newsHeight + 'px';
+            if (widget) widget.style.minHeight = targetWidgetHeight + 'px';
+        });
+    }
+
+    syncNewsReferencedHeights();
+    window.addEventListener('resize', syncNewsReferencedHeights);
+    window.addEventListener('load', syncNewsReferencedHeights);
 })();
 </script>
 @endpush
