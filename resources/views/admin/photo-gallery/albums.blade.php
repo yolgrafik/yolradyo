@@ -7,7 +7,7 @@
         @if(session('success'))<div class="pg-alert pg-alert--ok">{{ session('success') }}</div>@endif
         @if($errors->any())<div class="pg-alert" style="background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.35);color:#fecaca;">{{ $errors->first() }}</div>@endif
 
-        <form method="POST" action="{{ route('admin.photo-gallery.albums.store') }}">
+        <form method="POST" action="{{ route('admin.photo-gallery.albums.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="pg-form-group">
                 <label>Albüm Adı</label>
@@ -16,6 +16,10 @@
             <div class="pg-form-group">
                 <label>Açıklama</label>
                 <textarea name="description" rows="2" class="pg-input"></textarea>
+            </div>
+            <div class="pg-form-group">
+                <label>Kapak Resim</label>
+                <input type="file" name="cover_image" class="pg-input" accept="image/*">
             </div>
             <div class="pg-form-group">
                 <label>Sıra</label>
@@ -31,6 +35,9 @@
         <div class="pg-grid">
             @forelse($albums as $album)
                 <article class="pg-item">
+                    @if($album->cover_image_path)
+                        <img src="{{ asset($album->cover_image_path) }}" alt="{{ $album->name }}">
+                    @endif
                     <div class="pg-item__body">
                         <strong>{{ $album->name }}</strong>
                         <div style="margin-top:.35rem;color:var(--muted);font-size:.8rem;">{{ $album->photos_count }} fotoğraf</div>

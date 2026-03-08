@@ -235,6 +235,8 @@ Route::prefix('admin')->group(function () {
             Route::get('albums/edit', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'editAlbumList'])->name('albums.edit.list');
             Route::get('albums/{album}/edit', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'editAlbum'])->name('albums.edit');
             Route::put('albums/{album}', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'updateAlbum'])->name('albums.update');
+            Route::get('albums/delete', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'deleteAlbumList'])->name('albums.delete.list');
+            Route::delete('albums/{album}', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'destroyAlbum'])->name('albums.destroy');
 
             Route::get('photos/create', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'createPhoto'])->name('photos.create');
             Route::post('photos', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'storePhoto'])->name('photos.store');

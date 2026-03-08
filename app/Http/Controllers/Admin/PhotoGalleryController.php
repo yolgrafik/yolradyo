@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 class PhotoGalleryController extends Controller
 {
     private string $uploadDir = 'uploads/gallery/photos';
+    private string $albumCoverDir = 'uploads/gallery/albums';
 
     public function albums()
     {
@@ -24,14 +25,20 @@ class PhotoGalleryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
+            'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
         ]);
+
+        $coverPath = $request->hasFile('cover_image')
+            ? $this->uploadImage($request->file('cover_image'), $this->albumCoverDir)
+            : null;
 
         PhotoAlbum::create([
             'name' => $validated['name'],
             'slug' => Str::slug($validated['name']) . '-' . Str::random(4),
             'description' => $validated['description'] ?? null,
+            'cover_image_path' => $coverPath,
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);
@@ -55,18 +62,40 @@ class PhotoGalleryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
+            'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
         ]);
 
+        $coverPath = $album->cover_image_path;
+        if ($request->hasFile('cover_image')) {
+            $this->deleteImage($coverPath);
+            $coverPath = $this->uploadImage($request->file('cover_image'), $this->albumCoverDir);
+        }
+
         $album->update([
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
+            'cover_image_path' => $coverPath,
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);
 
         return redirect()->route('admin.photo-gallery.albums.edit.list')->with('success', 'Albüm güncellendi.');
+    }
+
+    public function deleteAlbumList()
+    {
+        $albums = PhotoAlbum::query()->withCount('photos')->latest()->paginate(24);
+        return view('admin.photo-gallery.albums-delete-list', compact('albums'));
+    }
+
+    public function destroyAlbum(PhotoAlbum $album)
+    {
+        $this->deleteImage($album->cover_image_path);
+        $album->delete();
+
+        return redirect()->route('admin.photo-gallery.albums.delete.list')->with('success', 'Albüm silindi.');
     }
 
     public function createPhoto()
@@ -87,7 +116,7 @@ class PhotoGalleryController extends Controller
             'is_active' => 'nullable|boolean',
         ]);
 
-        $path = $this->uploadImage($request->file('image'));
+        $path = $this->uploadImage($request->file('image'), $this->uploadDir);
 
         GalleryPhoto::create([
             'album_id' => !empty($validated['album_id']) ? (int) $validated['album_id'] : null,
@@ -118,7 +147,7 @@ class PhotoGalleryController extends Controller
         ]);
 
         foreach ($request->file('images', []) as $file) {
-            $path = $this->uploadImage($file);
+            $path = $this->uploadImage($file, $this->uploadDir);
             GalleryPhoto::create([
                 'album_id' => (int) $validated['album_id'],
                 'title' => null,
@@ -158,7 +187,7 @@ class PhotoGalleryController extends Controller
         $path = $photo->image_path;
         if ($request->hasFile('image')) {
             $this->deleteImage($path);
-            $path = $this->uploadImage($request->file('image'));
+            $path = $this->uploadImage($request->file('image'), $this->uploadDir);
         }
 
         $photo->update([
@@ -188,9 +217,10 @@ class PhotoGalleryController extends Controller
         return view('admin.photo-gallery.delete-list', compact('photos'));
     }
 
-    private function uploadImage($file): string
+    private function uploadImage($file, ?string $targetDir = null): string
     {
-        $fullDir = public_path($this->uploadDir);
+        $dir = $targetDir ?: $this->uploadDir;
+        $fullDir = public_path($dir);
         if (!File::isDirectory($fullDir)) {
             File::makeDirectory($fullDir, 0755, true);
         }
@@ -198,7 +228,7 @@ class PhotoGalleryController extends Controller
         $name = uniqid() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
         $file->move($fullDir, $name);
 
-        return $this->uploadDir . '/' . $name;
+        return $dir . '/' . $name;
     }
 
     private function deleteImage(?string $path): void
