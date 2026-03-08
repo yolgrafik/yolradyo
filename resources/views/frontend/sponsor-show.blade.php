@@ -12,9 +12,16 @@
 .sponsor-name { font-size: 1.75rem; font-weight: 700; color: #fff; margin: 0 0 0.35rem 0; }
 .sponsor-short { font-size: 1rem; color: var(--ry-text-muted); margin: 0 0 1rem 0; line-height: 1.5; }
 .sponsor-social { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
-.sponsor-social-link { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--ry-border); background: color-mix(in srgb, var(--ry-bar-bg) 80%, transparent); color: #fff; text-decoration: none; transition: transform 0.2s, border-color 0.2s, background 0.2s; }
-.sponsor-social-link:hover { transform: translateY(-2px); }
+.sponsor-social-link { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.3); text-decoration: none; transition: transform 0.2s; }
+.sponsor-social-link:hover { transform: scale(1.1); }
 .sponsor-social-link svg { width: 20px; height: 20px; }
+.sponsor-social-link i { font-size: 1.25rem; }
+.sponsor-social-link--web { background: rgba(255,255,255,0.15); color: var(--ry-text); }
+.sponsor-social-link--web:hover { color: #fff; }
+.sponsor-social-link--fb { background: #1877f2; color: #fff; }
+.sponsor-social-link--ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+.sponsor-social-link--x { background: #000; color: #fff; }
+.sponsor-social-link--yt { background: #ff0000; color: #fff; }
 .sponsor-content { background: color-mix(in srgb, var(--ry-bar-bg) 75%, #0b0f16); border: 1px solid var(--ry-border); border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem; }
 .sponsor-content h3 { font-size: 1.1rem; color: #fff; margin: 0 0 1rem 0; }
 .sponsor-description { color: var(--ry-text-muted); line-height: 1.7; white-space: pre-wrap; }
