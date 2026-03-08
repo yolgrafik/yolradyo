@@ -1,40 +1,47 @@
 <?php
 /**
- * cPanel Deployment Script - public_html Uyumlu
+ * cPanel KAYIPSIZ RELEASE Paketi
  *
- * Tüm proje public_html içine yüklenecek. Veri, medya, ayar kaybı olmadan.
- * Backend: yolcu/ altında | Kök: index.php, .htaccess, assets, uploads
+ * Sonuç: release/ içinde 3 ayrı klasör - bunları ayrı yerlere atacaksınız.
+ * Manuel taşıma/düzenleme YOK. Sadece FTP ile doğru yere yükle.
  *
  * Kullanım: php deploy-cpanel.php
- * Çıktı: release/ → FTP ile public_html'e yükleyin
+ * Çıktı: release/
+ *   ├── backend/      -> public_html DIŞINA (home/backend)
+ *   ├── public_html/  -> public_html İÇİNE (içeriğini at)
+ *   ├── sql/          -> full-export.sql (phpMyAdmin import)
+ *   └── KURULUM.txt
  */
 
 $root = __DIR__;
 $out = $root . '/release';
-$backend = 'yolcu';
 
-echo "=== cPanel Deployment Hazirligi ===\n\n";
+echo "=== KAYIPSIZ cPanel RELEASE Paketi ===\n\n";
 
 if (is_dir($out)) {
     echo "Mevcut release siliniyor...\n";
     rmdirRecursive($out);
 }
-mkdir($out, 0755, true);
-mkdir($out . '/' . $backend, 0755, true);
 
-// 1. public/ icerigini deploy kokune kopyala (index.php, .htaccess, storage symlink haric)
+mkdir($out, 0755, true);
+mkdir($out . '/backend', 0755, true);
+mkdir($out . '/public_html', 0755, true);
+mkdir($out . '/sql', 0755, true);
+
+// ========== 1. PUBLIC_HTML (sadece yayın kökü) ==========
 $pubSrc = $root . '/public';
+$pubOut = $out . '/public_html';
 $pubIter = new RecursiveIteratorIterator(
     new RecursiveDirectoryIterator($pubSrc, RecursiveDirectoryIterator::SKIP_DOTS),
     RecursiveIteratorIterator::SELF_FIRST
 );
-$skipPub = ['index.php', '.htaccess', '.gitignore'];
+$skipPub = ['.gitignore'];
 foreach ($pubIter as $item) {
     $subPath = str_replace($pubSrc . DIRECTORY_SEPARATOR, '', $item->getPathname());
     $subPath = str_replace('\\', '/', $subPath);
-    if (in_array(basename($subPath), $skipPub) && strpos($subPath, '/') === false) continue;
-    if ($subPath === 'storage' && $item->isDir()) continue; // symlink - kopyalanmaz
-    $target = $out . '/' . $subPath;
+    if (basename($subPath) === '.gitignore' && strpos($subPath, '/') === false) continue;
+    if ($subPath === 'storage' && $item->isDir()) continue;
+    $target = $pubOut . '/' . $subPath;
     if ($item->isDir()) {
         if (!is_dir($target)) mkdir($target, 0755, true);
     } else {
@@ -43,55 +50,9 @@ foreach ($pubIter as $item) {
         copy($item->getPathname(), $target);
     }
 }
-echo "  [OK] public/ icerigi (assets, uploads, robots.txt) kopyalandi\n";
 
-// 2. storage/app/public icerigini yolcu/storage/app/public'e kopyala (logo, favicon, forum, tema vb.)
-$storagePublic = $root . '/storage/app/public';
-$storageDest = $out . '/' . $backend . '/storage/app/public';
-if (is_dir($storagePublic)) {
-    mkdir($storageDest, 0755, true);
-    copyDirContents($storagePublic, $storageDest);
-    echo "  [OK] storage/app/public (logo, favicon, forum, tema dosyalari) kopyalandi\n";
-}
-
-// 3. Backend klasorleri
-$backendDirs = ['app', 'bootstrap', 'config', 'database', 'resources', 'routes', 'storage', 'vendor'];
-foreach ($backendDirs as $dir) {
-    $src = $root . '/' . $dir;
-    if (!is_dir($src) && $dir !== 'storage') {
-        echo "  UYARI: $dir bulunamadi.\n";
-        continue;
-    }
-    if ($dir === 'storage') {
-        $storageDirs = ['app', 'app/public', 'framework', 'framework/cache', 'framework/cache/data', 'framework/sessions', 'framework/views', 'logs'];
-        foreach ($storageDirs as $s) {
-            $p = $out . '/' . $backend . '/storage/' . $s;
-            if (!is_dir($p)) mkdir($p, 0755, true);
-        }
-        foreach (['storage/framework/cache', 'storage/framework/cache/data', 'storage/framework/sessions', 'storage/framework/views', 'storage/app'] as $g) {
-            $gitignorePath = $out . '/' . $backend . '/' . $g . '/.gitignore';
-            $gitignoreDir = dirname($gitignorePath);
-            if (!is_dir($gitignoreDir)) mkdir($gitignoreDir, 0755, true);
-            file_put_contents($gitignorePath, "*\n!.gitignore\n");
-        }
-    } elseif ($dir === 'bootstrap') {
-        copyDirExclude($src, $out . '/' . $backend . '/' . $dir, ['.git', 'node_modules', '.env']);
-        $cacheDir = $out . '/' . $backend . '/bootstrap/cache';
-        if (!is_dir($cacheDir)) mkdir($cacheDir, 0755, true);
-        file_put_contents($cacheDir . '/.gitignore', "*\n!.gitignore\n");
-        // cPanel: public path = document root (backend'in ustu)
-        $bootstrapApp = file_get_contents($out . '/' . $backend . '/bootstrap/app.php');
-        $bootstrapApp = str_replace('return Application::configure', '$app = Application::configure', $bootstrapApp);
-        $bootstrapApp = str_replace(')->create();', ')->create();' . "\n" . '$app->usePublicPath(dirname($app->basePath()));' . "\n" . 'return $app;', $bootstrapApp);
-        file_put_contents($out . '/' . $backend . '/bootstrap/app.php', $bootstrapApp);
-    } else {
-        copyDirExclude($src, $out . '/' . $backend . '/' . $dir, ['.git', 'node_modules', '.env']);
-    }
-}
-echo "  [OK] Backend klasorleri kopyalandi\n";
-
-// 4. index.php
-$indexContent = <<<PHP
+// public_html/index.php - ../backend referansı
+$indexContent = <<<'PHP'
 <?php
 
 use Illuminate\Foundation\Application;
@@ -99,148 +60,234 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-\$backendDir = __DIR__ . '/{$backend}';
-\$maintenance = \$backendDir . '/storage/framework/maintenance.php';
+$backendDir = dirname(__DIR__) . '/backend';
+$maintenance = $backendDir . '/storage/framework/maintenance.php';
 
-if (file_exists(\$maintenance)) {
-    require \$maintenance;
+if (file_exists($maintenance)) {
+    require $maintenance;
 }
 
-require \$backendDir . '/vendor/autoload.php';
+require $backendDir . '/vendor/autoload.php';
 
-/** @var Application \$app */
-\$app = require_once \$backendDir . '/bootstrap/app.php';
+/** @var Application $app */
+$app = require_once $backendDir . '/bootstrap/app.php';
 
-\$app->handleRequest(Request::capture());
+$app->handleRequest(Request::capture());
 PHP;
-file_put_contents($out . '/index.php', $indexContent);
+file_put_contents($pubOut . '/index.php', $indexContent);
 
-// 5. artisan, composer, .env
-foreach (['artisan', 'composer.json', 'composer.lock'] as $f) {
-    if (file_exists($root . '/' . $f)) {
-        copy($root . '/' . $f, $out . '/' . $backend . '/' . $f);
-    }
-}
-copy($root . '/.env.example', $out . '/' . $backend . '/.env.example');
+// public_html/.htaccess
+copy($root . '/public/.htaccess', $pubOut . '/.htaccess');
 
-// 6. yolcu/.htaccess - Backend'e dogrudan erisim engelle
-$yolcuHtaccess = <<<'HTA'
-<IfModule mod_authz_core.c>
-    Require all denied
-</IfModule>
-<IfModule !mod_authz_core.c>
-    Order deny,allow
-    Deny from all
-</IfModule>
-HTA;
-file_put_contents($out . '/' . $backend . '/.htaccess', $yolcuHtaccess);
-
-// 7. Kok .htaccess
-copy($root . '/public/.htaccess', $out . '/.htaccess');
-
-// 8. .user.ini (cPanel PHP - video yukleme icin yuksek limit)
+// public_html/.user.ini
 $userIni = <<<'INI'
 ; cPanel PHP - production
 upload_max_filesize = 128M
 post_max_size = 128M
 max_execution_time = 180
 memory_limit = 256M
-max_input_time = 180
 default_charset = "UTF-8"
 INI;
-file_put_contents($out . '/.user.ini', $userIni);
+file_put_contents($pubOut . '/.user.ini', $userIni);
 
-// 9. SQL export - artisan db:export veya mysqldump
-$sqlPath = $out . '/' . $backend . '/database';
-$fullSqlFile = $sqlPath . '/full-export.sql';
+echo "  [OK] public_html/ hazir (index.php, .htaccess, assets, uploads)\n";
+
+// ========== 2. BACKEND (public_html dışı) ==========
+$backendDirs = ['app', 'bootstrap', 'config', 'database', 'resources', 'routes', 'storage', 'vendor'];
+foreach ($backendDirs as $dir) {
+    $src = $root . '/' . $dir;
+    if (!is_dir($src)) {
+        if ($dir === 'storage') {
+            foreach (['app', 'app/public', 'framework', 'framework/cache', 'framework/cache/data', 'framework/sessions', 'framework/views', 'logs'] as $s) {
+                mkdir($out . '/backend/storage/' . $s, 0755, true);
+            }
+        }
+        continue;
+    }
+    if ($dir === 'storage') {
+        $storageDirs = ['app', 'app/public', 'framework', 'framework/cache', 'framework/cache/data', 'framework/sessions', 'framework/views', 'logs'];
+        foreach ($storageDirs as $s) {
+            $p = $out . '/backend/storage/' . $s;
+            if (!is_dir($p)) mkdir($p, 0755, true);
+        }
+        copyDirContents($root . '/storage/app/public', $out . '/backend/storage/app/public');
+        foreach (['framework/cache', 'framework/cache/data', 'framework/sessions', 'framework/views', 'app'] as $g) {
+            $gp = $out . '/backend/storage/' . $g . '/.gitignore';
+            if (!is_dir(dirname($gp))) mkdir(dirname($gp), 0755, true);
+            file_put_contents($gp, "*\n!.gitignore\n");
+        }
+    } elseif ($dir === 'bootstrap') {
+        copyDirExclude($src, $out . '/backend/bootstrap', ['.git', 'node_modules', '.env']);
+        $cacheDir = $out . '/backend/bootstrap/cache';
+        if (!is_dir($cacheDir)) mkdir($cacheDir, 0755, true);
+        file_put_contents($cacheDir . '/.gitignore', "*\n!.gitignore\n");
+        $bootstrapApp = file_get_contents($out . '/backend/bootstrap/app.php');
+        $bootstrapApp = str_replace('return Application::configure', '$app = Application::configure', $bootstrapApp);
+        $bootstrapApp = str_replace(')->create();', ')->create();' . "\n" . '$_pub = realpath($app->basePath() . \'/../public_html\'); if ($_pub) { $app->usePublicPath($_pub); }' . "\n" . 'return $app;', $bootstrapApp);
+        file_put_contents($out . '/backend/bootstrap/app.php', $bootstrapApp);
+    } else {
+        copyDirExclude($src, $out . '/backend/' . $dir, ['.git', 'node_modules', '.env']);
+    }
+}
+
+foreach (['artisan', 'composer.json', 'composer.lock'] as $f) {
+    if (file_exists($root . '/' . $f)) {
+        copy($root . '/' . $f, $out . '/backend/' . $f);
+    }
+}
+
+copy($root . '/.env.example', $out . '/backend/.env.example');
+copy($root . '/.env.example', $out . '/backend/.env.production.example');
+
+$envProd = file_get_contents($out . '/backend/.env.production.example');
+$envProd = preg_replace('/^APP_URL=.*/m', 'APP_URL=https://siteniz.com', $envProd);
+$envProd = "# Production icin .env olusturun: cp .env.production.example .env\n# Sonra DB_* ve APP_URL duzenleyin.\n\n" . $envProd;
+file_put_contents($out . '/backend/.env.production.example', $envProd);
+
+echo "  [OK] backend/ hazir (app, vendor, storage - public_html disinda)\n";
+
+// ========== 3. SQL ==========
+$sqlFile = $out . '/sql/full-export.sql';
+$sqlDone = false;
 if (file_exists($root . '/.env')) {
-    // Once artisan db:export dene (Laravel config kullanir)
-    $artisanOut = [];
     $prevCwd = getcwd();
     chdir($root);
     exec('php artisan db:export --output=database/full-export.sql 2>&1', $artisanOut, $artisanRet);
     chdir($prevCwd);
     if ($artisanRet === 0 && file_exists($root . '/database/full-export.sql')) {
-        copy($root . '/database/full-export.sql', $fullSqlFile);
-        echo "  [OK] php artisan db:export ile full-export.sql olusturuldu\n";
-    } else {
-        $env = parseEnv($root . '/.env');
-        $dbName = $env['DB_DATABASE'] ?? '';
-        $dbUser = $env['DB_USERNAME'] ?? '';
-        $dbPass = $env['DB_PASSWORD'] ?? '';
-        $dbHost = $env['DB_HOST'] ?? '127.0.0.1';
-        if ($dbName && $dbUser) {
-            $mysqldump = getMysqldumpPath();
-            if ($mysqldump) {
-                $host = escapeshellarg($dbHost);
-                $user = escapeshellarg($dbUser);
-                $db = escapeshellarg($dbName);
-                $cmd = $mysqldump . " -h $host -u $user " . ($dbPass ? '-p' . escapeshellarg($dbPass) . ' ' : '') . "$db --single-transaction --routines --triggers 2>nul";
-                $output = shell_exec($cmd);
-                if ($output && strlen(trim($output)) > 100) {
-                    file_put_contents($fullSqlFile, $output);
-                    echo "  [OK] Veritabani full-export.sql olusturuldu (mysqldump)\n";
-                } else {
-                    echo "  [--] mysqldump calistirilamadi (manuel: php artisan db:export)\n";
-                }
-            } else {
-                echo "  [--] mysqldump bulunamadi (manuel: php artisan db:export)\n";
+        copy($root . '/database/full-export.sql', $sqlFile);
+        $sqlDone = true;
+        echo "  [OK] sql/full-export.sql (artisan db:export)\n";
+    }
+}
+if (!$sqlDone) {
+    $env = parseEnv($root . '/.env');
+    $dbName = $env['DB_DATABASE'] ?? '';
+    $dbUser = $env['DB_USERNAME'] ?? '';
+    $dbPass = $env['DB_PASSWORD'] ?? '';
+    $dbHost = $env['DB_HOST'] ?? '127.0.0.1';
+    if ($dbName && $dbUser) {
+        $mysqldump = getMysqldumpPath();
+        if ($mysqldump) {
+            $cmd = sprintf('%s -h %s -u %s %s %s --single-transaction --routines --triggers --set-charset 2>nul',
+                escapeshellcmd($mysqldump), escapeshellarg($dbHost), escapeshellarg($dbUser),
+                $dbPass ? '-p' . escapeshellarg($dbPass) . ' ' : '', escapeshellarg($dbName));
+            $output = shell_exec($cmd);
+            if ($output && strlen(trim($output)) > 100) {
+                file_put_contents($sqlFile, $output);
+                $sqlDone = true;
+                echo "  [OK] sql/full-export.sql (mysqldump)\n";
             }
         }
     }
 }
-if (!file_exists($fullSqlFile) && file_exists($root . '/database/schema.sql')) {
-    copy($root . '/database/schema.sql', $fullSqlFile);
-    echo "  [OK] schema.sql kopyalandi (full-export.sql)\n";
+if (!$sqlDone && file_exists($root . '/database/schema.sql')) {
+    copy($root . '/database/schema.sql', $sqlFile);
+    echo "  [OK] sql/full-export.sql (schema.sql kopyalandi)\n";
+} elseif (!$sqlDone) {
+    echo "  [!!] SQL export basarisiz. Manuel: php artisan db:export\n";
 }
 
-// 10. DEPLOYMENT.md ve KURULUM.txt
+// ========== 4. KURULUM.txt ==========
 $kurulum = <<<'TXT'
-CPANEL / public_html KURULUM
-=============================
+================================================================================
+  cPanel KAYIPSIZ KURULUM - 5 ADIM
+================================================================================
 
-1. FTP ile release/ ICERIGINI public_html'e yukleyin.
-   Tum dosyalar public_html icinde olmali: index.php, .htaccess, assets, uploads, yolcu/
+Yapı: backend public_html DIŞINDA. public_html sadece yayın kökü.
 
-2. cPanel > MySQL: Yeni veritabani + kullanici olusturup yetki verin.
+--------------------------------------------------------------------------------
+ADIM 1: FTP ile backend/ klasörünü public_html DIŞINA yükleyin
+--------------------------------------------------------------------------------
+Hedef: /home/KULLANICI_ADI/backend/
+(cPanel File Manager: Ana dizinde "backend" klasörü oluşturup içine atın)
 
-3. cPanel > phpMyAdmin: Veritabani secin > Import
-   Dosya: yolcu/database/full-export.sql (veya schema.sql)
-   Charset: utf8mb4
-   ONEMLI: Import once "DROP TABLE IF EXISTS" ile tablolari siler, sonra yeniden olusturur.
+İçinde olmalı: app, bootstrap, config, database, resources, routes, storage, vendor,
+               artisan, composer.json, .env.example, .env.production.example
 
-4. cPanel > Terminal veya SSH:
-   cd ~/public_html/yolcu
-   cp .env.example .env
-   nano .env   # veya File Manager ile duzenle
 
-5. .env zorunlu alanlar:
-   APP_URL=https://siteniz.com
-   APP_DEBUG=false
-   DB_DATABASE=veritabani_adi
-   DB_USERNAME=kullanici
-   DB_PASSWORD=sifre
+--------------------------------------------------------------------------------
+ADIM 2: FTP ile public_html/ klasörünün İÇERİĞİNİ public_html'e yükleyin
+--------------------------------------------------------------------------------
+Hedef: /home/KULLANICI_ADI/public_html/
+(release/public_html/ içindeki her şeyi public_html'e kopyalayın - üzerine yazın)
 
-6. Devam:
-   php artisan key:generate
-   php artisan storage:link
-   chmod -R 775 storage bootstrap/cache
+İçinde olmalı: index.php, .htaccess, .user.ini, assets/, uploads/, robots.txt
 
-7. cPanel > MultiPHP: PHP 8.2 veya 8.3
 
-8. Tarayicida siteyi acin.
+--------------------------------------------------------------------------------
+ADIM 3: phpMyAdmin ile SQL import
+--------------------------------------------------------------------------------
+cPanel > phpMyAdmin > Veritabanı seçin > Import
+Dosya: release/sql/full-export.sql
+Charset: utf8mb4
+
+
+--------------------------------------------------------------------------------
+ADIM 4: .env oluştur
+--------------------------------------------------------------------------------
+cPanel > File Manager > backend/ klasörüne girin
+
+.env.production.example dosyasını .env olarak kopyalayın veya:
+  cp .env.production.example .env
+
+.env dosyasını düzenleyin (Edit):
+  APP_URL=https://siteniz.com
+  APP_DEBUG=false
+  DB_DATABASE=veritabani_adi
+  DB_USERNAME=kullanici
+  DB_PASSWORD=sifre
+
+
+--------------------------------------------------------------------------------
+ADIM 5: Terminal (cPanel > Terminal veya SSH)
+--------------------------------------------------------------------------------
+cd ~/backend
+php artisan key:generate
+php artisan storage:link
+chmod -R 775 storage bootstrap/cache
+
+(Bazı hostlarda storage:link çalışmaz. O zaman:
+ cd ~/public_html
+ ln -s ../backend/storage/app/public storage
+)
+
+
+--------------------------------------------------------------------------------
+KONTROL
+--------------------------------------------------------------------------------
+- Tarayıcıda siteyi açın
+- Görseller, videolar, sponsorlar çalışıyor mu?
+- Admin panele giriş yapın
+
+================================================================================
 TXT;
 file_put_contents($out . '/KURULUM.txt', $kurulum);
 
-// DEPLOYMENT.md - tam rapor
-$deployMd = generateDeploymentMd($backend);
-file_put_contents($out . '/DEPLOYMENT.md', $deployMd);
+// ========== 5. README release kökünde ==========
+$readme = <<<'TXT'
+RELEASE PAKETI - cPanel KAYIPSIZ KURULUM
+========================================
 
-echo "\n=== release/ HAZIR ===\n";
-echo "FTP ile release/ ICERIGINI public_html/ klasorune yukleyin.\n";
-echo "Sunucuda: cd ~/public_html/{$backend} && cp .env.example .env && php artisan key:generate && php artisan storage:link\n";
+Bu release/ klasörü 3 bölümden oluşur:
+
+1. backend/     -> public_html DIŞINA at (home/backend)
+2. public_html/ -> public_html İÇİNE at (içeriğini kopyala)
+3. sql/         -> full-export.sql dosyası phpMyAdmin'den import edilecek
+
+Detaylı adımlar: KURULUM.txt
+TXT;
+file_put_contents($out . '/README.txt', $readme);
+
+echo "\n=== RELEASE HAZIR ===\n";
+echo "release/\n";
+echo "  backend/     -> public_html DISINA (home/backend)\n";
+echo "  public_html/ -> public_html ICINE (icerigini at)\n";
+echo "  sql/         -> full-export.sql (phpMyAdmin import)\n";
+echo "  KURULUM.txt  -> 5 adimda kurulum\n";
 
 function copyDirContents($src, $dest) {
+    if (!is_dir($src)) return;
     if (!is_dir($dest)) mkdir($dest, 0755, true);
     $iter = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator($src, RecursiveDirectoryIterator::SKIP_DOTS),
@@ -313,134 +360,16 @@ function parseEnv($path) {
 }
 
 function getMysqldumpPath() {
-    $paths = ['mysqldump', 'C:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysqldump.exe'];
+    $paths = ['mysqldump'];
+    if (PHP_OS_FAMILY === 'Windows') {
+        $laragon = getenv('LARAGON_ROOT') ?: 'C:\\laragon';
+        $found = glob($laragon . '\\bin\\mysql\\*\\bin\\mysqldump.exe');
+        if (!empty($found)) $paths = array_merge($paths, $found);
+    }
     foreach ($paths as $p) {
         $out = [];
-        exec($p . ' --version 2>nul', $out, $r);
+        exec(escapeshellcmd($p) . ' --version 2>nul', $out, $r);
         if ($r === 0) return $p;
     }
     return null;
-}
-
-function generateDeploymentMd($backend) {
-    return <<<MD
-# cPanel Deployment Raporu
-
-## 1. Degistirilen / Olusturulan Dosyalar
-
-- `release/index.php` - Kok giris, backend yolcu/ icinden bootstrap
-- `release/.htaccess` - public/.htaccess ile ayni (rewrite)
-- `release/.user.ini` - cPanel PHP limitleri (128M upload)
-- `release/yolcu/.htaccess` - Backend klasorune dogrudan erisim engeli
-- `release/yolcu/bootstrap/app.php` - usePublicPath(document_root) eklendi
-
-## 2. public_html Klasor Yapisi
-
-\`\`\`
-public_html/
-├── index.php
-├── .htaccess
-├── .user.ini
-├── assets/
-├── uploads/           # Direkt yuklenen: sponsor, haber, slider, galeri, video, avatar
-│   ├── about-pages/
-│   ├── avatars/
-│   ├── gallery/
-│   ├── news/
-│   ├── sliders/
-│   ├── sponsors/
-│   │   ├── videos/
-│   │   └── video-posters/
-│   └── videos/
-├── storage/           # php artisan storage:link sonrasi symlink (yolcu/storage/app/public)
-├── robots.txt
-└── yolcu/
-    ├── app/
-    ├── bootstrap/
-    ├── config/
-    ├── database/
-    │   └── full-export.sql
-    ├── resources/
-    ├── routes/
-    ├── storage/
-    │   └── app/public/  # Logo, favicon, forum, tema, uye yuklemeleri
-    └── vendor/
-\`\`\`
-
-## 3. index.php Degisiklikleri
-
-- \`__DIR__\` = public_html (document root)
-- \`\$backendDir = __DIR__ . '/yolcu'\`
-- require \`\$backendDir . '/vendor/autoload.php'\`
-- require \`\$backendDir . '/bootstrap/app.php'\`
-
-## 4. .htaccess
-
-Kok .htaccess: public/.htaccess ile ayni. Tum istekler index.php'ye yonlendirilir.
-
-## 5. Storage / Medya Koruma
-
-| Konum | Icerik |
-|-------|--------|
-| public_html/uploads/ | Sponsor, haber, slider, galeri, video, avatar (direkt public_path) |
-| public_html/storage/ | Symlink -> yolcu/storage/app/public |
-| yolcu/storage/app/public/ | Logo, favicon, OG, tema arkaplan, forum, uye yuklemeleri |
-
-Symlink sorunu: cPanel Terminal'de \`php artisan storage:link\` calistirin. Calismazsa:
-\`ln -s ../yolcu/storage/app/public storage\` (public_html icinden)
-
-## 6. Kritik Medya Klasorleri
-
-- uploads/sponsors/
-- uploads/sponsors/videos/
-- uploads/sponsors/video-posters/
-- uploads/news/
-- uploads/news/gallery/
-- uploads/gallery/photos/
-- uploads/gallery/albums/
-- uploads/sliders/
-- uploads/videos/mp4/
-- uploads/videos/covers/
-- uploads/avatars/
-- uploads/about-pages/
-- storage/app/public/ (forum, uye, logo, favicon, tema)
-
-## 7. Production .env
-
-\`\`\`
-APP_ENV=production
-APP_DEBUG=false
-APP_URL=https://siteniz.com
-FILESYSTEM_DISK=local
-SESSION_DRIVER=database
-CACHE_STORE=database
-QUEUE_CONNECTION=database
-LOG_LEVEL=error
-DB_* = cPanel MySQL bilgileri
-\`\`\`
-
-## 8. SQL Import Notlari
-
-- Dosya: yolcu/database/full-export.sql
-- Charset: utf8mb4
-- Import oncesi mevcut tablolar DROP edilebilir
-- Migration calistirmaya gerek yok (SQL tam)
-
-## 9. cPanel Yukleme Sonrasi Kontrol
-
-- [ ] storage:link calisti mi?
-- [ ] chmod 775 storage bootstrap/cache
-- [ ] .env dogru mu?
-- [ ] php artisan key:generate
-- [ ] Veritabani baglanti test
-
-## 10. Riskli Noktalar
-
-- Symlink: Bazı hostlarda devre disi. storage:link sonrasi manuel ln -s gerekebilir.
-- Yazma izinleri: storage ve bootstrap/cache 775 olmali.
-
-## 11. Ozet
-
-Proje public_html kokunden calisacak sekilde hazir. Backend yolcu/ altinda. Tum medya ve veri kaybi olmadan yuklenir.
-MD;
 }
