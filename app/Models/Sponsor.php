@@ -62,4 +62,21 @@ class Sponsor extends Model
         }
         return null;
     }
+
+    public function getYouTubeThumbnailUrl(): ?string
+    {
+        $id = $this->getYouTubeVideoId();
+        return $id ? "https://img.youtube.com/vi/{$id}/hqdefault.jpg" : null;
+    }
+
+    public function getVideoPosterUrl(): ?string
+    {
+        if (($this->video_type ?? '') === 'youtube') {
+            return $this->getYouTubeThumbnailUrl();
+        }
+        if (($this->video_type ?? '') === 'mp4' && !empty($this->image_path)) {
+            return asset($this->image_path);
+        }
+        return null;
+    }
 }
