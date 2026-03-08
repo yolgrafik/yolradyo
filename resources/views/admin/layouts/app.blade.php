@@ -857,6 +857,18 @@
                             <li><a href="{{ route('admin.news.index') }}" class="nav-item {{ request()->routeIs('admin.news.edit') ? 'is-active' : '' }}">Haber Duzenle</a></li>
                         </ul>
                     </div>
+                    <div class="nav-section {{ request()->routeIs('admin.about-pages.*') ? 'is-open' : '' }}" data-section="hakkimizda">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.about-pages.*') ? 'true' : 'false' }}">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            <span>Hakkımızda</span>
+                            <span class="nav-section__chevron">&#9660;</span>
+                        </button>
+                        <ul class="nav-section__items">
+                            <li><a href="{{ route('admin.about-pages.edit', 'biz-kimiz') }}" class="nav-item {{ request()->routeIs('admin.about-pages.edit') && request()->route('slug') == 'biz-kimiz' ? 'is-active' : '' }}">Biz Kimiz</a></li>
+                            <li><a href="{{ route('admin.about-pages.edit', 'misyon') }}" class="nav-item {{ request()->routeIs('admin.about-pages.edit') && request()->route('slug') == 'misyon' ? 'is-active' : '' }}">Misyon & Vizyon</a></li>
+                            <li><a href="{{ route('admin.about-pages.edit', 'politika') }}" class="nav-item {{ request()->routeIs('admin.about-pages.edit') && request()->route('slug') == 'politika' ? 'is-active' : '' }}">Yayın Politikamız</a></li>
+                        </ul>
+                    </div>
                     <div class="nav-section" data-section="videolar">
                         <button class="nav-section__toggle" type="button" aria-expanded="false">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
