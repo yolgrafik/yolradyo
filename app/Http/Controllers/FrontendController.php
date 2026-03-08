@@ -211,6 +211,17 @@ class FrontendController extends Controller
         return view('frontend.galeri-album', compact('album', 'photos'));
     }
 
+    public function sponsorlarIndex()
+    {
+        $sponsors = Sponsor::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->latest()
+            ->get();
+
+        return view('frontend.sponsorlar', compact('sponsors'));
+    }
+
     public function reklam()
     {
         $page = AboutPage::query()

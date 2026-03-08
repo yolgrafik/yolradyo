@@ -14,7 +14,7 @@ class MenuItemsSeeder extends Seeder
             ['title' => 'Programlar', 'type' => 'page', 'url' => '/programlar', 'sort_order' => 1],
             ['title' => 'Haberler', 'type' => 'page', 'url' => '/haberler', 'sort_order' => 2],
             ['title' => 'Medya', 'type' => 'page', 'url' => '/videolar', 'sort_order' => 3],
-            ['title' => 'Sponsorlar', 'type' => 'page', 'url' => '/reklam', 'sort_order' => 4],
+            ['title' => 'Sponsorlar', 'type' => 'page', 'url' => '/sponsorlar', 'sort_order' => 4],
             ['title' => 'Hakkimizda', 'type' => 'page', 'url' => '/hakkimizda/biz-kimiz', 'sort_order' => 5],
             ['title' => 'Iletisim', 'type' => 'page', 'url' => '/iletisim', 'sort_order' => 6],
         ];
