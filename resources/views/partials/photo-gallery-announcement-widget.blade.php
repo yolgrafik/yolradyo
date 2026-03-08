@@ -4,7 +4,7 @@
 
 <section class="home-news-section photo-gallery-announcement-section" aria-label="Foto Galeri">
     <div class="home-news-section__header photo-gallery-announcement-section__header">
-        <h2 class="home-news-section__title photo-gallery-announcement-section__title">Foto Galeri</h2>
+        <h2 class="home-news-section__title photo-gallery-announcement-section__title">Foto Galeri &amp; DUYURU</h2>
     </div>
     <div class="photo-gallery-announcement-widget">
         @if($galleryPhotos->isNotEmpty())
@@ -56,13 +56,13 @@
 .photo-gallery-announcement-section__title{margin:0;}
 .photo-gallery-announcement-widget{position:relative;background:color-mix(in srgb,var(--ry-bar-bg) 75%, #0b0f16);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.25);border-top:1px solid var(--ry-line-color);border-bottom:1px solid var(--ry-line-color);}
 .photo-gallery-announcement-widget__body{padding:14px;color:var(--ry-text-muted);font-size:.85rem;line-height:1.5;}
-.photo-gallery-announcement-slider{position:relative;padding:10px;}
-.photo-gallery-announcement-card{display:none;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:rgba(255,255,255,.03);height:100%;}
-.photo-gallery-announcement-card.is-active{display:block;}
+.photo-gallery-announcement-slider{position:relative;padding:10px;min-height:325px;}
+.photo-gallery-announcement-card{display:none;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:rgba(255,255,255,.03);height:100%;grid-template-rows:auto 96px;}
+.photo-gallery-announcement-card.is-active{display:grid;}
 .photo-gallery-announcement-card__image-btn{display:block;width:100%;padding:0;border:none;background:none;cursor:zoom-in;aspect-ratio:16/10;height:auto;overflow:hidden;}
 .photo-gallery-announcement-card img{display:block;width:100%;height:100%;object-fit:cover;}
-.photo-gallery-announcement-card__body{padding:8px;min-height:72px;}
-.photo-gallery-announcement-card__body h3{margin:0;font-size:.8rem;color:var(--ry-text);line-height:1.35;}
+.photo-gallery-announcement-card__body{padding:8px;min-height:96px;max-height:96px;overflow:hidden;}
+.photo-gallery-announcement-card__body h3{margin:0;font-size:.8rem;color:var(--ry-text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em;}
 .photo-gallery-announcement-card__body p{margin:.35rem 0 0;font-size:.72rem;color:var(--ry-text-muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .photo-gallery-slider-btn{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:color-mix(in srgb,var(--ry-bar-bg) 90%, transparent);color:var(--ry-text);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
 .photo-gallery-slider-btn--prev{left:16px;}
@@ -74,6 +74,7 @@
 .photo-gallery-lightbox__image{display:block;max-width:100%;max-height:90vh;margin:0 auto;border-radius:12px;border:1px solid rgba(255,255,255,.2);}
 .photo-gallery-lightbox__close{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.55);color:#fff;font-size:22px;line-height:1;cursor:pointer;z-index:2;}
 @media (max-width: 600px){
+    .photo-gallery-announcement-slider{min-height:300px;}
     .photo-gallery-announcement-card__image-btn{aspect-ratio:4/3;}
 }
 </style>
