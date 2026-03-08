@@ -218,15 +218,9 @@ class SponsorController extends Controller
             $allImages = [$this->uploadImage($request->file('image'))];
         }
 
-        if ($sponsor && empty($allImages)) {
+        if ($sponsor) {
             $current = $sponsor->getGalleryImages();
-            if (!empty($current)) {
-                return $current;
-            }
-        }
-
-        if ($sponsor && !empty($existing)) {
-            $current = $sponsor->getGalleryImages();
+            $kept = array_intersect($current, $existing);
             $removed = array_diff($current, $existing);
             foreach ($removed as $path) {
                 $this->deleteImage($path);

@@ -6,8 +6,20 @@
 <style>
 .sponsor-detail { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
 .sponsor-detail__image-wrap { width: 100%; margin-bottom: 1.5rem; border-radius: 14px; overflow: hidden; border: 1px solid var(--ry-border); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); background: rgba(255,255,255,0.03); }
-.sponsor-detail__image-wrap img { width: 100%; max-height: 480px; object-fit: contain; object-position: center; display: block; }
+.sponsor-detail__image-wrap img { width: 100%; max-height: 480px; object-fit: contain; object-position: center; display: block; cursor: pointer; }
 .sponsor-detail__image-placeholder { width: 100%; aspect-ratio: 16/9; max-height: 320px; display: flex; align-items: center; justify-content: center; font-size: 4rem; font-weight: 800; color: var(--ry-schedule-active); background: rgba(255,255,255,0.04); }
+.sponsor-detail__gallery { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.sponsor-detail__gallery-thumb { padding: 0; border: 2px solid transparent; border-radius: 8px; overflow: hidden; cursor: pointer; background: none; transition: border-color 0.2s, opacity 0.2s; }
+.sponsor-detail__gallery-thumb:hover { border-color: var(--ry-schedule-active); opacity: 0.9; }
+.sponsor-detail__gallery-thumb.is-active { border-color: var(--ry-schedule-active); }
+.sponsor-detail__gallery-thumb img { width: 64px; height: 64px; object-fit: cover; display: block; }
+.sponsor-detail-lightbox { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; padding: 2rem; }
+.sponsor-detail-lightbox.is-open { display: flex; }
+.sponsor-detail-lightbox__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.9); cursor: pointer; }
+.sponsor-detail-lightbox__content { position: relative; max-width: 95vw; max-height: 90vh; z-index: 1; }
+.sponsor-detail-lightbox__close { position: absolute; top: -44px; right: 0; width: 40px; height: 40px; border: none; border-radius: 50%; background: rgba(255,255,255,.2); color: #fff; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 10; }
+.sponsor-detail-lightbox__close:hover { background: rgba(255,255,255,.35); }
+.sponsor-detail-lightbox__img { max-width: 100%; max-height: 85vh; object-fit: contain; border-radius: 8px; display: block; }
 .sponsor-name { font-size: 1.75rem; font-weight: 700; color: #fff; margin: 0 0 0.5rem 0; }
 .sponsor-short { font-size: 1.05rem; color: var(--ry-text-muted); margin: 0 0 1rem 0; line-height: 1.6; }
 .sponsor-social { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; margin-top: 1rem; }
@@ -48,6 +60,7 @@
 .sponsor-share-toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 @media (max-width: 640px) {
     .sponsor-detail__image-wrap img { max-height: 360px; }
+    .sponsor-detail__gallery-thumb img { width: 52px; height: 52px; }
 }
 </style>
 @endpush
@@ -56,10 +69,20 @@
 <div class="sponsor-detail">
     <a href="{{ url('/') }}#sponsors" class="sponsor-back">← Ana Sayfa</a>
 
-    @if($sponsor->image_path ?? null)
+    @php $galleryImages = $sponsor->getGalleryImages(); $firstImg = $sponsor->getFirstImagePath(); @endphp
+    @if($firstImg)
         <div class="sponsor-detail__image-wrap">
-            <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->title ?? 'Sponsor' }}">
+            <img src="{{ asset($firstImg) }}" alt="{{ $sponsor->title ?? 'Sponsor' }}" class="sponsor-detail__main-img js-sponsor-gallery-open" data-src="{{ asset($firstImg) }}">
         </div>
+        @if(count($galleryImages) > 1)
+            <div class="sponsor-detail__gallery">
+                @foreach($galleryImages as $path)
+                    <button type="button" class="sponsor-detail__gallery-thumb js-sponsor-gallery-open {{ $path === $firstImg ? 'is-active' : '' }}" data-src="{{ asset($path) }}" aria-label="Resmi büyüt">
+                        <img src="{{ asset($path) }}" alt="">
+                    </button>
+                @endforeach
+            </div>
+        @endif
     @else
         <div class="sponsor-detail__image-wrap">
             <div class="sponsor-detail__image-placeholder">{{ mb_substr($sponsor->title ?? '', 0, 1) }}</div>
@@ -145,11 +168,42 @@
     </div>
 </div>
 <div id="sponsorShareToast" class="sponsor-share-toast" role="status" aria-live="polite">Bağlantı kopyalandı</div>
+
+<div id="sponsorDetailLightbox" class="sponsor-detail-lightbox" role="dialog" aria-modal="true" aria-label="Resim galerisi">
+    <div class="sponsor-detail-lightbox__backdrop js-sponsor-detail-lightbox-close"></div>
+    <div class="sponsor-detail-lightbox__content">
+        <button type="button" class="sponsor-detail-lightbox__close js-sponsor-detail-lightbox-close" aria-label="Kapat"><i class="bi bi-x-lg"></i></button>
+        <img src="" alt="" class="sponsor-detail-lightbox__img">
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
 (function(){
+    var lb = document.getElementById('sponsorDetailLightbox');
+    var lbImg = lb ? lb.querySelector('.sponsor-detail-lightbox__img') : null;
+    document.querySelectorAll('.js-sponsor-gallery-open').forEach(function(el){
+        el.addEventListener('click', function(){
+            var src = el.getAttribute('data-src');
+            if (lb && lbImg && src) {
+                lbImg.src = src;
+                lb.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+    function closeLightbox(){
+        if (lb) {
+            lb.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+    }
+    if (lb) {
+        lb.querySelectorAll('.js-sponsor-detail-lightbox-close').forEach(function(btn){ btn.addEventListener('click', closeLightbox); });
+    }
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && lb && lb.classList.contains('is-open')) closeLightbox(); });
+
     var btn = document.querySelector('.js-sponsor-copy-link');
     var toast = document.getElementById('sponsorShareToast');
     var timer = null;

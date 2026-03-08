@@ -105,7 +105,7 @@ class Sponsor extends Model
         }
         $first = $this->getFirstImagePath();
         if (($this->video_type ?? '') === 'mp4' && $first) {
-            return $first;
+            return asset($first);
         }
         return null;
     }
