@@ -13,6 +13,7 @@ class Sponsor extends Model
         'short_description',
         'description',
         'image_path',
+        'images',
         'website_url',
         'facebook_url',
         'instagram_url',
@@ -27,7 +28,35 @@ class Sponsor extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
+        'images' => 'array',
     ];
+
+    /**
+     * İlk (ana) resmin path'ini döner. Eski sistemde image_path, yeni sistemde images[0].
+     */
+    public function getFirstImagePath(): ?string
+    {
+        $imgs = $this->images;
+        if (is_array($imgs) && !empty($imgs)) {
+            return $imgs[0];
+        }
+        return $this->image_path;
+    }
+
+    /**
+     * Galeri için tüm resimler (ilk resim dahil). Boşsa image_path varsa tek elemanlı dizi.
+     */
+    public function getGalleryImages(): array
+    {
+        $imgs = $this->images;
+        if (is_array($imgs) && !empty($imgs)) {
+            return $imgs;
+        }
+        if ($this->image_path) {
+            return [$this->image_path];
+        }
+        return [];
+    }
 
     public function getRouteKeyName(): string
     {
@@ -74,8 +103,9 @@ class Sponsor extends Model
         if (($this->video_type ?? '') === 'youtube') {
             return $this->getYouTubeThumbnailUrl();
         }
-        if (($this->video_type ?? '') === 'mp4' && !empty($this->image_path)) {
-            return asset($this->image_path);
+        $first = $this->getFirstImagePath();
+        if (($this->video_type ?? '') === 'mp4' && $first) {
+            return $first;
         }
         return null;
     }

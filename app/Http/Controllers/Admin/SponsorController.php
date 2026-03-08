@@ -23,7 +23,8 @@ class SponsorController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validatePayload($request);
-        $imagePath = $request->hasFile('image') ? $this->uploadImage($request->file('image')) : null;
+        $images = $this->processSponsorImages($request, null);
+        $imagePath = !empty($images) ? $images[0] : null;
         $videoType = $validated['video_type'] ?? 'none';
         $videoPath = null;
         $videoYoutubeUrl = null;
@@ -39,6 +40,7 @@ class SponsorController extends Controller
             'short_description' => $validated['short_description'] ?? null,
             'description' => $validated['description'] ?? null,
             'image_path' => $imagePath,
+            'images' => $images,
             'website_url' => $validated['website_url'] ?? null,
             'facebook_url' => $validated['facebook_url'] ?? null,
             'instagram_url' => $validated['instagram_url'] ?? null,
@@ -62,12 +64,8 @@ class SponsorController extends Controller
     public function update(Request $request, Sponsor $sponsor)
     {
         $validated = $this->validatePayload($request, $sponsor);
-        $imagePath = $sponsor->image_path;
-
-        if ($request->hasFile('image')) {
-            $this->deleteImage($imagePath);
-            $imagePath = $this->uploadImage($request->file('image'));
-        }
+        $images = $this->processSponsorImages($request, $sponsor);
+        $imagePath = !empty($images) ? $images[0] : null;
 
         $videoType = $validated['video_type'] ?? 'none';
         $videoPath = $sponsor->video_path;
@@ -97,6 +95,7 @@ class SponsorController extends Controller
             'short_description' => $validated['short_description'] ?? null,
             'description' => $validated['description'] ?? null,
             'image_path' => $imagePath,
+            'images' => $images,
             'website_url' => $validated['website_url'] ?? null,
             'facebook_url' => $validated['facebook_url'] ?? null,
             'instagram_url' => $validated['instagram_url'] ?? null,
@@ -115,6 +114,9 @@ class SponsorController extends Controller
     public function destroy(Sponsor $sponsor)
     {
         $this->deleteImage($sponsor->image_path);
+        foreach ($sponsor->getGalleryImages() as $path) {
+            $this->deleteImage($path);
+        }
         $this->deleteVideo($sponsor->video_path);
         $sponsor->delete();
         return redirect()->route('admin.sponsors.index')->with('success', 'Sponsor silindi.');
@@ -128,6 +130,10 @@ class SponsorController extends Controller
             'short_description' => 'nullable|string|max:2000',
             'description' => 'nullable|string|max:10000',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:10240',
+            'images' => 'nullable|array|max:20',
+            'images.*' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:10240',
+            'existing_images' => 'nullable|array',
+            'existing_images.*' => 'nullable|string|max:500',
             'website_url' => 'nullable|url|max:500',
             'facebook_url' => 'nullable|url|max:500',
             'instagram_url' => 'nullable|url|max:500',
@@ -193,5 +199,40 @@ class SponsorController extends Controller
         if ($path && File::exists(public_path($path))) {
             File::delete(public_path($path));
         }
+    }
+
+    private function processSponsorImages(Request $request, ?Sponsor $sponsor): array
+    {
+        $existing = array_values(array_filter((array) $request->input('existing_images', [])));
+        $newPaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                if ($file && $file->isValid()) {
+                    $newPaths[] = $this->uploadImage($file);
+                }
+            }
+        }
+        $allImages = array_merge($existing, $newPaths);
+
+        if (empty($allImages) && $request->hasFile('image')) {
+            $allImages = [$this->uploadImage($request->file('image'))];
+        }
+
+        if ($sponsor && empty($allImages)) {
+            $current = $sponsor->getGalleryImages();
+            if (!empty($current)) {
+                return $current;
+            }
+        }
+
+        if ($sponsor && !empty($existing)) {
+            $current = $sponsor->getGalleryImages();
+            $removed = array_diff($current, $existing);
+            foreach ($removed as $path) {
+                $this->deleteImage($path);
+            }
+        }
+
+        return $allImages;
     }
 }

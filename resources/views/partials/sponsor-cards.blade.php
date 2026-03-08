@@ -39,9 +39,10 @@
                                             @endif
                                         </div>
                                     </div>
-                                @elseif($sponsor->image_path ?? null)
-                                    <button type="button" class="home-sponsor-card__img-btn" onclick="sponsorLightboxOpen('{{ asset($sponsor->image_path) }}', '{{ addslashes($sponsor->title ?? '') }}')" aria-label="Görseli büyüt">
-                                        <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->title ?? '' }}" class="home-sponsor-card__img">
+                                @elseif($sponsor->getFirstImagePath())
+                                    @php $firstImg = $sponsor->getFirstImagePath(); @endphp
+                                    <button type="button" class="home-sponsor-card__img-btn" onclick="sponsorLightboxOpen('{{ asset($firstImg) }}', '{{ addslashes($sponsor->title ?? '') }}')" aria-label="Görseli büyüt">
+                                        <img src="{{ asset($firstImg) }}" alt="{{ $sponsor->title ?? '' }}" class="home-sponsor-card__img">
                                     </button>
                                 @else
                                     <div class="home-sponsor-card__img-placeholder">{{ mb_substr($sponsor->title ?? '', 0, 1) }}</div>

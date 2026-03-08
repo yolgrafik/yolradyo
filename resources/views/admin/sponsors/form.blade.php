@@ -14,11 +14,21 @@
 </div>
 
 <div class="pg-form-group">
-    <label>Resim Ekle</label>
-    <input type="file" name="image" class="pg-input" accept="image/*">
-    @if(!empty($sponsor?->image_path))
-        <div style="margin-top:.6rem;">
-            <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->title }}" style="max-width:180px;border-radius:10px;border:1px solid rgba(255,255,255,.15);">
+    <label>Resimler (çoklu yükleme)</label>
+    <input type="file" name="images[]" class="pg-input" accept="image/*" multiple>
+    <p class="pg-hint" style="margin-top:.4rem;font-size:.82rem;color:var(--muted);">Birden fazla resim seçebilirsiniz. İlk resim ana sayfa ve detayda büyük görünür.</p>
+    @php
+        $galleryImgs = $sponsor?->getGalleryImages() ?? [];
+    @endphp
+    @if(!empty($galleryImgs))
+        <div class="sponsor-images-preview" style="margin-top:.8rem;display:flex;flex-wrap:wrap;gap:8px;">
+            @foreach($galleryImgs as $idx => $path)
+                <div class="sponsor-image-item" style="position:relative;">
+                    <input type="hidden" name="existing_images[]" value="{{ $path }}">
+                    <img src="{{ asset($path) }}" alt="" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid rgba(255,255,255,.15);">
+                    <button type="button" class="sponsor-image-remove" data-path="{{ $path }}" style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;border:none;background:#dc2626;color:#fff;cursor:pointer;font-size:12px;line-height:1;display:flex;align-items:center;justify-content:center;" title="Kaldır">×</button>
+                </div>
+            @endforeach
         </div>
     @endif
 </div>
@@ -78,6 +88,12 @@
 @push('scripts')
 <script>
 (function(){
+    document.querySelectorAll('.sponsor-image-remove').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            var item = btn.closest('.sponsor-image-item');
+            if (item) item.remove();
+        });
+    });
     var sel = document.getElementById('sponsorVideoType');
     var ytWrap = document.getElementById('sponsorVideoYoutubeWrap');
     var mp4Wrap = document.getElementById('sponsorVideoMp4Wrap');
