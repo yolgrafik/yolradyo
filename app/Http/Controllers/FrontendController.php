@@ -27,7 +27,7 @@ class FrontendController extends Controller
             ->active()
             ->orderByDesc('is_featured')
             ->orderBy('sort_order')
-            ->latest()
+            ->orderByDesc('id')
             ->limit(12)
             ->get();
         $listenerSubmissions = ForumPost::with('user')
@@ -117,10 +117,19 @@ class FrontendController extends Controller
             ->active()
             ->orderByDesc('is_featured')
             ->orderBy('sort_order')
-            ->latest()
+            ->orderByDesc('id')
             ->paginate(12);
 
         return view('frontend.videolar', compact('artistVideos'));
+    }
+
+    public function videoShow(ArtistVideo $video)
+    {
+        abort_unless($video->is_active, 404);
+
+        return view('frontend.videolar-show', [
+            'video' => $video,
+        ]);
     }
 
     public function galeri()

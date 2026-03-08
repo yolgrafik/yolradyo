@@ -34,7 +34,8 @@ Route::get('/programcilar/{slug}', [FrontendController::class, 'programciShow'])
 Route::post('/programcilar/{slug}/contact', [App\Http\Controllers\ProgramciContactController::class, 'store'])->name('public.programcilar.contact')->middleware(['auth', 'throttle:contact-messages'])->where('slug', '[a-z0-9\-]+');
 Route::get('/haberler', [FrontendController::class, 'haberler'])->name('news.index');
 Route::get('/haberler/{slug}', [FrontendController::class, 'haberDetay'])->name('news.show')->where('slug', '[a-z0-9\-]+');
-Route::get('/videolar', [FrontendController::class, 'videolar']);
+Route::get('/videolar', [FrontendController::class, 'videolar'])->name('videos.index');
+Route::get('/videolar/{video}', [FrontendController::class, 'videoShow'])->name('videos.show')->whereNumber('video');
 Route::get('/galeri', [FrontendController::class, 'galeri']);
 Route::get('/reklam', [FrontendController::class, 'reklam']);
 Route::get('/hakkimizda', fn () => redirect('/hakkimizda/biz-kimiz'));
