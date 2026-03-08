@@ -221,10 +221,10 @@ Route::prefix('admin')->group(function () {
         Route::prefix('about-pages')->name('admin.about-pages.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\AboutPageController::class, 'index'])->name('index');
             Route::get('{slug}/edit', [App\Http\Controllers\Admin\AboutPageController::class, 'edit'])
-                ->where('slug', 'biz-kimiz|misyon|politika')
+                ->where('slug', 'biz-kimiz|misyon|politika|reklam')
                 ->name('edit');
             Route::put('{slug}', [App\Http\Controllers\Admin\AboutPageController::class, 'update'])
-                ->where('slug', 'biz-kimiz|misyon|politika')
+                ->where('slug', 'biz-kimiz|misyon|politika|reklam')
                 ->name('update');
         });
 
