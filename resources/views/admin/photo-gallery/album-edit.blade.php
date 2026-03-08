@@ -5,7 +5,7 @@
     <div class="card-header">Albüm Düzenle</div>
     <div class="card-body">
         @if($errors->any())<div class="pg-alert" style="background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.35);color:#fecaca;">{{ $errors->first() }}</div>@endif
-        <form method="POST" action="{{ route('admin.photo-gallery.albums.update', $album) }}">
+        <form method="POST" action="{{ route('admin.photo-gallery.albums.update', $album) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="pg-form-group">
@@ -15,6 +15,15 @@
             <div class="pg-form-group">
                 <label>Açıklama</label>
                 <textarea name="description" rows="3" class="pg-input">{{ old('description', $album->description) }}</textarea>
+            </div>
+            <div class="pg-form-group">
+                <label>Kapak Resim</label>
+                <input type="file" name="cover_image" class="pg-input" accept="image/*">
+                @if(!empty($album->cover_image_path))
+                    <div style="margin-top:.6rem;max-width:220px;border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+                        <img src="{{ asset($album->cover_image_path) }}" alt="{{ $album->name }}" style="display:block;width:100%;height:auto;">
+                    </div>
+                @endif
             </div>
             <div class="pg-form-group">
                 <label>Sıra</label>
