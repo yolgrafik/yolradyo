@@ -924,13 +924,13 @@
                                 <li><a href="{{ url('/galeri') }}" class="{{ request()->is('galeri') ? 'active' : '' }}">Foto Galeri</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ url('/reklam') }}" class="{{ request()->is('reklam') ? 'active' : '' }}">Sponsorlar</a></li>
                         <li class="nav-dropdown">
                             <a href="{{ url('/hakkimizda/biz-kimiz') }}" class="{{ request()->is('hakkimizda/*') ? 'active' : '' }}">Hakkımızda<span class="arrow">▾</span></a>
                             <ul class="nav-dropdown-menu">
                                 <li><a href="{{ url('/hakkimizda/biz-kimiz') }}">Biz Kimiz</a></li>
                                 <li><a href="{{ url('/hakkimizda/misyon') }}">Misyon & Vizyon</a></li>
                                 <li><a href="{{ url('/hakkimizda/politika') }}">Yayın Politikamız</a></li>
+                                <li><a href="{{ url('/reklam') }}" class="{{ request()->is('reklam') ? 'active' : '' }}">Reklam</a></li>
                             </ul>
                         </li>
                         <li><a href="{{ url('/iletisim') }}" class="{{ request()->is('iletisim') ? 'active' : '' }}">İletişim</a></li>
