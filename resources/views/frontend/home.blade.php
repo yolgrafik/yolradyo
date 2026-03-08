@@ -858,12 +858,32 @@
         position: relative;
         z-index: 2;
     }
+    .home-sponsor-card__img-wrap {
+        position: relative;
+        width: 100%;
+    }
     .home-sponsor-card__img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         display: block;
         background: #111827;
+    }
+    .home-sponsor-card__img-wrap .home-sponsor-card__img { aspect-ratio: 16/9; }
+    .home-sponsor-card__video-badge {
+        position: absolute;
+        bottom: 6px;
+        right: 6px;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,.7);
+        border-radius: 50%;
+        color: #fff;
+        font-size: 14px;
+        z-index: 2;
     }
     .home-sponsor-card__body {
         padding: .75rem .85rem;
@@ -1073,11 +1093,16 @@
                                     <a href="{{ route('sponsor.show', $sponsor) }}" class="home-sponsor-card__click-area" aria-label="{{ $sponsor->title }} detayı"></a>
                                 @endif
                                 <div class="home-sponsor-card__inner">
-                                    @if($sponsor->image_path ?? null)
-                                        <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->title ?? '' }}" class="home-sponsor-card__img">
-                                    @else
-                                        <div class="home-sponsor-card__img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:var(--ry-schedule-active);">{{ mb_substr($sponsor->title ?? '', 0, 1) }}</div>
-                                    @endif
+                                    <div class="home-sponsor-card__img-wrap">
+                                        @if($sponsor->image_path ?? null)
+                                            <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->title ?? '' }}" class="home-sponsor-card__img">
+                                        @else
+                                            <div class="home-sponsor-card__img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:var(--ry-schedule-active);">{{ mb_substr($sponsor->title ?? '', 0, 1) }}</div>
+                                        @endif
+                                        @if($sponsor->hasVideo())
+                                            <span class="home-sponsor-card__video-badge" title="Video var"><i class="bi bi-play-circle-fill"></i></span>
+                                        @endif
+                                    </div>
                                     <div class="home-sponsor-card__body">
                                         <h3 class="home-sponsor-card__title">{{ $sponsor->title ?? 'Sponsor' }}</h3>
                                         @if(!empty($sponsor->short_description))

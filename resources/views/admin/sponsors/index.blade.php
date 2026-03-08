@@ -20,6 +20,7 @@
                             <th>Resim</th>
                             <th>Başlık</th>
                             <th>Kısa Açıklama</th>
+                            <th>Video</th>
                             <th>Sıra</th>
                             <th>Durum</th>
                             <th style="width:180px;">İşlem</th>
@@ -37,6 +38,17 @@
                                 </td>
                                 <td>{{ $sponsor->title }}</td>
                                 <td>{{ \Illuminate\Support\Str::limit($sponsor->short_description, 90) }}</td>
+                                <td>
+                                    @if($sponsor->hasVideo())
+                                        @if(($sponsor->video_type ?? '') === 'youtube')
+                                            <span class="badge badge-info" title="YouTube video">YouTube</span>
+                                        @elseif(($sponsor->video_type ?? '') === 'mp4')
+                                            <span class="badge badge-success" title="MP4 video">MP4</span>
+                                        @endif
+                                    @else
+                                        <span style="color:var(--muted);font-size:.8rem;">—</span>
+                                    @endif
+                                </td>
                                 <td>{{ $sponsor->sort_order }}</td>
                                 <td>{{ $sponsor->is_active ? 'Aktif' : 'Pasif' }}</td>
                                 <td>
@@ -58,5 +70,6 @@
         @endif
     </div>
 </div>
+<style>.badge{padding:0.2rem 0.5rem;border-radius:6px;font-size:0.75rem;font-weight:600;}.badge-info{background:rgba(59,130,246,0.25);color:#93c5fd;}.badge-success{background:rgba(34,197,94,0.25);color:#86efac;}</style>
 @include('admin.photo-gallery._style')
 @endsection

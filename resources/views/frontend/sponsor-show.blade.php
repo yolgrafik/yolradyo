@@ -27,6 +27,9 @@
 .sponsor-description { color: var(--ry-text-muted); line-height: 1.7; white-space: pre-wrap; }
 .sponsor-back { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; border-radius: 999px; border: 1px solid var(--ry-border); background: color-mix(in srgb, var(--ry-bar-bg) 76%, transparent); color: var(--ry-text); text-decoration: none; font-size: 0.85rem; font-weight: 700; margin-bottom: 1.5rem; transition: background 0.2s, border-color 0.2s; }
 .sponsor-back:hover { background: color-mix(in srgb, var(--ry-btn-bg) 26%, transparent); border-color: var(--ry-line-color); }
+.sponsor-video-embed { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; background: #000; }
+.sponsor-video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.sponsor-video-mp4 video { border-radius: 10px; max-width: 100%; background: #000; }
 @media (max-width: 640px) {
     .sponsor-hero { flex-direction: column; }
     .sponsor-logo-wrap { width: 120px; height: 90px; }
@@ -70,6 +73,24 @@
             </div>
         </div>
     </div>
+
+    @if($sponsor->hasVideo())
+    <div class="sponsor-video-section sponsor-content">
+        <h3>Video</h3>
+        @if(($sponsor->video_type ?? '') === 'youtube' && $sponsor->getYouTubeVideoId())
+            <div class="sponsor-video-embed">
+                <iframe src="https://www.youtube.com/embed/{{ $sponsor->getYouTubeVideoId() }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="{{ $sponsor->title ?? '' }} video"></iframe>
+            </div>
+        @elseif(($sponsor->video_type ?? '') === 'mp4' && !empty($sponsor->video_path))
+            <div class="sponsor-video-mp4">
+                <video controls width="100%" preload="metadata" poster="">
+                    <source src="{{ asset($sponsor->video_path) }}" type="video/mp4">
+                    Tarayıcınız video oynatmayı desteklemiyor.
+                </video>
+            </div>
+        @endif
+    </div>
+    @endif
 
     @if(!empty($sponsor->description))
     <div class="sponsor-content">

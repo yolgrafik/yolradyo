@@ -23,6 +23,26 @@
     @endif
 </div>
 
+<div class="pg-form-group">
+    <label>Video Türü</label>
+    <select name="video_type" id="sponsorVideoType" class="pg-input">
+        <option value="none" {{ old('video_type', $sponsor->video_type ?? 'none') === 'none' ? 'selected' : '' }}>Yok</option>
+        <option value="youtube" {{ old('video_type', $sponsor->video_type ?? '') === 'youtube' ? 'selected' : '' }}>YouTube Link</option>
+        <option value="mp4" {{ old('video_type', $sponsor->video_type ?? '') === 'mp4' ? 'selected' : '' }}>MP4 Yükle</option>
+    </select>
+</div>
+<div class="pg-form-group sponsor-video-field" id="sponsorVideoYoutubeWrap" style="display:none;">
+    <label>YouTube Video Linki</label>
+    <input type="url" name="video_youtube_url" id="sponsorVideoYoutubeUrl" class="pg-input" value="{{ old('video_youtube_url', $sponsor->video_youtube_url ?? '') }}" placeholder="https://www.youtube.com/watch?v=... veya https://youtu.be/...">
+</div>
+<div class="pg-form-group sponsor-video-field" id="sponsorVideoMp4Wrap" style="display:none;">
+    <label>MP4 Video Yükle</label>
+    <input type="file" name="video_file" id="sponsorVideoFile" class="pg-input" accept="video/mp4,.mp4">
+    @if(!empty($sponsor?->video_path))
+        <div style="margin-top:.6rem;font-size:.85rem;color:var(--muted);">Mevcut video: {{ basename($sponsor->video_path) }}</div>
+    @endif
+</div>
+
 <div class="pg-grid">
     <div class="pg-form-group">
         <label>Website Linki</label>
@@ -54,3 +74,22 @@
     <input type="checkbox" name="is_active" value="1" {{ old('is_active', $sponsor->is_active ?? true) ? 'checked' : '' }}>
     Durum (Aktif/Pasif)
 </label>
+
+@push('scripts')
+<script>
+(function(){
+    var sel = document.getElementById('sponsorVideoType');
+    var ytWrap = document.getElementById('sponsorVideoYoutubeWrap');
+    var mp4Wrap = document.getElementById('sponsorVideoMp4Wrap');
+    var ytInput = document.getElementById('sponsorVideoYoutubeUrl');
+    var fileInput = document.getElementById('sponsorVideoFile');
+    function toggle() {
+        var v = sel ? sel.value : 'none';
+        if (ytWrap) ytWrap.style.display = v === 'youtube' ? 'block' : 'none';
+        if (mp4Wrap) mp4Wrap.style.display = v === 'mp4' ? 'block' : 'none';
+    }
+    if (sel) sel.addEventListener('change', toggle);
+    toggle();
+})();
+</script>
+@endpush

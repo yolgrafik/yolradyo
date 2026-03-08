@@ -18,6 +18,9 @@ class Sponsor extends Model
         'instagram_url',
         'x_url',
         'youtube_url',
+        'video_type',
+        'video_youtube_url',
+        'video_path',
         'sort_order',
         'is_active',
     ];
@@ -38,5 +41,25 @@ class Sponsor extends Model
                 $sponsor->slug = Str::slug($sponsor->title) . '-' . Str::random(4);
             }
         });
+    }
+
+    public function hasVideo(): bool
+    {
+        if (($this->video_type ?? '') === 'youtube' && !empty($this->video_youtube_url)) {
+            return true;
+        }
+        if (($this->video_type ?? '') === 'mp4' && !empty($this->video_path)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getYouTubeVideoId(): ?string
+    {
+        $url = $this->video_youtube_url ?? '';
+        if (preg_match('#(?:youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})#', $url, $m)) {
+            return $m[1];
+        }
+        return null;
     }
 }

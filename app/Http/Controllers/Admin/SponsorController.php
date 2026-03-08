@@ -24,6 +24,15 @@ class SponsorController extends Controller
     {
         $validated = $this->validatePayload($request);
         $imagePath = $request->hasFile('image') ? $this->uploadImage($request->file('image')) : null;
+        $videoType = $validated['video_type'] ?? 'none';
+        $videoPath = null;
+        $videoYoutubeUrl = null;
+
+        if ($videoType === 'youtube' && !empty($validated['video_youtube_url'] ?? '')) {
+            $videoYoutubeUrl = $validated['video_youtube_url'];
+        } elseif ($videoType === 'mp4' && $request->hasFile('video_file')) {
+            $videoPath = $this->uploadVideo($request->file('video_file'));
+        }
 
         Sponsor::create([
             'title' => $validated['title'],
@@ -35,6 +44,9 @@ class SponsorController extends Controller
             'instagram_url' => $validated['instagram_url'] ?? null,
             'x_url' => $validated['x_url'] ?? null,
             'youtube_url' => $validated['youtube_url'] ?? null,
+            'video_type' => $videoType === 'none' ? null : $videoType,
+            'video_youtube_url' => $videoYoutubeUrl,
+            'video_path' => $videoPath,
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);
@@ -49,12 +61,35 @@ class SponsorController extends Controller
 
     public function update(Request $request, Sponsor $sponsor)
     {
-        $validated = $this->validatePayload($request);
+        $validated = $this->validatePayload($request, $sponsor);
         $imagePath = $sponsor->image_path;
 
         if ($request->hasFile('image')) {
             $this->deleteImage($imagePath);
             $imagePath = $this->uploadImage($request->file('image'));
+        }
+
+        $videoType = $validated['video_type'] ?? 'none';
+        $videoPath = $sponsor->video_path;
+        $videoYoutubeUrl = $sponsor->video_youtube_url;
+
+        if ($videoType === 'none') {
+            if ($sponsor->video_path) {
+                $this->deleteVideo($sponsor->video_path);
+                $videoPath = null;
+            }
+            $videoYoutubeUrl = null;
+        } elseif ($videoType === 'youtube') {
+            if ($sponsor->video_path) {
+                $this->deleteVideo($sponsor->video_path);
+                $videoPath = null;
+            }
+            $videoYoutubeUrl = !empty($validated['video_youtube_url'] ?? '') ? $validated['video_youtube_url'] : null;
+        } elseif ($videoType === 'mp4' && $request->hasFile('video_file')) {
+            if ($sponsor->video_path) {
+                $this->deleteVideo($sponsor->video_path);
+            }
+            $videoPath = $this->uploadVideo($request->file('video_file'));
         }
 
         $sponsor->update([
@@ -67,6 +102,9 @@ class SponsorController extends Controller
             'instagram_url' => $validated['instagram_url'] ?? null,
             'x_url' => $validated['x_url'] ?? null,
             'youtube_url' => $validated['youtube_url'] ?? null,
+            'video_type' => $videoType === 'none' ? null : $videoType,
+            'video_youtube_url' => $videoYoutubeUrl,
+            'video_path' => $videoPath,
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);
@@ -77,13 +115,15 @@ class SponsorController extends Controller
     public function destroy(Sponsor $sponsor)
     {
         $this->deleteImage($sponsor->image_path);
+        $this->deleteVideo($sponsor->video_path);
         $sponsor->delete();
         return redirect()->route('admin.sponsors.index')->with('success', 'Sponsor silindi.');
     }
 
-    private function validatePayload(Request $request): array
+    private function validatePayload(Request $request, ?Sponsor $sponsor = null): array
     {
-        return $request->validate([
+        $videoType = $request->input('video_type', 'none');
+        $rules = [
             'title' => 'required|string|max:255',
             'short_description' => 'nullable|string|max:2000',
             'description' => 'nullable|string|max:10000',
@@ -93,9 +133,24 @@ class SponsorController extends Controller
             'instagram_url' => 'nullable|url|max:500',
             'x_url' => 'nullable|url|max:500',
             'youtube_url' => 'nullable|url|max:500',
+            'video_type' => 'nullable|in:none,youtube,mp4',
+            'video_youtube_url' => 'nullable|url|max:500',
+            'video_file' => 'nullable|file|mimetypes:video/mp4|max:102400',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
-        ]);
+        ];
+
+        if ($videoType === 'youtube') {
+            $rules['video_youtube_url'] = 'required|url|max:500|regex:#(youtube\.com/watch\?v=|youtu\.be/)#';
+        }
+        if ($videoType === 'mp4') {
+            $hasExisting = $sponsor && !empty($sponsor->video_path);
+            $rules['video_file'] = ($hasExisting && !$request->hasFile('video_file'))
+                ? 'nullable|file|mimetypes:video/mp4|max:102400'
+                : 'required|file|mimetypes:video/mp4|max:102400';
+        }
+
+        return $request->validate($rules);
     }
 
     private function uploadImage($file): string
@@ -112,6 +167,28 @@ class SponsorController extends Controller
     }
 
     private function deleteImage(?string $path): void
+    {
+        if ($path && File::exists(public_path($path))) {
+            File::delete(public_path($path));
+        }
+    }
+
+    private function uploadVideo($file): string
+    {
+        $dir = 'uploads/sponsors/videos';
+        $fullDir = public_path($dir);
+        if (!File::isDirectory($fullDir)) {
+            File::makeDirectory($fullDir, 0755, true);
+        }
+        $name = uniqid() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
+        if (!str_ends_with(strtolower($name), '.mp4')) {
+            $name .= '.mp4';
+        }
+        $file->move($fullDir, $name);
+        return $dir . '/' . $name;
+    }
+
+    private function deleteVideo(?string $path): void
     {
         if ($path && File::exists(public_path($path))) {
             File::delete(public_path($path));
