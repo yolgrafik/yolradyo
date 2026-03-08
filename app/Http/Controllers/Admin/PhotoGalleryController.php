@@ -48,7 +48,7 @@ class PhotoGalleryController extends Controller
     public function storePhoto(Request $request)
     {
         $validated = $request->validate([
-            'album_id' => 'required|exists:photo_albums,id',
+            'album_id' => 'nullable|exists:photo_albums,id',
             'title' => 'nullable|string|max:255',
             'short_description' => 'nullable|string|max:500',
             'image' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
@@ -60,7 +60,7 @@ class PhotoGalleryController extends Controller
         $path = $this->uploadImage($request->file('image'));
 
         GalleryPhoto::create([
-            'album_id' => (int) $validated['album_id'],
+            'album_id' => !empty($validated['album_id']) ? (int) $validated['album_id'] : null,
             'title' => $validated['title'] ?? null,
             'short_description' => $validated['short_description'] ?? null,
             'image_path' => $path,
@@ -116,7 +116,7 @@ class PhotoGalleryController extends Controller
     public function updatePhoto(Request $request, GalleryPhoto $photo)
     {
         $validated = $request->validate([
-            'album_id' => 'required|exists:photo_albums,id',
+            'album_id' => 'nullable|exists:photo_albums,id',
             'title' => 'nullable|string|max:255',
             'short_description' => 'nullable|string|max:500',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
@@ -132,7 +132,7 @@ class PhotoGalleryController extends Controller
         }
 
         $photo->update([
-            'album_id' => (int) $validated['album_id'],
+            'album_id' => !empty($validated['album_id']) ? (int) $validated['album_id'] : null,
             'title' => $validated['title'] ?? null,
             'short_description' => $validated['short_description'] ?? null,
             'image_path' => $path,

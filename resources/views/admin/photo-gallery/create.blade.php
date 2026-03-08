@@ -9,8 +9,8 @@
             @csrf
             <div class="pg-form-group">
                 <label>Albüm</label>
-                <select name="album_id" class="pg-input" required>
-                    <option value="">Seçiniz</option>
+                <select name="album_id" class="pg-input">
+                    <option value="">Albüm seçmeden devam et</option>
                     @foreach($albums as $album)
                         <option value="{{ $album->id }}">{{ $album->name }}</option>
                     @endforeach
