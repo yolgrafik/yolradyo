@@ -8,6 +8,7 @@ use App\Models\DjProfile;
 use App\Models\ForumPost;
 use App\Models\GalleryPhoto;
 use App\Models\News;
+use App\Models\PhotoAlbum;
 use App\Models\Programci;
 use App\Models\Setting;
 use App\Models\Slider;
@@ -142,7 +143,21 @@ class FrontendController extends Controller
 
     public function galeri()
     {
-        return view('frontend.page', ['pageTitle' => 'Foto Galeri']);
+        $albums = PhotoAlbum::query()
+            ->where('is_active', true)
+            ->with(['photos' => function ($query) {
+                $query->where('is_active', true)
+                    ->orderByDesc('is_cover')
+                    ->orderBy('sort_order')
+                    ->latest();
+            }])
+            ->orderBy('sort_order')
+            ->latest()
+            ->get()
+            ->filter(fn ($album) => $album->photos->isNotEmpty())
+            ->values();
+
+        return view('frontend.galeri', compact('albums'));
     }
 
     public function reklam()
