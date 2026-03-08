@@ -218,6 +218,16 @@ Route::prefix('admin')->group(function () {
             Route::delete('{news}', [App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('destroy');
         });
 
+        Route::prefix('about-pages')->name('admin.about-pages.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\AboutPageController::class, 'index'])->name('index');
+            Route::get('{slug}/edit', [App\Http\Controllers\Admin\AboutPageController::class, 'edit'])
+                ->where('slug', 'biz-kimiz|misyon|politika')
+                ->name('edit');
+            Route::put('{slug}', [App\Http\Controllers\Admin\AboutPageController::class, 'update'])
+                ->where('slug', 'biz-kimiz|misyon|politika')
+                ->name('update');
+        });
+
         Route::prefix('members')->name('admin.members.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\MemberController::class, 'index'])->name('index');
             Route::get('{user}/edit', [App\Http\Controllers\Admin\MemberController::class, 'edit'])->name('edit');

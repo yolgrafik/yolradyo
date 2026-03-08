@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutPage;
 use App\Models\DjProfile;
 use App\Models\ForumPost;
 use App\Models\News;
@@ -119,13 +120,23 @@ class FrontendController extends Controller
 
     public function hakkimizda(string $slug)
     {
+        $page = AboutPage::query()
+            ->active()
+            ->where('slug', $slug)
+            ->first();
+
         $titles = [
             'biz-kimiz' => 'Biz Kimiz',
             'misyon' => 'Misyon & Vizyon',
-            'politika' => 'Yayin Politikamiz',
+            'politika' => 'Yayın Politikamız',
         ];
-        $pageTitle = $titles[$slug] ?? 'Hakkimizda';
-        return view('frontend.page', ['pageTitle' => $pageTitle]);
+
+        return view('frontend.page', [
+            'pageTitle' => $page?->title ?? ($titles[$slug] ?? 'Hakkımızda'),
+            'pageDescription' => $page?->short_description,
+            'pageContent' => $page?->content,
+            'pageImage' => $page?->image_path,
+        ]);
     }
 
     public function iletisim()
