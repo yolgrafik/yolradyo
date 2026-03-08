@@ -935,6 +935,34 @@
             </div>
             @include('partials.requests-ticker')
             @include('partials.programcilar-cards')
+            @php $latestNews = $latestNews ?? collect(); @endphp
+            <section class="home-news-section" aria-label="Haberler">
+                <div class="home-news-section__header">
+                    <h2 class="home-news-section__title">Haberler</h2>
+                </div>
+                @if($latestNews->isNotEmpty())
+                <div class="home-news-grid">
+                    @foreach($latestNews as $news)
+                    <article class="home-news-card">
+                        <div class="home-news-card__img-wrap">
+                            @if($news->cover_image)
+                            <img src="{{ asset($news->cover_image) }}" alt="{{ $news->title }}" class="home-news-card__img">
+                            @endif
+                        </div>
+                        <div class="home-news-card__body">
+                            <h3 class="home-news-card__title" title="{{ $news->title }}">{{ $news->title }}</h3>
+                            <p class="home-news-card__excerpt" title="{{ $news->excerpt }}">{{ \Illuminate\Support\Str::limit($news->excerpt ?: $news->title, 120) }}</p>
+                            <a href="{{ route('news.show', $news->slug) }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
+                        </div>
+                    </article>
+                    @endforeach
+                </div>
+                @else
+                <div class="schedule-empty" style="display:block;padding:1rem 0;text-align:center;color:rgba(255,255,255,0.75);font-size:0.95rem;">
+                    Henüz yayınlanmış haber bulunmuyor.
+                </div>
+                @endif
+            </section>
         </div>
         <div class="home-right">
             <div class="home-actions">
@@ -993,34 +1021,6 @@
                 </div>
             </div>
             @include('partials.listener-submissions-widget')
-            @php $latestNews = $latestNews ?? collect(); @endphp
-            <section class="home-news-section" aria-label="Haberler">
-                <div class="home-news-section__header">
-                    <h2 class="home-news-section__title">Haberler</h2>
-                </div>
-                @if($latestNews->isNotEmpty())
-                <div class="home-news-grid">
-                    @foreach($latestNews as $news)
-                    <article class="home-news-card">
-                        <div class="home-news-card__img-wrap">
-                            @if($news->cover_image)
-                            <img src="{{ asset($news->cover_image) }}" alt="{{ $news->title }}" class="home-news-card__img">
-                            @endif
-                        </div>
-                        <div class="home-news-card__body">
-                            <h3 class="home-news-card__title" title="{{ $news->title }}">{{ $news->title }}</h3>
-                            <p class="home-news-card__excerpt" title="{{ $news->excerpt }}">{{ \Illuminate\Support\Str::limit($news->excerpt ?: $news->title, 120) }}</p>
-                            <a href="{{ route('news.show', $news->slug) }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
-                        </div>
-                    </article>
-                    @endforeach
-                </div>
-                @else
-                <div class="schedule-empty" style="display:block;padding:1rem 0;text-align:center;color:rgba(255,255,255,0.75);font-size:0.95rem;">
-                    Henüz yayınlanmış haber bulunmuyor.
-                </div>
-                @endif
-            </section>
             @include('partials.video-gallery-widget')
         </div>
     </div>
