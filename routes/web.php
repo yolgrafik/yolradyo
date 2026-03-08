@@ -229,6 +229,24 @@ Route::prefix('admin')->group(function () {
             Route::delete('{video}', [App\Http\Controllers\Admin\VideoController::class, 'destroy'])->name('destroy');
         });
 
+        Route::prefix('photo-gallery')->name('admin.photo-gallery.')->group(function () {
+            Route::get('albums', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'albums'])->name('albums');
+            Route::post('albums', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'storeAlbum'])->name('albums.store');
+
+            Route::get('photos/create', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'createPhoto'])->name('photos.create');
+            Route::post('photos', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'storePhoto'])->name('photos.store');
+
+            Route::get('photos/bulk', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'bulkUploadForm'])->name('photos.bulk');
+            Route::post('photos/bulk', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'bulkUploadStore'])->name('photos.bulk.store');
+
+            Route::get('photos/edit', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'editList'])->name('photos.edit.list');
+            Route::get('photos/{photo}/edit', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'editPhoto'])->name('photos.edit');
+            Route::put('photos/{photo}', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'updatePhoto'])->name('photos.update');
+
+            Route::get('photos/delete', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'deleteList'])->name('photos.delete.list');
+            Route::delete('photos/{photo}', [App\Http\Controllers\Admin\PhotoGalleryController::class, 'destroyPhoto'])->name('photos.destroy');
+        });
+
         Route::prefix('about-pages')->name('admin.about-pages.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\AboutPageController::class, 'index'])->name('index');
             Route::get('{slug}/edit', [App\Http\Controllers\Admin\AboutPageController::class, 'edit'])

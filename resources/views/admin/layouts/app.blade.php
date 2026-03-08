@@ -877,18 +877,18 @@
                             <li><a href="{{ route('admin.videos.featured') }}" class="nav-item {{ request()->routeIs('admin.videos.featured') ? 'is-active' : '' }}">One Cikan Video</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section" data-section="foto">
-                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                    <div class="nav-section {{ request()->routeIs('admin.photo-gallery.*') ? 'is-open' : '' }}" data-section="foto">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.photo-gallery.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                             <span>Foto Galeri</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="#" class="nav-item">Albumler</a></li>
-                            <li><a href="#" class="nav-item">Foto Ekle</a></li>
-                            <li><a href="#" class="nav-item">Toplu Foto Yukleme</a></li>
-                            <li><a href="#" class="nav-item">Foto Duzenle</a></li>
-                            <li><a href="#" class="nav-item">Foto Sil</a></li>
+                            <li><a href="{{ route('admin.photo-gallery.albums') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.albums') ? 'is-active' : '' }}">Albumler</a></li>
+                            <li><a href="{{ route('admin.photo-gallery.photos.create') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.photos.create') ? 'is-active' : '' }}">Foto Ekle</a></li>
+                            <li><a href="{{ route('admin.photo-gallery.photos.bulk') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.photos.bulk') ? 'is-active' : '' }}">Toplu Foto Yukleme</a></li>
+                            <li><a href="{{ route('admin.photo-gallery.photos.edit.list') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.photos.edit*') ? 'is-active' : '' }}">Foto Duzenle</a></li>
+                            <li><a href="{{ route('admin.photo-gallery.photos.delete.list') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.photos.delete.list') ? 'is-active' : '' }}">Foto Sil</a></li>
                         </ul>
                     </div>
                     <div class="nav-section {{ request()->routeIs('admin.schedule.*') || request()->routeIs('admin.djs.*') || request()->routeIs('admin.programcilar.*') ? 'is-open' : '' }}" data-section="program">
