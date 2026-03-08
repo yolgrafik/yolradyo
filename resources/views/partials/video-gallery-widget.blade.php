@@ -1,5 +1,8 @@
 @php
     $artistVideos = $artistVideos ?? collect();
+    $videoFallbackImage = 'data:image/svg+xml;charset=UTF-8,' . rawurlencode(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111827"/><stop offset="1" stop-color="#1f2937"/></linearGradient></defs><rect width="1280" height="720" fill="url(#g)"/><circle cx="640" cy="360" r="84" fill="#c92a2a"/><polygon points="620,320 620,400 700,360" fill="#fff"/><text x="640" y="470" text-anchor="middle" fill="#d1d5db" font-family="Arial, sans-serif" font-size="34" font-weight="700">Video</text></svg>'
+    );
 @endphp
 
 <section class="home-news-section video-gallery-section" aria-label="Video Galeri">
@@ -16,6 +19,31 @@
             <div class="swiper video-gallery-swiper" id="videoGallerySwiper">
                 <div class="swiper-wrapper">
                     @foreach($artistVideos as $video)
+                        @php
+                            $youtubeId = null;
+                            $youtubeSource = (string) (data_get($video, 'youtube_url') ?: data_get($video, 'youtube_embed_url') ?: '');
+                            if ($youtubeSource !== '' && preg_match('~(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)([A-Za-z0-9_-]{6,})~', $youtubeSource, $m)) {
+                                $youtubeId = $m[1];
+                            }
+
+                            $coverCandidates = [
+                                data_get($video, 'thumbnail'),
+                                data_get($video, 'thumbnail_url'),
+                                data_get($video, 'cover_image'),
+                                data_get($video, 'image'),
+                                data_get($video, 'cover_image_path') ? asset(data_get($video, 'cover_image_path')) : null,
+                                $youtubeId ? 'https://i.ytimg.com/vi/' . $youtubeId . '/hqdefault.jpg' : null,
+                            ];
+
+                            $resolvedCover = null;
+                            foreach ($coverCandidates as $candidate) {
+                                if (is_string($candidate) && trim($candidate) !== '') {
+                                    $resolvedCover = $candidate;
+                                    break;
+                                }
+                            }
+                            $resolvedCover = $resolvedCover ?: $videoFallbackImage;
+                        @endphp
                         <div class="swiper-slide">
                             <article
                                 class="video-gallery-card js-gallery-video-card"
@@ -24,11 +52,12 @@
                                 data-youtube="{{ $video->youtube_embed_url ?? '' }}"
                             >
                                 <div class="video-gallery-card__cover">
-                                    @if($video->cover_image_path)
-                                        <img src="{{ asset($video->cover_image_path) }}" alt="{{ $video->title }}" loading="lazy">
-                                    @else
-                                        <div class="video-gallery-card__fallback">Video</div>
-                                    @endif
+                                    <img
+                                        src="{{ $resolvedCover }}"
+                                        alt="{{ $video->title ?: 'Video' }}"
+                                        loading="lazy"
+                                        onerror="this.onerror=null;this.src='{{ $videoFallbackImage }}';"
+                                    >
                                     <span class="video-gallery-card__play">▶</span>
                                 </div>
                                 <div class="video-gallery-card__body">
@@ -80,8 +109,8 @@
 .video-gallery-card__inline-player iframe,.video-gallery-card__inline-player video{position:absolute;inset:0;width:100%;height:100%;border:none;display:block;object-fit:cover;}
 .video-gallery-card__play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(201,42,42,.92);color:#fff;font-size:22px;padding-left:3px;box-shadow:0 6px 18px rgba(0,0,0,.35);}
 .video-gallery-card__body{padding:8px 10px;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:3px;flex:0 0 20%;min-height:0;margin-top:0;background:transparent;overflow:hidden;}
-.video-gallery-card__title{margin:0;font-size:.85rem;font-weight:700;color:var(--text);line-height:1.3;}
-.video-gallery-card__desc{margin:0;font-size:.72rem;line-height:1.35;color:var(--ry-text-muted);}
+.video-gallery-card__title{margin:0;font-size:.85rem;font-weight:700;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em;}
+.video-gallery-card__desc{margin:0;font-size:.72rem;line-height:1.35;color:var(--ry-text-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em;}
 .video-gallery-widget{padding-bottom:0;}
 .video-gallery-swiper-btn{width:32px;height:32px;border-radius:50%;background:color-mix(in srgb, var(--ry-bar-bg) 90%, transparent);border:1px solid var(--border);color:var(--ry-text);}
 .video-gallery-swiper-btn::after{font-size:12px;font-weight:700;}
