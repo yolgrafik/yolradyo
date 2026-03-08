@@ -116,20 +116,14 @@
             z-index: 1;
         }
         .topbar-logo-wrap {
-            height: 42px;
+            height: 48px;
             display: flex;
             align-items: center;
         }
         .topbar-logo {
-            height: 42px;
+            height: 48px;
             width: auto;
             object-fit: contain;
-        }
-        .topbar-logo-fallback {
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: #fff;
         }
         .topbar-brand-text {
             display: flex;
@@ -545,10 +539,10 @@
                 padding: 0.75rem 1rem;
             }
             .topbar-logo-wrap {
-                height: 32px;
+                height: 38px;
             }
             .topbar-logo {
-                height: 32px;
+                height: 38px;
             }
             .topbar-title {
                 font-size: 1.25rem;
@@ -742,8 +736,7 @@
                 <div class="topbar-spacer"></div>
                 <div class="topbar-brand">
                     <div class="topbar-logo-wrap logo">
-                        <img src="{{ asset('logo.png') }}" alt="RADYOYOL" class="topbar-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="topbar-logo-fallback" style="display:none">RADYOYOL</span>
+                        <img src="{{ asset('assets/images/logo.png') }}" alt="RADYOYOL" class="topbar-logo">
                     </div>
                     <div class="topbar-brand-text">
                         <div class="topbar-title"><span class="shine">RADYOYOL ADMIN PANEL</span></div>
