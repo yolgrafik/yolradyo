@@ -60,7 +60,7 @@
 .photo-gallery-announcement-card{display:none;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:rgba(255,255,255,.03);height:100%;grid-template-rows:auto 96px;}
 .photo-gallery-announcement-card.is-active{display:grid;}
 .photo-gallery-announcement-card__image-btn{display:block;width:100%;padding:0;border:none;background:color-mix(in srgb,var(--ry-bar-bg) 82%, #0b0f16);cursor:zoom-in;aspect-ratio:16/10;height:auto;overflow:hidden;}
-.photo-gallery-announcement-card img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;}
+.photo-gallery-announcement-card img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;}
 .photo-gallery-announcement-card__body{padding:8px;min-height:96px;max-height:96px;overflow:hidden;}
 .photo-gallery-announcement-card__body h3{margin:0;font-size:.8rem;color:var(--ry-text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em;}
 .photo-gallery-announcement-card__body p{margin:.35rem 0 0;font-size:.72rem;color:var(--ry-text-muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
