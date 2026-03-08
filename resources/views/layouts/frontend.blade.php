@@ -622,7 +622,7 @@
             transform: translate(-55%, -50%);
         }
         .bottom-bar-logo {
-            height: 120px;
+            height: 112px;
             width: auto;
             display: block;
         }
@@ -781,7 +781,7 @@
             body.playing .disc-overlay { animation: none; }
         }
         @media (max-width: 768px) {
-            .bottom-bar-logo { height: 96px; }
+            .bottom-bar-logo { height: 90px; }
             .legal-footer { padding: 0 0.75rem; }
             .site-footer-bar { min-height: 48px; gap: 10px; }
             .footer-social a { width: 32px; height: 32px; }
