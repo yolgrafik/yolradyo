@@ -29,10 +29,14 @@ class SponsorController extends Controller
         $videoPath = null;
         $videoYoutubeUrl = null;
 
+        $videoPosterPath = null;
         if ($videoType === 'youtube' && !empty($validated['video_youtube_url'] ?? '')) {
             $videoYoutubeUrl = $validated['video_youtube_url'];
         } elseif ($videoType === 'mp4' && $request->hasFile('video_file')) {
             $videoPath = $this->uploadVideo($request->file('video_file'));
+            if ($request->hasFile('video_poster_file')) {
+                $videoPosterPath = $this->uploadVideoPoster($request->file('video_poster_file'));
+            }
         }
 
         Sponsor::create([
@@ -49,6 +53,7 @@ class SponsorController extends Controller
             'video_type' => $videoType === 'none' ? null : $videoType,
             'video_youtube_url' => $videoYoutubeUrl,
             'video_path' => $videoPath,
+            'video_poster_path' => $videoPosterPath,
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);
@@ -69,6 +74,7 @@ class SponsorController extends Controller
 
         $videoType = $validated['video_type'] ?? 'none';
         $videoPath = $sponsor->video_path;
+        $videoPosterPath = $sponsor->video_poster_path;
         $videoYoutubeUrl = $sponsor->video_youtube_url;
 
         if ($videoType === 'none') {
@@ -76,18 +82,34 @@ class SponsorController extends Controller
                 $this->deleteVideo($sponsor->video_path);
                 $videoPath = null;
             }
+            if ($sponsor->video_poster_path ?? null) {
+                $this->deleteVideoPoster($sponsor->video_poster_path);
+                $videoPosterPath = null;
+            }
             $videoYoutubeUrl = null;
         } elseif ($videoType === 'youtube') {
             if ($sponsor->video_path) {
                 $this->deleteVideo($sponsor->video_path);
                 $videoPath = null;
             }
-            $videoYoutubeUrl = !empty($validated['video_youtube_url'] ?? '') ? $validated['video_youtube_url'] : null;
-        } elseif ($videoType === 'mp4' && $request->hasFile('video_file')) {
-            if ($sponsor->video_path) {
-                $this->deleteVideo($sponsor->video_path);
+            if ($sponsor->video_poster_path ?? null) {
+                $this->deleteVideoPoster($sponsor->video_poster_path);
+                $videoPosterPath = null;
             }
-            $videoPath = $this->uploadVideo($request->file('video_file'));
+            $videoYoutubeUrl = !empty($validated['video_youtube_url'] ?? '') ? $validated['video_youtube_url'] : null;
+        } elseif ($videoType === 'mp4') {
+            if ($request->hasFile('video_file')) {
+                if ($sponsor->video_path) {
+                    $this->deleteVideo($sponsor->video_path);
+                }
+                $videoPath = $this->uploadVideo($request->file('video_file'));
+            }
+            if ($request->hasFile('video_poster_file')) {
+                if ($sponsor->video_poster_path ?? null) {
+                    $this->deleteVideoPoster($sponsor->video_poster_path);
+                }
+                $videoPosterPath = $this->uploadVideoPoster($request->file('video_poster_file'));
+            }
         }
 
         $sponsor->update([
@@ -104,6 +126,7 @@ class SponsorController extends Controller
             'video_type' => $videoType === 'none' ? null : $videoType,
             'video_youtube_url' => $videoYoutubeUrl,
             'video_path' => $videoPath,
+            'video_poster_path' => $videoPosterPath,
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);
@@ -118,6 +141,7 @@ class SponsorController extends Controller
             $this->deleteImage($path);
         }
         $this->deleteVideo($sponsor->video_path);
+        $this->deleteVideoPoster($sponsor->video_poster_path ?? null);
         $sponsor->delete();
         return redirect()->route('admin.sponsors.index')->with('success', 'Sponsor silindi.');
     }
@@ -142,6 +166,7 @@ class SponsorController extends Controller
             'video_type' => 'nullable|in:none,youtube,mp4',
             'video_youtube_url' => 'nullable|url|max:500',
             'video_file' => 'nullable|file|mimetypes:video/mp4|max:102400',
+            'video_poster_file' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:5120',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
         ];
@@ -195,6 +220,29 @@ class SponsorController extends Controller
     }
 
     private function deleteVideo(?string $path): void
+    {
+        if ($path && File::exists(public_path($path))) {
+            File::delete(public_path($path));
+        }
+    }
+
+    private function uploadVideoPoster($file): string
+    {
+        $dir = 'uploads/sponsors/video-posters';
+        $fullDir = public_path($dir);
+        if (!File::isDirectory($fullDir)) {
+            File::makeDirectory($fullDir, 0755, true);
+        }
+        $ext = strtolower($file->getClientOriginalExtension() ?: 'jpg');
+        if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'], true)) {
+            $ext = 'jpg';
+        }
+        $name = uniqid() . '_poster.' . $ext;
+        $file->move($fullDir, $name);
+        return $dir . '/' . $name;
+    }
+
+    private function deleteVideoPoster(?string $path): void
     {
         if ($path && File::exists(public_path($path))) {
             File::delete(public_path($path));

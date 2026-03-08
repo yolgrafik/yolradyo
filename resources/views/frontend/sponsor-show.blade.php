@@ -84,8 +84,9 @@
                     <iframe src="https://www.youtube.com/embed/{{ $ytId }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="{{ $sponsor->title ?? 'Sponsor' }} video"></iframe>
                 </div>
             @elseif($mp4Path)
+                @php $mp4Poster = $sponsor->getVideoPosterUrl(); @endphp
                 <div class="sponsor-video-mp4">
-                    <video controls width="100%" preload="metadata" poster="{{ $firstImg ? asset($firstImg) : '' }}">
+                    <video controls width="100%" preload="metadata" poster="{{ $mp4Poster ?? '' }}">
                         <source src="{{ asset($mp4Path) }}" type="video/mp4">
                         Tarayıcınız video oynatmayı desteklemiyor.
                     </video>

@@ -14,10 +14,11 @@
 </div>
 
 <div class="form-group">
-    <label for="cover_image">Kapak Resmi</label>
-    <input type="file" name="cover_image" id="cover_image" accept="image/*" class="form-input">
+    <label for="cover_image">Kapak Resmi / Önizleme Görseli</label>
+    <p class="form-hint" id="coverHint">MP4 için önizlemede kullanılır. YouTube için otomatik thumbnail gelir; isterseniz özel kapak da yükleyebilirsiniz.</p>
+    <input type="file" name="cover_image" id="cover_image" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif" class="form-input">
     @if($isEdit && !empty($video->cover_image_path))
-        <div class="preview-wrap"><img src="{{ asset($video->cover_image_path) }}" class="preview-img" alt=""></div>
+        <div class="preview-wrap" style="margin-top:.5rem;"><img src="{{ asset($video->cover_image_path) }}" class="preview-img" alt="" style="max-width:160px;max-height:90px;object-fit:cover;border-radius:6px;"></div>
     @endif
 </div>
 

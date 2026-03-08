@@ -30,8 +30,9 @@
             @foreach($artistVideos as $video)
                 <a href="{{ route('videos.show', $video) }}" class="videos-card">
                     <div class="videos-card__cover">
-                        @if($video->cover_image_path)
-                            <img src="{{ asset($video->cover_image_path) }}" alt="{{ $video->title }}">
+                        @php $poster = $video->getVideoPosterUrl(); @endphp
+                        @if($poster)
+                            <img src="{{ $poster }}" alt="{{ $video->title }}">
                         @endif
                         <span class="videos-card__play">▶</span>
                     </div>

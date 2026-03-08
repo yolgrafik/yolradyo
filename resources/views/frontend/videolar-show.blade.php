@@ -34,7 +34,7 @@
 <div class="video-detail">
     <div class="video-detail__player">
         @if($video->video_type === 'mp4' && $video->mp4_path)
-            <video controls autoplay playsinline src="{{ asset($video->mp4_path) }}"></video>
+            <video controls autoplay playsinline src="{{ asset($video->mp4_path) }}" poster="{{ $video->cover_image_path ? asset($video->cover_image_path) : '' }}"></video>
         @elseif($video->youtube_embed_url)
             <iframe src="{{ $video->youtube_embed_url }}?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
         @endif

@@ -51,6 +51,17 @@
     @if(!empty($sponsor?->video_path))
         <div style="margin-top:.6rem;font-size:.85rem;color:var(--muted);">Mevcut video: {{ basename($sponsor->video_path) }}</div>
     @endif
+    <div style="margin-top:1rem;">
+        <label style="display:block;margin-bottom:.4rem;font-weight:600;">Video Kapak Resmi / Önizleme Görseli</label>
+        <p class="pg-hint" style="font-size:.82rem;color:var(--muted);margin-bottom:.5rem;">MP4 video için önizlemede görünecek kapak resmi. Yoksa ana görsel kullanılır.</p>
+        <input type="file" name="video_poster_file" id="sponsorVideoPosterFile" class="pg-input" accept="image/jpeg,image/jpg,image/png,image/webp,image/gif">
+    @if(!empty($sponsor?->video_poster_path))
+        <div style="margin-top:.6rem;display:flex;align-items:center;gap:.75rem;">
+            <img src="{{ asset($sponsor->video_poster_path) }}" alt="Mevcut kapak" style="max-width:120px;max-height:68px;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,.15);">
+            <span style="font-size:.85rem;color:var(--muted);">Mevcut kapak görseli</span>
+        </div>
+    @endif
+    </div>
 </div>
 
 <div class="pg-grid">

@@ -46,4 +46,20 @@ class ArtistVideo extends Model
 
         return null;
     }
+
+    /**
+     * Video önizleme URL. MP4: cover_image_path. YouTube: cover_image_path veya otomatik thumbnail.
+     */
+    public function getVideoPosterUrl(): ?string
+    {
+        if (!empty($this->cover_image_path)) {
+            return asset($this->cover_image_path);
+        }
+        if ($this->video_type === 'youtube' && $this->youtube_url) {
+            if (preg_match('~(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)([A-Za-z0-9_-]{11})~', $this->youtube_url, $m)) {
+                return 'https://img.youtube.com/vi/' . $m[1] . '/hqdefault.jpg';
+            }
+        }
+        return null;
+    }
 }

@@ -22,6 +22,7 @@ class Sponsor extends Model
         'video_type',
         'video_youtube_url',
         'video_path',
+        'video_poster_path',
         'sort_order',
         'is_active',
     ];
@@ -98,14 +99,22 @@ class Sponsor extends Model
         return $id ? "https://img.youtube.com/vi/{$id}/hqdefault.jpg" : null;
     }
 
+    /**
+     * Video önizleme/kapak resmi URL. YouTube: otomatik thumbnail. MP4: video_poster_path > ana görsel > null (placeholder).
+     */
     public function getVideoPosterUrl(): ?string
     {
         if (($this->video_type ?? '') === 'youtube') {
             return $this->getYouTubeThumbnailUrl();
         }
-        $first = $this->getFirstImagePath();
-        if (($this->video_type ?? '') === 'mp4' && $first) {
-            return asset($first);
+        if (($this->video_type ?? '') === 'mp4') {
+            if (!empty($this->video_poster_path)) {
+                return asset($this->video_poster_path);
+            }
+            $first = $this->getFirstImagePath();
+            if ($first) {
+                return asset($first);
+            }
         }
         return null;
     }
