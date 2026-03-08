@@ -112,6 +112,7 @@ class PhotoGalleryController extends Controller
             'short_description' => 'nullable|string|max:2000',
             'image' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
             'is_cover' => 'nullable|boolean',
+            'is_announcement' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
         ]);
@@ -124,6 +125,7 @@ class PhotoGalleryController extends Controller
             'short_description' => $validated['short_description'] ?? null,
             'image_path' => $path,
             'is_cover' => (bool) ($validated['is_cover'] ?? false),
+            'is_announcement' => (bool) ($validated['is_announcement'] ?? false),
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);
@@ -180,6 +182,7 @@ class PhotoGalleryController extends Controller
             'short_description' => 'nullable|string|max:2000',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
             'is_cover' => 'nullable|boolean',
+            'is_announcement' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
         ]);
@@ -196,6 +199,7 @@ class PhotoGalleryController extends Controller
             'short_description' => $validated['short_description'] ?? null,
             'image_path' => $path,
             'is_cover' => (bool) ($validated['is_cover'] ?? false),
+            'is_announcement' => (bool) ($validated['is_announcement'] ?? false),
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);

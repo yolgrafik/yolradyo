@@ -146,24 +146,33 @@ class FrontendController extends Controller
         $albums = PhotoAlbum::query()
             ->where('is_active', true)
             ->withCount(['photos as active_photos_count' => function ($query) {
-                $query->where('is_active', true);
+                $query->where('is_active', true)->where('is_announcement', false);
             }])
             ->with(['photos' => function ($query) {
-                $query->where('is_active', true)->orderByDesc('is_cover')->orderBy('sort_order')->latest();
+                $query->where('is_active', true)->where('is_announcement', false)->orderByDesc('is_cover')->orderBy('sort_order')->latest();
             }])
+            ->orderBy('sort_order')
+            ->latest()
+            ->get();
+
+        $announcements = GalleryPhoto::query()
+            ->where('is_active', true)
+            ->where('is_announcement', true)
+            ->orderByDesc('is_cover')
             ->orderBy('sort_order')
             ->latest()
             ->get();
 
         $unassignedPhotos = GalleryPhoto::query()
             ->where('is_active', true)
+            ->where('is_announcement', false)
             ->whereNull('album_id')
             ->orderByDesc('is_cover')
             ->orderBy('sort_order')
             ->latest()
             ->get();
 
-        return view('frontend.galeri', compact('albums', 'unassignedPhotos'));
+        return view('frontend.galeri', compact('albums', 'announcements', 'unassignedPhotos'));
     }
 
     public function galeriAlbum(string $slug)
@@ -175,6 +184,7 @@ class FrontendController extends Controller
 
         $photos = GalleryPhoto::query()
             ->where('is_active', true)
+            ->where('is_announcement', false)
             ->where('album_id', $album->id)
             ->orderByDesc('is_cover')
             ->orderBy('sort_order')

@@ -59,6 +59,23 @@
         </div>
     @endif
 
+    @if(($announcements ?? collect())->isNotEmpty())
+        <h2 class="gallery-section-title">Duyurular</h2>
+        <div class="gallery-plain-grid">
+            @foreach($announcements as $photo)
+                <article class="gallery-photo-card">
+                    <img src="{{ asset($photo->image_path) }}" alt="{{ $photo->title ?: 'Duyuru' }}">
+                    <div class="gallery-photo-card__body">
+                        <h3 class="gallery-photo-card__title">{{ $photo->title ?: 'Duyuru' }}</h3>
+                        @if(!empty($photo->short_description))
+                            <p class="gallery-photo-card__desc">{{ \Illuminate\Support\Str::limit($photo->short_description, 90) }}</p>
+                        @endif
+                    </div>
+                </article>
+            @endforeach
+        </div>
+    @endif
+
     @if(($unassignedPhotos ?? collect())->isNotEmpty())
         <h2 class="gallery-section-title">Albümsüz Fotoğraflar</h2>
         <div class="gallery-plain-grid">
@@ -76,7 +93,7 @@
         </div>
     @endif
 
-    @if(($albums ?? collect())->isEmpty() && ($unassignedPhotos ?? collect())->isEmpty())
+    @if(($albums ?? collect())->isEmpty() && ($announcements ?? collect())->isEmpty() && ($unassignedPhotos ?? collect())->isEmpty())
         <div class="gallery-empty">Henüz yayınlanmış fotoğraf bulunmuyor.</div>
     @endif
 </section>

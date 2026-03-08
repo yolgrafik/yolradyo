@@ -21,6 +21,7 @@
             <div class="pg-form-group"><label>Kısa Açıklama</label><textarea name="short_description" rows="3" class="pg-input">{{ $photo->short_description }}</textarea></div>
             <div class="pg-form-group"><label>Foto Yükle (opsiyonel)</label><input type="file" name="image" class="pg-input" accept="image/*"></div>
             <label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;margin-bottom:.6rem;"><input type="checkbox" name="is_cover" value="1" {{ $photo->is_cover ? 'checked' : '' }}> Kapak Foto</label>
+            <label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;margin-bottom:.6rem;"><input type="checkbox" name="is_announcement" value="1" {{ $photo->is_announcement ? 'checked' : '' }}> Duyuru</label>
             <div class="pg-form-group"><label>Sıra</label><input type="number" name="sort_order" class="pg-input" min="0" value="{{ $photo->sort_order }}"></div>
             <label style="display:flex;gap:.5rem;align-items:center;font-size:.88rem;"><input type="checkbox" name="is_active" value="1" {{ $photo->is_active ? 'checked' : '' }}> Durum (Aktif/Pasif)</label>
             <div class="pg-actions">
