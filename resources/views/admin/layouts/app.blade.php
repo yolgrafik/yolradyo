@@ -885,6 +885,7 @@
                         </button>
                         <ul class="nav-section__items">
                             <li><a href="{{ route('admin.photo-gallery.albums') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.albums') ? 'is-active' : '' }}">Albumler</a></li>
+                            <li><a href="{{ route('admin.photo-gallery.albums.edit.list') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.albums.edit*') ? 'is-active' : '' }}">Albüm Düzenle</a></li>
                             <li><a href="{{ route('admin.photo-gallery.photos.create') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.photos.create') ? 'is-active' : '' }}">Foto Ekle</a></li>
                             <li><a href="{{ route('admin.photo-gallery.photos.bulk') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.photos.bulk') ? 'is-active' : '' }}">Toplu Foto Yukleme</a></li>
                             <li><a href="{{ route('admin.photo-gallery.photos.edit.list') }}" class="nav-item {{ request()->routeIs('admin.photo-gallery.photos.edit*') ? 'is-active' : '' }}">Foto Duzenle</a></li>
