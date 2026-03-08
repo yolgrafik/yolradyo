@@ -2,9 +2,9 @@
     $artistVideos = $artistVideos ?? collect();
 @endphp
 
-<section class="video-gallery-section" aria-label="Video Galeri">
-    <div class="video-gallery-section__header">
-        <h2 class="video-gallery-section__title">Video Galeri</h2>
+<section class="home-news-section video-gallery-section" aria-label="Video Galeri">
+    <div class="home-news-section__header video-gallery-section__header">
+        <h2 class="home-news-section__title video-gallery-section__title">Video Galeri</h2>
         <p class="video-gallery-section__subtitle">Sanatçı Videoları</p>
     </div>
     <div class="video-gallery-widget">
@@ -60,9 +60,8 @@
 @push('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <style>
-.video-gallery-section{margin-top:1.25rem;}
-.video-gallery-section__header{padding:.75rem 1rem;border-radius:var(--ry-radius);background:color-mix(in srgb, var(--ry-bar-bg) 85%, transparent);border:1px solid var(--ry-border);border-top:1px solid var(--ry-line-color);border-bottom:1px solid var(--ry-line-color);margin-bottom:1rem;}
-.video-gallery-section__title{font-size:1.1rem;font-weight:700;color:var(--ry-text);margin:0;}
+.video-gallery-section__header{margin-bottom:1rem;}
+.video-gallery-section__title{margin:0;}
 .video-gallery-section__subtitle{font-size:.84rem;color:var(--ry-text-muted);margin:.25rem 0 0;}
 .video-gallery-widget{position:relative;background:color-mix(in srgb,var(--ry-bar-bg) 75%, #0b0f16);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.25);border-top:1px solid var(--ry-line-color);}
 .video-gallery-swiper{padding:12px 12px 24px;}

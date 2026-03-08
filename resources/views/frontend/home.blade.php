@@ -956,6 +956,7 @@
                 </div>
                 @endif
             </section>
+            @include('partials.video-gallery-widget')
         </div>
         <div class="home-right">
             <div class="home-actions">
@@ -1014,7 +1015,6 @@
                 </div>
             </div>
             @include('partials.listener-submissions-widget')
-            @include('partials.video-gallery-widget')
         </div>
     </div>
 </div>
