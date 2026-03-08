@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AboutPage;
+use App\Models\ArtistVideo;
 use App\Models\DjProfile;
 use App\Models\ForumPost;
 use App\Models\News;
@@ -22,6 +23,12 @@ class FrontendController extends Controller
             ->limit(4)
             ->get();
         $programcilar = Programci::active()->ordered()->get();
+        $artistVideos = ArtistVideo::query()
+            ->active()
+            ->orderBy('sort_order')
+            ->latest()
+            ->limit(12)
+            ->get();
         $listenerSubmissions = ForumPost::with('user')
             ->where('approval_status', ForumPost::APPROVAL_APPROVED)
             ->whereIn('type', [ForumPost::TYPE_PHOTO, ForumPost::TYPE_VIDEO])
@@ -35,7 +42,7 @@ class FrontendController extends Controller
             ->limit(20)
             ->get();
 
-        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions', 'latestNews'));
+        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions', 'latestNews', 'artistVideos'));
     }
 
     public function player(SettingsService $settings, \Illuminate\Http\Request $request)
@@ -105,7 +112,13 @@ class FrontendController extends Controller
 
     public function videolar()
     {
-        return view('frontend.page', ['pageTitle' => 'Video Galeri']);
+        $artistVideos = ArtistVideo::query()
+            ->active()
+            ->orderBy('sort_order')
+            ->latest()
+            ->paginate(12);
+
+        return view('frontend.videolar', compact('artistVideos'));
     }
 
     public function galeri()

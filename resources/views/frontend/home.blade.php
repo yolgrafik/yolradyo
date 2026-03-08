@@ -837,6 +837,9 @@
         .listener-widget {
             grid-column: 1 / -1;
         }
+        .video-gallery-widget {
+            grid-column: 1 / -1;
+        }
         .live-dj-card {
             grid-column: 1 / -1;
         }
@@ -1011,6 +1014,7 @@
                 </div>
             </div>
             @include('partials.listener-submissions-widget')
+            @include('partials.video-gallery-widget')
         </div>
     </div>
 </div>

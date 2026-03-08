@@ -863,18 +863,16 @@
                             <li><a href="{{ route('admin.about-pages.edit', 'reklam') }}" class="nav-item {{ request()->routeIs('admin.about-pages.edit') && request()->route('slug') == 'reklam' ? 'is-active' : '' }}">Reklam</a></li>
                         </ul>
                     </div>
-                    <div class="nav-section" data-section="videolar">
-                        <button class="nav-section__toggle" type="button" aria-expanded="false">
+                    <div class="nav-section {{ request()->routeIs('admin.videos.*') ? 'is-open' : '' }}" data-section="videolar">
+                        <button class="nav-section__toggle" type="button" aria-expanded="{{ request()->routeIs('admin.videos.*') ? 'true' : 'false' }}">
                             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
                             <span>Videolar</span>
                             <span class="nav-section__chevron">&#9660;</span>
                         </button>
                         <ul class="nav-section__items">
-                            <li><a href="#" class="nav-item">Tum Videolar</a></li>
-                            <li><a href="#" class="nav-item">Video Ekle</a></li>
-                            <li><a href="#" class="nav-item">Video Duzenle</a></li>
-                            <li><a href="#" class="nav-item">Video Sil</a></li>
-                            <li><a href="#" class="nav-item">One Cikan Video</a></li>
+                            <li><a href="{{ route('admin.videos.index') }}" class="nav-item {{ request()->routeIs('admin.videos.index') ? 'is-active' : '' }}">Tum Videolar</a></li>
+                            <li><a href="{{ route('admin.videos.create') }}" class="nav-item {{ request()->routeIs('admin.videos.create') ? 'is-active' : '' }}">Video Ekle</a></li>
+                            <li><a href="{{ route('admin.videos.index') }}" class="nav-item {{ request()->routeIs('admin.videos.edit') ? 'is-active' : '' }}">Video Duzenle</a></li>
                         </ul>
                     </div>
                     <div class="nav-section" data-section="foto">
