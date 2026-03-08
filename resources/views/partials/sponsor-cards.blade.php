@@ -14,13 +14,10 @@
                     <article class="home-sponsor-card">
                         <div class="home-sponsor-card__inner">
                             <div class="home-sponsor-card__media" style="aspect-ratio:16/9;min-height:140px;">
-                                @if($sponsor->hasVideo())
+                                    @if($sponsor->hasVideo())
                                     @php
                                         $vid = $sponsor->getYouTubeVideoId();
                                         $poster = $sponsor->getVideoPosterUrl();
-                                        if (!$poster && ($sponsor->video_type ?? '') === 'mp4') {
-                                            $poster = $sponsor->image_path ? asset($sponsor->image_path) : null;
-                                        }
                                     @endphp
                                     <div class="home-sponsor-card__video-wrap" data-video-type="{{ $sponsor->video_type ?? '' }}" data-video-id="{{ $vid ?? '' }}" data-video-src="{{ ($sponsor->video_type ?? '') === 'mp4' ? asset($sponsor->video_path ?? '') : '' }}" data-sponsor-id="{{ $sponsor->id }}">
                                         <div class="home-sponsor-card__video-preview">
