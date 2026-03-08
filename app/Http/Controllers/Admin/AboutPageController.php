@@ -15,6 +15,7 @@ class AboutPageController extends Controller
         'biz-kimiz' => 'Biz Kimiz',
         'misyon' => 'Misyon & Vizyon',
         'politika' => 'Yayın Politikamız',
+        'reklam' => 'Reklam',
     ];
 
     private string $uploadDir = 'uploads/about-pages';

@@ -15,7 +15,7 @@
         @endif
 
         <ul class="about-list">
-            @foreach(['biz-kimiz', 'misyon', 'politika'] as $slug)
+            @foreach(['biz-kimiz', 'misyon', 'politika', 'reklam'] as $slug)
                 @php $page = $pages[$slug] ?? null; @endphp
                 <li class="about-item">
                     <a href="{{ route('admin.about-pages.edit', $slug) }}" class="about-link">
