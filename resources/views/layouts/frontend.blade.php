@@ -1052,8 +1052,7 @@
     <div class="bottom-bar-player">
         <div class="player-logo-wrap">
             <div class="logo-player bottom-bar-logo-wrap">
-                @php $playerLogo = brand_logo_url(null, 'assets/images/play.png'); @endphp
-                <img src="{{ $playerLogo }}" class="bottom-bar-logo" alt="{{ $siteName }}">
+                <img src="{{ asset('assets/images/play.png') }}" class="bottom-bar-logo" alt="{{ $siteName }}">
                 <button type="button" id="discBtn" class="disc-overlay" title="Oynat / Duraklat" aria-label="Oynat / Duraklat"><span class="icon play"></span></button>
             </div>
         </div>
