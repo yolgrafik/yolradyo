@@ -102,10 +102,11 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 (function(){
+    var gallerySwiper = null;
     if (typeof Swiper === 'undefined') return;
     var swiperEl = document.getElementById('videoGallerySwiper');
     if (swiperEl) {
-        new Swiper('#videoGallerySwiper', {
+        gallerySwiper = new Swiper('#videoGallerySwiper', {
             loop: swiperEl.querySelectorAll('.swiper-slide').length > 1,
             slidesPerView: 1,
             spaceBetween: 0,
@@ -148,6 +149,9 @@
             return;
         }
         player.classList.add('is-active');
+        if (gallerySwiper && gallerySwiper.autoplay) {
+            gallerySwiper.autoplay.stop();
+        }
     }
 
     document.querySelectorAll('.js-gallery-video-card').forEach(function(card){
