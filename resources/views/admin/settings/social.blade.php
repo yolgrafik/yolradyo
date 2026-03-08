@@ -54,6 +54,8 @@
                 <button type="submit" class="btn-save">Kaydet</button>
             </div>
         </form>
+
+        @include('admin.settings.partials.export-sql-link')
     </div>
 </div>
 

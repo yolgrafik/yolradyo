@@ -42,17 +42,11 @@ class SettingsExportController extends Controller
             if ($rows->isNotEmpty()) {
                 $lines[] = '-- settings (radyo/shoutcast)';
                 $lines[] = 'TRUNCATE TABLE `settings`;';
+                $cols = array_diff(array_keys((array) $rows->first()), ['id']);
                 foreach ($rows as $row) {
-                    $cols = ['radio_stream_url', 'radio_backup_stream_url', 'radio_auto_play', 'radio_default_volume', 'shoutcast_base_url', 'shoutcast_sid'];
-                    if (Schema::hasColumn('settings', 'radio_force_status')) {
-                        $cols[] = 'radio_force_status';
-                    }
-                    $cols[] = 'created_at';
-                    $cols[] = 'updated_at';
                     $vals = [];
                     foreach ($cols as $c) {
-                        $v = $row->{$c} ?? null;
-                        $vals[] = $this->sqlVal($v);
+                        $vals[] = $this->sqlVal($row->{$c} ?? null);
                     }
                     $lines[] = 'INSERT INTO `settings` (`' . implode('`, `', $cols) . '`) VALUES (' . implode(', ', $vals) . ');';
                 }

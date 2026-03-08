@@ -101,6 +101,8 @@
                 <button type="submit" class="btn-test">Test Mail Gönder</button>
             </form>
         </div>
+
+        @include('admin.settings.partials.export-sql-link')
     </div>
 </div>
 

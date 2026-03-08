@@ -24,6 +24,8 @@
                 <a href="{{ route('admin.shoutcast.player.index') }}" class="btn-secondary">Web Player'a Git</a>
             </div>
         </form>
+
+        @include('admin.settings.partials.export-sql-link')
     </div>
 </div>
 

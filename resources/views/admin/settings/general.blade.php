@@ -150,6 +150,8 @@
             <button type="submit" class="btn-mail-test">Test E-postası Gönder</button>
         </form>
     </div>
+
+    @include('admin.settings.partials.export-sql-link')
 </div>
 
 @push('styles')
