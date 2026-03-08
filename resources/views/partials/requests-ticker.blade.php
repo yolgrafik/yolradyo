@@ -80,12 +80,15 @@
     flex-wrap: nowrap;
     height: 100%;
     white-space: nowrap;
-    animation: tickerMove 30s linear infinite;
+    width: max-content;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    animation: tickerMove var(--ticker-duration, 30s) linear infinite;
 }
 .ticker:hover .ticker__track { animation-play-state: paused; }
 @keyframes tickerMove {
-    from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(calc(-1 * var(--ticker-shift, 0px)), 0, 0); }
 }
 .ticker__item {
     display: inline-flex;
@@ -104,6 +107,12 @@
     flex-shrink: 0;
     margin: 0 0.5rem;
 }
+.ticker__group {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+}
 .ticker__empty {
     padding: 0 1rem;
     color: var(--muted);
@@ -115,6 +124,12 @@
     .ticker__item { font-size: 0.85rem; padding: 0 0.5rem; }
     .ticker__logo { height: 18px; margin: 0 0.35rem; }
 }
+@media (prefers-reduced-motion: reduce) {
+    .ticker__track {
+        animation: none !important;
+        transform: none !important;
+    }
+}
 </style>
 @endpush
 
@@ -125,6 +140,8 @@
     var logoUrl = '{{ $logoUrl }}';
     var track = document.getElementById('tickerTrack');
     if (!track) return;
+    var viewport = track.parentElement;
+    var latestBaseHtml = '';
 
     var fallback = [
         { artist: 'Ahmet Kaya', song: 'Ben Beni', name: 'Ali Çelik' },
@@ -132,8 +149,62 @@
         { artist: 'Mahsun Kırmızıgül', song: 'Sevda', name: 'Mehmet Demir' },
     ];
 
+    function getRequester(r) {
+        return r.requester || r.requester_name || r.name || r.full_name || '';
+    }
+
+    function getArtist(r) {
+        return r.artist || r.artist_name || '';
+    }
+
+    function getSong(r) {
+        return r.song || r.song_name || '';
+    }
+
     function formatItem(r) {
-        return (r.artist || '') + ' - ' + (r.song || '') + ' | ' + (r.name || '');
+        return getRequester(r) + ' | ' + getArtist(r) + ' | ' + getSong(r);
+    }
+
+    function restartAnimation() {
+        track.style.animation = 'none';
+        // Force reflow before re-enabling animation.
+        void track.offsetWidth;
+        track.style.animation = '';
+    }
+
+    function buildBaseHtml(items) {
+        var logo = '<img class="ticker__logo" src="' + logoUrl + '" alt="RADYOYOL" onerror="this.style.display=\'none\'">';
+        var html = '';
+        items.forEach(function(r) {
+            html += '<span class="ticker__item">' + escapeHtml(formatItem(r)) + '</span>' + logo;
+        });
+        return html;
+    }
+
+    function setupInfiniteTrack(baseHtml) {
+        latestBaseHtml = baseHtml;
+        var viewportWidth = (viewport && viewport.offsetWidth) ? viewport.offsetWidth : 1;
+
+        track.innerHTML = '<span class="ticker__group">' + baseHtml + '</span>';
+        var measuredBaseWidth = (track.querySelector('.ticker__group') || { offsetWidth: 1 }).offsetWidth || 1;
+
+        // Grow one cycle so it is always wider than viewport; avoids visible gaps on reset.
+        var minCycleWidth = viewportWidth * 1.5;
+        var repeatCount = Math.max(1, Math.ceil(minCycleWidth / measuredBaseWidth));
+        var cycleHtml = new Array(repeatCount + 1).join(baseHtml);
+
+        track.innerHTML =
+            '<span class="ticker__group">' + cycleHtml + '</span>' +
+            '<span class="ticker__group" aria-hidden="true">' + cycleHtml + '</span>';
+
+        var firstGroup = track.querySelector('.ticker__group');
+        var shift = (firstGroup && firstGroup.offsetWidth) ? firstGroup.offsetWidth : measuredBaseWidth;
+        var pxPerSecond = 85;
+        var duration = Math.max(12, shift / pxPerSecond);
+
+        track.style.setProperty('--ticker-shift', shift + 'px');
+        track.style.setProperty('--ticker-duration', duration + 's');
+        restartAnimation();
     }
 
     function renderItems(items) {
@@ -142,13 +213,7 @@
             track.style.animation = 'none';
             return;
         }
-        var html = '';
-        var logo = '<img class="ticker__logo" src="' + logoUrl + '" alt="RADYOYOL" onerror="this.style.display=\'none\'">';
-        items.forEach(function(r) {
-            html += '<span class="ticker__item">' + escapeHtml(formatItem(r)) + '</span>' + logo;
-        });
-        track.innerHTML = html + html;
-        track.style.animation = '';
+        setupInfiniteTrack(buildBaseHtml(items));
     }
 
     function escapeHtml(s) {
@@ -165,6 +230,15 @@
         .catch(function() {
             renderItems(fallback);
         });
+
+    var resizeTimer = null;
+    window.addEventListener('resize', function() {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (!latestBaseHtml || track.querySelector('.ticker__empty')) return;
+            setupInfiniteTrack(latestBaseHtml);
+        }, 120);
+    });
 })();
 </script>
 @endpush

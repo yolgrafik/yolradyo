@@ -15,6 +15,7 @@ class ApprovedRequestsController extends Controller
             ->limit(50)
             ->get()
             ->map(fn ($r) => [
+                'requester' => $r->full_name,
                 'artist' => $r->artist_name,
                 'song' => $r->song_name,
                 'name' => $r->full_name,

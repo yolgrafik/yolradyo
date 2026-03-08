@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DjProfile;
 use App\Models\ForumPost;
+use App\Models\News;
 use App\Models\Programci;
 use App\Models\Setting;
 use App\Models\Slider;
@@ -14,6 +15,11 @@ class FrontendController extends Controller
     public function home()
     {
         $sliders = Slider::active()->ordered()->get();
+        $latestNews = News::query()
+            ->active()
+            ->latest()
+            ->limit(4)
+            ->get();
         $programcilar = Programci::active()->ordered()->get();
         $listenerSubmissions = ForumPost::with('user')
             ->where('approval_status', ForumPost::APPROVAL_APPROVED)
@@ -28,7 +34,7 @@ class FrontendController extends Controller
             ->limit(20)
             ->get();
 
-        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions'));
+        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions', 'latestNews'));
     }
 
     public function player(SettingsService $settings, \Illuminate\Http\Request $request)
@@ -70,7 +76,30 @@ class FrontendController extends Controller
 
     public function haberler()
     {
-        return view('frontend.page', ['pageTitle' => 'Haberler']);
+        $news = News::query()
+            ->active()
+            ->latest()
+            ->get();
+
+        return view('frontend.haberler.index', compact('news'));
+    }
+
+    public function haberDetay(string $slug)
+    {
+        $newsItem = News::query()
+            ->active()
+            ->with('media')
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $relatedNews = News::query()
+            ->active()
+            ->where('id', '!=', $newsItem->id)
+            ->latest()
+            ->limit(4)
+            ->get();
+
+        return view('frontend.haberler.show', compact('newsItem', 'relatedNews'));
     }
 
     public function videolar()

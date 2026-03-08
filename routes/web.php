@@ -32,7 +32,8 @@ Route::get('/programlar', [FrontendController::class, 'programlar']);
 Route::get('/programcilar', [FrontendController::class, 'programcilarIndex'])->name('public.programcilar.index');
 Route::get('/programcilar/{slug}', [FrontendController::class, 'programciShow'])->name('public.programcilar.show')->where('slug', '[a-z0-9\-]+');
 Route::post('/programcilar/{slug}/contact', [App\Http\Controllers\ProgramciContactController::class, 'store'])->name('public.programcilar.contact')->middleware(['auth', 'throttle:contact-messages'])->where('slug', '[a-z0-9\-]+');
-Route::get('/haberler', [FrontendController::class, 'haberler']);
+Route::get('/haberler', [FrontendController::class, 'haberler'])->name('news.index');
+Route::get('/haberler/{slug}', [FrontendController::class, 'haberDetay'])->name('news.show')->where('slug', '[a-z0-9\-]+');
 Route::get('/videolar', [FrontendController::class, 'videolar']);
 Route::get('/galeri', [FrontendController::class, 'galeri']);
 Route::get('/reklam', [FrontendController::class, 'reklam']);
@@ -206,6 +207,15 @@ Route::prefix('admin')->group(function () {
             Route::get('{slider}/edit', [App\Http\Controllers\Admin\SliderController::class, 'edit'])->name('edit');
             Route::put('{slider}', [App\Http\Controllers\Admin\SliderController::class, 'update'])->name('update');
             Route::delete('{slider}', [App\Http\Controllers\Admin\SliderController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('news')->name('admin.news.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\NewsController::class, 'index'])->name('index');
+            Route::get('create', [App\Http\Controllers\Admin\NewsController::class, 'create'])->name('create');
+            Route::post('/', [App\Http\Controllers\Admin\NewsController::class, 'store'])->name('store');
+            Route::get('{news}/edit', [App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('edit');
+            Route::put('{news}', [App\Http\Controllers\Admin\NewsController::class, 'update'])->name('update');
+            Route::delete('{news}', [App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('members')->name('admin.members.')->group(function () {

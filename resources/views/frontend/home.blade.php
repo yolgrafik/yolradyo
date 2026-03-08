@@ -198,7 +198,7 @@
         justify-content: space-between;
         gap: 0.75rem;
         padding: 0.6rem 1rem 0.5rem;
-        background: rgba(255, 255, 255, 0.02);
+        background: transparent;
         border-bottom: 1px solid var(--ry-line-color);
     }
     .schedule-top-bar__title {
@@ -253,6 +253,7 @@
         padding: 0 1rem 1rem;
         min-width: 0;
         overflow: hidden;
+        min-height: 72px;
     }
     .schedule-strip {
         display: flex;
@@ -264,11 +265,9 @@
         max-width: 100%;
         overflow: hidden;
         padding: 8px 10px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-top: 1px solid var(--ry-line-color);
-        border-bottom: 1px solid var(--ry-line-color);
+        border-radius: 0;
+        background: transparent;
+        border: none;
         margin-top: 8px;
         min-height: 44px;
     }
@@ -475,6 +474,7 @@
     .live-content {
         padding: 14px;
         transition: opacity 0.3s ease;
+        min-height: 136px;
     }
     .live-content.updating {
         opacity: 0.6;
@@ -719,6 +719,104 @@
     .listener-swiper-pagination .swiper-pagination-bullet-active {
         background: var(--ry-schedule-active);
     }
+    .home-news-section {
+        margin-top: 1.25rem;
+    }
+    .home-news-section__header {
+        padding: 0.75rem 1rem;
+        border-radius: var(--ry-radius);
+        background: color-mix(in srgb, var(--ry-bar-bg) 85%, transparent);
+        border: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
+        margin-bottom: 1rem;
+    }
+    .home-news-section__title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--ry-text);
+        margin: 0;
+    }
+    .home-news-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+    }
+    .home-news-card {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background: color-mix(in srgb, var(--ry-bar-bg) 75%, transparent);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
+        border-radius: var(--ry-radius);
+        overflow: hidden;
+        transition: all 0.2s;
+        min-height: 100%;
+    }
+    .home-news-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--ry-schedule-active);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .home-news-card__img-wrap {
+        width: 100%;
+        aspect-ratio: 1;
+        background: var(--ry-schedule-bg);
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    .home-news-card__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .home-news-card__body {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        flex: 1;
+        min-width: 0;
+    }
+    .home-news-card__title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--ry-text);
+        margin: 0;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 2.7em;
+    }
+    .home-news-card__excerpt {
+        font-size: 0.85rem;
+        color: var(--ry-text-muted);
+        margin: 0;
+        line-height: 1.45;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 2.9em;
+    }
+    .home-news-card__btn {
+        margin-top: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.95rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-decoration: none;
+    }
     @media (max-width: 992px) {
         .home-main {
             grid-template-columns: 1fr;
@@ -742,6 +840,9 @@
         .live-dj-card {
             grid-column: 1 / -1;
         }
+        .home-news-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
     @media (max-width: 768px) {
         .home-slider__content { padding: 1.5rem; max-width: 85%; }
@@ -764,6 +865,9 @@
         }
         .home-actions { flex-direction: column; }
         .btn-request, .btn-whatsapp-istek { font-size: 0.8rem; padding: 0.9rem 0.75rem; }
+        .home-news-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 @endpush
@@ -821,6 +925,30 @@
             </div>
             @include('partials.requests-ticker')
             @include('partials.programcilar-cards')
+            @php $latestNews = $latestNews ?? collect(); @endphp
+            @if($latestNews->isNotEmpty())
+            <section class="home-news-section" aria-label="Haberler">
+                <div class="home-news-section__header">
+                    <h2 class="home-news-section__title">Haberler</h2>
+                </div>
+                <div class="home-news-grid">
+                    @foreach($latestNews as $news)
+                    <article class="home-news-card">
+                        <div class="home-news-card__img-wrap">
+                            @if($news->cover_image)
+                            <img src="{{ asset($news->cover_image) }}" alt="{{ $news->title }}" class="home-news-card__img">
+                            @endif
+                        </div>
+                        <div class="home-news-card__body">
+                            <h3 class="home-news-card__title" title="{{ $news->title }}">{{ $news->title }}</h3>
+                            <p class="home-news-card__excerpt" title="{{ $news->excerpt }}">{{ \Illuminate\Support\Str::limit($news->excerpt ?: $news->title, 120) }}</p>
+                            <a href="{{ route('news.show', $news->slug) }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
+                        </div>
+                    </article>
+                    @endforeach
+                </div>
+            </section>
+            @endif
         </div>
         <div class="home-right">
             <div class="home-actions">
@@ -891,15 +1019,32 @@
     var loadingEl = document.getElementById('scheduleLoading');
     var emptyEl = document.getElementById('scheduleEmpty');
     var currentDay = (function(){ var d=new Date().getDay(); return d===0?6:d-1; })();
+    var hasInitialScheduleLoad = false;
+    var lastScheduleSignature = '';
+    var lastLiveSignature = '';
 
     function renderSchedule(items) {
         if (!container) return;
         if (loadingEl) loadingEl.style.display='none';
         if (emptyEl) emptyEl.style.display=items.length===0?'block':'none';
-        container.querySelectorAll('.schedule-strip').forEach(function(el){ el.remove(); });
-        if (items.length===0) return;
-        var strip = document.createElement('div');
-        strip.className = 'schedule-strip';
+        var signature = JSON.stringify(items || []);
+        if (signature === lastScheduleSignature) return;
+        lastScheduleSignature = signature;
+
+        var strip = container.querySelector('.schedule-strip');
+        if (!strip) {
+            strip = document.createElement('div');
+            strip.className = 'schedule-strip';
+            container.appendChild(strip);
+        }
+        strip.textContent = '';
+
+        if (items.length===0) {
+            strip.style.display = 'none';
+            return;
+        }
+
+        strip.style.display = 'flex';
         items.forEach(function(it, i){
             var chip = document.createElement('span');
             chip.className = 'schedule-chip' + (it.is_live ? ' is-live' : '');
@@ -921,22 +1066,25 @@
                 chip.appendChild(badge);
             }
             strip.appendChild(chip);
-            if (i < items.length - 1) {
-                var dot = document.createElement('span');
-                dot.className = 'dot';
-                dot.textContent = '•';
-                strip.appendChild(dot);
-            }
         });
-        container.appendChild(strip);
     }
 
     function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
     function renderLiveCard(activeDj) {
         var cardContent = document.getElementById('liveDjCardContent');
         if (!cardContent) return;
+        var signature = activeDj ? JSON.stringify({
+            id: activeDj.id || '',
+            name: activeDj.name || '',
+            avatar_url: activeDj.avatar_url || '',
+            initials: activeDj.initials || '',
+            program_title: activeDj.program_title || '',
+            tagline: activeDj.tagline || ''
+        }) : 'no-live';
+        if (signature === lastLiveSignature) return;
+        lastLiveSignature = signature;
+
         cardContent.classList.add('updating');
-        setTimeout(function() {
         if (activeDj) {
             var html = '<div class="live-dj-row">';
             if (activeDj.avatar_url) {
@@ -958,21 +1106,22 @@
             cardContent.classList.add('empty');
         }
         cardContent.classList.remove('updating');
-        }, 50);
     }
 
     function loadSchedule(day) {
-        if (loadingEl) loadingEl.style.display='block';
+        if (!hasInitialScheduleLoad && loadingEl) loadingEl.style.display='block';
         if (emptyEl) emptyEl.style.display='none';
         fetch('{{ url("/api/schedule") }}?day=' + day)
             .then(function(r){ return r.json(); })
             .then(function(data){
                 renderSchedule(data.items || []);
                 renderLiveCard(data.activeDj || null);
+                hasInitialScheduleLoad = true;
             })
             .catch(function(){
                 renderSchedule([]);
                 renderLiveCard(null);
+                hasInitialScheduleLoad = true;
             });
     }
 
