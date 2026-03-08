@@ -73,13 +73,13 @@
             max-width: 260px;
         }
         .nav-logo img {
-            height: 72px;
+            height: 92px;
             width: auto;
             flex-shrink: 0;
             object-fit: contain;
             transition: height 0.25s ease;
         }
-        .navbar.is-scrolled .nav-logo img { height: 56px; }
+        .navbar.is-scrolled .nav-logo img { height: 72px; }
         .nav-logo-text {
             font-size: 1.5rem;
             font-weight: 700;
@@ -630,8 +630,8 @@
             .navbar { height: 72px; min-height: 72px; padding: 0 1rem; }
             .navbar.is-scrolled { height: 68px; min-height: 68px; }
             .nav-logo { flex-direction: row; max-width: 240px; }
-            .nav-logo img { height: 52px; }
-            .navbar.is-scrolled .nav-logo img { height: 46px; }
+            .nav-logo img { height: 66px; }
+            .navbar.is-scrolled .nav-logo img { height: 58px; }
             .nav-logo-slogan-wrap { padding: 0.2rem 0.4rem; max-width: 110px; min-width: 60px; }
             .nav-logo-slogan { font-size: clamp(0.5rem, 2.5vw, 0.6rem); letter-spacing: 0.02em; }
             .nav-center {
@@ -693,8 +693,8 @@
         }
         @media (max-width: 768px) {
             .nav-logo { max-width: 220px; }
-            .nav-logo img { height: 50px; }
-            .navbar.is-scrolled .nav-logo img { height: 44px; }
+            .nav-logo img { height: 62px; }
+            .navbar.is-scrolled .nav-logo img { height: 54px; }
             .nav-logo-slogan-wrap { max-width: 100px; min-width: 50px; }
             .nav-logo-slogan { font-size: clamp(0.48rem, 2.8vw, 0.58rem); }
             .bottom-bar-player { padding: 0 1rem; gap: 0.5rem; }
