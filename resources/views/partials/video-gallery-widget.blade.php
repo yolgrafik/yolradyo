@@ -83,7 +83,7 @@
 .video-gallery-card__title{margin:0;font-size:.85rem;font-weight:700;color:var(--text);line-height:1.3;}
 .video-gallery-card__desc{margin:0;font-size:.72rem;line-height:1.35;color:var(--ry-text-muted);}
 .video-gallery-widget{padding-bottom:0;}
-.video-gallery-swiper-btn{width:32px;height:32px;border-radius:50%;background:color-mix(in srgb, var(--ry-bar-bg) 90%, transparent);border:1px solid var(--border);color:var(--ry-text);}
+.video-gallery-swiper-btn{top:22%;width:32px;height:32px;border-radius:50%;background:color-mix(in srgb, var(--ry-bar-bg) 90%, transparent);border:1px solid var(--border);color:var(--ry-text);}
 .video-gallery-swiper-btn::after{font-size:12px;font-weight:700;}
 .video-gallery-swiper-pagination .swiper-pagination-bullet{background:rgba(255,255,255,.38);opacity:1;}
 .video-gallery-swiper-pagination .swiper-pagination-bullet-active{background:var(--ry-schedule-active);}
