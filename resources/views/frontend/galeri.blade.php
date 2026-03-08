@@ -6,8 +6,7 @@
 <style>
 .gallery-page{max-width:1180px;margin:0 auto;padding:1.25rem 1rem 2rem;}
 .gallery-page__head{padding:.75rem 1rem;border-radius:var(--ry-radius);background:color-mix(in srgb, var(--ry-bar-bg) 85%, transparent);border:1px solid var(--ry-border);border-top:1px solid var(--ry-line-color);border-bottom:1px solid var(--ry-line-color);margin-bottom:1rem;}
-.gallery-page__title{margin:0;font-size:1.15rem;font-weight:700;color:var(--ry-text);}
-.gallery-page__subtitle{margin:.25rem 0 0;color:var(--ry-text-muted);font-size:.85rem;}
+.gallery-page__title{margin:0;font-size:clamp(.95rem,1.7vw,1.15rem);font-weight:700;color:var(--ry-text);line-height:1.3;letter-spacing:.01em;word-break:break-word;text-wrap:balance;}
 .gallery-albums-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
 .gallery-album-card{display:block;text-decoration:none;background:color-mix(in srgb, var(--ry-bar-bg) 75%, #0b0f16);border:1px solid var(--border);border-radius:12px;overflow:hidden;border-top:1px solid var(--ry-line-color);border-bottom:1px solid var(--ry-line-color);transition:transform .2s ease, box-shadow .2s ease,border-color .2s ease;}
 .gallery-album-card:hover{transform:translateY(-3px);border-color:var(--ry-schedule-active);box-shadow:0 8px 20px rgba(0,0,0,.28);}
@@ -57,6 +56,8 @@
 }
 @media (max-width: 640px){
     .gallery-plain-grid--unassigned{grid-template-columns:1fr;}
+    .gallery-page__head{padding:.62rem .78rem;}
+    .gallery-page__title{font-size:clamp(.9rem,4.2vw,1rem);}
 }
 </style>
 @endpush
@@ -64,8 +65,7 @@
 @section('content')
 <section class="gallery-page">
     <div class="gallery-page__head">
-        <h1 class="gallery-page__title">Foto Galeri</h1>
-        <p class="gallery-page__subtitle">Albüm bazlı fotoğraflar</p>
+        <h1 class="gallery-page__title">Foto Galeri &amp; Albümler &amp; Duyuru</h1>
     </div>
 
     @if(($albums ?? collect())->isNotEmpty())
