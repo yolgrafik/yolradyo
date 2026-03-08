@@ -17,7 +17,7 @@
                         <form method="POST" action="{{ route('admin.photo-gallery.albums.destroy', $album) }}" onsubmit="return confirm('Albüm silinsin mi? Albümdeki fotoğraflar da silinecek.');" style="margin-top:.6rem;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn-save" style="background:#7f1d1d;">Sil</button>
+                            <button type="submit" class="btn-sm btn-danger">Sil</button>
                         </form>
                     </div>
                 </article>

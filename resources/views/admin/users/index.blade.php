@@ -87,13 +87,8 @@
 .badge-success{background:rgba(34,197,94,0.25);color:#86efac;}
 .badge-muted{background:rgba(148,163,184,0.25);color:#94a3b8;}
 .btn-group{display:flex;gap:0.35rem;flex-wrap:wrap;}
-.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
-.btn-edit{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
-.btn-edit:hover{background:rgba(255,255,255,0.12);}
 .btn-warn{background:rgba(245,158,11,0.25);color:#fcd34d;}
 .btn-success{background:rgba(34,197,94,0.25);color:#86efac;}
-.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
-.d-inline{display:inline;}
 .table-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--border);}
 .table-user-name{font-weight:600;color:var(--text);}
 .table-user-email{font-size:0.8rem;color:var(--muted);}

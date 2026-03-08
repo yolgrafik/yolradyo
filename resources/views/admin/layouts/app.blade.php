@@ -724,6 +724,16 @@
           40%  { transform: translateX(250%) skewX(-20deg); opacity:0; }
           100% { transform: translateX(250%) skewX(-20deg); opacity:0; }
         }
+        /* Admin action buttons - slider reference (Düzenle/Sil standard) */
+        .admin-action-wrap{display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;}
+        .btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;line-height:1.25;border-radius:6px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background 0.18s,border-color 0.18s,color 0.18s,box-shadow 0.18s;}
+        .btn-sm.btn-edit{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
+        .btn-sm.btn-edit:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.15);}
+        .btn-sm.btn-edit:focus{outline:none;box-shadow:0 0 0 2px rgba(255,255,255,0.15);}
+        .btn-sm.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;border:1px solid rgba(239,68,68,0.35);}
+        .btn-sm.btn-danger:hover{background:rgba(239,68,68,0.35);border-color:rgba(239,68,68,0.5);}
+        .btn-sm.btn-danger:focus{outline:none;box-shadow:0 0 0 2px rgba(239,68,68,0.3);}
+        .d-inline{display:inline;}
     </style>
     @stack('styles')
 </head>

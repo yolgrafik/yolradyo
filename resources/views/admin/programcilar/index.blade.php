@@ -66,11 +66,6 @@
 <style>
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;font-size:0.9rem;margin-bottom:1rem;}
 .alert-error{padding:0.75rem 1rem;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#fca5a5;font-size:0.9rem;margin-bottom:1rem;}
-.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
-.btn-muted{background:rgba(255,255,255,0.1);color:var(--muted);}
-.btn-edit{background:rgba(59,130,246,0.25);color:#93c5fd;}
-.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
-.d-inline{display:inline;}
 .badge-success{background:rgba(34,197,94,0.3);color:#86efac;}
 .badge-muted{background:rgba(148,163,184,0.25);color:#94a3b8;}
 </style>

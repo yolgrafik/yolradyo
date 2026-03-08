@@ -13,7 +13,7 @@
                         <div style="font-size:.8rem;color:var(--muted);margin-top:.35rem;">{{ $album->photos_count }} fotoğraf</div>
                         <div style="font-size:.8rem;color:var(--muted);margin-top:.35rem;">Sıra: {{ $album->sort_order }} | {{ $album->is_active ? 'Aktif' : 'Pasif' }}</div>
                         <div class="pg-actions">
-                            <a href="{{ route('admin.photo-gallery.albums.edit', $album) }}" class="btn-cancel">Düzenle</a>
+                            <a href="{{ route('admin.photo-gallery.albums.edit', $album) }}" class="btn-sm btn-edit">Düzenle</a>
                         </div>
                     </div>
                 </article>

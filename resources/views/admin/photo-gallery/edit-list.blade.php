@@ -13,7 +13,7 @@
                         <div style="font-weight:700;">{{ $photo->title ?: 'Başlıksız' }}</div>
                         <div style="font-size:.8rem;color:var(--muted);margin-top:.35rem;">Albüm: {{ $photo->album->name ?? '-' }}</div>
                         <div class="pg-actions">
-                            <a href="{{ route('admin.photo-gallery.photos.edit', $photo) }}" class="btn-cancel">Düzenle</a>
+                            <a href="{{ route('admin.photo-gallery.photos.edit', $photo) }}" class="btn-sm btn-edit">Düzenle</a>
                         </div>
                     </div>
                 </article>

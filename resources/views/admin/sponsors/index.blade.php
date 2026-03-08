@@ -40,12 +40,12 @@
                                 <td>{{ $sponsor->sort_order }}</td>
                                 <td>{{ $sponsor->is_active ? 'Aktif' : 'Pasif' }}</td>
                                 <td>
-                                    <div style="display:flex;gap:.4rem;">
-                                        <a href="{{ route('admin.sponsors.edit', $sponsor) }}" class="btn-cancel" style="padding:.35rem .6rem;">Düzenle</a>
-                                        <form method="POST" action="{{ route('admin.sponsors.destroy', $sponsor) }}" onsubmit="return confirm('Sponsor silinsin mi?');">
+                                    <div class="admin-action-wrap">
+                                        <a href="{{ route('admin.sponsors.edit', $sponsor) }}" class="btn-sm btn-edit">Düzenle</a>
+                                        <form method="POST" action="{{ route('admin.sponsors.destroy', $sponsor) }}" class="d-inline" onsubmit="return confirm('Sponsor silinsin mi?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn-save" style="padding:.35rem .6rem;background:#b91c1c;border-color:#b91c1c;">Sil</button>
+                                            <button type="submit" class="btn-sm btn-danger">Sil</button>
                                         </form>
                                     </div>
                                 </td>

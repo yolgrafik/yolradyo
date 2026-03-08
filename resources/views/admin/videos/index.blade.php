@@ -53,11 +53,11 @@
                                     @endif
                                 </td>
                                 <td style="padding:10px;border-bottom:1px solid var(--border);text-align:right;">
-                                    <a href="{{ route('admin.videos.edit', $video) }}" class="btn-cancel" style="margin-right:8px;text-decoration:none;">Düzenle</a>
-                                    <form method="POST" action="{{ route('admin.videos.destroy', $video) }}" style="display:inline;" onsubmit="return confirm('Silinsin mi?');">
+                                    <a href="{{ route('admin.videos.edit', $video) }}" class="btn-sm btn-edit">Düzenle</a>
+                                    <form method="POST" action="{{ route('admin.videos.destroy', $video) }}" class="d-inline" onsubmit="return confirm('Silinsin mi?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn-save" style="background:#7f1d1d;">Sil</button>
+                                        <button type="submit" class="btn-sm btn-danger">Sil</button>
                                     </form>
                                 </td>
                             </tr>
