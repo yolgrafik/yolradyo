@@ -1024,6 +1024,7 @@
             </div>
             @include('partials.listener-submissions-widget')
             @include('partials.video-gallery-widget')
+            @include('partials.photo-gallery-announcement-widget')
         </div>
     </div>
 </div>
