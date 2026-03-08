@@ -54,6 +54,13 @@
     </label>
 </div>
 
+<div class="form-group">
+    <label class="checkbox-label">
+        <input type="checkbox" name="is_featured" value="1" {{ old('is_featured', $video->is_featured ?? false) ? 'checked' : '' }}>
+        Öne Çıkan mı
+    </label>
+</div>
+
 @push('scripts')
 <script>
 (function(){

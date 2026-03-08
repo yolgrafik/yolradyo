@@ -220,6 +220,7 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('videos')->name('admin.videos.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\VideoController::class, 'index'])->name('index');
+            Route::get('featured', [App\Http\Controllers\Admin\VideoController::class, 'featured'])->name('featured');
             Route::get('create', [App\Http\Controllers\Admin\VideoController::class, 'create'])->name('create');
             Route::post('/', [App\Http\Controllers\Admin\VideoController::class, 'store'])->name('store');
             Route::get('{video}/edit', [App\Http\Controllers\Admin\VideoController::class, 'edit'])->name('edit');

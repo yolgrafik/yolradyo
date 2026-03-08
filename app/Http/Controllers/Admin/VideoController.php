@@ -15,7 +15,21 @@ class VideoController extends Controller
 
     public function index()
     {
-        $videos = ArtistVideo::query()->orderBy('sort_order')->latest()->get();
+        $videos = ArtistVideo::query()
+            ->orderByDesc('is_featured')
+            ->orderBy('sort_order')
+            ->latest()
+            ->get();
+        return view('admin.videos.index', compact('videos'));
+    }
+
+    public function featured()
+    {
+        $videos = ArtistVideo::query()
+            ->featured()
+            ->orderBy('sort_order')
+            ->latest()
+            ->get();
         return view('admin.videos.index', compact('videos'));
     }
 
@@ -34,6 +48,7 @@ class VideoController extends Controller
             'mp4_file' => 'nullable|file|mimetypes:video/mp4|max:51200',
             'youtube_url' => 'nullable|url|max:500',
             'is_active' => 'nullable|boolean',
+            'is_featured' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
         ]);
 
@@ -50,6 +65,7 @@ class VideoController extends Controller
             'mp4_path' => $validated['video_type'] === 'mp4' ? $mp4Path : null,
             'youtube_url' => $validated['video_type'] === 'youtube' ? ($validated['youtube_url'] ?? null) : null,
             'is_active' => (bool) ($validated['is_active'] ?? false),
+            'is_featured' => (bool) ($validated['is_featured'] ?? false),
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
         ]);
 
@@ -71,6 +87,7 @@ class VideoController extends Controller
             'mp4_file' => 'nullable|file|mimetypes:video/mp4|max:51200',
             'youtube_url' => 'nullable|url|max:500',
             'is_active' => 'nullable|boolean',
+            'is_featured' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
         ]);
 
@@ -101,6 +118,7 @@ class VideoController extends Controller
             'mp4_path' => $validated['video_type'] === 'mp4' ? $mp4Path : null,
             'youtube_url' => $validated['video_type'] === 'youtube' ? ($validated['youtube_url'] ?? null) : null,
             'is_active' => (bool) ($validated['is_active'] ?? false),
+            'is_featured' => (bool) ($validated['is_featured'] ?? false),
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
         ]);
 

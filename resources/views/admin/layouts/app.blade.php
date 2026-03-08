@@ -873,6 +873,8 @@
                             <li><a href="{{ route('admin.videos.index') }}" class="nav-item {{ request()->routeIs('admin.videos.index') ? 'is-active' : '' }}">Tum Videolar</a></li>
                             <li><a href="{{ route('admin.videos.create') }}" class="nav-item {{ request()->routeIs('admin.videos.create') ? 'is-active' : '' }}">Video Ekle</a></li>
                             <li><a href="{{ route('admin.videos.index') }}" class="nav-item {{ request()->routeIs('admin.videos.edit') ? 'is-active' : '' }}">Video Duzenle</a></li>
+                            <li><a href="{{ route('admin.videos.index') }}" class="nav-item">Video Sil</a></li>
+                            <li><a href="{{ route('admin.videos.featured') }}" class="nav-item {{ request()->routeIs('admin.videos.featured') ? 'is-active' : '' }}">One Cikan Video</a></li>
                         </ul>
                     </div>
                     <div class="nav-section" data-section="foto">

@@ -25,6 +25,7 @@ class FrontendController extends Controller
         $programcilar = Programci::active()->ordered()->get();
         $artistVideos = ArtistVideo::query()
             ->active()
+            ->orderByDesc('is_featured')
             ->orderBy('sort_order')
             ->latest()
             ->limit(12)
@@ -114,6 +115,7 @@ class FrontendController extends Controller
     {
         $artistVideos = ArtistVideo::query()
             ->active()
+            ->orderByDesc('is_featured')
             ->orderBy('sort_order')
             ->latest()
             ->paginate(12);

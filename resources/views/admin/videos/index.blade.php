@@ -10,6 +10,10 @@
         <a href="{{ route('admin.videos.create') }}" class="btn-save" style="text-decoration:none;">Video Ekle</a>
     </div>
     <div class="card-body">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+            <a href="{{ route('admin.videos.index') }}" class="btn-cancel" style="text-decoration:none;">Tüm Videolar</a>
+            <a href="{{ route('admin.videos.featured') }}" class="btn-cancel" style="text-decoration:none;">Öne Çıkan Video</a>
+        </div>
         @if(session('success'))
             <div class="alert-success">{{ session('success') }}</div>
         @endif
@@ -24,6 +28,7 @@
                             <th style="text-align:left;padding:10px;border-bottom:1px solid var(--border);">Başlık</th>
                             <th style="text-align:left;padding:10px;border-bottom:1px solid var(--border);">Tür</th>
                             <th style="text-align:left;padding:10px;border-bottom:1px solid var(--border);">Durum</th>
+                            <th style="text-align:left;padding:10px;border-bottom:1px solid var(--border);">Öne Çıkan</th>
                             <th style="text-align:right;padding:10px;border-bottom:1px solid var(--border);">İşlem</th>
                         </tr>
                     </thead>
@@ -38,6 +43,13 @@
                                         <span style="color:#86efac;">Aktif</span>
                                     @else
                                         <span style="color:#fca5a5;">Pasif</span>
+                                    @endif
+                                </td>
+                                <td style="padding:10px;border-bottom:1px solid var(--border);">
+                                    @if($video->is_featured)
+                                        <span style="color:#fbbf24;">Evet</span>
+                                    @else
+                                        <span style="color:var(--muted);">Hayır</span>
                                     @endif
                                 </td>
                                 <td style="padding:10px;border-bottom:1px solid var(--border);text-align:right;">
