@@ -7,12 +7,12 @@
             <h1 style="font-size:1.2rem;font-weight:700;margin:0;">Videolar</h1>
             <p style="font-size:0.88rem;color:var(--muted);margin-top:0.35rem;">Video Galeri içeriklerini buradan yönetin.</p>
         </div>
-        <a href="{{ route('admin.videos.create') }}" class="btn-save" style="text-decoration:none;">Video Ekle</a>
+        <a href="{{ route('admin.videos.create') }}" class="btn-save">Video Ekle</a>
     </div>
     <div class="card-body">
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-            <a href="{{ route('admin.videos.index') }}" class="btn-cancel" style="text-decoration:none;">Tüm Videolar</a>
-            <a href="{{ route('admin.videos.featured') }}" class="btn-cancel" style="text-decoration:none;">Öne Çıkan Video</a>
+            <a href="{{ route('admin.videos.index') }}" class="btn-cancel">Tüm Videolar</a>
+            <a href="{{ route('admin.videos.featured') }}" class="btn-cancel">Öne Çıkan Video</a>
         </div>
         @if(session('success'))
             <div class="alert-success">{{ session('success') }}</div>

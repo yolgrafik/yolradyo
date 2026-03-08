@@ -7,7 +7,7 @@
             <h1 class="forum-posts-title">Forum Gönderileri</h1>
             <p class="forum-posts-desc">Dinleyicilerden gelen istek, şikayet, foto ve video gönderilerini yönetin.</p>
         </div>
-        <a href="{{ route('admin.forum.comments') }}" class="forum-btn forum-btn--secondary">Forum Yorumları</a>
+        <a href="{{ route('admin.forum.comments') }}" class="btn btn-cancel">Forum Yorumları</a>
     </header>
 
     @if(session('success'))
@@ -33,7 +33,7 @@
                 <option value="approved" {{ request('approval_status') === 'approved' ? 'selected' : '' }}>Onaylı</option>
                 <option value="rejected" {{ request('approval_status') === 'rejected' ? 'selected' : '' }}>Reddedildi</option>
             </select>
-            <button type="submit" class="forum-btn forum-btn--primary">Filtrele</button>
+            <button type="submit" class="btn-save">Filtrele</button>
         </form>
     </div>
 
@@ -93,21 +93,21 @@
             </div>
             <div class="forum-post-card__actions">
                 @if($post->file_path)
-                    <a href="{{ route('admin.forum.download', $post) }}" class="forum-btn forum-btn--secondary forum-btn--sm">İndir</a>
+                    <a href="{{ route('admin.forum.download', $post) }}" class="btn-sm btn-edit">İndir</a>
                 @endif
                 @if(in_array($post->type, ['photo', 'video']) && $post->approval_status === 'pending')
                     <form action="{{ route('admin.forum.approve', $post) }}" method="POST" class="forum-action-form">
                         @csrf
-                        <button type="submit" class="forum-btn forum-btn--success forum-btn--sm">Onayla</button>
+                        <button type="submit" class="btn-sm btn-success">Onayla</button>
                     </form>
                     <form action="{{ route('admin.forum.reject', $post) }}" method="POST" class="forum-action-form">
                         @csrf
-                        <button type="submit" class="forum-btn forum-btn--danger forum-btn--sm">Reddet</button>
+                        <button type="submit" class="btn-sm btn-danger">Reddet</button>
                     </form>
                 @endif
                 <form action="{{ route('admin.forum.toggle-status', $post) }}" method="POST" class="forum-action-form">
                     @csrf
-                    <button type="submit" class="forum-btn forum-btn--secondary forum-btn--sm">{{ $post->status === 'open' ? 'Kapat' : 'Aç' }}</button>
+                    <button type="submit" class="btn-sm btn-edit">{{ $post->status === 'open' ? 'Kapat' : 'Aç' }}</button>
                 </form>
                 <form action="{{ route('admin.forum.destroy-post', $post) }}" method="POST" class="forum-action-form" onsubmit="return confirm('Bu gönderiyi silmek istediğinize emin misiniz?');">
                     @csrf

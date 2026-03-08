@@ -60,8 +60,8 @@
         <form method="POST" action="{{ route('admin.messages.bulk-destroy') }}" id="bulkForm" onsubmit="return confirm('Seçilen kayıtları silmek istediğinize emin misiniz?');">
             @csrf
             <div style="margin-bottom:0.75rem;">
-                <button type="button" class="quick-btn" id="selectAll">Tümünü Seç</button>
-                <button type="submit" class="quick-btn" style="background:rgba(239,68,68,0.3);color:#fca5a5;">Seçilenleri Sil</button>
+                <button type="button" class="btn-cancel" id="selectAll">Tümünü Seç</button>
+                <button type="submit" class="btn btn-danger">Seçilenleri Sil</button>
             </div>
             <div class="request-table-wrap" style="overflow-x:auto;">
                 <table class="request-table" style="width:100%;border-collapse:collapse;">

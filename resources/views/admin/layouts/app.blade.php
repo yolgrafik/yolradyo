@@ -465,26 +465,6 @@
             flex-wrap: wrap;
             gap: 0.6rem;
         }
-        .quick-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1rem;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--text);
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background 0.18s, border-color 0.18s, color 0.18s;
-        }
-        .quick-btn:hover {
-            background: rgba(201, 42, 42, 0.18);
-            border-color: rgba(201, 42, 42, 0.4);
-            color: #fff;
-        }
         .activity-list {
             list-style: none;
             margin: 0;
@@ -724,16 +704,35 @@
           40%  { transform: translateX(250%) skewX(-20deg); opacity:0; }
           100% { transform: translateX(250%) skewX(-20deg); opacity:0; }
         }
-        /* Admin action buttons - slider reference (Düzenle/Sil standard) */
+        /* Admin action buttons - unified system (slider reference) */
         .admin-action-wrap{display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;}
-        .btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;line-height:1.25;border-radius:6px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background 0.18s,border-color 0.18s,color 0.18s,box-shadow 0.18s;}
+        .d-inline{display:inline;}
+        /* Base btn - normal size for forms, headers */
+        .btn,.btn-save,.btn-cancel,.quick-btn{padding:0.5rem 1rem;font-size:0.88rem;font-weight:600;line-height:1.25;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;transition:background 0.18s,border-color 0.18s,color 0.18s,box-shadow 0.18s;border:1px solid transparent;}
+        .btn-save,.quick-btn,.btn-primary{background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border-color:rgba(255,255,255,0.2);}
+        .btn-save:hover,.quick-btn:hover,.btn-primary:hover{background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 2px 8px rgba(201,42,42,0.4);}
+        .btn-save:focus,.quick-btn:focus,.btn-primary:focus{outline:none;box-shadow:0 0 0 2px rgba(201,42,42,0.4);}
+        .btn-cancel,.btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
+        .btn-cancel:hover,.btn-secondary:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.15);}
+        .btn.btn-danger{background:rgba(239,68,68,0.4);color:#fca5a5;border:1px solid rgba(239,68,68,0.5);}
+        .btn.btn-danger:hover{background:rgba(239,68,68,0.5);}
+        .btn-cancel:focus,.btn-secondary:focus{outline:none;box-shadow:0 0 0 2px rgba(255,255,255,0.15);}
+        /* Small buttons - table/list actions */
+        .btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;font-weight:600;line-height:1.25;border-radius:6px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background 0.18s,border-color 0.18s,color 0.18s,box-shadow 0.18s;}
         .btn-sm.btn-edit{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
         .btn-sm.btn-edit:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.15);}
         .btn-sm.btn-edit:focus{outline:none;box-shadow:0 0 0 2px rgba(255,255,255,0.15);}
         .btn-sm.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
         .btn-sm.btn-danger:hover{background:rgba(239,68,68,0.35);}
         .btn-sm.btn-danger:focus{outline:none;box-shadow:0 0 0 2px rgba(239,68,68,0.3);}
-        .d-inline{display:inline;}
+        .btn-sm.btn-success{background:rgba(34,197,94,0.3);color:#86efac;border:1px solid rgba(34,197,94,0.4);}
+        .btn-sm.btn-success:hover{background:rgba(34,197,94,0.4);}
+        .btn-sm.btn-warning{background:rgba(234,179,8,0.3);color:#fde047;border:1px solid rgba(234,179,8,0.4);}
+        .btn-sm.btn-warning:hover{background:rgba(234,179,8,0.4);}
+        .btn-sm.btn-blacklist{background:rgba(127,29,29,0.5);color:#fca5a5;border:1px solid rgba(185,28,28,0.5);display:inline-flex;align-items:center;gap:0.35rem;}
+        .btn-sm.btn-blacklist:hover{background:rgba(185,28,28,0.4);border-color:rgba(220,38,38,0.6);}
+        .btn-sm.btn-warn{background:rgba(245,158,11,0.25);color:#fcd34d;border:1px solid rgba(245,158,11,0.4);}
+        .btn-sm:disabled{opacity:0.6;cursor:not-allowed;}
     </style>
     @stack('styles')
 </head>
