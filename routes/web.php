@@ -199,6 +199,10 @@ Route::prefix('admin')->group(function () {
         Route::prefix('sponsors')->name('admin.sponsors.')->group(function () {
             Route::get('/', [App\Http\Controllers\Admin\SponsorController::class, 'index'])->name('index');
             Route::get('create', [App\Http\Controllers\Admin\SponsorController::class, 'create'])->name('create');
+            Route::post('/', [App\Http\Controllers\Admin\SponsorController::class, 'store'])->name('store');
+            Route::get('{sponsor}/edit', [App\Http\Controllers\Admin\SponsorController::class, 'edit'])->name('edit');
+            Route::put('{sponsor}', [App\Http\Controllers\Admin\SponsorController::class, 'update'])->name('update');
+            Route::delete('{sponsor}', [App\Http\Controllers\Admin\SponsorController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('sliders')->name('admin.sliders.')->group(function () {

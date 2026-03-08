@@ -12,6 +12,7 @@ use App\Models\PhotoAlbum;
 use App\Models\Programci;
 use App\Models\Setting;
 use App\Models\Slider;
+use App\Models\Sponsor;
 use App\Services\SettingsService;
 
 class FrontendController extends Controller
@@ -23,6 +24,12 @@ class FrontendController extends Controller
             ->active()
             ->latest()
             ->limit(4)
+            ->get();
+        $sponsors = Sponsor::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->latest()
+            ->limit(3)
             ->get();
         $programcilar = Programci::active()->ordered()->get();
         $artistVideos = ArtistVideo::query()
@@ -62,7 +69,7 @@ class FrontendController extends Controller
             ->limit(20)
             ->get();
 
-        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions', 'latestNews', 'artistVideos', 'galleryPhotos'));
+        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions', 'latestNews', 'sponsors', 'artistVideos', 'galleryPhotos'));
     }
 
     public function player(SettingsService $settings, \Illuminate\Http\Request $request)

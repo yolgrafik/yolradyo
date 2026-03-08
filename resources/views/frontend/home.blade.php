@@ -826,6 +826,71 @@
         font-weight: 700;
         text-decoration: none;
     }
+    .home-sponsors-section { margin-top: 1rem; }
+    .home-sponsors-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+    .home-sponsor-card {
+        display: flex;
+        flex-direction: column;
+        background: color-mix(in srgb, var(--ry-bar-bg) 75%, #0b0f16);
+        border: 1px solid var(--ry-border);
+        border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
+        border-radius: var(--ry-radius);
+        overflow: hidden;
+    }
+    .home-sponsor-card__img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+        background: #111827;
+    }
+    .home-sponsor-card__body {
+        padding: .75rem .85rem;
+        display: flex;
+        flex-direction: column;
+        gap: .35rem;
+    }
+    .home-sponsor-card__title {
+        margin: 0;
+        font-size: .92rem;
+        font-weight: 700;
+        color: var(--ry-text);
+    }
+    .home-sponsor-card__desc {
+        margin: 0;
+        font-size: .78rem;
+        color: var(--ry-text-muted);
+        line-height: 1.45;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .home-sponsor-card__links {
+        margin-top: .25rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: .35rem;
+    }
+    .home-sponsor-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 28px;
+        min-width: 28px;
+        padding: 0 .55rem;
+        border-radius: 999px;
+        border: 1px solid var(--ry-border);
+        color: var(--ry-text);
+        text-decoration: none;
+        font-size: .68rem;
+        background: color-mix(in srgb, var(--ry-bar-bg) 72%, transparent);
+    }
     @media (max-width: 992px) {
         .home-main {
             grid-template-columns: 1fr;
@@ -855,6 +920,7 @@
         .home-news-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+        .home-sponsors-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 768px) {
         .home-slider__content { padding: 1.5rem; max-width: 85%; }
@@ -880,6 +946,7 @@
         .home-news-grid {
             grid-template-columns: 1fr;
         }
+        .home-sponsors-grid { grid-template-columns: 1fr; }
     }
 </style>
 @endpush
@@ -963,6 +1030,40 @@
                 <div class="schedule-empty" style="display:block;padding:1rem 0;text-align:center;color:rgba(255,255,255,0.75);font-size:0.95rem;">
                     Henüz yayınlanmış haber bulunmuyor.
                 </div>
+                @endif
+            </section>
+            @php $sponsors = $sponsors ?? collect(); @endphp
+            <section class="home-news-section home-sponsors-section" aria-label="Sponsorlar">
+                <div class="home-news-section__header">
+                    <h2 class="home-news-section__title">Sponsorlar</h2>
+                </div>
+                @if($sponsors->isNotEmpty())
+                    <div class="home-sponsors-grid">
+                        @foreach($sponsors as $sponsor)
+                            <article class="home-sponsor-card">
+                                @if($sponsor->image_path)
+                                    <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->title }}" class="home-sponsor-card__img">
+                                @endif
+                                <div class="home-sponsor-card__body">
+                                    <h3 class="home-sponsor-card__title">{{ $sponsor->title }}</h3>
+                                    @if($sponsor->short_description)
+                                        <p class="home-sponsor-card__desc">{{ \Illuminate\Support\Str::limit($sponsor->short_description, 120) }}</p>
+                                    @endif
+                                    <div class="home-sponsor-card__links">
+                                        @if($sponsor->website_url)<a class="home-sponsor-link" href="{{ $sponsor->website_url }}" target="_blank" rel="noopener noreferrer">Web</a>@endif
+                                        @if($sponsor->facebook_url)<a class="home-sponsor-link" href="{{ $sponsor->facebook_url }}" target="_blank" rel="noopener noreferrer">Facebook</a>@endif
+                                        @if($sponsor->instagram_url)<a class="home-sponsor-link" href="{{ $sponsor->instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram</a>@endif
+                                        @if($sponsor->x_url)<a class="home-sponsor-link" href="{{ $sponsor->x_url }}" target="_blank" rel="noopener noreferrer">X</a>@endif
+                                        @if($sponsor->youtube_url)<a class="home-sponsor-link" href="{{ $sponsor->youtube_url }}" target="_blank" rel="noopener noreferrer">YouTube</a>@endif
+                                    </div>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="schedule-empty" style="display:block;padding:1rem 0;text-align:center;color:rgba(255,255,255,0.75);font-size:0.95rem;">
+                        Henüz sponsor eklenmemiş.
+                    </div>
                 @endif
             </section>
         </div>
