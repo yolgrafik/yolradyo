@@ -9,9 +9,14 @@
 .gallery-page__title{margin:0;font-size:1.15rem;font-weight:700;color:var(--ry-text);}
 .gallery-page__subtitle{margin:.25rem 0 0;color:var(--ry-text-muted);font-size:.85rem;}
 .gallery-album{margin-top:1.2rem;}
-.gallery-album__title{margin:0 0 .6rem 0;font-size:1rem;font-weight:800;color:var(--ry-text);}
+.gallery-album__toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.7rem;margin:0 0 .6rem 0;padding:.55rem .75rem;border-radius:10px;border:1px solid var(--ry-border);border-top:1px solid var(--ry-line-color);border-bottom:1px solid var(--ry-line-color);background:color-mix(in srgb, var(--ry-bar-bg) 72%, transparent);color:var(--ry-text);font-size:1rem;font-weight:800;cursor:pointer;text-align:left;}
+.gallery-album__toggle .arrow{font-size:.85rem;opacity:.8;transition:transform .2s ease;}
+.gallery-album.is-open .gallery-album__toggle .arrow{transform:rotate(180deg);}
+.gallery-album__content{display:none;}
+.gallery-album.is-open .gallery-album__content{display:block;}
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
 .gallery-card{background:color-mix(in srgb, var(--ry-bar-bg) 75%, #0b0f16);border:1px solid var(--border);border-radius:12px;overflow:hidden;border-top:1px solid var(--ry-line-color);border-bottom:1px solid var(--ry-line-color);}
+.gallery-card__img-btn{display:block;width:100%;padding:0;border:none;background:none;cursor:zoom-in;}
 .gallery-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
 .gallery-card__body{padding:.6rem .7rem;}
 .gallery-card__title{margin:0;font-size:.84rem;font-weight:700;color:var(--ry-text);line-height:1.35;}
@@ -32,6 +37,12 @@
 .gallery-share-btn--copy:hover{background:color-mix(in srgb, var(--ry-btn-bg) 45%, transparent);}
 .gallery-share-toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(8px);padding:.5rem .85rem;border-radius:999px;background:rgba(0,0,0,.82);color:#fff;font-size:.78rem;z-index:10000;opacity:0;pointer-events:none;transition:opacity .2s ease, transform .2s ease;}
 .gallery-share-toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0);}
+.gallery-lightbox{position:fixed;inset:0;display:none;z-index:12000;}
+.gallery-lightbox.is-open{display:block;}
+.gallery-lightbox__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.86);}
+.gallery-lightbox__dialog{position:relative;max-width:min(1200px,94vw);max-height:90vh;margin:4vh auto;z-index:1;}
+.gallery-lightbox__img{display:block;max-width:100%;max-height:90vh;margin:0 auto;border-radius:12px;border:1px solid rgba(255,255,255,.2);}
+.gallery-lightbox__close{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.55);color:#fff;font-size:22px;line-height:1;cursor:pointer;z-index:2;}
 .gallery-empty{padding:1rem;color:var(--ry-text-muted);}
 </style>
 @endpush
@@ -44,8 +55,12 @@
     </div>
 
     @forelse($albums as $album)
-        <article class="gallery-album">
-            <h2 class="gallery-album__title">{{ $album->name }}</h2>
+        <article class="gallery-album" data-gallery-album>
+            <button type="button" class="gallery-album__toggle" data-gallery-toggle>
+                <span>{{ $album->name }}</span>
+                <span class="arrow">▾</span>
+            </button>
+            <div class="gallery-album__content">
             <div class="gallery-grid">
                 @foreach($album->photos as $photo)
                     @php
@@ -55,7 +70,9 @@
                         $encodedText = urlencode($shareText);
                     @endphp
                     <figure class="gallery-card">
-                        <img src="{{ asset($photo->image_path) }}" alt="{{ $photo->title ?: $album->name }}">
+                        <button type="button" class="gallery-card__img-btn js-gallery-open-lightbox" data-image-src="{{ asset($photo->image_path) }}" data-image-alt="{{ $photo->title ?: $album->name }}">
+                            <img src="{{ asset($photo->image_path) }}" alt="{{ $photo->title ?: $album->name }}">
+                        </button>
                         <figcaption class="gallery-card__body">
                             <h3 class="gallery-card__title">{{ $photo->title ?: $album->name }}</h3>
                             @if(!empty($photo->short_description))
@@ -72,14 +89,19 @@
                     </figure>
                 @endforeach
             </div>
+            </div>
         </article>
     @empty
         <div class="gallery-empty">Henüz yayınlanmış fotoğraf bulunmuyor.</div>
     @endforelse
 
     @if(($unassignedPhotos ?? collect())->isNotEmpty())
-        <article class="gallery-album">
-            <h2 class="gallery-album__title">Albümsüz Fotoğraflar</h2>
+        <article class="gallery-album" data-gallery-album>
+            <button type="button" class="gallery-album__toggle" data-gallery-toggle>
+                <span>Albümsüz Fotoğraflar</span>
+                <span class="arrow">▾</span>
+            </button>
+            <div class="gallery-album__content">
             <div class="gallery-grid">
                 @foreach($unassignedPhotos as $photo)
                     @php
@@ -89,7 +111,9 @@
                         $encodedText = urlencode($shareText);
                     @endphp
                     <figure class="gallery-card">
-                        <img src="{{ asset($photo->image_path) }}" alt="{{ $photo->title ?: 'Albümsüz Fotoğraf' }}">
+                        <button type="button" class="gallery-card__img-btn js-gallery-open-lightbox" data-image-src="{{ asset($photo->image_path) }}" data-image-alt="{{ $photo->title ?: 'Albümsüz Fotoğraf' }}">
+                            <img src="{{ asset($photo->image_path) }}" alt="{{ $photo->title ?: 'Albümsüz Fotoğraf' }}">
+                        </button>
                         <figcaption class="gallery-card__body">
                             <h3 class="gallery-card__title">{{ $photo->title ?: 'Albümsüz Fotoğraf' }}</h3>
                             @if(!empty($photo->short_description))
@@ -106,15 +130,32 @@
                     </figure>
                 @endforeach
             </div>
+            </div>
         </article>
     @endif
 </section>
 <div class="gallery-share-toast" id="galleryShareToast">Link kopyalandı</div>
+<div class="gallery-lightbox" id="galleryLightbox" aria-hidden="true">
+    <div class="gallery-lightbox__backdrop" data-gallery-lightbox-close></div>
+    <div class="gallery-lightbox__dialog">
+        <button type="button" class="gallery-lightbox__close" data-gallery-lightbox-close aria-label="Kapat">×</button>
+        <img class="gallery-lightbox__img" id="galleryLightboxImage" src="" alt="">
+    </div>
+</div>
 @endsection
 
 @push('scripts')
 <script>
 (function(){
+    document.querySelectorAll('[data-gallery-album]').forEach(function(album, idx){
+        if (idx === 0) album.classList.add('is-open');
+        var toggle = album.querySelector('[data-gallery-toggle]');
+        if (!toggle) return;
+        toggle.addEventListener('click', function(){
+            album.classList.toggle('is-open');
+        });
+    });
+
     var toast = document.getElementById('galleryShareToast');
     if (!toast) return;
     document.querySelectorAll('.js-gallery-copy-link').forEach(function(btn){
@@ -126,6 +167,37 @@
                 setTimeout(function(){ toast.classList.remove('is-visible'); }, 1500);
             });
         });
+    });
+
+    var lightbox = document.getElementById('galleryLightbox');
+    var lightboxImg = document.getElementById('galleryLightboxImage');
+    if (!lightbox || !lightboxImg) return;
+
+    function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImg.src = '';
+        lightboxImg.alt = '';
+        document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.js-gallery-open-lightbox').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            var src = btn.getAttribute('data-image-src');
+            var alt = btn.getAttribute('data-image-alt') || 'Fotoğraf';
+            if (!src) return;
+            lightboxImg.src = src;
+            lightboxImg.alt = alt;
+            lightbox.classList.add('is-open');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    document.querySelectorAll('[data-gallery-lightbox-close]').forEach(function(el){
+        el.addEventListener('click', closeLightbox);
+    });
+    document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
     });
 })();
 </script>
