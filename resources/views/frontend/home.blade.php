@@ -461,6 +461,7 @@
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
     }
     .live-banner {
         background: var(--ry-bar-bg);
@@ -587,6 +588,7 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         min-height: 335px;
         border-top: 1px solid var(--ry-line-color);
+        border-bottom: 1px solid var(--ry-line-color);
     }
     .listener-widget img,
     .listener-widget video {
