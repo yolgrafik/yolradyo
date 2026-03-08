@@ -32,13 +32,23 @@ class FrontendController extends Controller
             ->orderByDesc('id')
             ->limit(12)
             ->get();
-        $galleryPhotos = GalleryPhoto::query()
+        $announcementPhotos = GalleryPhoto::query()
             ->where('is_active', true)
+            ->where('is_announcement', true)
             ->orderByDesc('is_cover')
             ->orderBy('sort_order')
             ->latest()
-            ->limit(12)
             ->get();
+        $latestUnassignedPhotos = GalleryPhoto::query()
+            ->where('is_active', true)
+            ->where('is_announcement', false)
+            ->whereNull('album_id')
+            ->orderByDesc('is_cover')
+            ->orderBy('sort_order')
+            ->latest()
+            ->limit(6)
+            ->get();
+        $galleryPhotos = $announcementPhotos->concat($latestUnassignedPhotos)->values();
         $listenerSubmissions = ForumPost::with('user')
             ->where('approval_status', ForumPost::APPROVAL_APPROVED)
             ->whereIn('type', [ForumPost::TYPE_PHOTO, ForumPost::TYPE_VIDEO])
