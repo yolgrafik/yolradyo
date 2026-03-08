@@ -112,7 +112,7 @@
                 <form action="{{ route('admin.forum.destroy-post', $post) }}" method="POST" class="forum-action-form" onsubmit="return confirm('Bu gönderiyi silmek istediğinize emin misiniz?');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="forum-btn forum-btn--danger forum-btn--sm">Sil</button>
+                    <button type="submit" class="btn-sm btn-danger">Sil</button>
                 </form>
             </div>
         </article>

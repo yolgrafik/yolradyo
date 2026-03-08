@@ -75,9 +75,6 @@
 @push('styles')
 <style>
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;margin-bottom:1rem;}
-.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;text-decoration:none;display:inline-block;}
-.btn-edit{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
-.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
 .btn-save{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border:none;border-radius:10px;cursor:pointer;}
 </style>
 @endpush

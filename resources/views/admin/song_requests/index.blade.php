@@ -85,13 +85,10 @@
 .badge-warning{background:rgba(234,179,8,0.25);color:#fde047;}
 .badge-success{background:rgba(34,197,94,0.25);color:#86efac;}
 .badge-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
-.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;margin-left:0.25rem;display:inline-flex;align-items:center;gap:0.35rem;}
-.btn-success{background:rgba(34,197,94,0.3);color:#86efac;}
-.btn-warning{background:rgba(234,179,8,0.3);color:#fde047;}
-.btn-blacklist{background:rgba(127,29,29,0.5);color:#fca5a5;border:1px solid rgba(185,28,28,0.5);}
-.btn-blacklist:hover{background:rgba(185,28,28,0.4);border-color:rgba(220,38,38,0.6);}
-.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
-.d-inline{display:inline;}
+.btn-sm.btn-success{background:rgba(34,197,94,0.3);color:#86efac;border:1px solid rgba(34,197,94,0.4);}
+.btn-sm.btn-warning{background:rgba(234,179,8,0.3);color:#fde047;border:1px solid rgba(234,179,8,0.4);}
+.btn-sm.btn-blacklist{background:rgba(127,29,29,0.5);color:#fca5a5;border:1px solid rgba(185,28,28,0.5);display:inline-flex;align-items:center;gap:0.35rem;}
+.btn-sm.btn-blacklist:hover{background:rgba(185,28,28,0.4);border-color:rgba(220,38,38,0.6);}
 nav[aria-label="Pagination"] ul{display:flex;gap:0.5rem;list-style:none;margin:0;padding:0;flex-wrap:wrap;}
 nav[aria-label="Pagination"] a,nav[aria-label="Pagination"] span{padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.9rem;}
 nav[aria-label="Pagination"] a:hover{background:rgba(201,42,42,0.2);border-color:var(--accent);}

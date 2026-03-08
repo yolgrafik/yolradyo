@@ -57,10 +57,6 @@
 .data-table{width:100%;border-collapse:collapse;}
 .data-table th,.data-table td{padding:0.75rem 1rem;text-align:left;border-bottom:1px solid var(--border);}
 .data-table th{font-weight:700;color:var(--muted);font-size:0.8rem;text-transform:uppercase;}
-.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;text-decoration:none;display:inline-block;margin-right:0.35rem;}
-.btn-edit{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
-.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
-.d-inline{display:inline;}
 .text-center{text-align:center;}
 </style>
 @endpush

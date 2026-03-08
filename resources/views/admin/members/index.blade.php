@@ -57,7 +57,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('admin.members.edit', $m) }}" class="btn-sm btn-edit" style="text-decoration:none;">Düzenle</a>
+                            <a href="{{ route('admin.members.edit', $m) }}" class="btn-sm btn-edit">Düzenle</a>
                             @if($m->status === 'pasif')
                                 <form action="{{ route('admin.members.approve', $m) }}" method="POST" class="d-inline">
                                     @csrf
@@ -106,10 +106,6 @@
 .badge-success{background:rgba(34,197,94,0.25);color:#86efac;}
 .badge-warning{background:rgba(234,179,8,0.25);color:#fde047;}
 .badge-muted{background:rgba(148,163,184,0.25);color:#94a3b8;}
-.btn-sm{padding:0.35rem 0.65rem;font-size:0.8rem;border-radius:6px;border:none;cursor:pointer;display:inline-block;}
-.btn-edit{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
-.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
-.d-inline{display:inline;}
 </style>
 @endpush
 @endsection

@@ -730,8 +730,8 @@
         .btn-sm.btn-edit{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);}
         .btn-sm.btn-edit:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.15);}
         .btn-sm.btn-edit:focus{outline:none;box-shadow:0 0 0 2px rgba(255,255,255,0.15);}
-        .btn-sm.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;border:1px solid rgba(239,68,68,0.35);}
-        .btn-sm.btn-danger:hover{background:rgba(239,68,68,0.35);border-color:rgba(239,68,68,0.5);}
+        .btn-sm.btn-danger{background:rgba(239,68,68,0.25);color:#fca5a5;}
+        .btn-sm.btn-danger:hover{background:rgba(239,68,68,0.35);}
         .btn-sm.btn-danger:focus{outline:none;box-shadow:0 0 0 2px rgba(239,68,68,0.3);}
         .d-inline{display:inline;}
     </style>
