@@ -6,6 +6,7 @@
     <div class="home-news-section__header">
         <h2 class="home-news-section__title">Sponsorlar</h2>
     </div>
+    <div class="home-sponsors-widget">
     <div class="home-sponsors-swiper-wrap">
         <div class="swiper home-sponsors-swiper" id="homeSponsorsSwiper">
             <div class="swiper-wrapper">
@@ -73,6 +74,7 @@
             @endif
         </div>
     </div>
+    </div>
 </section>
 
 <div id="sponsorLightbox" class="sponsor-lightbox" role="dialog" aria-modal="true" aria-label="Sponsor görseli" style="display:none;">
@@ -87,14 +89,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <style>
 .home-sponsors-section { margin-top: 1rem; }
-.home-sponsors-swiper-wrap { position: relative; overflow: hidden; }
+.home-sponsors-widget { position: relative; background: color-mix(in srgb, var(--ry-bar-bg) 75%, #0b0f16); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); min-height: 345px; }
+.home-sponsors-swiper-wrap { position: relative; overflow: hidden; padding: 10px; min-height: 325px; }
 .home-sponsors-swiper { overflow: visible; padding: 2px; }
 .home-sponsors-swiper .swiper-wrapper { align-items: stretch; }
 .home-sponsors-swiper .swiper-slide { height: auto; display: flex; }
-.home-sponsor-card { width: 100%; min-width: 0; display: flex; flex-direction: column; background: color-mix(in srgb, var(--ry-bar-bg) 75%, #0b0f16); border: 1px solid var(--ry-border); border-top: 1px solid var(--ry-line-color); border-bottom: 1px solid var(--ry-line-color); border-radius: var(--ry-radius); overflow: hidden; transition: all 0.2s; }
+.home-sponsor-card { width: 100%; min-width: 0; height: 100%; min-height: 305px; display: flex; flex-direction: column; background: rgba(255,255,255,.03); border: 1px solid var(--ry-border); border-radius: 10px; overflow: hidden; transition: all 0.2s; }
 .home-sponsor-card:hover { border-color: color-mix(in srgb, var(--ry-schedule-active) 60%, var(--ry-border)); box-shadow: 0 6px 16px rgba(0,0,0,.25); }
-.home-sponsor-card__inner { display: flex; flex-direction: column; flex: 1; min-height: 0; }
-.home-sponsor-card__media { position: relative; width: 100%; flex-shrink: 0; background: #111827; overflow: hidden; }
+.home-sponsor-card__inner { display: grid; grid-template-rows: 70% 30%; flex: 1; min-height: 0; height: 100%; }
+.home-sponsor-card__media { position: relative; width: 100%; min-height: 0; background: #111827; overflow: hidden; }
 .home-sponsor-card__img-btn { all: unset; cursor: pointer; display: block; width: 100%; line-height: 0; }
 .home-sponsor-card__img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 16/9; background: #111827; }
 .home-sponsor-card__img-placeholder { width: 100%; height: 100%; min-height: 140px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: var(--ry-schedule-active); background: #111827; }
@@ -108,10 +111,10 @@
 .home-sponsor-card__video-player iframe, .home-sponsor-card__video-player video { width: 100%; height: 100%; object-fit: contain; display: block; }
 .home-sponsor-card__video-close { position: absolute; top: 4px; right: 4px; width: 28px; height: 28px; border: none; background: rgba(0,0,0,.7); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; z-index: 4; transition: background 0.2s; }
 .home-sponsor-card__video-close:hover { background: rgba(0,0,0,.9); }
-.home-sponsor-card__body { padding: .75rem .85rem; display: flex; flex-direction: column; gap: .35rem; flex: 1; min-width: 0; }
-.home-sponsor-card__title { margin: 0; font-size: .92rem; font-weight: 700; color: var(--ry-text); }
-.home-sponsor-card__desc { margin: 0; font-size: .78rem; color: var(--ry-text-muted); line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.home-sponsor-card__detail-btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.4rem 0.75rem; font-size: 0.8rem; font-weight: 700; background: var(--ry-schedule-active); color: #fff; border-radius: 8px; text-decoration: none; transition: opacity 0.2s; align-self: flex-start; }
+.home-sponsor-card__body { padding: 10px 10px 9px; display: flex; flex-direction: column; gap: .3rem; flex: 1; min-height: 82px; max-height: 100%; overflow: hidden; background: linear-gradient(to top, rgba(7,10,16,.9), rgba(7,10,16,.15)); min-width: 0; }
+.home-sponsor-card__title { margin: 0; font-size: .75rem; font-weight: 700; color: var(--ry-text); line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.45em; }
+.home-sponsor-card__desc { margin: .28rem 0 0; font-size: .68rem; color: var(--ry-text-muted); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.home-sponsor-card__detail-btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.3rem 0.6rem; font-size: .7rem; font-weight: 700; background: var(--ry-schedule-active); color: #fff; border-radius: 6px; text-decoration: none; transition: opacity 0.2s; align-self: flex-start; margin-top: auto; }
 .home-sponsor-card__detail-btn:hover { opacity: 0.9; color: #fff; }
 .home-sponsor-card__links { display: flex; flex-wrap: wrap; gap: .35rem; }
 .home-sponsor-social-btn { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.3); cursor: pointer; transition: transform 0.2s; flex-shrink: 0; text-decoration: none; }
@@ -140,7 +143,13 @@
     .home-sponsors-swiper .home-sponsors-swiper-btn--next { right: 4px; }
 }
 @media (max-width: 600px) {
+    .home-sponsors-widget { min-height: 312px; }
+    .home-sponsors-swiper-wrap { min-height: 292px; }
+    .home-sponsor-card { min-height: 272px; }
     .home-sponsor-card__media { min-height: 120px; }
+    .home-sponsor-card__body { min-height: 78px; max-height: 78px; }
+    .home-sponsor-card__title { font-size: .72rem; }
+    .home-sponsor-card__desc { font-size: .66rem; }
 }
 </style>
 @endpush
