@@ -39,6 +39,36 @@ class PhotoGalleryController extends Controller
         return redirect()->route('admin.photo-gallery.albums')->with('success', 'Albüm eklendi.');
     }
 
+    public function editAlbumList()
+    {
+        $albums = PhotoAlbum::query()->withCount('photos')->orderBy('sort_order')->latest()->paginate(24);
+        return view('admin.photo-gallery.albums-edit-list', compact('albums'));
+    }
+
+    public function editAlbum(PhotoAlbum $album)
+    {
+        return view('admin.photo-gallery.album-edit', compact('album'));
+    }
+
+    public function updateAlbum(Request $request, PhotoAlbum $album)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'sort_order' => 'nullable|integer|min:0|max:9999',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        $album->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? null,
+            'sort_order' => (int) ($validated['sort_order'] ?? 0),
+            'is_active' => (bool) ($validated['is_active'] ?? false),
+        ]);
+
+        return redirect()->route('admin.photo-gallery.albums.edit.list')->with('success', 'Albüm güncellendi.');
+    }
+
     public function createPhoto()
     {
         $albums = PhotoAlbum::query()->where('is_active', true)->orderBy('sort_order')->get();
