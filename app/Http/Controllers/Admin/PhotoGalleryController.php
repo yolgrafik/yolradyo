@@ -50,7 +50,7 @@ class PhotoGalleryController extends Controller
         $validated = $request->validate([
             'album_id' => 'nullable|exists:photo_albums,id',
             'title' => 'nullable|string|max:255',
-            'short_description' => 'nullable|string|max:500',
+            'short_description' => 'nullable|string|max:2000',
             'image' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
             'is_cover' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
@@ -118,7 +118,7 @@ class PhotoGalleryController extends Controller
         $validated = $request->validate([
             'album_id' => 'nullable|exists:photo_albums,id',
             'title' => 'nullable|string|max:255',
-            'short_description' => 'nullable|string|max:500',
+            'short_description' => 'nullable|string|max:2000',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
             'is_cover' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
