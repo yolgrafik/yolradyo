@@ -24,7 +24,7 @@ class PhotoAlbum extends Model
     {
         static::creating(function (self $album) {
             if (empty($album->slug)) {
-                $album->slug = Str::slug($album->name . '-' . Str::random(4));
+                $album->slug = Str::slug($album->name . '-' . Str::lower(Str::random(4)));
             }
         });
     }
