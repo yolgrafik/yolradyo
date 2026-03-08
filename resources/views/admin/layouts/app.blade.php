@@ -867,6 +867,7 @@
                             <li><a href="{{ route('admin.about-pages.edit', 'biz-kimiz') }}" class="nav-item {{ request()->routeIs('admin.about-pages.edit') && request()->route('slug') == 'biz-kimiz' ? 'is-active' : '' }}">Biz Kimiz</a></li>
                             <li><a href="{{ route('admin.about-pages.edit', 'misyon') }}" class="nav-item {{ request()->routeIs('admin.about-pages.edit') && request()->route('slug') == 'misyon' ? 'is-active' : '' }}">Misyon & Vizyon</a></li>
                             <li><a href="{{ route('admin.about-pages.edit', 'politika') }}" class="nav-item {{ request()->routeIs('admin.about-pages.edit') && request()->route('slug') == 'politika' ? 'is-active' : '' }}">Yayın Politikamız</a></li>
+                            <li><a href="{{ route('admin.about-pages.edit', 'reklam') }}" class="nav-item {{ request()->routeIs('admin.about-pages.edit') && request()->route('slug') == 'reklam' ? 'is-active' : '' }}">Reklam</a></li>
                         </ul>
                     </div>
                     <div class="nav-section" data-section="videolar">
