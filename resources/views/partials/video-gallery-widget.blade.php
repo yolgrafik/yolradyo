@@ -72,14 +72,14 @@
 .video-gallery-swiper{padding:12px 12px 2px;}
 .video-gallery-card{display:flex;flex-direction:column;height:100%;min-height:360px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.34);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;}
 .video-gallery-card:hover{transform:translateY(-2px);border-color:var(--ry-schedule-active);box-shadow:0 10px 24px rgba(0,0,0,0.35);}
-.video-gallery-card__cover{position:relative;aspect-ratio:16/10;background:transparent;overflow:hidden;flex:0 0 70%;line-height:0;}
-.video-gallery-card__cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.12);transform-origin:center center;}
+.video-gallery-card__cover{position:relative;background:transparent;overflow:hidden;flex:0 0 80%;line-height:0;min-height:0;}
+.video-gallery-card__cover img{width:100%;height:100%;object-fit:cover;display:block;}
 .video-gallery-card__fallback{width:100%;height:100%;display:grid;place-items:center;color:#d1d5db;font-weight:700;}
 .video-gallery-card__inline-player{position:absolute;inset:0;display:none;background:#000;overflow:hidden;}
 .video-gallery-card__inline-player.is-active{display:block;}
 .video-gallery-card__inline-player iframe,.video-gallery-card__inline-player video{position:absolute;inset:0;width:100%;height:100%;border:none;display:block;object-fit:cover;}
 .video-gallery-card__play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(201,42,42,.92);color:#fff;font-size:22px;padding-left:3px;box-shadow:0 6px 18px rgba(0,0,0,.35);}
-.video-gallery-card__body{padding:0 10px 8px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:3px;flex:0 0 30%;min-height:72px;margin-top:0;background:transparent;}
+.video-gallery-card__body{padding:8px 10px;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:3px;flex:0 0 20%;min-height:0;margin-top:0;background:transparent;overflow:hidden;}
 .video-gallery-card__title{margin:0;font-size:.85rem;font-weight:700;color:var(--text);line-height:1.3;}
 .video-gallery-card__desc{margin:0;font-size:.72rem;line-height:1.35;color:var(--ry-text-muted);}
 .video-gallery-widget{padding-bottom:0;}
