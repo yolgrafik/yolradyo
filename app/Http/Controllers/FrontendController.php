@@ -115,7 +115,16 @@ class FrontendController extends Controller
 
     public function reklam()
     {
-        return view('frontend.page', ['pageTitle' => 'Sponsor']);
+        $page = AboutPage::query()
+            ->active()
+            ->where('slug', 'reklam')
+            ->first();
+
+        return view('frontend.page', [
+            'pageTitle' => $page?->title ?? 'Reklam',
+            'pageContent' => $page?->content,
+            'pageImage' => $page?->image_path,
+        ]);
     }
 
     public function hakkimizda(string $slug)
