@@ -2,11 +2,12 @@
     $artistVideos = $artistVideos ?? collect();
 @endphp
 
-<section class="video-gallery-widget" aria-label="Video Galeri">
-    <div class="video-gallery-widget__header">
-        <h2 class="video-gallery-widget__title">Video Galeri</h2>
-        <p class="video-gallery-widget__subtitle">Sanatçı Videoları</p>
+<section class="video-gallery-section" aria-label="Video Galeri">
+    <div class="video-gallery-section__header">
+        <h2 class="video-gallery-section__title">Video Galeri</h2>
+        <p class="video-gallery-section__subtitle">Sanatçı Videoları</p>
     </div>
+    <div class="video-gallery-widget">
     @if($artistVideos->isNotEmpty())
         <div class="video-gallery-swiper-wrap">
             <div class="swiper video-gallery-swiper" id="videoGallerySwiper">
@@ -45,6 +46,7 @@
     @else
         <div class="video-gallery-widget__empty">Henüz video eklenmedi.</div>
     @endif
+    </div>
 </section>
 
 <div class="video-modal" id="videoGalleryModal" aria-hidden="true">
@@ -58,11 +60,11 @@
 @push('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <style>
-.video-gallery-widget{margin-top:1.25rem;position:relative;background:color-mix(in srgb,var(--ry-bar-bg) 75%, #0b0f16);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.25);border-top:1px solid var(--ry-line-color);}
-.video-gallery-widget__header{margin-bottom:10px;}
-.video-gallery-widget__header{padding:10px 14px;background:var(--ry-bar-bg);border-bottom:1px solid var(--ry-line-color);}
-.video-gallery-widget__title{margin:0;font-size:1rem;font-weight:900;color:#fff;letter-spacing:.02em;}
-.video-gallery-widget__subtitle{margin:4px 0 0;color:rgba(255,255,255,.78);font-size:.78rem;}
+.video-gallery-section{margin-top:1.25rem;}
+.video-gallery-section__header{padding:.75rem 1rem;border-radius:var(--ry-radius);background:color-mix(in srgb, var(--ry-bar-bg) 85%, transparent);border:1px solid var(--ry-border);border-top:1px solid var(--ry-line-color);border-bottom:1px solid var(--ry-line-color);margin-bottom:1rem;}
+.video-gallery-section__title{font-size:1.1rem;font-weight:700;color:var(--ry-text);margin:0;}
+.video-gallery-section__subtitle{font-size:.84rem;color:var(--ry-text-muted);margin:.25rem 0 0;}
+.video-gallery-widget{position:relative;background:color-mix(in srgb,var(--ry-bar-bg) 75%, #0b0f16);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.25);border-top:1px solid var(--ry-line-color);}
 .video-gallery-swiper{padding:12px 12px 24px;}
 .video-gallery-card{display:flex;flex-direction:column;height:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;}
 .video-gallery-card:hover{transform:translateY(-2px);border-color:var(--ry-schedule-active);box-shadow:0 10px 24px rgba(0,0,0,0.35);}
@@ -85,7 +87,7 @@
 .video-modal__close{position:absolute;right:10px;top:8px;z-index:2;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);color:#fff;width:34px;height:34px;border-radius:50%;font-size:22px;line-height:1;cursor:pointer;}
 .video-modal__player{aspect-ratio:16/9;background:#000;}
 .video-modal__player iframe,.video-modal__player video{width:100%;height:100%;border:none;display:block;}
-@media (max-width: 768px){.video-gallery-card__title{font-size:.9rem;}.video-gallery-card__desc{font-size:.76rem;}}
+@media (max-width: 768px){.video-gallery-card__title{font-size:.9rem;}.video-gallery-card__desc{font-size:.76rem;}.video-gallery-section__subtitle{font-size:.8rem;}}
 </style>
 @endpush
 
