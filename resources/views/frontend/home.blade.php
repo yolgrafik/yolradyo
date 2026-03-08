@@ -722,6 +722,23 @@
     .home-news-section {
         margin-top: 1.25rem;
     }
+    .home-media-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        align-items: flex-start;
+        margin-top: 1rem;
+    }
+    .home-media-col {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+    .home-media-row .home-news-section,
+    .home-media-row .video-gallery-section {
+        margin-top: 0;
+    }
     .home-right .home-news-grid {
         grid-template-columns: 1fr;
         gap: 12px;
@@ -853,6 +870,9 @@
         .home-news-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+        .home-media-row {
+            grid-template-columns: 1fr;
+        }
     }
     @media (max-width: 768px) {
         .home-slider__content { padding: 1.5rem; max-width: 85%; }
@@ -935,34 +955,6 @@
             </div>
             @include('partials.requests-ticker')
             @include('partials.programcilar-cards')
-            @php $latestNews = $latestNews ?? collect(); @endphp
-            <section class="home-news-section" aria-label="Haberler">
-                <div class="home-news-section__header">
-                    <h2 class="home-news-section__title">Haberler</h2>
-                </div>
-                @if($latestNews->isNotEmpty())
-                <div class="home-news-grid">
-                    @foreach($latestNews as $news)
-                    <article class="home-news-card">
-                        <div class="home-news-card__img-wrap">
-                            @if($news->cover_image)
-                            <img src="{{ asset($news->cover_image) }}" alt="{{ $news->title }}" class="home-news-card__img">
-                            @endif
-                        </div>
-                        <div class="home-news-card__body">
-                            <h3 class="home-news-card__title" title="{{ $news->title }}">{{ $news->title }}</h3>
-                            <p class="home-news-card__excerpt" title="{{ $news->excerpt }}">{{ \Illuminate\Support\Str::limit($news->excerpt ?: $news->title, 120) }}</p>
-                            <a href="{{ route('news.show', $news->slug) }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
-                        </div>
-                    </article>
-                    @endforeach
-                </div>
-                @else
-                <div class="schedule-empty" style="display:block;padding:1rem 0;text-align:center;color:rgba(255,255,255,0.75);font-size:0.95rem;">
-                    Henüz yayınlanmış haber bulunmuyor.
-                </div>
-                @endif
-            </section>
         </div>
         <div class="home-right">
             <div class="home-actions">
@@ -1021,7 +1013,41 @@
                 </div>
             </div>
             @include('partials.listener-submissions-widget')
-            @include('partials.video-gallery-widget')
+            @php $latestNews = $latestNews ?? collect(); @endphp
+            <div class="home-media-row">
+                <div class="home-media-col">
+                    <section class="home-news-section" aria-label="Haberler">
+                        <div class="home-news-section__header">
+                            <h2 class="home-news-section__title">Haberler</h2>
+                        </div>
+                        @if($latestNews->isNotEmpty())
+                        <div class="home-news-grid">
+                            @foreach($latestNews as $news)
+                            <article class="home-news-card">
+                                <div class="home-news-card__img-wrap">
+                                    @if($news->cover_image)
+                                    <img src="{{ asset($news->cover_image) }}" alt="{{ $news->title }}" class="home-news-card__img">
+                                    @endif
+                                </div>
+                                <div class="home-news-card__body">
+                                    <h3 class="home-news-card__title" title="{{ $news->title }}">{{ $news->title }}</h3>
+                                    <p class="home-news-card__excerpt" title="{{ $news->excerpt }}">{{ \Illuminate\Support\Str::limit($news->excerpt ?: $news->title, 120) }}</p>
+                                    <a href="{{ route('news.show', $news->slug) }}" class="home-news-card__btn ry-btn ry-btn-primary">Devamını Oku</a>
+                                </div>
+                            </article>
+                            @endforeach
+                        </div>
+                        @else
+                        <div class="schedule-empty" style="display:block;padding:1rem 0;text-align:center;color:rgba(255,255,255,0.75);font-size:0.95rem;">
+                            Henüz yayınlanmış haber bulunmuyor.
+                        </div>
+                        @endif
+                    </section>
+                </div>
+                <div class="home-media-col">
+                    @include('partials.video-gallery-widget')
+                </div>
+            </div>
         </div>
     </div>
 </div>
