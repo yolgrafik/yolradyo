@@ -619,7 +619,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-53%, -48%);
         }
         .bottom-bar-logo {
             height: 112px;
@@ -739,7 +739,7 @@
             cursor: pointer;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-53%, -48%);
         }
         .disc-overlay .icon {
             flex-shrink: 0;
@@ -771,8 +771,8 @@
         .disc-overlay .icon.pause::before { left: 0; }
         .disc-overlay .icon.pause::after { right: 0; }
         @keyframes spinDisc {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
+            from { transform: translate(-53%, -48%) rotate(0deg); }
+            to { transform: translate(-53%, -48%) rotate(360deg); }
         }
         body.playing .disc-overlay {
             animation: spinDisc 2.5s linear infinite;
