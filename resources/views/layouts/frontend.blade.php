@@ -903,6 +903,9 @@
                                         @foreach($m->children as $c)
                                             <li><a href="{{ $c->href }}" @if($c->target_blank) target="_blank" rel="noopener noreferrer" @endif>{{ $c->title }}</a></li>
                                         @endforeach
+                                        @if(($m->url ?? '') === '/hakkimizda/biz-kimiz')
+                                            <li><a href="{{ url('/reklam') }}">Reklam</a></li>
+                                        @endif
                                     </ul>
                                 </li>
                             @else
