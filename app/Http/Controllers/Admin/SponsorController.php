@@ -220,7 +220,6 @@ class SponsorController extends Controller
 
         if ($sponsor) {
             $current = $sponsor->getGalleryImages();
-            $kept = array_intersect($current, $existing);
             $removed = array_diff($current, $existing);
             foreach ($removed as $path) {
                 $this->deleteImage($path);
