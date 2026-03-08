@@ -75,6 +75,9 @@
 .video-gallery-card__cover{position:relative;aspect-ratio:5/4;background:#10131a;overflow:hidden;}
 .video-gallery-card__cover img{width:100%;height:100%;object-fit:cover;display:block;}
 .video-gallery-card__fallback{width:100%;height:100%;display:grid;place-items:center;color:#d1d5db;font-weight:700;}
+.video-gallery-card__inline-player{position:absolute;inset:0;display:none;background:#000;}
+.video-gallery-card__inline-player.is-active{display:block;}
+.video-gallery-card__inline-player iframe,.video-gallery-card__inline-player video{width:100%;height:100%;border:none;display:block;object-fit:cover;}
 .video-gallery-card__play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(201,42,42,.92);color:#fff;font-size:22px;padding-left:3px;box-shadow:0 6px 18px rgba(0,0,0,.35);}
 .video-gallery-card__body{padding:10px 12px;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:6px;min-height:88px;}
 .video-gallery-card__title{margin:0;font-size:.95rem;font-weight:700;color:var(--text);line-height:1.35;}
@@ -113,21 +116,29 @@
         });
     }
 
-    var modal = document.getElementById('videoGalleryModal');
-    var player = document.getElementById('videoGalleryPlayer');
-    if (!modal || !player) return;
-
-    function closeModal() {
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-        player.innerHTML = '';
-        document.body.style.overflow = '';
+    function stopAllInlinePlayers() {
+        document.querySelectorAll('.video-gallery-card__inline-player').forEach(function(p){
+            p.innerHTML = '';
+            p.classList.remove('is-active');
+        });
     }
 
-    function openModal(card) {
+    function openInline(card) {
         var type = card.getAttribute('data-video-type');
         var mp4 = card.getAttribute('data-mp4');
         var yt = card.getAttribute('data-youtube');
+        var cover = card.querySelector('.video-gallery-card__cover');
+        if (!cover) return;
+
+        stopAllInlinePlayers();
+
+        var player = cover.querySelector('.video-gallery-card__inline-player');
+        if (!player) {
+            player = document.createElement('div');
+            player.className = 'video-gallery-card__inline-player';
+            cover.appendChild(player);
+        }
+
         if (type === 'mp4' && mp4) {
             player.innerHTML = '<video controls autoplay playsinline src="' + mp4 + '"></video>';
         } else if (type === 'youtube' && yt) {
@@ -136,19 +147,11 @@
         } else {
             return;
         }
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
+        player.classList.add('is-active');
     }
 
     document.querySelectorAll('.js-gallery-video-card').forEach(function(card){
-        card.addEventListener('click', function(){ openModal(card); });
-    });
-    document.querySelectorAll('[data-close-video-modal]').forEach(function(el){
-        el.addEventListener('click', closeModal);
-    });
-    document.addEventListener('keydown', function(e){
-        if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+        card.addEventListener('click', function(){ openInline(card); });
     });
 })();
 </script>
