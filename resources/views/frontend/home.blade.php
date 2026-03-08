@@ -949,7 +949,7 @@
                 </div>
                 @else
                 <div class="schedule-empty" style="display:block;padding:1rem 0;text-align:center;color:rgba(255,255,255,0.75);font-size:0.95rem;">
-                    Henuz yayinlanmis haber bulunmuyor.
+                    Henüz yayınlanmış haber bulunmuyor.
                 </div>
                 @endif
             </section>
