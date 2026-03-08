@@ -111,7 +111,7 @@
 .video-gallery-swiper{padding:12px 12px 2px;}
 .video-gallery-swiper .swiper-wrapper{align-items:stretch;}
 .video-gallery-swiper .swiper-slide{height:auto;display:flex;}
-.video-gallery-card{display:flex;flex-direction:column;width:100%;height:420px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.34);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;}
+.video-gallery-card{display:flex;flex-direction:column;width:100%;height:360px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.34);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;}
 .video-gallery-card:hover{transform:translateY(-2px);border-color:var(--ry-schedule-active);box-shadow:0 10px 24px rgba(0,0,0,0.35);}
 .video-gallery-card__cover{position:relative;background:transparent;overflow:hidden;flex:0 0 80%;line-height:0;min-height:0;height:80%;}
 .video-gallery-card__cover img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -136,7 +136,7 @@
 .video-modal__close{position:absolute;right:10px;top:8px;z-index:2;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);color:#fff;width:34px;height:34px;border-radius:50%;font-size:22px;line-height:1;cursor:pointer;}
 .video-modal__player{aspect-ratio:16/9;background:#000;}
 .video-modal__player iframe,.video-modal__player video{width:100%;height:100%;border:none;display:block;}
-@media (max-width: 768px){.video-gallery-card{height:390px;}.video-gallery-card__title{font-size:.84rem;}.video-gallery-card__desc{font-size:.7rem;}.video-gallery-section__subtitle{font-size:.7rem;}}
+@media (max-width: 768px){.video-gallery-card{height:340px;}.video-gallery-card__title{font-size:.84rem;}.video-gallery-card__desc{font-size:.7rem;}.video-gallery-section__subtitle{font-size:.7rem;}}
 </style>
 @endpush
 
