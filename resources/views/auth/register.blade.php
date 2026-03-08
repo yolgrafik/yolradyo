@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Üye Ol')
+@section('title', 'Üyelik Kaydı')
 
 @push('styles')
 <style>
@@ -58,7 +58,7 @@
 
 @section('content')
 <section class="page-hero">
-    <h1>Üye Ol</h1>
+    <h1>Üyelik Kaydı</h1>
 </section>
 <div class="auth-page">
     <div class="auth-card">
@@ -71,42 +71,41 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="form-group">
-                <label for="name">Ad Soyad *</label>
-                <input type="text" name="name" id="name" class="form-input" value="{{ old('name') }}" placeholder="Örn: Ali Yılmaz" maxlength="60" required>
-                <span class="help-text">2 kelime, sadece harf, her kelime en az 3 karakter</span>
+                <label for="name">Ad Soyad <span class="required">*</span></label>
+                <input type="text" name="name" id="name" class="form-input" value="{{ old('name') }}" placeholder="Adınız ve soyadınızı giriniz" maxlength="60" required>
+                <span class="help-text">İki kelime, yalnızca harf; her kelime en az 3 karakter olmalıdır</span>
                 @error('name')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
-                <label for="email">E-posta *</label>
-                <input type="email" name="email" id="email" class="form-input" value="{{ old('email') }}" required>
+                <label for="email">E-posta Adresi <span class="required">*</span></label>
+                <input type="email" name="email" id="email" class="form-input" value="{{ old('email') }}" placeholder="ornek@eposta.com" required>
                 @error('email')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
-                <label for="password">Şifre *</label>
-                <input type="password" name="password" id="password" class="form-input" required minlength="8">
-                <span class="help-text">En az 8 karakter</span>
+                <label for="password">Şifre <span class="required">*</span></label>
+                <input type="password" name="password" id="password" class="form-input" placeholder="En az 8 karakter" required minlength="8">
                 @error('password')<span class="form-error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
-                <label for="password_confirmation">Şifre Tekrar *</label>
-                <input type="password" name="password_confirmation" id="password_confirmation" class="form-input" required>
+                <label for="password_confirmation">Şifre Tekrar <span class="required">*</span></label>
+                <input type="password" name="password_confirmation" id="password_confirmation" class="form-input" placeholder="Şifrenizi tekrar giriniz" required>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" name="terms_accepted" id="terms_accepted" value="1" {{ old('terms_accepted') ? 'checked' : '' }} required>
                 <label for="terms_accepted">
-                    <a href="{{ url('/kullanim') }}" target="_blank" rel="noopener">Kullanım şartlarını</a> kabul ediyorum *
+                    <a href="{{ url('/kullanim') }}" target="_blank" rel="noopener">Kullanım şartlarını</a> okudum ve kabul ediyorum <span class="required">*</span>
                 </label>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" name="privacy_accepted" id="privacy_accepted" value="1" {{ old('privacy_accepted') ? 'checked' : '' }} required>
                 <label for="privacy_accepted">
-                    <a href="{{ url('/gizlilik') }}" target="_blank" rel="noopener">Gizlilik politikasını</a> ve <a href="{{ url('/kvkk') }}" target="_blank" rel="noopener">KVKK aydınlatma metnini</a> okudum, kabul ediyorum *
+                    <a href="{{ url('/gizlilik') }}" target="_blank" rel="noopener">Gizlilik politikasını</a> ve <a href="{{ url('/kvkk') }}" target="_blank" rel="noopener">KVKK aydınlatma metnini</a> okudum ve kabul ediyorum <span class="required">*</span>
                 </label>
             </div>
-            <button type="submit" class="btn-submit">Üye Ol</button>
+            <button type="submit" class="btn-submit">Kayıt Oluştur</button>
         </form>
         <div class="auth-links">
-            <a href="{{ route('login') }}">Zaten üye misiniz? Giriş Yap</a>
+            <a href="{{ route('login') }}">Hesabınız var mı? Giriş Yap</a>
         </div>
     </div>
 </div>

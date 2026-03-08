@@ -114,8 +114,8 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         $message = $status === 'aktif'
-            ? 'Hesabınız oluşturuldu. Hoş geldiniz!'
-            : 'Hesabınız oluşturuldu. Onaylandıktan sonra tüm özelliklere erişebilirsiniz.';
+            ? 'Üyeliğiniz başarıyla oluşturuldu. Hoş geldiniz.'
+            : 'Üyeliğiniz başarıyla oluşturuldu. Yönetici onayından sonra tüm özelliklere erişebilirsiniz.';
 
         return redirect()->intended('/')
             ->with('success', $message);
