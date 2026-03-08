@@ -619,7 +619,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-52%, -50%);
+            transform: translate(-50%, -50%);
         }
         .bottom-bar-logo {
             height: 112px;
@@ -739,7 +739,7 @@
             cursor: pointer;
             top: 50%;
             left: 50%;
-            transform: translate(-52%, -50%);
+            transform: translate(-50%, -50%);
         }
         .disc-overlay .icon {
             flex-shrink: 0;
@@ -751,7 +751,7 @@
             border-top: 8px solid transparent;
             border-bottom: 8px solid transparent;
             border-left: 14px solid var(--ry-text);
-            margin-left: 4px;
+            margin-left: 0;
         }
         .disc-overlay .icon.pause {
             width: 16px;
@@ -771,8 +771,8 @@
         .disc-overlay .icon.pause::before { left: 0; }
         .disc-overlay .icon.pause::after { right: 0; }
         @keyframes spinDisc {
-            from { transform: translate(-52%, -50%) rotate(0deg); }
-            to { transform: translate(-52%, -50%) rotate(360deg); }
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
         body.playing .disc-overlay {
             animation: spinDisc 2.5s linear infinite;
@@ -791,7 +791,7 @@
             .legal-links { font-size: 12px !important; }
             body { padding-bottom: 165px; }
             .disc-overlay { width: 40px; height: 40px; }
-            .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 3px; }
+            .disc-overlay .icon.play { border-top-width: 6px; border-bottom-width: 6px; border-left-width: 10px; margin-left: 0; }
             .disc-overlay .icon.pause { width: 14px; height: 14px; }
             .disc-overlay .icon.pause::before,
             .disc-overlay .icon.pause::after { width: 4px; height: 14px; }
