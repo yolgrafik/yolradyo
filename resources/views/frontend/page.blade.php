@@ -63,7 +63,7 @@
     }
     .page-content-body--about {
         position: relative;
-        background: rgba(15, 20, 30, 0.72);
+        background: rgba(28, 36, 52, 0.76);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.08);
