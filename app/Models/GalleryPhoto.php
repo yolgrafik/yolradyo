@@ -9,12 +9,15 @@ class GalleryPhoto extends Model
     protected $fillable = [
         'album_id',
         'title',
+        'short_description',
         'image_path',
+        'is_cover',
         'is_active',
         'sort_order',
     ];
 
     protected $casts = [
+        'is_cover' => 'boolean',
         'is_active' => 'boolean',
     ];
 

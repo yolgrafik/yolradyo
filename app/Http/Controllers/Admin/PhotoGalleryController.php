@@ -50,7 +50,9 @@ class PhotoGalleryController extends Controller
         $validated = $request->validate([
             'album_id' => 'required|exists:photo_albums,id',
             'title' => 'nullable|string|max:255',
+            'short_description' => 'nullable|string|max:500',
             'image' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
+            'is_cover' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
         ]);
@@ -60,7 +62,9 @@ class PhotoGalleryController extends Controller
         GalleryPhoto::create([
             'album_id' => (int) $validated['album_id'],
             'title' => $validated['title'] ?? null,
+            'short_description' => $validated['short_description'] ?? null,
             'image_path' => $path,
+            'is_cover' => (bool) ($validated['is_cover'] ?? false),
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);
@@ -114,7 +118,9 @@ class PhotoGalleryController extends Controller
         $validated = $request->validate([
             'album_id' => 'required|exists:photo_albums,id',
             'title' => 'nullable|string|max:255',
+            'short_description' => 'nullable|string|max:500',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
+            'is_cover' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
         ]);
@@ -128,7 +134,9 @@ class PhotoGalleryController extends Controller
         $photo->update([
             'album_id' => (int) $validated['album_id'],
             'title' => $validated['title'] ?? null,
+            'short_description' => $validated['short_description'] ?? null,
             'image_path' => $path,
+            'is_cover' => (bool) ($validated['is_cover'] ?? false),
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_active' => (bool) ($validated['is_active'] ?? false),
         ]);
