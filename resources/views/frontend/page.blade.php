@@ -61,6 +61,42 @@
         padding: 35px;
         box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
     }
+    .page-content-body--about {
+        position: relative;
+        background: rgba(15, 20, 30, 0.72);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        padding: 32px 36px;
+        margin-top: 24px;
+        margin-bottom: 24px;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 980px;
+        color: #f3f4f6;
+    }
+    .page-content-body--about::before {
+        content: '';
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        top: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+        pointer-events: none;
+    }
+    .page-content-body--about p {
+        color: #f3f4f6;
+        line-height: 1.9;
+        margin-bottom: 1.25rem;
+    }
+    .page-content-body--about h2,
+    .page-content-body--about h3 {
+        color: #ffffff;
+        letter-spacing: 0.01em;
+    }
     .page-content-body h2 { font-size: 1.25rem; font-weight: 700; color: #fff; margin: 1.5rem 0 0.75rem 0; }
     .page-content-body h3 { font-size: 1.1rem; font-weight: 600; color: #e5e7eb; margin: 1.25rem 0 0.5rem 0; }
     .page-content-body ul, .page-content-body ol { margin: 0.75rem 0 1rem 1.5rem; color: #dbe3ef; line-height: 1.85; }
@@ -71,11 +107,19 @@
         .page-content-body {
             padding: 22px;
         }
+        .page-content-body--about {
+            padding: 20px;
+            border-radius: 14px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            max-width: 100%;
+        }
     }
 </style>
 @endpush
 
 @section('content')
+@php $isAboutPage = request()->is('hakkimizda/*'); @endphp
 <section class="page-hero">
     <h1>{{ $pageTitle ?? 'Sayfa' }}</h1>
 </section>
@@ -89,7 +133,7 @@
         </div>
     @endif
     @if(!empty(trim($pageContent ?? '')))
-        <div class="page-content-body">
+        <div class="page-content-body {{ $isAboutPage ? 'page-content-body--about' : '' }}">
             {!! $pageContent !!}
         </div>
     @else
