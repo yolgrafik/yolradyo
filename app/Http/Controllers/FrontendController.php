@@ -6,6 +6,7 @@ use App\Models\AboutPage;
 use App\Models\ArtistVideo;
 use App\Models\DjProfile;
 use App\Models\ForumPost;
+use App\Models\GalleryPhoto;
 use App\Models\News;
 use App\Models\Programci;
 use App\Models\Setting;
@@ -30,6 +31,13 @@ class FrontendController extends Controller
             ->orderByDesc('id')
             ->limit(12)
             ->get();
+        $galleryPhotos = GalleryPhoto::query()
+            ->where('is_active', true)
+            ->orderByDesc('is_cover')
+            ->orderBy('sort_order')
+            ->latest()
+            ->limit(12)
+            ->get();
         $listenerSubmissions = ForumPost::with('user')
             ->where('approval_status', ForumPost::APPROVAL_APPROVED)
             ->whereIn('type', [ForumPost::TYPE_PHOTO, ForumPost::TYPE_VIDEO])
@@ -43,7 +51,7 @@ class FrontendController extends Controller
             ->limit(20)
             ->get();
 
-        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions', 'latestNews', 'artistVideos'));
+        return view('frontend.home', compact('sliders', 'programcilar', 'listenerSubmissions', 'latestNews', 'artistVideos', 'galleryPhotos'));
     }
 
     public function player(SettingsService $settings, \Illuminate\Http\Request $request)
