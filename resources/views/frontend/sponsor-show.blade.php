@@ -39,8 +39,9 @@
 .sponsor-back { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; border-radius: 999px; border: 1px solid var(--ry-border); background: color-mix(in srgb, var(--ry-bar-bg) 76%, transparent); color: var(--ry-text); text-decoration: none; font-size: 0.85rem; font-weight: 700; margin-bottom: 1.5rem; transition: background 0.2s, border-color 0.2s; }
 .sponsor-back:hover { background: color-mix(in srgb, var(--ry-btn-bg) 26%, transparent); border-color: var(--ry-line-color); }
 .sponsor-video-embed { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; background: #000; }
-.sponsor-video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.sponsor-video-mp4 video { border-radius: 10px; max-width: 100%; background: #000; }
+.sponsor-video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
+.sponsor-video-mp4 { width: 100%; }
+.sponsor-video-mp4 video { border-radius: 10px; max-width: 100%; width: 100%; display: block; background: #000; }
 .sponsor-share { margin-top: 1.5rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.55rem; }
 .sponsor-share__label { font-size: 0.8rem; color: var(--ry-text-muted); margin-right: 0.2rem; }
 .sponsor-share-btn { display: inline-flex; align-items: center; justify-content: flex-start; gap: 0.45rem; min-height: 36px; padding: 0.45rem 0.75rem; border-radius: 999px; border: 1px solid var(--ry-border); color: #fff; text-decoration: none; font-size: 0.8rem; font-weight: 700; background: color-mix(in srgb, var(--ry-bar-bg) 72%, transparent); transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease; white-space: nowrap; cursor: pointer; font-family: inherit; }
@@ -69,8 +70,29 @@
 <div class="sponsor-detail">
     <a href="{{ url('/') }}#sponsors" class="sponsor-back">← Ana Sayfa</a>
 
-    @php $galleryImages = $sponsor->getGalleryImages(); $firstImg = $sponsor->getFirstImagePath(); @endphp
-    @if($firstImg)
+    @php
+        $galleryImages = $sponsor->getGalleryImages();
+        $firstImg = $sponsor->getFirstImagePath();
+        $ytId = ($sponsor->video_type ?? '') === 'youtube' ? $sponsor->getYouTubeVideoId() : null;
+        $mp4Path = (($sponsor->video_type ?? '') === 'mp4' && !empty($sponsor->video_path)) ? $sponsor->video_path : null;
+        $hasValidVideo = ($ytId && ($sponsor->video_type ?? '') === 'youtube') || ($mp4Path && ($sponsor->video_type ?? '') === 'mp4');
+    @endphp
+    @if($hasValidVideo)
+        <div class="sponsor-detail__media-wrap sponsor-detail__image-wrap">
+            @if($ytId)
+                <div class="sponsor-video-embed">
+                    <iframe src="https://www.youtube.com/embed/{{ $ytId }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="{{ $sponsor->title ?? 'Sponsor' }} video"></iframe>
+                </div>
+            @elseif($mp4Path)
+                <div class="sponsor-video-mp4">
+                    <video controls width="100%" preload="metadata" poster="{{ $firstImg ? asset($firstImg) : '' }}">
+                        <source src="{{ asset($mp4Path) }}" type="video/mp4">
+                        Tarayıcınız video oynatmayı desteklemiyor.
+                    </video>
+                </div>
+            @endif
+        </div>
+    @elseif($firstImg)
         <div class="sponsor-detail__image-wrap">
             <img src="{{ asset($firstImg) }}" alt="{{ $sponsor->title ?? 'Sponsor' }}" class="sponsor-detail__main-img js-sponsor-gallery-open" data-src="{{ asset($firstImg) }}">
         </div>
@@ -119,23 +141,6 @@
                 @endif
     </div>
 
-    @if($sponsor->hasVideo())
-    <div class="sponsor-video-section sponsor-content">
-        <h3>Video</h3>
-        @if(($sponsor->video_type ?? '') === 'youtube' && $sponsor->getYouTubeVideoId())
-            <div class="sponsor-video-embed">
-                <iframe src="https://www.youtube.com/embed/{{ $sponsor->getYouTubeVideoId() }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="{{ $sponsor->title ?? '' }} video"></iframe>
-            </div>
-        @elseif(($sponsor->video_type ?? '') === 'mp4' && !empty($sponsor->video_path))
-            <div class="sponsor-video-mp4">
-                <video controls width="100%" preload="metadata" poster="">
-                    <source src="{{ asset($sponsor->video_path) }}" type="video/mp4">
-                    Tarayıcınız video oynatmayı desteklemiyor.
-                </video>
-            </div>
-        @endif
-    </div>
-    @endif
 
     @php
         $shareUrl = route('sponsor.show', $sponsor);
