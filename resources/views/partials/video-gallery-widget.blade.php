@@ -4,8 +4,11 @@
 
 <section class="home-news-section video-gallery-section" aria-label="Video Galeri">
     <div class="home-news-section__header video-gallery-section__header">
-        <h2 class="home-news-section__title video-gallery-section__title">Video Galeri</h2>
-        <p class="video-gallery-section__subtitle">Sanatçı Videoları</p>
+        <div class="video-gallery-section__title-row">
+            <h2 class="home-news-section__title video-gallery-section__title">Video Galeri</h2>
+            <span class="video-gallery-section__sep" aria-hidden="true">|</span>
+            <p class="video-gallery-section__subtitle">Sanatçı Videoları</p>
+        </div>
     </div>
     <div class="video-gallery-widget">
     @if($artistVideos->isNotEmpty())
@@ -62,7 +65,9 @@
 <style>
 .video-gallery-section__header{margin-bottom:1rem;}
 .video-gallery-section__title{margin:0;}
-.video-gallery-section__subtitle{font-size:.84rem;color:var(--ry-text-muted);margin:.25rem 0 0;}
+.video-gallery-section__title-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
+.video-gallery-section__sep{color:var(--ry-text-muted);font-size:.9rem;line-height:1;}
+.video-gallery-section__subtitle{font-size:.74rem;color:var(--ry-text-muted);margin:0;line-height:1;}
 .video-gallery-widget{position:relative;background:color-mix(in srgb,var(--ry-bar-bg) 75%, #0b0f16);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.25);border-top:1px solid var(--ry-line-color);}
 .video-gallery-swiper{padding:12px 12px 24px;}
 .video-gallery-card{display:flex;flex-direction:column;height:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;}
@@ -86,7 +91,7 @@
 .video-modal__close{position:absolute;right:10px;top:8px;z-index:2;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);color:#fff;width:34px;height:34px;border-radius:50%;font-size:22px;line-height:1;cursor:pointer;}
 .video-modal__player{aspect-ratio:16/9;background:#000;}
 .video-modal__player iframe,.video-modal__player video{width:100%;height:100%;border:none;display:block;}
-@media (max-width: 768px){.video-gallery-card__title{font-size:.9rem;}.video-gallery-card__desc{font-size:.76rem;}.video-gallery-section__subtitle{font-size:.8rem;}}
+@media (max-width: 768px){.video-gallery-card__title{font-size:.9rem;}.video-gallery-card__desc{font-size:.76rem;}.video-gallery-section__subtitle{font-size:.7rem;}}
 </style>
 @endpush
 
