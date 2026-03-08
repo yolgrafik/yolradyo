@@ -38,6 +38,7 @@ Route::get('/videolar', [FrontendController::class, 'videolar'])->name('videos.i
 Route::get('/videolar/{video}', [FrontendController::class, 'videoShow'])->name('videos.show')->whereNumber('video');
 Route::get('/galeri', [FrontendController::class, 'galeri'])->name('gallery.index');
 Route::get('/galeri/{slug}', [FrontendController::class, 'galeriAlbum'])->name('gallery.show')->where('slug', '[A-Za-z0-9\-]+');
+Route::get('/sponsorlar/{sponsor:slug}', [FrontendController::class, 'sponsorShow'])->name('sponsor.show')->where('sponsor', '[A-Za-z0-9\-]+');
 Route::get('/reklam', [FrontendController::class, 'reklam']);
 Route::get('/hakkimizda', fn () => redirect('/hakkimizda/biz-kimiz'));
 Route::get('/hakkimizda/{slug}', [FrontendController::class, 'hakkimizda'])->where('slug', 'biz-kimiz|misyon|politika');

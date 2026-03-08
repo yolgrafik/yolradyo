@@ -280,4 +280,10 @@ class FrontendController extends Controller
         $content = $settings->get('legal_dmca', '');
         return view('frontend.page', ['pageTitle' => 'DMCA / Telif Hakkı Bildirimi', 'pageContent' => $content]);
     }
+
+    public function sponsorShow(Sponsor $sponsor)
+    {
+        abort_unless($sponsor->is_active, 404);
+        return view('frontend.sponsor-show', compact('sponsor'));
+    }
 }

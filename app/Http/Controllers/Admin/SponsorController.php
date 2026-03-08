@@ -28,6 +28,7 @@ class SponsorController extends Controller
         Sponsor::create([
             'title' => $validated['title'],
             'short_description' => $validated['short_description'] ?? null,
+            'description' => $validated['description'] ?? null,
             'image_path' => $imagePath,
             'website_url' => $validated['website_url'] ?? null,
             'facebook_url' => $validated['facebook_url'] ?? null,
@@ -59,6 +60,7 @@ class SponsorController extends Controller
         $sponsor->update([
             'title' => $validated['title'],
             'short_description' => $validated['short_description'] ?? null,
+            'description' => $validated['description'] ?? null,
             'image_path' => $imagePath,
             'website_url' => $validated['website_url'] ?? null,
             'facebook_url' => $validated['facebook_url'] ?? null,
@@ -84,7 +86,8 @@ class SponsorController extends Controller
         return $request->validate([
             'title' => 'required|string|max:255',
             'short_description' => 'nullable|string|max:2000',
-            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
+            'description' => 'nullable|string|max:10000',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:10240',
             'website_url' => 'nullable|url|max:500',
             'facebook_url' => 'nullable|url|max:500',
             'instagram_url' => 'nullable|url|max:500',

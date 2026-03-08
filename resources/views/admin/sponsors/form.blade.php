@@ -5,7 +5,12 @@
 
 <div class="pg-form-group">
     <label>Kısa Açıklama</label>
-    <textarea name="short_description" rows="4" class="pg-input">{{ old('short_description', $sponsor->short_description ?? '') }}</textarea>
+    <textarea name="short_description" rows="4" class="pg-input" placeholder="Kartlarda ve özetlerde görünecek kısa metin">{{ old('short_description', $sponsor->short_description ?? '') }}</textarea>
+</div>
+
+<div class="pg-form-group">
+    <label>Detaylı Açıklama</label>
+    <textarea name="description" rows="6" class="pg-input" placeholder="Sponsor detay sayfasında görünecek uzun açıklama">{{ old('description', $sponsor->description ?? '') }}</textarea>
 </div>
 
 <div class="pg-form-group">

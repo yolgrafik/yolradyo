@@ -25,7 +25,7 @@ class PhotoGalleryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
-            'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
+            'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:10240',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
         ]);
@@ -62,7 +62,7 @@ class PhotoGalleryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
-            'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
+            'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:10240',
             'sort_order' => 'nullable|integer|min:0|max:9999',
             'is_active' => 'nullable|boolean',
         ]);
@@ -110,7 +110,7 @@ class PhotoGalleryController extends Controller
             'album_id' => 'nullable|exists:photo_albums,id',
             'title' => 'nullable|string|max:255',
             'short_description' => 'nullable|string|max:2000',
-            'image' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
+            'image' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:10240',
             'is_cover' => 'nullable|boolean',
             'is_announcement' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
@@ -144,7 +144,7 @@ class PhotoGalleryController extends Controller
         $validated = $request->validate([
             'album_id' => 'required|exists:photo_albums,id',
             'images' => 'required|array|min:1',
-            'images.*' => 'image|mimes:jpeg,jpg,png,webp,gif|max:8192',
+            'images.*' => 'image|mimes:jpeg,jpg,png,webp,gif|max:10240',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -180,7 +180,7 @@ class PhotoGalleryController extends Controller
             'album_id' => 'nullable|exists:photo_albums,id',
             'title' => 'nullable|string|max:255',
             'short_description' => 'nullable|string|max:2000',
-            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:8192',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp,gif|max:10240',
             'is_cover' => 'nullable|boolean',
             'is_announcement' => 'nullable|boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',

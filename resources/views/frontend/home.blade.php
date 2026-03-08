@@ -841,6 +841,22 @@
         border-bottom: 1px solid var(--ry-line-color);
         border-radius: var(--ry-radius);
         overflow: hidden;
+        position: relative;
+    }
+    .home-sponsor-card__click-area {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+    .home-sponsor-card__inner {
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
+    }
+    .home-sponsor-card__links {
+        pointer-events: auto;
+        position: relative;
+        z-index: 2;
     }
     .home-sponsor-card__img {
         width: 100%;
@@ -877,20 +893,28 @@
         flex-wrap: wrap;
         gap: .35rem;
     }
-    .home-sponsor-link {
+    .home-sponsor-card:hover {
+        border-color: color-mix(in srgb, var(--ry-schedule-active) 60%, var(--ry-border));
+        box-shadow: 0 6px 16px rgba(0,0,0,.25);
+    }
+    .home-sponsor-social-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        width: 28px;
         height: 28px;
-        min-width: 28px;
-        padding: 0 .55rem;
         border-radius: 999px;
         border: 1px solid var(--ry-border);
         color: var(--ry-text);
-        text-decoration: none;
-        font-size: .68rem;
         background: color-mix(in srgb, var(--ry-bar-bg) 72%, transparent);
+        cursor: pointer;
+        transition: transform .15s, color .15s, border-color .15s;
     }
+    .home-sponsor-social-btn:hover {
+        transform: translateY(-1px);
+        color: #fff;
+    }
+    .home-sponsor-social-btn svg { width: 14px; height: 14px; }
     @media (max-width: 992px) {
         .home-main {
             grid-template-columns: 1fr;
@@ -1038,23 +1062,30 @@
                     <h2 class="home-news-section__title">Sponsorlar</h2>
                 </div>
                 @if($sponsors->isNotEmpty())
-                    <div class="home-sponsors-grid">
+                    <div class="home-sponsors-grid" id="sponsors">
                         @foreach($sponsors as $sponsor)
                             <article class="home-sponsor-card">
-                                @if($sponsor->image_path)
-                                    <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->title }}" class="home-sponsor-card__img">
+                                @if($sponsor->slug ?? null)
+                                    <a href="{{ route('sponsor.show', $sponsor) }}" class="home-sponsor-card__click-area" aria-label="{{ $sponsor->title }} detayı"></a>
                                 @endif
-                                <div class="home-sponsor-card__body">
-                                    <h3 class="home-sponsor-card__title">{{ $sponsor->title }}</h3>
-                                    @if($sponsor->short_description)
-                                        <p class="home-sponsor-card__desc">{{ \Illuminate\Support\Str::limit($sponsor->short_description, 120) }}</p>
+                                <div class="home-sponsor-card__inner">
+                                    @if($sponsor->image_path ?? null)
+                                        <img src="{{ asset($sponsor->image_path) }}" alt="{{ $sponsor->title ?? '' }}" class="home-sponsor-card__img">
+                                    @else
+                                        <div class="home-sponsor-card__img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:var(--ry-schedule-active);">{{ mb_substr($sponsor->title ?? '', 0, 1) }}</div>
                                     @endif
-                                    <div class="home-sponsor-card__links">
-                                        @if($sponsor->website_url)<a class="home-sponsor-link" href="{{ $sponsor->website_url }}" target="_blank" rel="noopener noreferrer">Web</a>@endif
-                                        @if($sponsor->facebook_url)<a class="home-sponsor-link" href="{{ $sponsor->facebook_url }}" target="_blank" rel="noopener noreferrer">Facebook</a>@endif
-                                        @if($sponsor->instagram_url)<a class="home-sponsor-link" href="{{ $sponsor->instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram</a>@endif
-                                        @if($sponsor->x_url)<a class="home-sponsor-link" href="{{ $sponsor->x_url }}" target="_blank" rel="noopener noreferrer">X</a>@endif
-                                        @if($sponsor->youtube_url)<a class="home-sponsor-link" href="{{ $sponsor->youtube_url }}" target="_blank" rel="noopener noreferrer">YouTube</a>@endif
+                                    <div class="home-sponsor-card__body">
+                                        <h3 class="home-sponsor-card__title">{{ $sponsor->title ?? 'Sponsor' }}</h3>
+                                        @if(!empty($sponsor->short_description))
+                                            <p class="home-sponsor-card__desc">{{ \Illuminate\Support\Str::limit($sponsor->short_description, 120) }}</p>
+                                        @endif
+                                        <div class="home-sponsor-card__links">
+                                            @if(!empty($sponsor->website_url))<a class="home-sponsor-social-btn" href="{{ $sponsor->website_url }}" target="_blank" rel="noopener noreferrer" title="Web Sitesi"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></a>@endif
+                                            @if(!empty($sponsor->facebook_url))<a class="home-sponsor-social-btn" href="{{ $sponsor->facebook_url }}" target="_blank" rel="noopener noreferrer" title="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>@endif
+                                            @if(!empty($sponsor->instagram_url))<a class="home-sponsor-social-btn" href="{{ $sponsor->instagram_url }}" target="_blank" rel="noopener noreferrer" title="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/></svg></a>@endif
+                                            @if(!empty($sponsor->x_url))<a class="home-sponsor-social-btn" href="{{ $sponsor->x_url }}" target="_blank" rel="noopener noreferrer" title="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>@endif
+                                            @if(!empty($sponsor->youtube_url))<a class="home-sponsor-social-btn" href="{{ $sponsor->youtube_url }}" target="_blank" rel="noopener noreferrer" title="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/></svg></a>@endif
+                                        </div>
                                     </div>
                                 </div>
                             </article>
