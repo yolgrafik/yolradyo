@@ -16,6 +16,13 @@
 .gallery-album-card__title{margin:0;font-size:.92rem;font-weight:800;color:var(--ry-text);}
 .gallery-album-card__desc{margin:.4rem 0 0;font-size:.78rem;color:var(--ry-text-muted);line-height:1.45;min-height:2.6em;}
 .gallery-album-card__meta{margin-top:.45rem;font-size:.72rem;color:var(--muted);}
+.gallery-section-title{margin:1.4rem 0 .7rem;font-size:.95rem;font-weight:800;color:var(--ry-text);}
+.gallery-plain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.gallery-photo-card{background:color-mix(in srgb, var(--ry-bar-bg) 75%, #0b0f16);border:1px solid var(--border);border-radius:12px;overflow:hidden;border-top:1px solid var(--ry-line-color);border-bottom:1px solid var(--ry-line-color);}
+.gallery-photo-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
+.gallery-photo-card__body{padding:.6rem .7rem;}
+.gallery-photo-card__title{margin:0;font-size:.84rem;font-weight:700;color:var(--ry-text);line-height:1.35;}
+.gallery-photo-card__desc{margin:.3rem 0 0;font-size:.76rem;color:var(--ry-text-muted);line-height:1.4;}
 .gallery-empty{padding:1rem;color:var(--ry-text-muted);}
 </style>
 @endpush
@@ -47,7 +54,26 @@
                 </a>
             @endforeach
         </div>
-    @else
+    @endif
+
+    @if(($unassignedPhotos ?? collect())->isNotEmpty())
+        <h2 class="gallery-section-title">Albümsüz Fotoğraflar</h2>
+        <div class="gallery-plain-grid">
+            @foreach($unassignedPhotos as $photo)
+                <article class="gallery-photo-card">
+                    <img src="{{ asset($photo->image_path) }}" alt="{{ $photo->title ?: 'Albümsüz Fotoğraf' }}">
+                    <div class="gallery-photo-card__body">
+                        <h3 class="gallery-photo-card__title">{{ $photo->title ?: 'Albümsüz Fotoğraf' }}</h3>
+                        @if(!empty($photo->short_description))
+                            <p class="gallery-photo-card__desc">{{ \Illuminate\Support\Str::limit($photo->short_description, 90) }}</p>
+                        @endif
+                    </div>
+                </article>
+            @endforeach
+        </div>
+    @endif
+
+    @if(($albums ?? collect())->isEmpty() && ($unassignedPhotos ?? collect())->isEmpty())
         <div class="gallery-empty">Henüz yayınlanmış fotoğraf bulunmuyor.</div>
     @endif
 </section>

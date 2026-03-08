@@ -155,7 +155,15 @@ class FrontendController extends Controller
             ->latest()
             ->get();
 
-        return view('frontend.galeri', compact('albums'));
+        $unassignedPhotos = GalleryPhoto::query()
+            ->where('is_active', true)
+            ->whereNull('album_id')
+            ->orderByDesc('is_cover')
+            ->orderBy('sort_order')
+            ->latest()
+            ->get();
+
+        return view('frontend.galeri', compact('albums', 'unassignedPhotos'));
     }
 
     public function galeriAlbum(string $slug)
