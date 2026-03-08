@@ -71,8 +71,8 @@
                 @endforeach
             </div>
             @if($sponsors->count() > 1)
-            <div class="swiper-button-prev home-sponsors-swiper-btn home-sponsors-swiper-btn--prev" aria-label="Önceki"></div>
-            <div class="swiper-button-next home-sponsors-swiper-btn home-sponsors-swiper-btn--next" aria-label="Sonraki"></div>
+            <div class="swiper-button-prev home-sponsors-swiper-btn home-sponsors-swiper-btn--prev" aria-label="Önceki"><i class="bi bi-chevron-left"></i></div>
+            <div class="swiper-button-next home-sponsors-swiper-btn home-sponsors-swiper-btn--next" aria-label="Sonraki"><i class="bi bi-chevron-right"></i></div>
             @endif
         </div>
     </div>
@@ -130,11 +130,12 @@
 .home-sponsor-social-btn--ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
 .home-sponsor-social-btn--x { background: #000; color: #fff; }
 .home-sponsor-social-btn--yt { background: #ff0000; color: #fff; }
-.home-sponsors-swiper .home-sponsors-swiper-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; margin: 0; border-radius: 50%; background: color-mix(in srgb, var(--ry-bar-bg) 90%, transparent); border: 1px solid var(--ry-border); color: var(--ry-text); z-index: 10; transition: all 0.2s; }
+.home-sponsors-swiper .home-sponsors-swiper-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; margin: 0; border-radius: 50%; background: color-mix(in srgb, var(--ry-bar-bg) 90%, transparent); border: 1px solid var(--ry-border); color: var(--ry-text); z-index: 10; transition: all 0.2s; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; cursor: pointer; }
+.home-sponsors-swiper .home-sponsors-swiper-btn::after { display: none; }
 .home-sponsors-swiper .home-sponsors-swiper-btn:hover { background: rgba(255,255,255,0.2); border-color: var(--ry-line-color); }
 .home-sponsors-swiper .home-sponsors-swiper-btn--prev { left: 12px; }
 .home-sponsors-swiper .home-sponsors-swiper-btn--next { right: 12px; }
-.home-sponsors-swiper .swiper-button-disabled { opacity: 0.35; pointer-events: none; }
+.home-sponsors-swiper .home-sponsors-swiper-btn.swiper-button-disabled { opacity: 0.35; pointer-events: none; }
 .sponsor-lightbox { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; }
 .sponsor-lightbox__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.85); cursor: pointer; }
 .sponsor-lightbox__content { position: relative; max-width: 90vw; max-height: 90vh; }
