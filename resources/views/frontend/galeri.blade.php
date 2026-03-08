@@ -54,7 +54,8 @@
         <p class="gallery-page__subtitle">Albüm bazlı fotoğraflar</p>
     </div>
 
-    @forelse($albums as $album)
+    @if(($albums ?? collect())->isNotEmpty())
+    @foreach($albums as $album)
         <article class="gallery-album" data-gallery-album>
             <button type="button" class="gallery-album__toggle" data-gallery-toggle>
                 <span>{{ $album->name }}</span>
@@ -91,9 +92,8 @@
             </div>
             </div>
         </article>
-    @empty
-        <div class="gallery-empty">Henüz yayınlanmış fotoğraf bulunmuyor.</div>
-    @endforelse
+    @endforeach
+    @endif
 
     @if(($unassignedPhotos ?? collect())->isNotEmpty())
         <article class="gallery-album" data-gallery-album>
@@ -132,6 +132,10 @@
             </div>
             </div>
         </article>
+    @endif
+
+    @if(($albums ?? collect())->isEmpty() && ($unassignedPhotos ?? collect())->isEmpty())
+        <div class="gallery-empty">Henüz yayınlanmış fotoğraf bulunmuyor.</div>
     @endif
 </section>
 <div class="gallery-share-toast" id="galleryShareToast">Link kopyalandı</div>
