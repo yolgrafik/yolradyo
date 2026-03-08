@@ -10,7 +10,8 @@
             @method('PUT')
             <div class="pg-form-group">
                 <label>Albüm</label>
-                <select name="album_id" class="pg-input" required>
+                <select name="album_id" class="pg-input">
+                    <option value="">Albüm seçmeden devam et</option>
                     @foreach($albums as $album)
                         <option value="{{ $album->id }}" {{ $photo->album_id === $album->id ? 'selected' : '' }}>{{ $album->name }}</option>
                     @endforeach
