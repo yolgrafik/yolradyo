@@ -145,27 +145,35 @@ class FrontendController extends Controller
     {
         $albums = PhotoAlbum::query()
             ->where('is_active', true)
+            ->withCount(['photos as active_photos_count' => function ($query) {
+                $query->where('is_active', true);
+            }])
             ->with(['photos' => function ($query) {
-                $query->where('is_active', true)
-                    ->orderByDesc('is_cover')
-                    ->orderBy('sort_order')
-                    ->latest();
+                $query->where('is_active', true)->orderByDesc('is_cover')->orderBy('sort_order')->latest();
             }])
             ->orderBy('sort_order')
             ->latest()
-            ->get()
-            ->filter(fn ($album) => $album->photos->isNotEmpty())
-            ->values();
+            ->get();
 
-        $unassignedPhotos = GalleryPhoto::query()
+        return view('frontend.galeri', compact('albums'));
+    }
+
+    public function galeriAlbum(string $slug)
+    {
+        $album = PhotoAlbum::query()
             ->where('is_active', true)
-            ->whereNull('album_id')
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $photos = GalleryPhoto::query()
+            ->where('is_active', true)
+            ->where('album_id', $album->id)
             ->orderByDesc('is_cover')
             ->orderBy('sort_order')
             ->latest()
             ->get();
 
-        return view('frontend.galeri', compact('albums', 'unassignedPhotos'));
+        return view('frontend.galeri-album', compact('album', 'photos'));
     }
 
     public function reklam()
