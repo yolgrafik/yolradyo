@@ -48,7 +48,6 @@
 .radio-option span { font-weight: 600; }
 .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.35rem; display: block; }
 .form-actions { margin-top: 1.5rem; }
-.btn-save { padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; border: none; border-radius: 10px; cursor: pointer; }
 </style>
 @endpush
 @endsection

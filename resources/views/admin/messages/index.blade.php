@@ -125,8 +125,6 @@
 <style>
 .alert-success{padding:0.75rem 1rem;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);border-radius:10px;color:#86efac;font-size:0.9rem;margin-bottom:1rem;}
 .btn-sm:disabled{opacity:0.6;cursor:not-allowed;}
-.btn-sm.btn-success{background:rgba(34,197,94,0.3);color:#86efac;border:1px solid rgba(34,197,94,0.4);}
-.btn-sm.btn-warning{background:rgba(234,179,8,0.3);color:#fde047;border:1px solid rgba(234,179,8,0.4);}
 nav[aria-label="Pagination"] ul{display:flex;gap:0.5rem;list-style:none;margin:0;padding:0;flex-wrap:wrap;}
 nav[aria-label="Pagination"] a,nav[aria-label="Pagination"] span{padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:0.9rem;}
 nav[aria-label="Pagination"] a:hover{background:rgba(201,42,42,0.2);border-color:var(--accent);}

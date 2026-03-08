@@ -111,8 +111,7 @@
 .form-group{margin-bottom:1rem;}
 .form-input{width:100%;padding:0.5rem 0.75rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:6px;color:var(--text);}
 .form-error{font-size:0.8rem;color:#f87171;margin-top:0.25rem;}
-.btn-save{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border:none;border-radius:10px;cursor:pointer;}
-.btn-test{padding:0.5rem 1rem;font-size:0.9rem;font-weight:600;background:rgba(59,130,246,0.3);color:#93c5fd;border:1px solid rgba(59,130,246,0.5);border-radius:8px;cursor:pointer;}
+.btn-test{padding:0.5rem 1rem;font-size:0.88rem;font-weight:600;background:rgba(59,130,246,0.3);color:#93c5fd;border:1px solid rgba(59,130,246,0.5);border-radius:8px;cursor:pointer;}
 .btn-test:hover{background:rgba(59,130,246,0.4);}
 .mail-notes a{color:#93c5fd;}
 </style>

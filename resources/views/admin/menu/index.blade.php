@@ -69,7 +69,7 @@
         </div>
 
         @if($items->isEmpty())
-            <p class="muted" style="text-align:center;padding:2rem;">Bu konum icin henuz menu ogesi yok. <a href="{{ route('admin.menu.create', ['location' => $location]) }}" style="color:var(--accent);">Ilk ogeyi ekleyin</a>.</p>
+            <p class="muted" style="text-align:center;padding:2rem;">Bu konum icin henuz menu ogesi yok. <a href="{{ route('admin.menu.create', ['location' => $location]) }}" class="btn-save" style="margin-left:0.5rem;">İlk Ögeyi Ekle</a>.</p>
         @else
             <div class="form-actions" style="margin-top:1rem;">
                 <button type="button" id="saveOrderBtn" class="btn-save">Siralari Kaydet</button>
@@ -86,8 +86,6 @@
 .menu-tab{padding:0.5rem 1rem;font-size:0.85rem;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid var(--border);border-radius:8px;text-decoration:none;}
 .menu-tab:hover{background:rgba(255,255,255,0.1);}
 .menu-tab.is-active{background:var(--accent);color:#fff;border-color:var(--accent);}
-.quick-btn{padding:0.5rem 1rem;font-size:0.9rem;font-weight:600;background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border:none;border-radius:8px;text-decoration:none;}
-.quick-btn:hover{opacity:0.95;}
 .table-wrap{overflow-x:auto;}
 .menu-table{width:100%;border-collapse:collapse;font-size:0.9rem;}
 .menu-table th,.menu-table td{padding:0.75rem;text-align:left;border-bottom:1px solid var(--border);}
@@ -102,7 +100,6 @@
 .slider-actions,.menu-actions{display:flex;gap:0.5rem;}
 .muted{color:var(--muted);}
 .form-actions{margin-top:1rem;}
-.btn-save{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border:none;border-radius:10px;cursor:pointer;}
 </style>
 @endpush
 @push('scripts')

@@ -36,7 +36,6 @@
 .form-help { font-size: 0.8rem; color: var(--muted); margin-top: 0.35rem; }
 .form-error { font-size: 0.8rem; color: #f87171; margin-top: 0.35rem; display: block; }
 .form-actions { margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
-.btn-save { padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; border: none; border-radius: 10px; cursor: pointer; text-decoration: none; }
 .btn-secondary { padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; text-decoration: none; }
 </style>
 @endpush

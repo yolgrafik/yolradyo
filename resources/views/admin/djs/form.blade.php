@@ -49,8 +49,6 @@
 .form-error{font-size:0.8rem;color:#f87171;margin-top:0.35rem;display:block;}
 .avatar-preview{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--border);}
 .form-actions{margin-top:1.5rem;display:flex;gap:0.75rem;}
-.btn-save{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border:none;border-radius:10px;cursor:pointer;}
-.btn-cancel{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);border-radius:10px;text-decoration:none;}
 </style>
 @endpush
 @push('scripts')

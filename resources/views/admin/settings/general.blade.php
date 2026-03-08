@@ -187,9 +187,6 @@
 .settings-toggle-input:checked + .settings-toggle-slider::before { transform: translateX(22px); background: #fbbf24; }
 .settings-toggle-label { font-size: 0.95rem; font-weight: 600; color: #e5e7eb; }
 .form-actions { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
-.btn-save { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-size: 0.95rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; border: none; border-radius: 10px; cursor: pointer; transition: opacity 0.2s, transform 0.1s; }
-.btn-save:hover { opacity: 0.95; }
-.btn-save:active { transform: scale(0.98); }
 .btn-save-icon { font-size: 1rem; }
 .btn-mail-test { padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; background: rgba(59,130,246,0.3); color: #93c5fd; border: 1px solid rgba(59,130,246,0.5); border-radius: 8px; cursor: pointer; }
 .btn-mail-test:hover { background: rgba(59,130,246,0.4); }

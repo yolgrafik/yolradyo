@@ -84,8 +84,6 @@
 .avatar-edit-actions{flex:1;min-width:0;}
 .form-input--sm{padding:0.5rem 0.75rem;font-size:0.85rem;max-width:240px;}
 .form-actions{margin-top:1.5rem;display:flex;gap:0.75rem;}
-.btn-save{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border:none;border-radius:10px;cursor:pointer;}
-.btn-cancel{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:rgba(255,255,255,0.08);color:var(--text);border:1px solid var(--border);border-radius:10px;text-decoration:none;}
 </style>
 @endpush
 @push('scripts')

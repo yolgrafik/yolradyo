@@ -79,7 +79,6 @@
 .data-table th{font-weight:700;color:var(--muted);font-size:0.8rem;text-transform:uppercase;}
 .data-table td{font-size:0.9rem;}
 .muted{font-size:0.75rem;color:var(--muted);}
-.btn-save{padding:0.5rem 1rem;font-size:0.9rem;font-weight:600;background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border:none;border-radius:8px;cursor:pointer;}
 .text-center{text-align:center;}
 </style>
 @endpush

@@ -38,10 +38,8 @@
             </div>
 
             <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
-                <button type="submit" style="padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; border: none; border-radius: 10px; cursor: pointer;">
-                    Kaydet
-                </button>
-                <button type="button" id="streamTestBtn" data-url="{{ $settings->radio_stream_url ?? '' }}" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border); border-radius: 10px; cursor: pointer;">
+                <button type="submit" class="btn-save">Kaydet</button>
+                <button type="button" id="streamTestBtn" data-url="{{ $settings->radio_stream_url ?? '' }}" class="btn-cancel" style="display: inline-flex; align-items: center; gap: 0.5rem;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                     Stream Test
                 </button>

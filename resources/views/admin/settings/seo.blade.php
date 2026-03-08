@@ -303,7 +303,6 @@
 .seo-settings-page .form-check { font-size: 0.85rem; color: #8b95a5; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top: 0.5rem; }
 .seo-settings-page .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 .seo-settings-page .form-actions { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
-.seo-settings-page .btn-save { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-size: 0.95rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; border: none; border-radius: 10px; cursor: pointer; }
 .seo-image-current { margin-bottom: 0.75rem; }
 .seo-image-current img { display: block; margin-bottom: 0.5rem; }
 .settings-toggle { display: flex; align-items: center; gap: 1rem; cursor: pointer; margin-bottom: 1rem; }

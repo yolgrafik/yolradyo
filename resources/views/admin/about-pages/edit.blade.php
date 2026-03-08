@@ -75,8 +75,6 @@
 .image-preview-wrap { margin-top: 0.75rem; max-width: 360px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
 .image-preview { width: 100%; display: block; object-fit: cover; }
 .form-actions { margin-top: 1.5rem; display: flex; gap: 0.75rem; }
-.btn-save { padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; border: none; border-radius: 10px; cursor: pointer; }
-.btn-cancel { padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; }
 </style>
 @endpush
 @endsection

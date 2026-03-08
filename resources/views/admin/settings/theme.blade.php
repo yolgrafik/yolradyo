@@ -176,7 +176,6 @@
 .btn-remove-bg:hover { background: rgba(239,68,68,0.3); }
 .current-image { font-size: 0.85rem; color: #9ca3af; margin-top: 0.25rem; }
 .form-actions { margin-top: 1.5rem; }
-.btn-save { padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600; background: linear-gradient(135deg, #dc2626, #c92a2a); color: #fff; border: none; border-radius: 10px; cursor: pointer; }
 </style>
 @endpush
 @push('scripts')

@@ -7,7 +7,7 @@
             <h1 class="forum-posts-title">Forum Gönderileri</h1>
             <p class="forum-posts-desc">Dinleyicilerden gelen istek, şikayet, foto ve video gönderilerini yönetin.</p>
         </div>
-        <a href="{{ route('admin.forum.comments') }}" class="btn btn-cancel">Forum Yorumları</a>
+        <a href="{{ route('admin.forum.comments') }}" class="btn-cancel">Forum Yorumları</a>
     </header>
 
     @if(session('success'))
@@ -134,13 +134,6 @@
 .forum-posts-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
 .forum-posts-title { font-size: 1.5rem; font-weight: 700; color: #f0f2f5; margin: 0 0 0.25rem 0; }
 .forum-posts-desc { font-size: 0.9rem; color: #8b95a5; margin: 0; }
-.forum-btn { display: inline-flex; align-items: center; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: 600; border-radius: 8px; text-decoration: none; border: 1px solid transparent; cursor: pointer; transition: opacity 0.2s; }
-.forum-btn--primary { background: linear-gradient(135deg, #dc2626, var(--accent)); color: #fff; }
-.forum-btn--secondary { background: rgba(255,255,255,0.08); color: #e5e7eb; border-color: rgba(255,255,255,0.15); }
-.forum-btn--secondary:hover { background: rgba(255,255,255,0.12); }
-.forum-btn--success { background: rgba(34,197,94,0.3); color: #86efac; border-color: rgba(34,197,94,0.5); }
-.forum-btn--danger { background: rgba(239,68,68,0.2); color: #fca5a5; border-color: rgba(239,68,68,0.4); }
-.forum-btn--sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
 .forum-alert { padding: 1rem 1.25rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.9rem; }
 .forum-alert--success { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.35); color: #86efac; }
 .forum-alert--error { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.35); color: #fca5a5; }

@@ -20,7 +20,7 @@
                     <input type="password" name="password" id="password" required class="form-input">
                     @error('password')<span class="form-error">{{ $message }}</span>@enderror
                 </div>
-                <button type="submit" class="btn-danger">2FA Devre Disi Birak</button>
+                <button type="submit" class="btn btn-danger">2FA Devre Dışı Bırak</button>
             </form>
         @else
             <p class="status-badge disabled">2FA kapali</p>
@@ -45,8 +45,6 @@
 .form-input{width:100%;max-width:300px;padding:0.75rem 1rem;font-size:0.9rem;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:10px;color:var(--text);}
 .form-error{font-size:0.8rem;color:#f87171;margin-top:0.35rem;display:block;}
 .muted{color:var(--muted);font-size:0.9rem;}
-.btn-save{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:linear-gradient(135deg,#dc2626,var(--accent));color:#fff;border:none;border-radius:10px;cursor:pointer;}
-.btn-danger{padding:0.65rem 1.25rem;font-size:0.9rem;font-weight:600;background:rgba(239,68,68,0.3);color:#fca5a5;border:1px solid rgba(239,68,68,0.5);border-radius:10px;cursor:pointer;}
 </style>
 @endpush
 @endsection
