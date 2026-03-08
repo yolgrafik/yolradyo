@@ -4,7 +4,11 @@
 
 <section class="home-news-section photo-gallery-announcement-section" aria-label="Foto Galeri">
     <div class="home-news-section__header photo-gallery-announcement-section__header">
-        <h2 class="home-news-section__title photo-gallery-announcement-section__title">Foto Galeri &amp; DUYURU</h2>
+        <div class="photo-gallery-announcement-section__title-row">
+            <h2 class="home-news-section__title photo-gallery-announcement-section__title">Foto Galeri</h2>
+            <span class="photo-gallery-announcement-section__sep" aria-hidden="true">|</span>
+            <p class="photo-gallery-announcement-section__subtitle">DUYURU</p>
+        </div>
     </div>
     <div class="photo-gallery-announcement-widget">
         @if($galleryPhotos->isNotEmpty())
@@ -52,8 +56,11 @@
 @push('styles')
 <style>
 .photo-gallery-announcement-section{margin-top:1rem;}
-.photo-gallery-announcement-section__header{margin-bottom:1rem;display:flex;align-items:center;justify-content:center;text-align:center;padding:.68rem .9rem;}
-.photo-gallery-announcement-section__title{margin:0 auto;font-size:clamp(.88rem,1.45vw,1.02rem);line-height:1.25;letter-spacing:.01em;word-break:break-word;text-wrap:balance;max-width:100%;}
+.photo-gallery-announcement-section__header{margin-bottom:1rem;}
+.photo-gallery-announcement-section__title{margin:0;}
+.photo-gallery-announcement-section__title-row{display:flex;align-items:center;justify-content:flex-start;gap:.5rem;flex-wrap:wrap;width:100%;}
+.photo-gallery-announcement-section__sep{color:var(--ry-text-muted);font-size:.9rem;line-height:1;}
+.photo-gallery-announcement-section__subtitle{font-size:.74rem;color:var(--ry-text-muted);margin:0;line-height:1;}
 .photo-gallery-announcement-widget{position:relative;background:color-mix(in srgb,var(--ry-bar-bg) 75%, #0b0f16);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.25);border-top:1px solid var(--ry-line-color);border-bottom:1px solid var(--ry-line-color);}
 .photo-gallery-announcement-widget__body{padding:14px;color:var(--ry-text-muted);font-size:.85rem;line-height:1.5;}
 .photo-gallery-announcement-slider{position:relative;padding:10px;min-height:345px;}
@@ -81,8 +88,7 @@
     .photo-gallery-announcement-card__body{min-height:78px;max-height:78px;}
     .photo-gallery-announcement-card__body h3{font-size:.72rem;}
     .photo-gallery-announcement-card__body p{font-size:.66rem;}
-    .photo-gallery-announcement-section__header{padding:.6rem .75rem;}
-    .photo-gallery-announcement-section__title{font-size:clamp(.82rem,4vw,.94rem);}
+    .photo-gallery-announcement-section__subtitle{font-size:.7rem;}
 }
 </style>
 @endpush
