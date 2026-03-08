@@ -91,6 +91,7 @@ Route::prefix('admin')->group(function () {
 
         Route::post('mail-test', [App\Http\Controllers\Admin\MailTestController::class, 'sendTest'])->name('admin.mail-test');
 
+        Route::get('settings/export-sql', [App\Http\Controllers\Admin\SettingsExportController::class, '__invoke'])->name('admin.settings.export-sql');
         Route::get('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'generalForm'])->name('admin.settings.general');
     Route::post('settings/general', [App\Http\Controllers\Admin\SettingsController::class, 'saveGeneral']);
     Route::get('settings/branding', [App\Http\Controllers\Admin\SettingsController::class, 'brandingForm'])->name('admin.settings.branding');
